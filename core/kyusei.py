@@ -29,18 +29,23 @@ def _calc_risshun(year: int) -> date:
 
 def calc_honmei_sei(birth_year: int, birth_month: int, birth_day: int) -> int:
     """
-    本命星番号を計算
-    アンカー法: 1984年 = 八白土星(8) を基準に、1年ごとに-1（9→1→9循環）
+    本命星番号を計算（各桁の和法）
+    西暦の各桁を足して一桁にし、11から引く（10以上なら-9）
     ※ 立春（2月4日）前は前年扱い
-    検証: 1977/5/24 → (8-1-(1977-1984))%9+1 = (7+7)%9+1 = 5+1 = 6 → 六白金星 ✓
+    検証: 1977/5/24 → 1+9+7+7=24→2+4=6→11-6=5 → 五黄土星 ✓
     """
     year = birth_year
     risshun = _calc_risshun(year)
     if date(birth_year, birth_month, birth_day) < risshun:
         year -= 1
 
-    # アンカー: 1984年 = 八白土星(8)
-    sei_num = ((8 - 1 - (year - 1984)) % 9) + 1
+    # 各桁の和を一桁になるまで繰り返す
+    digit_sum = sum(int(c) for c in str(year))
+    while digit_sum >= 10:
+        digit_sum = sum(int(c) for c in str(digit_sum))
+    sei_num = 11 - digit_sum
+    if sei_num > 9:
+        sei_num -= 9
     return sei_num
 
 
