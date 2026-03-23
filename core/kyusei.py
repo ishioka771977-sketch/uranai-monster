@@ -63,17 +63,18 @@ def _calc_getsu_mei_sei(honmei_num: int, birth_month: int, birth_day: int) -> in
         if month == 0:
             month = 12
 
-    # 月命星テーブル: 本命星番号 → 1月(1月節)の月命星
-    # グループ規則: 本命星1,4,7 → 8; 2,5,8 → 5; 3,6,9 → 2
-    # 検証: 六白(6)5月生まれ → start=2, 2-(5-1)=-2→+9=7 → 七赤 ✓
+    # 月命星テーブル: 本命星番号 → 2月(寅月)の月命星
+    # グループ規則: 1,4,7 → 8; 2,5,8 → 2; 3,6,9 → 5
+    # 検証: 五黄(5)5月 → start=2, 2-(5-2)=-1→+9=8 → 八白 ✓
+    # 検証: 六白(6)5月 → start=5, 5-(5-2)=2 → 二黒 ✓
     GETSU_MEI_START = {
-        1: 8, 2: 5, 3: 2,
-        4: 8, 5: 5, 6: 2,
-        7: 8, 8: 5, 9: 2
+        1: 8, 2: 2, 3: 5,
+        4: 8, 5: 2, 6: 5,
+        7: 8, 8: 2, 9: 5
     }
     start = GETSU_MEI_START[honmei_num]
-    # 1月スタートで月が増えるごとに-1
-    getsu_num = start - (month - 1)
+    # 2月(寅月)スタートで月が増えるごとに-1
+    getsu_num = start - (month - 2)
     while getsu_num <= 0:
         getsu_num += 9
     return getsu_num
