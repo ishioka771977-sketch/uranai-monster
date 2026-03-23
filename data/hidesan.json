@@ -1,0 +1,35 @@
+{
+  "comment": "ひでさん確定データ（将来の相性機能用・Phase 1cで使用）",
+  "name": "石岡秀貴",
+  "birth_date": "1977-05-24",
+  "birth_time": "01:34",
+  "birth_place": "函館市",
+  "blood_type": "A",
+  "sanmei": {
+    "nen_kanshi": "丁巳",
+    "tsuki_kanshi": "乙巳",
+    "hi_kanshi": "辛巳",
+    "nichikan": "辛",
+    "nichikan_gogyo": "金",
+    "nichikan_inyo": "陰",
+    "chuo_sei": "牽牛星",
+    "chuo_honno": "攻撃本能",
+    "tenchusatsu": "申酉天中殺",
+    "special_kakkyoku": "三巳格（火性地支一気格）"
+  },
+  "western": {
+    "sun_sign": "双子座",
+    "sun_sign_symbol": "♊",
+    "moon_sign": "獅子座",
+    "asc_sign": "水瓶座",
+    "mc_sign": "牡牛座"
+  },
+  "kyusei": {
+    "honmei_sei": "六白金星",
+    "getsu_mei_sei": "七赤金星"
+  },
+  "numerology": {
+    "life_path": 8,
+    "personal_year_2026": 3
+  }
+}

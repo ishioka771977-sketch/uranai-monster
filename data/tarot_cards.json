@@ -1,0 +1,1835 @@
+{
+  "comment": "大アルカナ22枚 + 小アルカナ56枚 = 78枚フルデッキ",
+  "major_arcana": [
+    {
+      "number": 0,
+      "name": "愚者",
+      "name_en": "The Fool",
+      "image_key": "major_00",
+      "upright": {
+        "keywords": [
+          "自由",
+          "冒険",
+          "無限の可能性"
+        ],
+        "message": "あなたの前には何にも縛られない自由な道が広がっています。恐れずに踏み出して"
+      },
+      "reversed": {
+        "keywords": [
+          "無計画",
+          "軽率",
+          "見直しのタイミング"
+        ],
+        "message": "少し立ち止まって足元を確認して。その直感、もう少し温めてみて"
+      }
+    },
+    {
+      "number": 1,
+      "name": "魔術師",
+      "name_en": "The Magician",
+      "image_key": "major_01",
+      "upright": {
+        "keywords": [
+          "才能",
+          "意志力",
+          "創造力"
+        ],
+        "message": "あなたには必要な才能と力がすべて揃っています。今すぐ行動を起こして"
+      },
+      "reversed": {
+        "keywords": [
+          "力の空回り",
+          "焦り",
+          "見直し"
+        ],
+        "message": "才能はあるのに空回りしている感じがある時。一度立ち止まって方向を確認して"
+      }
+    },
+    {
+      "number": 2,
+      "name": "女教皇",
+      "name_en": "The High Priestess",
+      "image_key": "major_02",
+      "upright": {
+        "keywords": [
+          "直感",
+          "神秘",
+          "内なる知恵"
+        ],
+        "message": "あなたの中に答えはもうあります。静かな時間を作って内なる声に耳を傾けて"
+      },
+      "reversed": {
+        "keywords": [
+          "秘密",
+          "直感の無視",
+          "焦り"
+        ],
+        "message": "感じていることを見ないふりしていない？直感を信じることが大切な時"
+      }
+    },
+    {
+      "number": 3,
+      "name": "女帝",
+      "name_en": "The Empress",
+      "image_key": "major_03",
+      "upright": {
+        "keywords": [
+          "豊穣",
+          "愛情",
+          "美・創造"
+        ],
+        "message": "あなたの中にある豊かな愛情と創造力が今まさに花開こうとしています"
+      },
+      "reversed": {
+        "keywords": [
+          "依存",
+          "創造性の停滞",
+          "自己愛"
+        ],
+        "message": "誰かに頼りすぎていない？自分自身の力を信じる時が来ています"
+      }
+    },
+    {
+      "number": 4,
+      "name": "皇帝",
+      "name_en": "The Emperor",
+      "image_key": "major_04",
+      "upright": {
+        "keywords": [
+          "権威",
+          "安定",
+          "リーダーシップ"
+        ],
+        "message": "あなたには人を引っ張るリーダーとしての強さがあります。自信を持って前に出て"
+      },
+      "reversed": {
+        "keywords": [
+          "支配欲",
+          "頑固",
+          "柔軟性を持って"
+        ],
+        "message": "少し力が入りすぎているかも。もう少し柔軟にいくと道が開けるよ"
+      }
+    },
+    {
+      "number": 5,
+      "name": "教皇",
+      "name_en": "The Hierophant",
+      "image_key": "major_05",
+      "upright": {
+        "keywords": [
+          "伝統",
+          "教え",
+          "信頼できる助言"
+        ],
+        "message": "信頼できる人の言葉や、長年の知恵の中にヒントが隠れています"
+      },
+      "reversed": {
+        "keywords": [
+          "束縛からの解放",
+          "新しい価値観",
+          "変革"
+        ],
+        "message": "古い枠を超える時かもしれない。自分らしいやり方を見つけて"
+      }
+    },
+    {
+      "number": 6,
+      "name": "恋人",
+      "name_en": "The Lovers",
+      "image_key": "major_06",
+      "upright": {
+        "keywords": [
+          "愛",
+          "選択",
+          "調和"
+        ],
+        "message": "心が動いていることに正直になって。愛と選択の場面でその直感を信じて"
+      },
+      "reversed": {
+        "keywords": [
+          "迷い",
+          "不調和",
+          "決断の時"
+        ],
+        "message": "迷っているなら、心が本当に望んでいることを見つめ直してみて"
+      }
+    },
+    {
+      "number": 7,
+      "name": "戦車",
+      "name_en": "The Chariot",
+      "image_key": "major_07",
+      "upright": {
+        "keywords": [
+          "勝利",
+          "前進",
+          "意志力"
+        ],
+        "message": "突き進む時です。困難があっても意志の力で乗り越えられます。前を向いて"
+      },
+      "reversed": {
+        "keywords": [
+          "焦り",
+          "方向性の見直し",
+          "休息"
+        ],
+        "message": "アクセルを踏みすぎているかも。一度立ち止まって方向を確かめて"
+      }
+    },
+    {
+      "number": 8,
+      "name": "力",
+      "name_en": "Strength",
+      "image_key": "major_08",
+      "upright": {
+        "keywords": [
+          "内なる力",
+          "忍耐",
+          "優しい強さ"
+        ],
+        "message": "あなたの中に静かで揺るぎない力があります。柔らかさの中にこそ本当の強さがある"
+      },
+      "reversed": {
+        "keywords": [
+          "自信の欠如",
+          "内側を見て",
+          "癒し"
+        ],
+        "message": "今は自分を責めないで。自分自身をいちばん大切に扱う時"
+      }
+    },
+    {
+      "number": 9,
+      "name": "隠者",
+      "name_en": "The Hermit",
+      "image_key": "major_09",
+      "upright": {
+        "keywords": [
+          "内省",
+          "智慧",
+          "一人の時間"
+        ],
+        "message": "一人で静かに自分と向き合う時間が、今いちばん大切な答えをくれます"
+      },
+      "reversed": {
+        "keywords": [
+          "孤立",
+          "外に出る時",
+          "人とのつながり"
+        ],
+        "message": "ひとりの時間が長くなりすぎているかも。誰かとつながることで光が見える"
+      }
+    },
+    {
+      "number": 10,
+      "name": "運命の輪",
+      "name_en": "Wheel of Fortune",
+      "image_key": "major_10",
+      "upright": {
+        "keywords": [
+          "転換期",
+          "運命",
+          "チャンス"
+        ],
+        "message": "運命の波が動き始めています。このタイミングを逃さないで。変化を歓迎して"
+      },
+      "reversed": {
+        "keywords": [
+          "停滞",
+          "流れへの抵抗",
+          "受け入れ"
+        ],
+        "message": "流れに逆らわず、今起きていることを受け入れることで次の扉が開く"
+      }
+    },
+    {
+      "number": 11,
+      "name": "正義",
+      "name_en": "Justice",
+      "image_key": "major_11",
+      "upright": {
+        "keywords": [
+          "公正",
+          "真実",
+          "バランス"
+        ],
+        "message": "あなたが正直でいれば、必ず正しい結果がついてくる。真実を大切に"
+      },
+      "reversed": {
+        "keywords": [
+          "不公平感",
+          "責任回避",
+          "見直し"
+        ],
+        "message": "自分に正直に向き合う時。誰かのせいにせず、自分の部分を見てみて"
+      }
+    },
+    {
+      "number": 12,
+      "name": "吊るされた男",
+      "name_en": "The Hanged Man",
+      "image_key": "major_12",
+      "upright": {
+        "keywords": [
+          "待機",
+          "新しい視点",
+          "手放し"
+        ],
+        "message": "今は動かず待つ時。角度を変えて見ると、今まで見えなかったものが見えてくる"
+      },
+      "reversed": {
+        "keywords": [
+          "停滞からの脱出",
+          "行動の時",
+          "決断"
+        ],
+        "message": "待ちすぎた？そろそろ動き出すサインかもしれない"
+      }
+    },
+    {
+      "number": 13,
+      "name": "死神",
+      "name_en": "Death",
+      "image_key": "major_13",
+      "upright": {
+        "keywords": [
+          "終わりと始まり",
+          "変容",
+          "手放し"
+        ],
+        "message": "何かが終わることは新しい始まり。手放すことで想像以上のものがやってくる"
+      },
+      "reversed": {
+        "keywords": [
+          "変化への抵抗",
+          "過去への執着",
+          "解放"
+        ],
+        "message": "変わることを恐れないで。過去を手放した先に、新しいあなたが待っています"
+      }
+    },
+    {
+      "number": 14,
+      "name": "節制",
+      "name_en": "Temperance",
+      "image_key": "major_14",
+      "upright": {
+        "keywords": [
+          "調和",
+          "バランス",
+          "癒し"
+        ],
+        "message": "急がず焦らず、絶妙なバランスの中に答えがあります。流れに乗って進んで"
+      },
+      "reversed": {
+        "keywords": [
+          "不均衡",
+          "過剰",
+          "調整が必要"
+        ],
+        "message": "どこかでやりすぎているかも。バランスを取り直すことが今の課題"
+      }
+    },
+    {
+      "number": 15,
+      "name": "悪魔",
+      "name_en": "The Devil",
+      "image_key": "major_15",
+      "upright": {
+        "keywords": [
+          "束縛",
+          "執着",
+          "影の部分に向き合う"
+        ],
+        "message": "何かに縛られていると感じるなら、その鎖は実は外せる。自分を解放して"
+      },
+      "reversed": {
+        "keywords": [
+          "解放",
+          "自由",
+          "新しい一歩"
+        ],
+        "message": "やっと縛りから解き放たれる時が来ている。自由な自分を取り戻して"
+      }
+    },
+    {
+      "number": 16,
+      "name": "塔",
+      "name_en": "The Tower",
+      "image_key": "major_16",
+      "upright": {
+        "keywords": [
+          "突然の変化",
+          "崩壊と再建",
+          "覚醒"
+        ],
+        "message": "突然の変化は崩壊ではなく、より本物のあなたへの目覚め。恐れずにいて"
+      },
+      "reversed": {
+        "keywords": [
+          "変化の先送り",
+          "内なる変革",
+          "準備"
+        ],
+        "message": "変化を先送りしていない？内側から少しずつ変わる準備を始めて"
+      }
+    },
+    {
+      "number": 17,
+      "name": "星",
+      "name_en": "The Star",
+      "image_key": "major_17",
+      "upright": {
+        "keywords": [
+          "希望",
+          "インスピレーション",
+          "癒し"
+        ],
+        "message": "星があなたを照らしています。希望を持って。願いはきっと叶います"
+      },
+      "reversed": {
+        "keywords": [
+          "希望の喪失",
+          "自信を取り戻して",
+          "内なる光"
+        ],
+        "message": "今は見えにくくても、あなたの中に光は必ずあります。信じて"
+      }
+    },
+    {
+      "number": 18,
+      "name": "月",
+      "name_en": "The Moon",
+      "image_key": "major_18",
+      "upright": {
+        "keywords": [
+          "直感",
+          "夢",
+          "潜在意識"
+        ],
+        "message": "見えないものを感じる力があなたには特別にあります。夢や直感を大切に"
+      },
+      "reversed": {
+        "keywords": [
+          "混乱の解消",
+          "明確さ",
+          "前進"
+        ],
+        "message": "モヤが晴れてくる時。迷いが少なくなり、進む道が見えてくる"
+      }
+    },
+    {
+      "number": 19,
+      "name": "太陽",
+      "name_en": "The Sun",
+      "image_key": "major_19",
+      "upright": {
+        "keywords": [
+          "喜び",
+          "成功",
+          "活力"
+        ],
+        "message": "太陽のように輝くあなたの時が来ています。喜びとエネルギーに満ちた最高の時"
+      },
+      "reversed": {
+        "keywords": [
+          "内なる太陽を見つけて",
+          "自信を持って",
+          "輝く準備"
+        ],
+        "message": "もう少し自信を持って大丈夫。あなたの中の太陽はちゃんと輝いている"
+      }
+    },
+    {
+      "number": 20,
+      "name": "審判",
+      "name_en": "Judgement",
+      "image_key": "major_20",
+      "upright": {
+        "keywords": [
+          "覚醒",
+          "復活",
+          "新たな呼びかけ"
+        ],
+        "message": "本当の自分への呼びかけが聞こえています。覚悟を決めて次のステージへ"
+      },
+      "reversed": {
+        "keywords": [
+          "自己批判",
+          "過去への囚われ",
+          "許し"
+        ],
+        "message": "過去を赦すことで、あなたは自由になれる。自分を責めすぎないで"
+      }
+    },
+    {
+      "number": 21,
+      "name": "世界",
+      "name_en": "The World",
+      "image_key": "major_21",
+      "upright": {
+        "keywords": [
+          "完成",
+          "達成",
+          "統合"
+        ],
+        "message": "素晴らしい！一つの完成を迎えています。あなたの努力が実を結ぶ最高の時"
+      },
+      "reversed": {
+        "keywords": [
+          "もう少し",
+          "完成間近",
+          "最後の一歩"
+        ],
+        "message": "ゴールはもう目の前。あと少しだけ諦めないで。必ず完成します"
+      }
+    }
+  ],
+  "minor_arcana": [
+    {
+      "number": 100,
+      "name": "ワンドのエース",
+      "name_en": "Ace of Wands",
+      "image_key": "minor_wands_01",
+      "suit": "wands",
+      "suit_name": "ワンド",
+      "upright": {
+        "keywords": [
+          "新しい始まり",
+          "情熱",
+          "創造力"
+        ],
+        "message": "心の中に火が灯りました。今がまさに動き出すタイミングです"
+      },
+      "reversed": {
+        "keywords": [
+          "遅延",
+          "意欲の低下",
+          "空回り"
+        ],
+        "message": "焦らなくて大丈夫。種火はまだ消えていません、準備を整えて"
+      }
+    },
+    {
+      "number": 101,
+      "name": "ワンドの2",
+      "name_en": "Two of Wands",
+      "image_key": "minor_wands_02",
+      "suit": "wands",
+      "suit_name": "ワンド",
+      "upright": {
+        "keywords": [
+          "計画",
+          "将来の展望",
+          "決断"
+        ],
+        "message": "世界はあなたの手の中にあります。大きく描いた夢を信じて"
+      },
+      "reversed": {
+        "keywords": [
+          "迷い",
+          "計画の停滞",
+          "恐れ"
+        ],
+        "message": "未知への不安が足を止めていませんか。一歩だけ踏み出してみて"
+      }
+    },
+    {
+      "number": 102,
+      "name": "ワンドの3",
+      "name_en": "Three of Wands",
+      "image_key": "minor_wands_03",
+      "suit": "wands",
+      "suit_name": "ワンド",
+      "upright": {
+        "keywords": [
+          "拡大",
+          "先見の明",
+          "前進"
+        ],
+        "message": "蒔いた種が芽吹き始めています。視野を広げて次の一手を"
+      },
+      "reversed": {
+        "keywords": [
+          "見通しの甘さ",
+          "遅れ",
+          "準備不足"
+        ],
+        "message": "結果を急がないで。遠回りに見える道が実は近道かもしれません"
+      }
+    },
+    {
+      "number": 103,
+      "name": "ワンドの4",
+      "name_en": "Four of Wands",
+      "image_key": "minor_wands_04",
+      "suit": "wands",
+      "suit_name": "ワンド",
+      "upright": {
+        "keywords": [
+          "祝福",
+          "安定",
+          "調和"
+        ],
+        "message": "ここまでよく頑張りました。仲間と喜びを分かち合う時です"
+      },
+      "reversed": {
+        "keywords": [
+          "不安定",
+          "居場所のなさ",
+          "祝えない"
+        ],
+        "message": "落ち着ける場所は自分で作れます。まず心の中を整えましょう"
+      }
+    },
+    {
+      "number": 104,
+      "name": "ワンドの5",
+      "name_en": "Five of Wands",
+      "image_key": "minor_wands_05",
+      "suit": "wands",
+      "suit_name": "ワンド",
+      "upright": {
+        "keywords": [
+          "競争",
+          "衝突",
+          "切磋琢磨"
+        ],
+        "message": "ぶつかり合いの中にこそ成長があります。逃げずに向き合って"
+      },
+      "reversed": {
+        "keywords": [
+          "争い回避",
+          "妥協",
+          "内なる葛藤"
+        ],
+        "message": "無理に戦わなくていい。引くことも立派な戦略のひとつです"
+      }
+    },
+    {
+      "number": 105,
+      "name": "ワンドの6",
+      "name_en": "Six of Wands",
+      "image_key": "minor_wands_06",
+      "suit": "wands",
+      "suit_name": "ワンド",
+      "upright": {
+        "keywords": [
+          "勝利",
+          "成功",
+          "称賛"
+        ],
+        "message": "努力が認められる時が来ました。胸を張って受け取りましょう"
+      },
+      "reversed": {
+        "keywords": [
+          "自信喪失",
+          "失敗への恐れ",
+          "傲慢"
+        ],
+        "message": "人の目を気にしすぎていませんか。自分の基準で歩みましょう"
+      }
+    },
+    {
+      "number": 106,
+      "name": "ワンドの7",
+      "name_en": "Seven of Wands",
+      "image_key": "minor_wands_07",
+      "suit": "wands",
+      "suit_name": "ワンド",
+      "upright": {
+        "keywords": [
+          "防衛",
+          "信念",
+          "立ち向かう勇気"
+        ],
+        "message": "あなたの立場を守り抜いて。正しいと信じるなら譲らないで"
+      },
+      "reversed": {
+        "keywords": [
+          "圧倒される",
+          "諦め",
+          "立場の弱さ"
+        ],
+        "message": "全部ひとりで抱えなくていい。助けを求めることも強さです"
+      }
+    },
+    {
+      "number": 107,
+      "name": "ワンドの8",
+      "name_en": "Eight of Wands",
+      "image_key": "minor_wands_08",
+      "suit": "wands",
+      "suit_name": "ワンド",
+      "upright": {
+        "keywords": [
+          "スピード",
+          "急展開",
+          "行動力"
+        ],
+        "message": "物事が一気に動き出します。流れに乗って駆け抜けましょう"
+      },
+      "reversed": {
+        "keywords": [
+          "遅延",
+          "焦り",
+          "方向のズレ"
+        ],
+        "message": "急いては事を仕損じます。深呼吸して方向を確認してから"
+      }
+    },
+    {
+      "number": 108,
+      "name": "ワンドの9",
+      "name_en": "Nine of Wands",
+      "image_key": "minor_wands_09",
+      "suit": "wands",
+      "suit_name": "ワンド",
+      "upright": {
+        "keywords": [
+          "忍耐",
+          "粘り強さ",
+          "最後の試練"
+        ],
+        "message": "あと少しです。傷だらけでも立っているあなたは本当に強い"
+      },
+      "reversed": {
+        "keywords": [
+          "疲弊",
+          "頑固",
+          "警戒しすぎ"
+        ],
+        "message": "頑張りすぎて疲れていませんか。休むことは負けではありません"
+      }
+    },
+    {
+      "number": 109,
+      "name": "ワンドの10",
+      "name_en": "Ten of Wands",
+      "image_key": "minor_wands_10",
+      "suit": "wands",
+      "suit_name": "ワンド",
+      "upright": {
+        "keywords": [
+          "重荷",
+          "責任",
+          "過負荷"
+        ],
+        "message": "背負いすぎています。荷物を下ろして本当に大切なものだけ選んで"
+      },
+      "reversed": {
+        "keywords": [
+          "解放",
+          "委任",
+          "負担軽減"
+        ],
+        "message": "やっと肩の荷が下りる時。人に任せる勇気が道を開きます"
+      }
+    },
+    {
+      "number": 110,
+      "name": "ワンドのページ",
+      "name_en": "Page of Wands",
+      "image_key": "minor_wands_11",
+      "suit": "wands",
+      "suit_name": "ワンド",
+      "upright": {
+        "keywords": [
+          "冒険心",
+          "好奇心",
+          "ひらめき"
+        ],
+        "message": "ワクワクする気持ちに正直に。その直感が新しい扉を開きます"
+      },
+      "reversed": {
+        "keywords": [
+          "未熟さ",
+          "飽きっぽさ",
+          "無計画"
+        ],
+        "message": "面白そう！だけで飛びつくと痛い目に。もう少し調べてから"
+      }
+    },
+    {
+      "number": 111,
+      "name": "ワンドのナイト",
+      "name_en": "Knight of Wands",
+      "image_key": "minor_wands_12",
+      "suit": "wands",
+      "suit_name": "ワンド",
+      "upright": {
+        "keywords": [
+          "情熱的な行動",
+          "大胆さ",
+          "冒険"
+        ],
+        "message": "熱い想いを胸に突き進んで。あなたの情熱は周りにも伝染します"
+      },
+      "reversed": {
+        "keywords": [
+          "暴走",
+          "短気",
+          "無謀"
+        ],
+        "message": "走り出す前に一拍おいて。熱意は大切だけど方向も確認して"
+      }
+    },
+    {
+      "number": 112,
+      "name": "ワンドのクイーン",
+      "name_en": "Queen of Wands",
+      "image_key": "minor_wands_13",
+      "suit": "wands",
+      "suit_name": "ワンド",
+      "upright": {
+        "keywords": [
+          "自信",
+          "カリスマ",
+          "温かいリーダーシップ"
+        ],
+        "message": "あなたの明るさが周りを照らしています。堂々と輝いてください"
+      },
+      "reversed": {
+        "keywords": [
+          "嫉妬",
+          "支配的",
+          "自信のなさ"
+        ],
+        "message": "人と比べなくていい。あなたにはあなただけの魅力があります"
+      }
+    },
+    {
+      "number": 113,
+      "name": "ワンドのキング",
+      "name_en": "King of Wands",
+      "image_key": "minor_wands_14",
+      "suit": "wands",
+      "suit_name": "ワンド",
+      "upright": {
+        "keywords": [
+          "リーダーシップ",
+          "ビジョン",
+          "決断力"
+        ],
+        "message": "大きなビジョンを持つあなたが先頭に立つ時です。導いて"
+      },
+      "reversed": {
+        "keywords": [
+          "横暴",
+          "独裁的",
+          "見栄"
+        ],
+        "message": "力を振りかざすと人は離れます。耳を傾ける姿勢が信頼を生む"
+      }
+    },
+    {
+      "number": 200,
+      "name": "カップのエース",
+      "name_en": "Ace of Cups",
+      "image_key": "minor_cups_01",
+      "suit": "cups",
+      "suit_name": "カップ",
+      "upright": {
+        "keywords": [
+          "愛の始まり",
+          "感情の目覚め",
+          "直感"
+        ],
+        "message": "心が満たされる出来事が訪れます。素直に受け止めてください"
+      },
+      "reversed": {
+        "keywords": [
+          "感情の抑圧",
+          "空虚感",
+          "愛の枯渇"
+        ],
+        "message": "心が渇いていませんか。まずは自分自身を優しく潤してあげて"
+      }
+    },
+    {
+      "number": 201,
+      "name": "カップの2",
+      "name_en": "Two of Cups",
+      "image_key": "minor_cups_02",
+      "suit": "cups",
+      "suit_name": "カップ",
+      "upright": {
+        "keywords": [
+          "パートナーシップ",
+          "相思相愛",
+          "絆"
+        ],
+        "message": "心と心が通い合う関係が生まれます。対等な信頼を大切に"
+      },
+      "reversed": {
+        "keywords": [
+          "すれ違い",
+          "不均衡",
+          "別離"
+        ],
+        "message": "気持ちのバランスが崩れていませんか。正直に話し合う時です"
+      }
+    },
+    {
+      "number": 202,
+      "name": "カップの3",
+      "name_en": "Three of Cups",
+      "image_key": "minor_cups_03",
+      "suit": "cups",
+      "suit_name": "カップ",
+      "upright": {
+        "keywords": [
+          "友情",
+          "祝祭",
+          "喜びの共有"
+        ],
+        "message": "仲間と過ごす楽しい時間が待っています。笑顔で乾杯しましょう"
+      },
+      "reversed": {
+        "keywords": [
+          "孤立",
+          "噂話",
+          "過度な享楽"
+        ],
+        "message": "楽しさの裏に寂しさが隠れていませんか。本音で話せる人を大切に"
+      }
+    },
+    {
+      "number": 203,
+      "name": "カップの4",
+      "name_en": "Four of Cups",
+      "image_key": "minor_cups_04",
+      "suit": "cups",
+      "suit_name": "カップ",
+      "upright": {
+        "keywords": [
+          "倦怠感",
+          "無関心",
+          "内省"
+        ],
+        "message": "今あるものに気づいていますか。見落としているチャンスがあるかも"
+      },
+      "reversed": {
+        "keywords": [
+          "目覚め",
+          "新たな意欲",
+          "チャンスに気づく"
+        ],
+        "message": "やっと目が覚めましたね。差し出された手を今度は掴みましょう"
+      }
+    },
+    {
+      "number": 204,
+      "name": "カップの5",
+      "name_en": "Five of Cups",
+      "image_key": "minor_cups_05",
+      "suit": "cups",
+      "suit_name": "カップ",
+      "upright": {
+        "keywords": [
+          "喪失感",
+          "後悔",
+          "悲しみ"
+        ],
+        "message": "失ったものばかり見ていませんか。振り返れば残っているものが"
+      },
+      "reversed": {
+        "keywords": [
+          "立ち直り",
+          "受容",
+          "前を向く"
+        ],
+        "message": "悲しみを乗り越える力があなたにはあります。顔を上げて"
+      }
+    },
+    {
+      "number": 205,
+      "name": "カップの6",
+      "name_en": "Six of Cups",
+      "image_key": "minor_cups_06",
+      "suit": "cups",
+      "suit_name": "カップ",
+      "upright": {
+        "keywords": [
+          "郷愁",
+          "純粋さ",
+          "懐かしい再会"
+        ],
+        "message": "懐かしい記憶が温かく蘇ります。あの頃の純粋さを思い出して"
+      },
+      "reversed": {
+        "keywords": [
+          "過去への執着",
+          "成長の拒否",
+          "甘い思い出"
+        ],
+        "message": "過去は美しいけれど戻れません。今を生きることに目を向けて"
+      }
+    },
+    {
+      "number": 206,
+      "name": "カップの7",
+      "name_en": "Seven of Cups",
+      "image_key": "minor_cups_07",
+      "suit": "cups",
+      "suit_name": "カップ",
+      "upright": {
+        "keywords": [
+          "幻想",
+          "選択肢",
+          "夢想"
+        ],
+        "message": "夢が広がりすぎて迷っていませんか。地に足をつけて選びましょう"
+      },
+      "reversed": {
+        "keywords": [
+          "現実直視",
+          "決断",
+          "幻想からの覚醒"
+        ],
+        "message": "夢から覚めて現実を見る時。本当に欲しいものはひとつだけ"
+      }
+    },
+    {
+      "number": 207,
+      "name": "カップの8",
+      "name_en": "Eight of Cups",
+      "image_key": "minor_cups_08",
+      "suit": "cups",
+      "suit_name": "カップ",
+      "upright": {
+        "keywords": [
+          "旅立ち",
+          "手放す勇気",
+          "探求"
+        ],
+        "message": "満たされないなら離れる勇気を。もっと深い幸せが待っています"
+      },
+      "reversed": {
+        "keywords": [
+          "留まる",
+          "変化への恐れ",
+          "惰性"
+        ],
+        "message": "居心地の良さに甘えていませんか。本当の望みに正直になって"
+      }
+    },
+    {
+      "number": 208,
+      "name": "カップの9",
+      "name_en": "Nine of Cups",
+      "image_key": "minor_cups_09",
+      "suit": "cups",
+      "suit_name": "カップ",
+      "upright": {
+        "keywords": [
+          "願望成就",
+          "満足感",
+          "幸福"
+        ],
+        "message": "願いが叶う時です。心からの満足感を味わってください"
+      },
+      "reversed": {
+        "keywords": [
+          "物足りなさ",
+          "贅沢",
+          "自己満足"
+        ],
+        "message": "手に入れても満たされない時は心の声に耳を傾けてみて"
+      }
+    },
+    {
+      "number": 209,
+      "name": "カップの10",
+      "name_en": "Ten of Cups",
+      "image_key": "minor_cups_10",
+      "suit": "cups",
+      "suit_name": "カップ",
+      "upright": {
+        "keywords": [
+          "家庭の幸福",
+          "調和",
+          "心の平和"
+        ],
+        "message": "愛する人たちと過ごす穏やかな幸せ。この瞬間を大切にして"
+      },
+      "reversed": {
+        "keywords": [
+          "家庭の不和",
+          "理想と現実のギャップ",
+          "孤独"
+        ],
+        "message": "完璧な幸せを求めすぎないで。小さな温もりを拾い集めましょう"
+      }
+    },
+    {
+      "number": 210,
+      "name": "カップのページ",
+      "name_en": "Page of Cups",
+      "image_key": "minor_cups_11",
+      "suit": "cups",
+      "suit_name": "カップ",
+      "upright": {
+        "keywords": [
+          "感受性",
+          "ロマンス",
+          "メッセージ"
+        ],
+        "message": "心にときめく知らせが届きます。感性のアンテナを研ぎ澄まして"
+      },
+      "reversed": {
+        "keywords": [
+          "感情的未熟",
+          "非現実的",
+          "気まぐれ"
+        ],
+        "message": "気持ちに振り回されていませんか。地に足をつけて感じてみて"
+      }
+    },
+    {
+      "number": 211,
+      "name": "カップのナイト",
+      "name_en": "Knight of Cups",
+      "image_key": "minor_cups_12",
+      "suit": "cups",
+      "suit_name": "カップ",
+      "upright": {
+        "keywords": [
+          "ロマンチスト",
+          "誘い",
+          "理想の追求"
+        ],
+        "message": "心に従って進みましょう。理想を追う姿は美しいものです"
+      },
+      "reversed": {
+        "keywords": [
+          "現実逃避",
+          "甘い誘惑",
+          "嫉妬"
+        ],
+        "message": "美しい言葉の裏に何があるか見極めて。夢と現実のバランスを"
+      }
+    },
+    {
+      "number": 212,
+      "name": "カップのクイーン",
+      "name_en": "Queen of Cups",
+      "image_key": "minor_cups_13",
+      "suit": "cups",
+      "suit_name": "カップ",
+      "upright": {
+        "keywords": [
+          "共感力",
+          "直感",
+          "慈愛"
+        ],
+        "message": "あなたの優しさが誰かを救います。その深い共感力を信じて"
+      },
+      "reversed": {
+        "keywords": [
+          "感情の不安定",
+          "過干渉",
+          "依存"
+        ],
+        "message": "人の感情を背負いすぎないで。自分の心を守ることも大切です"
+      }
+    },
+    {
+      "number": 213,
+      "name": "カップのキング",
+      "name_en": "King of Cups",
+      "image_key": "minor_cups_14",
+      "suit": "cups",
+      "suit_name": "カップ",
+      "upright": {
+        "keywords": [
+          "感情の成熟",
+          "寛容",
+          "落ち着き"
+        ],
+        "message": "穏やかな強さで周りを包んでください。感情の達人ですね"
+      },
+      "reversed": {
+        "keywords": [
+          "感情の操作",
+          "冷淡",
+          "抑圧"
+        ],
+        "message": "感情を押し殺していませんか。弱さを見せることも強さです"
+      }
+    },
+    {
+      "number": 300,
+      "name": "ソードのエース",
+      "name_en": "Ace of Swords",
+      "image_key": "minor_swords_01",
+      "suit": "swords",
+      "suit_name": "ソード",
+      "upright": {
+        "keywords": [
+          "真実",
+          "明晰さ",
+          "突破口"
+        ],
+        "message": "霧が晴れて真実が見えてきます。鋭い知性で道を切り拓いて"
+      },
+      "reversed": {
+        "keywords": [
+          "混乱",
+          "誤解",
+          "思考の曇り"
+        ],
+        "message": "考えが堂々巡りしていませんか。情報を整理してから判断を"
+      }
+    },
+    {
+      "number": 301,
+      "name": "ソードの2",
+      "name_en": "Two of Swords",
+      "image_key": "minor_swords_02",
+      "suit": "swords",
+      "suit_name": "ソード",
+      "upright": {
+        "keywords": [
+          "均衡",
+          "決断の保留",
+          "心の葛藤"
+        ],
+        "message": "どちらも選べない時は無理に選ばなくていい。心が決まるまで待って"
+      },
+      "reversed": {
+        "keywords": [
+          "情報過多",
+          "優柔不断",
+          "目を背ける"
+        ],
+        "message": "見ないふりはもう限界です。目を開けて向き合う勇気を持って"
+      }
+    },
+    {
+      "number": 302,
+      "name": "ソードの3",
+      "name_en": "Three of Swords",
+      "image_key": "minor_swords_03",
+      "suit": "swords",
+      "suit_name": "ソード",
+      "upright": {
+        "keywords": [
+          "悲嘆",
+          "心の痛み",
+          "裏切り"
+        ],
+        "message": "心が痛む時期ですが、この痛みは必ず癒えます。泣いていいよ"
+      },
+      "reversed": {
+        "keywords": [
+          "回復の兆し",
+          "許し",
+          "痛みの解放"
+        ],
+        "message": "少しずつ心の傷が癒え始めています。自分を許してあげて"
+      }
+    },
+    {
+      "number": 303,
+      "name": "ソードの4",
+      "name_en": "Four of Swords",
+      "image_key": "minor_swords_04",
+      "suit": "swords",
+      "suit_name": "ソード",
+      "upright": {
+        "keywords": [
+          "休息",
+          "回復",
+          "瞑想"
+        ],
+        "message": "今は静かに休む時。心と体を回復させれば再び立ち上がれます"
+      },
+      "reversed": {
+        "keywords": [
+          "休めない焦り",
+          "燃え尽き",
+          "不眠"
+        ],
+        "message": "休むことに罪悪感を持たないで。回復なくして前進はありません"
+      }
+    },
+    {
+      "number": 304,
+      "name": "ソードの5",
+      "name_en": "Five of Swords",
+      "image_key": "minor_swords_05",
+      "suit": "swords",
+      "suit_name": "ソード",
+      "upright": {
+        "keywords": [
+          "勝利の代償",
+          "争い",
+          "自己中心"
+        ],
+        "message": "勝っても虚しい戦いがあります。本当に戦う価値があるか考えて"
+      },
+      "reversed": {
+        "keywords": [
+          "和解",
+          "敗北を認める",
+          "争いの終結"
+        ],
+        "message": "負けを認めることで得られるものがあります。プライドを手放して"
+      }
+    },
+    {
+      "number": 305,
+      "name": "ソードの6",
+      "name_en": "Six of Swords",
+      "image_key": "minor_swords_06",
+      "suit": "swords",
+      "suit_name": "ソード",
+      "upright": {
+        "keywords": [
+          "移行",
+          "困難からの脱出",
+          "静かな旅"
+        ],
+        "message": "辛い場所から穏やかな場所へ移る時。静かに舟を進めましょう"
+      },
+      "reversed": {
+        "keywords": [
+          "逃げ切れない",
+          "過去の重荷",
+          "抵抗"
+        ],
+        "message": "荷物が重くて舟が進みません。過去の執着を少し置いていって"
+      }
+    },
+    {
+      "number": 306,
+      "name": "ソードの7",
+      "name_en": "Seven of Swords",
+      "image_key": "minor_swords_07",
+      "suit": "swords",
+      "suit_name": "ソード",
+      "upright": {
+        "keywords": [
+          "策略",
+          "巧みさ",
+          "単独行動"
+        ],
+        "message": "知恵を使って切り抜けましょう。正面突破だけが方法ではない"
+      },
+      "reversed": {
+        "keywords": [
+          "嘘の露見",
+          "裏切りの発覚",
+          "良心の呵責"
+        ],
+        "message": "隠し事は長く続きません。正直になった方が楽になれますよ"
+      }
+    },
+    {
+      "number": 307,
+      "name": "ソードの8",
+      "name_en": "Eight of Swords",
+      "image_key": "minor_swords_08",
+      "suit": "swords",
+      "suit_name": "ソード",
+      "upright": {
+        "keywords": [
+          "束縛",
+          "思い込み",
+          "無力感"
+        ],
+        "message": "縛られているように見えて実は自由です。目隠しを外してみて"
+      },
+      "reversed": {
+        "keywords": [
+          "解放",
+          "視野の拡大",
+          "自己発見"
+        ],
+        "message": "自分を縛っていたのは自分だったと気づく時。もう自由ですよ"
+      }
+    },
+    {
+      "number": 308,
+      "name": "ソードの9",
+      "name_en": "Nine of Swords",
+      "image_key": "minor_swords_09",
+      "suit": "swords",
+      "suit_name": "ソード",
+      "upright": {
+        "keywords": [
+          "不安",
+          "悪夢",
+          "心配事"
+        ],
+        "message": "夜中に不安が襲ってきますね。でも朝が来れば違って見えます"
+      },
+      "reversed": {
+        "keywords": [
+          "心配のしすぎ",
+          "回復",
+          "希望の光"
+        ],
+        "message": "心配の9割は実際には起こりません。少し楽に考えてみて"
+      }
+    },
+    {
+      "number": 309,
+      "name": "ソードの10",
+      "name_en": "Ten of Swords",
+      "image_key": "minor_swords_10",
+      "suit": "swords",
+      "suit_name": "ソード",
+      "upright": {
+        "keywords": [
+          "終わり",
+          "どん底",
+          "再生の始まり"
+        ],
+        "message": "これ以上落ちることはありません。底を打ったら上がるだけです"
+      },
+      "reversed": {
+        "keywords": [
+          "再起",
+          "最悪の回避",
+          "希望"
+        ],
+        "message": "夜明け前が一番暗い。もう光が見え始めていますよ"
+      }
+    },
+    {
+      "number": 310,
+      "name": "ソードのページ",
+      "name_en": "Page of Swords",
+      "image_key": "minor_swords_11",
+      "suit": "swords",
+      "suit_name": "ソード",
+      "upright": {
+        "keywords": [
+          "知的好奇心",
+          "観察力",
+          "新しいアイデア"
+        ],
+        "message": "鋭い目で真実を見抜いて。あなたの知的探究心が武器になります"
+      },
+      "reversed": {
+        "keywords": [
+          "口先だけ",
+          "噂好き",
+          "皮肉"
+        ],
+        "message": "言葉は刃物にもなります。発言する前にもう一度考えてみて"
+      }
+    },
+    {
+      "number": 311,
+      "name": "ソードのナイト",
+      "name_en": "Knight of Swords",
+      "image_key": "minor_swords_12",
+      "suit": "swords",
+      "suit_name": "ソード",
+      "upright": {
+        "keywords": [
+          "果敢な行動",
+          "知性",
+          "直進"
+        ],
+        "message": "考えたら即行動。スピードと知性であらゆる壁を突破できます"
+      },
+      "reversed": {
+        "keywords": [
+          "無謀",
+          "攻撃的",
+          "考えなしの行動"
+        ],
+        "message": "勢いだけで突っ込むと怪我をします。頭を冷やしてから動いて"
+      }
+    },
+    {
+      "number": 312,
+      "name": "ソードのクイーン",
+      "name_en": "Queen of Swords",
+      "image_key": "minor_swords_13",
+      "suit": "swords",
+      "suit_name": "ソード",
+      "upright": {
+        "keywords": [
+          "明晰な判断",
+          "独立心",
+          "率直さ"
+        ],
+        "message": "感情に流されず冷静に判断できるあなた。その知性を誇りに"
+      },
+      "reversed": {
+        "keywords": [
+          "冷酷",
+          "批判的",
+          "孤立"
+        ],
+        "message": "正しさだけでは人は動きません。温かさも忘れないでください"
+      }
+    },
+    {
+      "number": 313,
+      "name": "ソードのキング",
+      "name_en": "King of Swords",
+      "image_key": "minor_swords_14",
+      "suit": "swords",
+      "suit_name": "ソード",
+      "upright": {
+        "keywords": [
+          "公正",
+          "知的権威",
+          "論理的思考"
+        ],
+        "message": "公正な判断であなたの言葉に重みが増します。知恵で導いて"
+      },
+      "reversed": {
+        "keywords": [
+          "権力の濫用",
+          "冷酷な判断",
+          "独善"
+        ],
+        "message": "正論が人を傷つけることもあります。正しさに思いやりを添えて"
+      }
+    },
+    {
+      "number": 400,
+      "name": "ペンタクルのエース",
+      "name_en": "Ace of Pentacles",
+      "image_key": "minor_pentacles_01",
+      "suit": "pentacles",
+      "suit_name": "ペンタクル",
+      "upright": {
+        "keywords": [
+          "豊かさの始まり",
+          "チャンス",
+          "物質的繁栄"
+        ],
+        "message": "豊かさの種が手の中にあります。大切に育てれば大きな実りに"
+      },
+      "reversed": {
+        "keywords": [
+          "機会損失",
+          "経済的不安",
+          "計画倒れ"
+        ],
+        "message": "せっかくのチャンスを見逃していませんか。足元をよく見て"
+      }
+    },
+    {
+      "number": 401,
+      "name": "ペンタクルの2",
+      "name_en": "Two of Pentacles",
+      "image_key": "minor_pentacles_02",
+      "suit": "pentacles",
+      "suit_name": "ペンタクル",
+      "upright": {
+        "keywords": [
+          "バランス",
+          "器用さ",
+          "柔軟性"
+        ],
+        "message": "忙しくても上手にバランスを取れています。その調子で"
+      },
+      "reversed": {
+        "keywords": [
+          "混乱",
+          "優先順位の乱れ",
+          "手一杯"
+        ],
+        "message": "あちこち手を出しすぎです。優先順位をつけて整理しましょう"
+      }
+    },
+    {
+      "number": 402,
+      "name": "ペンタクルの3",
+      "name_en": "Three of Pentacles",
+      "image_key": "minor_pentacles_03",
+      "suit": "pentacles",
+      "suit_name": "ペンタクル",
+      "upright": {
+        "keywords": [
+          "チームワーク",
+          "技術",
+          "協力"
+        ],
+        "message": "ひとりでは作れないものがチームなら作れます。力を合わせて"
+      },
+      "reversed": {
+        "keywords": [
+          "連携不足",
+          "手抜き",
+          "認められない"
+        ],
+        "message": "努力が見えにくくても腐らないで。質の高い仕事は必ず伝わります"
+      }
+    },
+    {
+      "number": 403,
+      "name": "ペンタクルの4",
+      "name_en": "Four of Pentacles",
+      "image_key": "minor_pentacles_04",
+      "suit": "pentacles",
+      "suit_name": "ペンタクル",
+      "upright": {
+        "keywords": [
+          "安定",
+          "貯蓄",
+          "保守的"
+        ],
+        "message": "守りに入る時期も大切です。しっかり基盤を固めましょう"
+      },
+      "reversed": {
+        "keywords": [
+          "執着",
+          "ケチ",
+          "独占欲"
+        ],
+        "message": "握りしめすぎると手が痛みます。循環させることで豊かさは増える"
+      }
+    },
+    {
+      "number": 404,
+      "name": "ペンタクルの5",
+      "name_en": "Five of Pentacles",
+      "image_key": "minor_pentacles_05",
+      "suit": "pentacles",
+      "suit_name": "ペンタクル",
+      "upright": {
+        "keywords": [
+          "困窮",
+          "孤立感",
+          "試練"
+        ],
+        "message": "苦しい時ですが、助けの扉はすぐそばにあります。頼ってください"
+      },
+      "reversed": {
+        "keywords": [
+          "回復",
+          "支援を受ける",
+          "最悪期の脱出"
+        ],
+        "message": "寒い冬が終わりかけています。温かい場所はもうすぐそこに"
+      }
+    },
+    {
+      "number": 405,
+      "name": "ペンタクルの6",
+      "name_en": "Six of Pentacles",
+      "image_key": "minor_pentacles_06",
+      "suit": "pentacles",
+      "suit_name": "ペンタクル",
+      "upright": {
+        "keywords": [
+          "分かち合い",
+          "寛大さ",
+          "公平"
+        ],
+        "message": "与えることで自分も豊かになれます。惜しみなく分かち合って"
+      },
+      "reversed": {
+        "keywords": [
+          "不公平",
+          "施しの見返り",
+          "依存"
+        ],
+        "message": "助けるのと支配するのは違います。対等な関係を意識してみて"
+      }
+    },
+    {
+      "number": 406,
+      "name": "ペンタクルの7",
+      "name_en": "Seven of Pentacles",
+      "image_key": "minor_pentacles_07",
+      "suit": "pentacles",
+      "suit_name": "ペンタクル",
+      "upright": {
+        "keywords": [
+          "忍耐",
+          "収穫の時期",
+          "評価"
+        ],
+        "message": "コツコツ積み重ねた成果が実る時期。焦らず収穫を待ちましょう"
+      },
+      "reversed": {
+        "keywords": [
+          "焦り",
+          "成果が出ない",
+          "方向転換"
+        ],
+        "message": "同じやり方で成果が出ないなら別の方法を試す勇気も必要です"
+      }
+    },
+    {
+      "number": 407,
+      "name": "ペンタクルの8",
+      "name_en": "Eight of Pentacles",
+      "image_key": "minor_pentacles_08",
+      "suit": "pentacles",
+      "suit_name": "ペンタクル",
+      "upright": {
+        "keywords": [
+          "職人技",
+          "努力",
+          "スキルアップ"
+        ],
+        "message": "黙々と技を磨く姿は誰よりも美しい。その努力は裏切りません"
+      },
+      "reversed": {
+        "keywords": [
+          "完璧主義",
+          "退屈",
+          "方向性の迷い"
+        ],
+        "message": "完璧を目指して手が止まるより、まず形にしてみることが大事"
+      }
+    },
+    {
+      "number": 408,
+      "name": "ペンタクルの9",
+      "name_en": "Nine of Pentacles",
+      "image_key": "minor_pentacles_09",
+      "suit": "pentacles",
+      "suit_name": "ペンタクル",
+      "upright": {
+        "keywords": [
+          "自立",
+          "豊かさ",
+          "洗練"
+        ],
+        "message": "自分の力で築いた豊かさを楽しんでください。あなたは十分素敵"
+      },
+      "reversed": {
+        "keywords": [
+          "物質依存",
+          "孤独な成功",
+          "浪費"
+        ],
+        "message": "お金では買えないものがあります。心の豊かさにも目を向けて"
+      }
+    },
+    {
+      "number": 409,
+      "name": "ペンタクルの10",
+      "name_en": "Ten of Pentacles",
+      "image_key": "minor_pentacles_10",
+      "suit": "pentacles",
+      "suit_name": "ペンタクル",
+      "upright": {
+        "keywords": [
+          "家族の繁栄",
+          "遺産",
+          "永続的な豊かさ"
+        ],
+        "message": "築いてきたものが次の世代へつながります。大きな実りの時です"
+      },
+      "reversed": {
+        "keywords": [
+          "家族問題",
+          "財産トラブル",
+          "基盤の揺らぎ"
+        ],
+        "message": "お金のことで家族と揉めないで。大切なのは絆の方です"
+      }
+    },
+    {
+      "number": 410,
+      "name": "ペンタクルのページ",
+      "name_en": "Page of Pentacles",
+      "image_key": "minor_pentacles_11",
+      "suit": "pentacles",
+      "suit_name": "ペンタクル",
+      "upright": {
+        "keywords": [
+          "学びの始まり",
+          "堅実さ",
+          "新しい計画"
+        ],
+        "message": "新しいことを学ぶ絶好のタイミング。一歩一歩着実に進んで"
+      },
+      "reversed": {
+        "keywords": [
+          "非現実的",
+          "怠け",
+          "機会の無駄"
+        ],
+        "message": "夢を語るだけでは実りません。小さくても具体的な一歩を"
+      }
+    },
+    {
+      "number": 411,
+      "name": "ペンタクルのナイト",
+      "name_en": "Knight of Pentacles",
+      "image_key": "minor_pentacles_12",
+      "suit": "pentacles",
+      "suit_name": "ペンタクル",
+      "upright": {
+        "keywords": [
+          "勤勉",
+          "堅実",
+          "責任感"
+        ],
+        "message": "地道な努力が最強の武器です。コツコツと確実に進みましょう"
+      },
+      "reversed": {
+        "keywords": [
+          "停滞",
+          "退屈",
+          "頑固"
+        ],
+        "message": "真面目すぎて息が詰まっていませんか。たまには寄り道も大切"
+      }
+    },
+    {
+      "number": 412,
+      "name": "ペンタクルのクイーン",
+      "name_en": "Queen of Pentacles",
+      "image_key": "minor_pentacles_13",
+      "suit": "pentacles",
+      "suit_name": "ペンタクル",
+      "upright": {
+        "keywords": [
+          "実務力",
+          "豊かな母性",
+          "地に足のついた優しさ"
+        ],
+        "message": "あなたの温かい手が暮らしを支えています。その力を誇りに"
+      },
+      "reversed": {
+        "keywords": [
+          "自己犠牲",
+          "過保護",
+          "物質への依存"
+        ],
+        "message": "周りのお世話ばかりで自分を後回しにしないで。自分も大切に"
+      }
+    },
+    {
+      "number": 413,
+      "name": "ペンタクルのキング",
+      "name_en": "King of Pentacles",
+      "image_key": "minor_pentacles_14",
+      "suit": "pentacles",
+      "suit_name": "ペンタクル",
+      "upright": {
+        "keywords": [
+          "経済的成功",
+          "堅実な経営",
+          "信頼"
+        ],
+        "message": "あなたの堅実さが大きな実りをもたらします。王者の風格です"
+      },
+      "reversed": {
+        "keywords": [
+          "金銭執着",
+          "強欲",
+          "物質主義"
+        ],
+        "message": "数字だけを追いかけると大切なものを見失います。心も磨いて"
+      }
+    }
+  ]
+}
