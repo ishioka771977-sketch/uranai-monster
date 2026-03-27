@@ -27,21 +27,29 @@ def _ensure_env():
     global _env_loaded
     if _env_loaded:
         return
-    # 方法1: __file__からの相対パス
-    env_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), ".env")
-    load_dotenv(env_path, override=True)
-    # 方法2: まだ無ければ直接読み込み
+    # 方法1: Streamlit Cloud secrets
     if not os.environ.get("ANTHROPIC_API_KEY"):
         try:
-            with open(env_path, encoding="utf-8") as f:
-                for line in f:
-                    line = line.strip()
-                    if line.startswith("ANTHROPIC_API_KEY=") and not line.startswith("#"):
-                        key = line.split("=", 1)[1].strip()
-                        os.environ["ANTHROPIC_API_KEY"] = key
-                        break
+            import streamlit as st
+            if hasattr(st, "secrets") and "ANTHROPIC_API_KEY" in st.secrets:
+                os.environ["ANTHROPIC_API_KEY"] = st.secrets["ANTHROPIC_API_KEY"]
         except Exception:
             pass
+    # 方法2: .envファイル（ローカル用）
+    if not os.environ.get("ANTHROPIC_API_KEY"):
+        env_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), ".env")
+        load_dotenv(env_path, override=True)
+        if not os.environ.get("ANTHROPIC_API_KEY"):
+            try:
+                with open(env_path, encoding="utf-8") as f:
+                    for line in f:
+                        line = line.strip()
+                        if line.startswith("ANTHROPIC_API_KEY=") and not line.startswith("#"):
+                            key = line.split("=", 1)[1].strip()
+                            os.environ["ANTHROPIC_API_KEY"] = key
+                            break
+            except Exception:
+                pass
     _env_loaded = True
 
 
