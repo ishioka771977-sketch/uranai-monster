@@ -98,9 +98,10 @@ def _persist_people_db(db: dict):
         pass
 
 
-def _save_person(name, year, month, day, time_str="", place="", blood="不明"):
+def _save_person(name, year, month, day, time_str="", place="", blood="不明", gender="男性"):
     """鑑定した人のデータをsession_state + ファイルに記憶"""
     st.session_state._saved_name = name
+    st.session_state._saved_gender = gender
     st.session_state._saved_year = year
     st.session_state._saved_month = month
     st.session_state._saved_day = day
@@ -111,7 +112,7 @@ def _save_person(name, year, month, day, time_str="", place="", blood="不明"):
     db = _load_people_db()
     if name:
         db[name] = {
-            "name": name, "year": year, "month": month, "day": day,
+            "name": name, "gender": gender, "year": year, "month": month, "day": day,
             "time": time_str, "place": place, "blood": blood,
         }
         st.session_state._people_db = db
@@ -137,6 +138,7 @@ def _render_people_quick_select():
             label = f"👤 {name}\n{p.get('year','')}/{p.get('month','')}/{p.get('day','')}"
             if st.button(label, key=f"btn_quick_{idx}"):
                 st.session_state._saved_name = name
+                st.session_state._saved_gender = p.get("gender", "男性")
                 st.session_state._saved_year = int(p.get("year", 1990))
                 st.session_state._saved_month = int(p.get("month", 5))
                 st.session_state._saved_day = int(p.get("day", 15))
@@ -159,6 +161,7 @@ def render_input_page():
 
     # デフォルト値（復元済みなら復元値、なければ初期値）
     saved_name = st.session_state.get("_saved_name", "")
+    saved_gender = st.session_state.get("_saved_gender", "男性")
     saved_year = st.session_state.get("_saved_year", 1990)
     saved_month = st.session_state.get("_saved_month", 5)
     saved_day = st.session_state.get("_saved_day", 15)
@@ -188,6 +191,17 @@ def render_input_page():
         value=saved_name,
         placeholder="例: ゆうこ",
         key=f"input_name_{kv}"
+    )
+
+    # 性別
+    gender_options = ["男性", "女性", "その他"]
+    gender_idx = gender_options.index(saved_gender) if saved_gender in gender_options else 0
+    st.radio(
+        "性別",
+        options=gender_options,
+        index=gender_idx,
+        horizontal=True,
+        key=f"input_gender_{kv}"
     )
 
     year_idx = years.index(saved_year) if saved_year in years else years.index(1990)
@@ -237,6 +251,7 @@ def render_input_page():
 
             # session_stateから任意項目を取得（バージョン付きキー）
             input_name = st.session_state.get(f"input_name_{kv}", "").strip()
+            input_gender = st.session_state.get(f"input_gender_{kv}", "男性")
             input_time = st.session_state.get(f"input_time_{kv}", "").strip()
             input_place = st.session_state.get(f"input_place_{kv}", "").strip()
             input_blood = st.session_state.get(f"input_blood_{kv}", "不明")
@@ -245,6 +260,7 @@ def render_input_page():
             st.session_state.person = PersonInput(
                 birth_date=birth_date,
                 name=input_name if input_name else None,
+                gender=input_gender,
                 birth_time=input_time if input_time else None,
                 birth_place=input_place if input_place else None,
                 blood_type=input_blood if input_blood != "不明" else None,
@@ -252,7 +268,7 @@ def render_input_page():
 
             # 名前をキーにデータを記憶
             _save_person(
-                input_name, year, month, day, input_time, input_place, input_blood
+                input_name, year, month, day, input_time, input_place, input_blood, input_gender
             )
 
             st.session_state.page = "loading"
@@ -775,6 +791,7 @@ def render_aisho_input_page():
     # --- 1人目 ---
     st.markdown('<div style="color:#C9A84C; font-size:1.1em; font-weight:bold; margin:10px 0 5px;">✦ 1人目</div>', unsafe_allow_html=True)
     name1 = st.text_input("お名前", value="", placeholder="例: ひでさん", key="aisho_name1")
+    gender1 = st.radio("性別", options=["男性", "女性", "その他"], index=0, horizontal=True, key="aisho_gender1")
 
     c1a, c1b, c1c = st.columns(3)
     with c1a:
@@ -794,6 +811,7 @@ def render_aisho_input_page():
     # --- 2人目 ---
     st.markdown('<div style="color:#FF6B9D; font-size:1.1em; font-weight:bold; margin:10px 0 5px;">✦ 2人目</div>', unsafe_allow_html=True)
     name2 = st.text_input("お名前", value="", placeholder="例: ゆうこ", key="aisho_name2")
+    gender2 = st.radio("性別", options=["男性", "女性", "その他"], index=1, horizontal=True, key="aisho_gender2")
 
     c2a, c2b, c2c = st.columns(3)
     with c2a:
@@ -827,8 +845,12 @@ def render_aisho_input_page():
             place2 = st.session_state.get("aisho_p2", "").strip()
             blood2 = st.session_state.get("aisho_b2", "不明")
 
+            g1 = st.session_state.get("aisho_gender1", "男性")
+            g2 = st.session_state.get("aisho_gender2", "女性")
+
             st.session_state.aisho_person1 = PersonInput(
                 name=name1.strip() if name1.strip() else "1人目",
+                gender=g1,
                 birth_date=bd1,
                 birth_time=time1 if time1 else None,
                 birth_place=place1 if place1 else None,
@@ -836,6 +858,7 @@ def render_aisho_input_page():
             )
             st.session_state.aisho_person2 = PersonInput(
                 name=name2.strip() if name2.strip() else "2人目",
+                gender=g2,
                 birth_date=bd2,
                 birth_time=time2 if time2 else None,
                 birth_place=place2 if place2 else None,
@@ -1004,6 +1027,10 @@ def render_tarot_input_page():
         _render_people_quick_select()
         # 生年月日入力
         st.text_input("お名前", value=saved_name, placeholder="例: ひでさん", key="tarot_name")
+        saved_gender = st.session_state.get("_saved_gender", "男性")
+        gender_options = ["男性", "女性", "その他"]
+        gender_idx = gender_options.index(saved_gender) if saved_gender in gender_options else 0
+        st.radio("性別", options=gender_options, index=gender_idx, horizontal=True, key="tarot_gender")
         years = list(range(1930, date.today().year))
         tc1, tc2, tc3 = st.columns(3)
         year_idx = years.index(saved_year) if saved_year in years else years.index(1990)
@@ -1053,12 +1080,14 @@ def render_tarot_input_page():
                 return
 
             t_name = st.session_state.get("tarot_name", saved_name).strip() if not has_person else saved_name
+            t_gender = st.session_state.get("tarot_gender", st.session_state.get("_saved_gender", "男性"))
             st.session_state.tarot_person = PersonInput(
                 birth_date=birth_date,
                 name=t_name if t_name else None,
+                gender=t_gender,
             )
             # 名前をキーにデータを記憶
-            _save_person(t_name, saved_year, saved_month, saved_day)
+            _save_person(t_name, saved_year, saved_month, saved_day, gender=t_gender)
 
             st.session_state.tarot_question = q
             st.session_state.tarot_deepen_history = []

@@ -15,6 +15,7 @@ class PersonInput:
     birth_place: Optional[str] = None       # 都市名、任意
     blood_type: Optional[str] = None        # "A" / "B" / "O" / "AB"、任意
     name: Optional[str] = None              # 表示用、任意
+    gender: Optional[str] = None            # "男性" / "女性" / "その他"、任意
 
 
 @dataclass

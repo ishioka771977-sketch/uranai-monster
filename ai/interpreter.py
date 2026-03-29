@@ -1054,6 +1054,17 @@ def _format_all_data_summary(bundle: DivinationBundle) -> str:
     n = bundle.numerology
 
     lines = []
+    # 基本情報
+    person = bundle.person
+    if person.name or person.gender:
+        info_parts = []
+        if person.name:
+            info_parts.append(f"名前: {person.name}")
+        if person.gender:
+            info_parts.append(f"性別: {person.gender}")
+        lines.append("## 基本情報")
+        lines.append("- " + " / ".join(info_parts))
+        lines.append("")
     lines.append("## 算命学")
     lines.append(f"- 日干: {s.nichikan}（{s.nichikan_gogyo}性・{s.nichikan_inyo}）")
     lines.append(f"- 年柱: {s.nen_kanshi} / 月柱: {s.tsuki_kanshi} / 日柱: {s.hi_kanshi}")
