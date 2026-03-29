@@ -5,7 +5,16 @@
 画面フロー: TOP → 入力 → ローディング → 裏メニュー → 鑑定生成 → 結果
 起動: streamlit run main.py
 """
+import os
 import streamlit as st
+
+# Streamlit Cloud: secretsからAPIキーを環境変数に設定
+if not os.environ.get("ANTHROPIC_API_KEY"):
+    try:
+        if "ANTHROPIC_API_KEY" in st.secrets:
+            os.environ["ANTHROPIC_API_KEY"] = st.secrets["ANTHROPIC_API_KEY"]
+    except Exception:
+        pass
 
 # ページ設定（最初に呼ぶ）
 st.set_page_config(
