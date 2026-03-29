@@ -574,13 +574,13 @@ def _call_api(prompt: str, max_tokens: int = 2500) -> dict:
     """Gemini API 呼び出し共通処理"""
     client = _get_client()
     response = client.models.generate_content(
-        model="gemini-2.5-flash",
+        model="gemini-2.5-pro",
         contents=prompt,
         config=types.GenerateContentConfig(
             system_instruction=SYSTEM_PROMPT_BASE,
-            max_output_tokens=max_tokens,
+            max_output_tokens=max_tokens + 4096,
             temperature=0.9,
-            thinking_config=types.ThinkingConfig(thinking_budget=0),
+            thinking_config=types.ThinkingConfig(thinking_budget=4096),
         ),
     )
     text = response.text or ""
@@ -591,13 +591,13 @@ def _call_api_text(system: str, prompt: str, max_tokens: int = 1000) -> str:
     """Gemini API テキスト応答用（チャット向け）"""
     client = _get_client()
     response = client.models.generate_content(
-        model="gemini-2.5-flash",
+        model="gemini-2.5-pro",
         contents=prompt,
         config=types.GenerateContentConfig(
             system_instruction=system,
-            max_output_tokens=max_tokens,
+            max_output_tokens=max_tokens + 4096,
             temperature=0.9,
-            thinking_config=types.ThinkingConfig(thinking_budget=0),
+            thinking_config=types.ThinkingConfig(thinking_budget=4096),
         ),
     )
     return response.text or ""
