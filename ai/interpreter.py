@@ -12,14 +12,15 @@ import re
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import date
 
-import anthropic
+from google import genai
+from google.genai import types
 from dotenv import load_dotenv
 
 from core.models import DivinationBundle
 
 # .env ファイルを確実に読み込む（日本語パス対策: 複数方法を試行）
 _env_loaded = False
-_client = None
+_model = None
 
 
 def _ensure_env():
@@ -28,25 +29,25 @@ def _ensure_env():
     if _env_loaded:
         return
     # 方法1: Streamlit Cloud secrets
-    if not os.environ.get("ANTHROPIC_API_KEY"):
+    if not os.environ.get("GEMINI_API_KEY"):
         try:
             import streamlit as st
-            if hasattr(st, "secrets") and "ANTHROPIC_API_KEY" in st.secrets:
-                os.environ["ANTHROPIC_API_KEY"] = st.secrets["ANTHROPIC_API_KEY"]
+            if hasattr(st, "secrets") and "GEMINI_API_KEY" in st.secrets:
+                os.environ["GEMINI_API_KEY"] = st.secrets["GEMINI_API_KEY"]
         except Exception:
             pass
     # 方法2: .envファイル（ローカル用）
-    if not os.environ.get("ANTHROPIC_API_KEY"):
+    if not os.environ.get("GEMINI_API_KEY"):
         env_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), ".env")
         load_dotenv(env_path, override=True)
-        if not os.environ.get("ANTHROPIC_API_KEY"):
+        if not os.environ.get("GEMINI_API_KEY"):
             try:
                 with open(env_path, encoding="utf-8") as f:
                     for line in f:
                         line = line.strip()
-                        if line.startswith("ANTHROPIC_API_KEY=") and not line.startswith("#"):
+                        if line.startswith("GEMINI_API_KEY=") and not line.startswith("#"):
                             key = line.split("=", 1)[1].strip()
-                            os.environ["ANTHROPIC_API_KEY"] = key
+                            os.environ["GEMINI_API_KEY"] = key
                             break
             except Exception:
                 pass
@@ -54,12 +55,12 @@ def _ensure_env():
 
 
 def _get_client():
-    """Anthropicクライアントを遅延初期化で取得"""
-    global _client
-    if _client is None:
+    """Geminiクライアントを遅延初期化で取得"""
+    global _model
+    if _model is None:
         _ensure_env()
-        _client = anthropic.Anthropic()
-    return _client
+        _model = genai.Client(api_key=os.environ.get("GEMINI_API_KEY", ""))
+    return _model
 
 # ============================================================
 # 全占術共通 システムプロンプト（くろたん完全改良版）
@@ -532,6 +533,8 @@ RECOMMENDATION_PROMPT = """あなたはひでさん（占いモンスターマ�
 # ============================================================
 def _parse_json_response(text: str) -> dict:
     """APIレスポンスからJSONを抽出してパースする"""
+    if not text:
+        raise ValueError("Empty API response")
     text = text.strip()
 
     # ```json ... ``` ブロックの除去
@@ -544,20 +547,60 @@ def _parse_json_response(text: str) -> dict:
     if json_match:
         text = json_match.group(0)
 
-    return json.loads(text)
+    try:
+        return json.loads(text)
+    except json.JSONDecodeError:
+        # Geminiが不正なJSON（改行やエスケープ漏れ）を返す場合の修復
+        # 制御文字を除去して再試行
+        cleaned = text.replace('\n', '\\n').replace('\r', '\\r').replace('\t', '\\t')
+        try:
+            return json.loads(cleaned)
+        except json.JSONDecodeError:
+            pass
+        # 最終手段: readingフィールドだけでも抽出
+        reading_match = re.search(r'"reading"\s*:\s*"(.*?)"(?:\s*[,}])', text, re.DOTALL)
+        headline_match = re.search(r'"headline"\s*:\s*"(.*?)"', text, re.DOTALL)
+        closing_match = re.search(r'"closing"\s*:\s*"(.*?)"', text, re.DOTALL)
+        if reading_match:
+            return {
+                "headline": headline_match.group(1) if headline_match else "鑑定結果",
+                "reading": reading_match.group(1).replace('\\n', '\n'),
+                "closing": closing_match.group(1) if closing_match else "",
+            }
+        raise
 
 
 def _call_api(prompt: str, max_tokens: int = 2500) -> dict:
-    """Claude API 呼び出し共通処理"""
+    """Gemini API 呼び出し共通処理"""
     client = _get_client()
-    response = client.messages.create(
-        model="claude-sonnet-4-6",
-        max_tokens=max_tokens,
-        system=SYSTEM_PROMPT_BASE,
-        messages=[{"role": "user", "content": prompt}]
+    response = client.models.generate_content(
+        model="gemini-2.5-flash",
+        contents=prompt,
+        config=types.GenerateContentConfig(
+            system_instruction=SYSTEM_PROMPT_BASE,
+            max_output_tokens=max_tokens,
+            temperature=0.9,
+            thinking_config=types.ThinkingConfig(thinking_budget=0),
+        ),
     )
-    text = response.content[0].text
+    text = response.text or ""
     return _parse_json_response(text)
+
+
+def _call_api_text(system: str, prompt: str, max_tokens: int = 1000) -> str:
+    """Gemini API テキスト応答用（チャット向け）"""
+    client = _get_client()
+    response = client.models.generate_content(
+        model="gemini-2.5-flash",
+        contents=prompt,
+        config=types.GenerateContentConfig(
+            system_instruction=system,
+            max_output_tokens=max_tokens,
+            temperature=0.9,
+            thinking_config=types.ThinkingConfig(thinking_budget=0),
+        ),
+    )
+    return response.text or ""
 
 
 # ============================================================

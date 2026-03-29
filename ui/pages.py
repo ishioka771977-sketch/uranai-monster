@@ -1686,12 +1686,8 @@ def render_tarot_result_page():
 
 def _render_tarot_chat(bundle, question, spread_info, cards, initial_result):
     """くろちゃんへの追加質問チャット — 毎回1枚カードを引いて回答"""
-    from ai.interpreter import _format_all_data_summary, SYSTEM_PROMPT_BASE
+    from ai.interpreter import _format_all_data_summary, SYSTEM_PROMPT_BASE, _call_api_text
     from core.tarot import draw_tarot
-    import anthropic
-    from dotenv import load_dotenv
-    import os
-    load_dotenv(os.path.join(os.path.dirname(os.path.dirname(__file__)), ".env"))
 
     st.markdown("""
 <div style="text-align:center; margin:15px 0 8px;">
@@ -1791,14 +1787,7 @@ def _render_tarot_chat(bundle, question, spread_info, cards, initial_result):
         with st.chat_message("assistant", avatar="🔮"):
             with st.spinner("🃏 カードを1枚引いています…"):
                 try:
-                    client = anthropic.Anthropic()
-                    response = client.messages.create(
-                        model="claude-sonnet-4-6",
-                        max_tokens=1000,
-                        system=SYSTEM_PROMPT_BASE,
-                        messages=[{"role": "user", "content": prompt}]
-                    )
-                    answer = response.content[0].text
+                    answer = _call_api_text(SYSTEM_PROMPT_BASE, prompt, max_tokens=1000)
                 except Exception:
                     answer = f"カードを引いたら「{extra_card.card_name}（{extra_pos}）」が出ました。{extra_card.message}"
 
@@ -1822,11 +1811,7 @@ def _render_tarot_chat(bundle, question, spread_info, cards, initial_result):
 # ============================================================
 def _render_general_chat(bundle, course, results):
     """通常鑑定結果の下に追加質問チャット"""
-    from ai.interpreter import _format_all_data_summary, SYSTEM_PROMPT_BASE
-    import anthropic
-    from dotenv import load_dotenv
-    import os
-    load_dotenv(os.path.join(os.path.dirname(os.path.dirname(__file__)), ".env"))
+    from ai.interpreter import _format_all_data_summary, SYSTEM_PROMPT_BASE, _call_api_text
 
     name = bundle.person.name or "あなた"
 
@@ -1895,14 +1880,7 @@ def _render_general_chat(bundle, course, results):
         with st.chat_message("assistant", avatar="🔮"):
             with st.spinner("くろちゃんが考え中…"):
                 try:
-                    client = anthropic.Anthropic()
-                    response = client.messages.create(
-                        model="claude-sonnet-4-6",
-                        max_tokens=1000,
-                        system=SYSTEM_PROMPT_BASE,
-                        messages=[{"role": "user", "content": prompt}]
-                    )
-                    answer = response.content[0].text
+                    answer = _call_api_text(SYSTEM_PROMPT_BASE, prompt, max_tokens=1000)
                 except Exception:
                     answer = "ごめんね、今ちょっと集中できなくて…もう一度聞いてもらえる？"
             st.write(answer)
@@ -1918,11 +1896,7 @@ def _render_general_chat(bundle, course, results):
 # ============================================================
 def _render_aisho_chat(bundle1, bundle2, result):
     """相性占い結果の下に追加質問チャット"""
-    from ai.interpreter import _format_all_data_summary, SYSTEM_PROMPT_BASE
-    import anthropic
-    from dotenv import load_dotenv
-    import os
-    load_dotenv(os.path.join(os.path.dirname(os.path.dirname(__file__)), ".env"))
+    from ai.interpreter import _format_all_data_summary, SYSTEM_PROMPT_BASE, _call_api_text
 
     n1 = bundle1.person.name or "1人目"
     n2 = bundle2.person.name or "2人目"
@@ -1991,14 +1965,7 @@ def _render_aisho_chat(bundle1, bundle2, result):
         with st.chat_message("assistant", avatar="💕"):
             with st.spinner("くろちゃんが考え中…"):
                 try:
-                    client = anthropic.Anthropic()
-                    response = client.messages.create(
-                        model="claude-sonnet-4-6",
-                        max_tokens=1000,
-                        system=SYSTEM_PROMPT_BASE,
-                        messages=[{"role": "user", "content": prompt}]
-                    )
-                    answer = response.content[0].text
+                    answer = _call_api_text(SYSTEM_PROMPT_BASE, prompt, max_tokens=1000)
                 except Exception:
                     answer = "ごめんね、今ちょっと集中できなくて…もう一度聞いてもらえる？"
             st.write(answer)
@@ -2014,11 +1981,7 @@ def _render_aisho_chat(bundle1, bundle2, result):
 # ============================================================
 def _render_ura_chat(bundle):
     """裏メニューでの自由質問チャット"""
-    from ai.interpreter import _format_all_data_summary, SYSTEM_PROMPT_BASE
-    import anthropic
-    from dotenv import load_dotenv
-    import os
-    load_dotenv(os.path.join(os.path.dirname(os.path.dirname(__file__)), ".env"))
+    from ai.interpreter import _format_all_data_summary, SYSTEM_PROMPT_BASE, _call_api_text
 
     name = bundle.person.name or "この人"
 
@@ -2076,14 +2039,7 @@ def _render_ura_chat(bundle):
         with st.chat_message("assistant", avatar="🔮"):
             with st.spinner("くろちゃんが考え中…"):
                 try:
-                    client = anthropic.Anthropic()
-                    response = client.messages.create(
-                        model="claude-sonnet-4-6",
-                        max_tokens=800,
-                        system=SYSTEM_PROMPT_BASE,
-                        messages=[{"role": "user", "content": prompt}]
-                    )
-                    answer = response.content[0].text
+                    answer = _call_api_text(SYSTEM_PROMPT_BASE, prompt, max_tokens=800)
                 except Exception:
                     answer = "ごめんね、今ちょっと集中できなくて…もう一度聞いてもらえる？"
             st.write(answer)
@@ -2104,11 +2060,7 @@ THEME_CHAT_LABELS = {
 
 def _render_theme_chat(bundle, theme_key, theme_data):
     """テーマ別鑑定結果の下に追加質問チャット"""
-    from ai.interpreter import _format_all_data_summary, SYSTEM_PROMPT_BASE
-    import anthropic
-    from dotenv import load_dotenv
-    import os
-    load_dotenv(os.path.join(os.path.dirname(os.path.dirname(__file__)), ".env"))
+    from ai.interpreter import _format_all_data_summary, SYSTEM_PROMPT_BASE, _call_api_text
 
     name = bundle.person.name or "あなた"
     theme_label = THEME_CHAT_LABELS.get(theme_key, theme_key)
@@ -2171,14 +2123,7 @@ def _render_theme_chat(bundle, theme_key, theme_data):
         with st.chat_message("assistant", avatar="🔮"):
             with st.spinner("くろちゃんが考え中…"):
                 try:
-                    client = anthropic.Anthropic()
-                    response = client.messages.create(
-                        model="claude-sonnet-4-6",
-                        max_tokens=1000,
-                        system=SYSTEM_PROMPT_BASE,
-                        messages=[{"role": "user", "content": prompt}]
-                    )
-                    answer = response.content[0].text
+                    answer = _call_api_text(SYSTEM_PROMPT_BASE, prompt, max_tokens=1000)
                 except Exception:
                     answer = "ごめんね、今ちょっと集中できなくて…もう一度聞いてもらえる？"
             st.write(answer)
