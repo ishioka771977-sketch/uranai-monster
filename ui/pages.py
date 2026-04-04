@@ -121,34 +121,48 @@ def _save_person(name, year, month, day, time_str="", place="", blood="不明", 
 
 
 def _render_people_quick_select():
-    """登録済みの人をクイック選択するボタンを表示"""
+    """登録済みの人を「顧客リスト」ボタン経由で選択（普段は非表示）"""
     people_db = _load_people_db()
     if not people_db:
         return
 
     names = list(people_db.keys())
-    st.markdown("""
-<div style="color:#8A8478; font-size:0.85em; text-align:center; margin-bottom:5px;">
-前回の人をタップで選択
-</div>
-""", unsafe_allow_html=True)
-    cols = st.columns(min(len(names), 4))
-    for idx, name in enumerate(names[:4]):
-        p = people_db[name]
-        with cols[idx]:
-            label = f"👤 {name}\n{p.get('year','')}/{p.get('month','')}/{p.get('day','')}"
-            if st.button(label, key=f"btn_quick_{idx}"):
-                st.session_state._saved_name = name
-                st.session_state._saved_gender = p.get("gender", "男性")
-                st.session_state._saved_year = int(p.get("year", 1990))
-                st.session_state._saved_month = int(p.get("month", 5))
-                st.session_state._saved_day = int(p.get("day", 15))
-                st.session_state._saved_time = p.get("time", "")
-                st.session_state._saved_place = p.get("place", "")
-                st.session_state._saved_blood = p.get("blood", "不明")
-                st.session_state._input_key_ver = st.session_state.get("_input_key_ver", 0) + 1
-                st.rerun()
-    render_gold_divider()
+
+    # 「📋 顧客リスト」ボタン — 押すとリストが展開
+    with st.expander("顧客リスト", expanded=False, icon="📋"):
+        for idx, name in enumerate(names):
+            p = people_db[name]
+            year = p.get('year', '')
+            month = p.get('month', '')
+            day = p.get('day', '')
+            gender = p.get('gender', '')
+            blood = p.get('blood', '')
+            blood_str = f" {blood}型" if blood and blood != "不明" else ""
+            time_str = p.get('time', '')
+            time_disp = f" {time_str}生" if time_str else ""
+
+            col1, col2 = st.columns([4, 1])
+            with col1:
+                label = f"👤 {name}　{year}/{month}/{day}{time_disp}　{gender}{blood_str}"
+                if st.button(label, key=f"btn_quick_{idx}", use_container_width=True):
+                    st.session_state._saved_name = name
+                    st.session_state._saved_gender = p.get("gender", "男性")
+                    st.session_state._saved_year = int(p.get("year", 1990))
+                    st.session_state._saved_month = int(p.get("month", 5))
+                    st.session_state._saved_day = int(p.get("day", 15))
+                    st.session_state._saved_time = p.get("time", "")
+                    st.session_state._saved_place = p.get("place", "")
+                    st.session_state._saved_blood = p.get("blood", "不明")
+                    st.session_state._input_key_ver = st.session_state.get("_input_key_ver", 0) + 1
+                    st.rerun()
+            with col2:
+                if st.button("🗑", key=f"btn_del_{idx}", help=f"{name}を削除"):
+                    del people_db[name]
+                    st.session_state._people_db = people_db
+                    _persist_people_db(people_db)
+                    st.rerun()
+
+        st.markdown(f'<div style="color:#5A5A5A;font-size:0.72em;text-align:right;">{len(names)}件</div>', unsafe_allow_html=True)
 
 
 # ============================================================
