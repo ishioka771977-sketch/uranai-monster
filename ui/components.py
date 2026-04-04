@@ -40,8 +40,8 @@ def render_ura_menu(bundle: DivinationBundle, recommendation: dict):
     render_star_deco("✦")
     st.markdown("""
 <div style="text-align:center; margin-bottom:5px;">
-  <span style="color:#C9A84C; font-size:1.3em; font-weight:bold;">✦ 鑑定準備完了 ✦</span><br>
-  <span style="color:#9B8FC4; font-size:0.85em;">（この画面はあなただけに見えています）</span>
+  <span style="color:#BFA350; font-size:1.3em; font-weight:bold;">✦ 鑑定準備完了 ✦</span><br>
+  <span style="color:#8A8478; font-size:0.85em;">（この画面はあなただけに見えています）</span>
 </div>
 """, unsafe_allow_html=True)
 
@@ -49,17 +49,17 @@ def render_ura_menu(bundle: DivinationBundle, recommendation: dict):
     # ASC/MC表示（出生時刻ありの場合）
     asc_mc_row = ""
     if w.asc_sign:
-        asc_mc_row = f'<div>♈ ASC: <span style="color:#F5D78E">{w.asc_sign}</span></div><div>♑ MC: <span style="color:#F5D78E">{w.mc_sign or "不明"}</span></div>'
+        asc_mc_row = f'<div>♈ ASC: <span style="color:#D4B96A">{w.asc_sign}</span></div><div>♑ MC: <span style="color:#D4B96A">{w.mc_sign or "不明"}</span></div>'
 
     st.markdown(f"""<div class="divination-card">
 <div class="card-header">── 命式ハイライト ──</div>
 <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px; font-size:0.92em;">
-<div>🔥 日干: <span style="color:#F5D78E">{s.nichikan}（{s.nichikan_gogyo}性）</span></div>
-<div>⭐ 中央星: <span style="color:#F5D78E">{s.chuo_sei}</span></div>
-<div>{w.sun_sign_symbol} 太陽星座: <span style="color:#F5D78E">{w.sun_sign}</span></div>
-<div>★ 本命星: <span style="color:#F5D78E">{k.honmei_sei}</span></div>
-<div>🔢 LP: <span style="color:#F5D78E">{n.life_path}（{n.life_path_title}）</span></div>
-<div>🌀 天中殺: <span style="color:#F5D78E">{s.tenchusatsu} {tenchusatsu_status}</span></div>
+<div>🔥 日干: <span style="color:#D4B96A">{s.nichikan}（{s.nichikan_gogyo}性）</span></div>
+<div>⭐ 中央星: <span style="color:#D4B96A">{s.chuo_sei}</span></div>
+<div>{w.sun_sign_symbol} 太陽星座: <span style="color:#D4B96A">{w.sun_sign}</span></div>
+<div>★ 本命星: <span style="color:#D4B96A">{k.honmei_sei}</span></div>
+<div>🔢 LP: <span style="color:#D4B96A">{n.life_path}（{n.life_path_title}）</span></div>
+<div>🌀 天中殺: <span style="color:#D4B96A">{s.tenchusatsu} {tenchusatsu_status}</span></div>
 {asc_mc_row}
 </div>
 </div>""", unsafe_allow_html=True)
@@ -67,13 +67,13 @@ def render_ura_menu(bundle: DivinationBundle, recommendation: dict):
     # 人体図表示（算命学拡張）— 別のmarkdownブロックで表示
     if s.kita_sei:
         st.markdown(f"""<div class="divination-card" style="margin-top:8px;">
-<div style="color:#9B8FC4; font-size:0.8em; margin-bottom:4px; text-align:center;">── 人体図 ──</div>
+<div style="color:#8A8478; font-size:0.8em; margin-bottom:4px; text-align:center;">── 人体図 ──</div>
 <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:2px; text-align:center; font-size:0.9em; max-width:280px; margin:0 auto;">
-<div></div><div style="color:#F5D78E;">{s.kita_sei}<br><span style="color:#9B8FC4;font-size:0.8em">北</span></div><div></div>
-<div style="color:#F5D78E;">{s.nishi_sei}<br><span style="color:#9B8FC4;font-size:0.8em">西</span></div>
-<div style="color:#C9A84C; font-weight:bold;">{s.chuo_sei}<br><span style="color:#9B8FC4;font-size:0.8em">中央</span></div>
-<div style="color:#F5D78E;">{s.higashi_sei}<br><span style="color:#9B8FC4;font-size:0.8em">東</span></div>
-<div></div><div style="color:#F5D78E;">{s.minami_sei}<br><span style="color:#9B8FC4;font-size:0.8em">南</span></div><div></div>
+<div></div><div style="color:#D4B96A;">{s.kita_sei}<br><span style="color:#8A8478;font-size:0.8em">北</span></div><div></div>
+<div style="color:#D4B96A;">{s.nishi_sei}<br><span style="color:#8A8478;font-size:0.8em">西</span></div>
+<div style="color:#BFA350; font-weight:bold;">{s.chuo_sei}<br><span style="color:#8A8478;font-size:0.8em">中央</span></div>
+<div style="color:#D4B96A;">{s.higashi_sei}<br><span style="color:#8A8478;font-size:0.8em">東</span></div>
+<div></div><div style="color:#D4B96A;">{s.minami_sei}<br><span style="color:#8A8478;font-size:0.8em">南</span></div><div></div>
 </div>
 </div>""", unsafe_allow_html=True)
 
@@ -91,10 +91,10 @@ def render_ura_menu(bundle: DivinationBundle, recommendation: dict):
         opening = rec.get("opening_line", "")
 
         st.markdown(f"""
-<div style="margin-bottom:12px; padding:8px; border-left:3px solid #C9A84C;">
-  <div style="font-size:1.05em; color:#F5D78E; font-weight:bold;">{medal} {course}コース</div>
-  <div style="font-size:0.88em; color:#d4d0e0; margin:4px 0;">→ {reason}</div>
-  <div style="font-size:0.85em; color:#9B8FC4; font-style:italic;">💬「{opening}」</div>
+<div style="margin-bottom:12px; padding:8px; border-left:3px solid #BFA350;">
+  <div style="font-size:1.05em; color:#D4B96A; font-weight:bold;">{medal} {course}コース</div>
+  <div style="font-size:0.88em; color:#A39E93; margin:4px 0;">→ {reason}</div>
+  <div style="font-size:0.85em; color:#8A8478; font-style:italic;">💬「{opening}」</div>
 </div>
 """, unsafe_allow_html=True)
 
@@ -102,8 +102,8 @@ def render_ura_menu(bundle: DivinationBundle, recommendation: dict):
     full_note = recommendation.get("full_course_note", "")
     if full_note:
         st.markdown(f"""
-<div style="margin-top:8px; padding:6px; border:1px dashed #C9A84C; border-radius:6px; text-align:center;">
-  <span style="color:#C9A84C; font-size:0.85em;">✧ フルコース: {full_note}</span>
+<div style="margin-top:8px; padding:6px; border:1px dashed #BFA350; border-radius:6px; text-align:center;">
+  <span style="color:#BFA350; font-size:0.85em;">✧ フルコース: {full_note}</span>
 </div>
 """, unsafe_allow_html=True)
 
@@ -121,7 +121,7 @@ def _render_course_card(title: str, headline: str, reading: str, closing: str,
   <div class="card-header">✦ {title} ✦</div>
 
   <div style="text-align:center; margin:12px 0;">
-    <span style="font-size:1.2em; color:#C9A84C; font-weight:bold;">「{headline}」</span>
+    <span style="font-size:1.2em; color:#BFA350; font-weight:bold;">「{headline}」</span>
   </div>
 
   {data_tags}
@@ -132,7 +132,7 @@ def _render_course_card(title: str, headline: str, reading: str, closing: str,
 
   <div class="gold-divider"></div>
 
-  <div style="text-align:center; margin-top:14px; font-size:1.05em; color:#F5D78E; font-style:italic; line-height:1.8;">
+  <div style="text-align:center; margin-top:14px; font-size:1.05em; color:#D4B96A; font-style:italic; line-height:1.8;">
     ✦ {closing} ✦
   </div>
 </div>
@@ -158,14 +158,14 @@ def render_sanmei_course(bundle: DivinationBundle, data: dict):
     jintaizu = ""
     if s.kita_sei:
         jintaizu = f"""
-  <div style="margin:10px auto; max-width:280px; padding:8px; border:1px solid #3a3652; border-radius:6px;">
-    <div style="text-align:center; color:#9B8FC4; font-size:0.8em; margin-bottom:6px;">── 人体図 ──</div>
+  <div style="margin:10px auto; max-width:280px; padding:8px; border:1px solid #2A2A2A; border-radius:6px;">
+    <div style="text-align:center; color:#8A8478; font-size:0.8em; margin-bottom:6px;">── 人体図 ──</div>
     <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:4px; text-align:center; font-size:0.9em;">
-      <div></div><div style="color:#F5D78E;">{s.kita_sei}<br><span style="color:#666;font-size:0.75em">北（頭）</span></div><div></div>
-      <div style="color:#F5D78E;">{s.nishi_sei}<br><span style="color:#666;font-size:0.75em">西（左手）</span></div>
-      <div style="color:#C9A84C; font-weight:bold;">{s.chuo_sei}<br><span style="color:#666;font-size:0.75em">中央（胸）</span></div>
-      <div style="color:#F5D78E;">{s.higashi_sei}<br><span style="color:#666;font-size:0.75em">東（右手）</span></div>
-      <div></div><div style="color:#F5D78E;">{s.minami_sei}<br><span style="color:#666;font-size:0.75em">南（腹）</span></div><div></div>
+      <div></div><div style="color:#D4B96A;">{s.kita_sei}<br><span style="color:#5A5A5A;font-size:0.75em">北（頭）</span></div><div></div>
+      <div style="color:#D4B96A;">{s.nishi_sei}<br><span style="color:#5A5A5A;font-size:0.75em">西（左手）</span></div>
+      <div style="color:#BFA350; font-weight:bold;">{s.chuo_sei}<br><span style="color:#5A5A5A;font-size:0.75em">中央（胸）</span></div>
+      <div style="color:#D4B96A;">{s.higashi_sei}<br><span style="color:#5A5A5A;font-size:0.75em">東（右手）</span></div>
+      <div></div><div style="color:#D4B96A;">{s.minami_sei}<br><span style="color:#5A5A5A;font-size:0.75em">南（腹）</span></div><div></div>
     </div>
   </div>
   <div class="gold-divider"></div>"""
@@ -177,15 +177,15 @@ def render_sanmei_course(bundle: DivinationBundle, data: dict):
         bars = []
         max_val = max(gogyo.values()) or 1
         for element, count in gogyo.items():
-            colors = {"木": "#4CAF50", "火": "#FF5722", "土": "#FF9800", "金": "#FFD700", "水": "#2196F3"}
+            colors = {"木": "#7CB87C", "火": "#C47A6A", "土": "#C49860", "金": "#D4B96A", "水": "#7CA3B8"}
             width = int(count / max_val * 100) if max_val > 0 else 0
             bars.append(f'<div style="display:flex;align-items:center;gap:4px;margin:2px 0;">'
                        f'<span style="width:20px;color:{colors.get(element, "#aaa")}">{element}</span>'
                        f'<div style="background:{colors.get(element, "#555")};height:12px;width:{width}%;border-radius:3px;min-width:4px;"></div>'
-                       f'<span style="color:#9B8FC4;font-size:0.8em;">{count}</span></div>')
+                       f'<span style="color:#8A8478;font-size:0.8em;">{count}</span></div>')
         gogyo_html = f"""
-  <div style="margin:8px 0; padding:6px; border:1px solid #3a3652; border-radius:4px;">
-    <div style="color:#9B8FC4; font-size:0.8em; margin-bottom:4px;">五行バランス:</div>
+  <div style="margin:8px 0; padding:6px; border:1px solid #2A2A2A; border-radius:4px;">
+    <div style="color:#8A8478; font-size:0.8em; margin-bottom:4px;">五行バランス:</div>
     {"".join(bars)}
   </div>"""
 
@@ -218,14 +218,14 @@ def render_western_course(bundle: DivinationBundle, data: dict):
         for p in w.planets:
             deg_in_sign = p.degree % 30
             deg_str = f"{int(deg_in_sign)}°{int((deg_in_sign % 1) * 60):02d}'"
-            retro = " <span style='color:#FF6B6B;'>R</span>" if p.is_retrograde else ""
+            retro = " <span style='color:#C47A6A;'>R</span>" if p.is_retrograde else ""
             house = f"{p.house}H" if p.house else "-"
             rows.append(f"<tr><td>{p.name}</td><td>{p.sign}{retro}</td><td>{deg_str}</td><td>{house}</td></tr>")
         planet_html = f"""
   <details style="margin:8px 0;">
-    <summary style="color:#9B8FC4; cursor:pointer; font-size:0.85em;">📋 天体データ一覧</summary>
+    <summary style="color:#8A8478; cursor:pointer; font-size:0.85em;">📋 天体データ一覧</summary>
     <table style="width:100%; font-size:0.82em; margin-top:4px; border-collapse:collapse;">
-      <tr style="color:#C9A84C; border-bottom:1px solid #3a3652;">
+      <tr style="color:#BFA350; border-bottom:1px solid #2A2A2A;">
         <th style="text-align:left;padding:2px 4px;">天体</th><th>星座</th><th>度数</th><th>ハウス</th>
       </tr>
       {"".join(rows)}
@@ -254,11 +254,11 @@ def render_western_course(bundle: DivinationBundle, data: dict):
         aspect_items = []
         for a in w.aspects:
             if a.orb <= 5.0:
-                aspect_items.append(f"<span style='color:#d4d0e0;font-size:0.82em;'>{a.planet1}{a.aspect_type}{a.planet2}({a.orb}°)</span>")
+                aspect_items.append(f"<span style='color:#A39E93;font-size:0.82em;'>{a.planet1}{a.aspect_type}{a.planet2}({a.orb}°)</span>")
         if aspect_items:
             aspect_html = f"""
-  <div style="margin:6px 0; padding:4px; border:1px solid #3a3652; border-radius:4px;">
-    <div style="color:#9B8FC4; font-size:0.78em;">主要アスペクト: {" / ".join(aspect_items)}</div>
+  <div style="margin:6px 0; padding:4px; border:1px solid #2A2A2A; border-radius:4px;">
+    <div style="color:#8A8478; font-size:0.78em;">主要アスペクト: {" / ".join(aspect_items)}</div>
   </div>"""
 
     _render_course_card(
@@ -338,13 +338,13 @@ def render_tarot_course(bundle: DivinationBundle, data: dict):
   <div class="card-header">✦ 今のあなたへ ── タロットカード ✦</div>
 
   <div style="text-align:center; margin:12px 0;">
-    <span style="font-size:1.2em; color:#C9A84C; font-weight:bold;">「{headline}」</span>
+    <span style="font-size:1.2em; color:#BFA350; font-weight:bold;">「{headline}」</span>
   </div>
 
   <div style="text-align:center; margin-bottom:6px;">
-    <span style="font-size:0.9em; color:#9B8FC4;">No.{t.card_number} &nbsp;</span>
+    <span style="font-size:0.9em; color:#8A8478;">No.{t.card_number} &nbsp;</span>
     <span class="tarot-name-jp" style="font-size:1.2em;">{t.card_name}</span>
-    <span style="font-size:0.85em; color:#C9A84C;"> {t.card_name_en}</span>
+    <span style="font-size:0.85em; color:#BFA350;"> {t.card_name_en}</span>
   </div>
   <div style="text-align:center; margin-bottom:8px;">
     <span class="tarot-position">{pos_symbol} {pos_text}</span>
@@ -378,7 +378,7 @@ def render_tarot_course(bundle: DivinationBundle, data: dict):
 
   <div class="gold-divider"></div>
 
-  <div style="text-align:center; margin-top:14px; font-size:1.05em; color:#F5D78E; font-style:italic; line-height:1.8;">
+  <div style="text-align:center; margin-top:14px; font-size:1.05em; color:#D4B96A; font-style:italic; line-height:1.8;">
     ✦ {closing} ✦
   </div>
 </div>
@@ -397,7 +397,7 @@ def render_synthesis_tab(bundle: DivinationBundle, data: dict):
     st.markdown(f"""
 <div class="divination-card">
   <div style="text-align:center; margin-bottom:16px;">
-    <div style="font-size:1.4em; color:#C9A84C; font-weight:bold; line-height:1.6;">
+    <div style="font-size:1.4em; color:#BFA350; font-weight:bold; line-height:1.6;">
       ✦ {headline} ✦
     </div>
   </div>
@@ -408,14 +408,14 @@ def render_synthesis_tab(bundle: DivinationBundle, data: dict):
 
   <div class="gold-divider"></div>
 
-  <div style="text-align:center; margin-top:14px; font-size:1.1em; color:#F5D78E; font-style:italic; line-height:1.8;">
+  <div style="text-align:center; margin-top:14px; font-size:1.1em; color:#D4B96A; font-style:italic; line-height:1.8;">
     {message}
   </div>
 </div>
 """, unsafe_allow_html=True)
 
     st.markdown("""
-<div style="text-align:center; color:#9B8FC4; font-size:0.85em; margin-top:10px;">
+<div style="text-align:center; color:#8A8478; font-size:0.85em; margin-top:10px;">
   ↑ もっと深く知りたい占術をタブでタップ ↑
 </div>
 """, unsafe_allow_html=True)
@@ -429,11 +429,11 @@ def render_tarot_card_back(waiting=False):
     opacity = "0.5" if waiting else "1.0"
     st.markdown(f"""
 <div style="text-align:center; opacity:{opacity};">
-  <div style="background:linear-gradient(135deg, #1a1040 0%, #2d1b69 50%, #1a1040 100%);
-       border:2px solid #C9A84C; border-radius:8px; padding:40px 15px;
+  <div style="background:linear-gradient(135deg, #1A1A1A 0%, #222222 50%, #1A1A1A 100%);
+       border:2px solid #BFA350; border-radius:8px; padding:40px 15px;
        display:inline-block; min-width:120px; min-height:170px;
        display:flex; align-items:center; justify-content:center;">
-    <span style="color:#C9A84C; font-size:1.5em; letter-spacing:4px;">✦☽✦</span>
+    <span style="color:#BFA350; font-size:1.5em; letter-spacing:4px;">✦☽✦</span>
   </div>
 </div>
 """, unsafe_allow_html=True)
@@ -449,7 +449,7 @@ def render_tarot_card_simple(card):
     from PIL import Image
 
     pos_text = "逆位置" if card.is_reversed else "正位置"
-    pos_color = "#FF6B9D" if card.is_reversed else "#C9A84C"
+    pos_color = "#D4837A" if card.is_reversed else "#BFA350"
 
     # カード画像を探す
     img_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), "data", "tarot_images")
@@ -477,7 +477,7 @@ def render_tarot_card_simple(card):
         symbol = SUIT_SYMBOLS.get(suit, "🃏")
         rotation = "transform:rotate(180deg);" if card.is_reversed else ""
         st.markdown(f"""
-<div style="background:linear-gradient(135deg, #f5f0e0, #e8dcc8); border:2px solid #C9A84C;
+<div style="background:linear-gradient(135deg, #f5f0e0, #e8dcc8); border:2px solid #BFA350;
      border-radius:8px; padding:20px; text-align:center; min-height:140px;
      display:flex; align-items:center; justify-content:center; {rotation}">
   <span style="font-size:3em;">{symbol}</span>
@@ -487,8 +487,8 @@ def render_tarot_card_simple(card):
     # カード名 + ポジション
     st.markdown(f"""
 <div style="text-align:center;">
-<div style="color:#C9A84C; font-weight:bold; font-size:0.95em;">{card.card_name}</div>
-<div style="color:#9B8FC4; font-size:0.75em;">{card.card_name_en}</div>
+<div style="color:#BFA350; font-weight:bold; font-size:0.95em;">{card.card_name}</div>
+<div style="color:#8A8478; font-size:0.75em;">{card.card_name_en}</div>
 <div style="color:{pos_color}; font-size:0.8em; margin-top:3px;">{pos_text}</div>
 </div>
 """, unsafe_allow_html=True)
@@ -503,11 +503,11 @@ def render_tarot_card_face(bundle: DivinationBundle, reading: str):
 # テーマ別深掘り鑑定結果
 # ============================================================
 THEME_DISPLAY = {
-    "love": {"icon": "💕", "title": "恋愛運", "color": "#FF6B9D"},
-    "marriage": {"icon": "💍", "title": "結婚運", "color": "#FFD700"},
-    "career": {"icon": "💼", "title": "仕事運", "color": "#4FC3F7"},
-    "future10": {"icon": "🔮", "title": "10年後の自分", "color": "#CE93D8"},
-    "shine": {"icon": "✨", "title": "最大限に輝く生き方", "color": "#FFE082"},
+    "love": {"icon": "💕", "title": "恋愛運", "color": "#D4837A"},
+    "marriage": {"icon": "💍", "title": "結婚運", "color": "#D4B96A"},
+    "career": {"icon": "💼", "title": "仕事運", "color": "#7CA3B8"},
+    "future10": {"icon": "🔮", "title": "10年後の自分", "color": "#A08B99"},
+    "shine": {"icon": "✨", "title": "最大限に輝く生き方", "color": "#D4B96A"},
 }
 
 
@@ -532,37 +532,37 @@ def render_ziwei_course(bundle, data: dict):
 <div class="card-header">✦ 紫微斗数 ── 命盤鑑定 ✦</div>
 
 <div style="text-align:center; margin:12px 0;">
-<span style="font-size:1.2em; color:#C9A84C; font-weight:bold;">「{headline}」</span>
+<span style="font-size:1.2em; color:#BFA350; font-weight:bold;">「{headline}」</span>
 </div>
 
 <div style="text-align:center; margin-bottom:8px;">
-<span style="font-size:0.85em; color:#9B8FC4;">農暦 {z.lunar_year}年{z.lunar_month}月{z.lunar_day}日 {z.birth_hour_name}生まれ</span>
+<span style="font-size:0.85em; color:#8A8478;">農暦 {z.lunar_year}年{z.lunar_month}月{z.lunar_day}日 {z.birth_hour_name}生まれ</span>
 </div>
 
 <table style="width:100%; border-collapse:collapse; margin:10px 0;">
 <tr>
-<td style="padding:6px; border:1px solid #3A2E6E; color:#C9A84C; width:30%;">命宮</td>
-<td style="padding:6px; border:1px solid #3A2E6E; color:#E8E0F0;">{z.ming_gong_branch}宮 ── {ming_stars_text}</td>
+<td style="padding:6px; border:1px solid #2A2A2A; color:#BFA350; width:30%;">命宮</td>
+<td style="padding:6px; border:1px solid #2A2A2A; color:#F0EBE0;">{z.ming_gong_branch}宮 ── {ming_stars_text}</td>
 </tr>
 <tr>
-<td style="padding:6px; border:1px solid #3A2E6E; color:#C9A84C;">身宮</td>
-<td style="padding:6px; border:1px solid #3A2E6E; color:#E8E0F0;">{z.shen_gong_branch}宮</td>
+<td style="padding:6px; border:1px solid #2A2A2A; color:#BFA350;">身宮</td>
+<td style="padding:6px; border:1px solid #2A2A2A; color:#F0EBE0;">{z.shen_gong_branch}宮</td>
 </tr>
 <tr>
-<td style="padding:6px; border:1px solid #3A2E6E; color:#C9A84C;">五行局</td>
-<td style="padding:6px; border:1px solid #3A2E6E; color:#E8E0F0;">{z.five_element_name}</td>
+<td style="padding:6px; border:1px solid #2A2A2A; color:#BFA350;">五行局</td>
+<td style="padding:6px; border:1px solid #2A2A2A; color:#F0EBE0;">{z.five_element_name}</td>
 </tr>
 <tr>
-<td style="padding:6px; border:1px solid #3A2E6E; color:#C9A84C;">年干支</td>
-<td style="padding:6px; border:1px solid #3A2E6E; color:#E8E0F0;">{z.year_stem}{z.year_branch}年</td>
+<td style="padding:6px; border:1px solid #2A2A2A; color:#BFA350;">年干支</td>
+<td style="padding:6px; border:1px solid #2A2A2A; color:#F0EBE0;">{z.year_stem}{z.year_branch}年</td>
 </tr>
 <tr>
-<td style="padding:6px; border:1px solid #3A2E6E; color:#C9A84C;">四化</td>
-<td style="padding:6px; border:1px solid #3A2E6E; color:#E8E0F0; font-size:0.85em;">{sihua_text}</td>
+<td style="padding:6px; border:1px solid #2A2A2A; color:#BFA350;">四化</td>
+<td style="padding:6px; border:1px solid #2A2A2A; color:#F0EBE0; font-size:0.85em;">{sihua_text}</td>
 </tr>
 <tr>
-<td style="padding:6px; border:1px solid #3A2E6E; color:#C9A84C;">大限方向</td>
-<td style="padding:6px; border:1px solid #3A2E6E; color:#E8E0F0;">{z.da_xian_direction}</td>
+<td style="padding:6px; border:1px solid #2A2A2A; color:#BFA350;">大限方向</td>
+<td style="padding:6px; border:1px solid #2A2A2A; color:#F0EBE0;">{z.da_xian_direction}</td>
 </tr>
 </table>
 """, unsafe_allow_html=True)
@@ -584,42 +584,42 @@ def render_ziwei_course(bundle, data: dict):
         grid_html += '<tr>'
         for branch_idx in row:
             if branch_idx == -1:
-                grid_html += '<td style="border:1px solid #2A1F4E; padding:4px; background:#1A1535;"></td>'
+                grid_html += '<td style="border:1px solid #2A2A2A; padding:4px; background:#1A1A1A;"></td>'
             else:
                 palace = branch_to_palace.get(branch_idx)
                 if palace:
                     stars = '<br>'.join(palace.main_stars) if palace.main_stars else ''
                     aux = ' '.join(palace.aux_stars[:3]) if palace.aux_stars else ''
-                    sihua_badges = ''.join(f'<span style="color:#FFD700;font-size:0.7em;">{s}</span>' for s in palace.sihua)
+                    sihua_badges = ''.join(f'<span style="color:#D4B96A;font-size:0.7em;">{s}</span>' for s in palace.sihua)
                     is_ming = palace.palace_name == '命宮'
-                    bg = '#2A1F5E' if is_ming else '#1A1535'
-                    border_color = '#C9A84C' if is_ming else '#3A2E6E'
-                    grid_html += f'''<td style="border:1px solid {border_color}; padding:4px; background:{bg}; vertical-align:top; font-size:0.75em; color:#E8E0F0;">
-<div style="color:#9B8FC4;font-size:0.85em;">{palace.palace_name}</div>
-<div style="color:#C9A84C;font-weight:bold;">{stars}</div>
-<div style="color:#7A6FA0;font-size:0.8em;">{aux}</div>
+                    bg = '#222222' if is_ming else '#1A1A1A'
+                    border_color = '#BFA350' if is_ming else '#2A2A2A'
+                    grid_html += f'''<td style="border:1px solid {border_color}; padding:4px; background:{bg}; vertical-align:top; font-size:0.75em; color:#F0EBE0;">
+<div style="color:#8A8478;font-size:0.85em;">{palace.palace_name}</div>
+<div style="color:#BFA350;font-weight:bold;">{stars}</div>
+<div style="color:#8A8478;font-size:0.8em;">{aux}</div>
 {sihua_badges}
 </td>'''
                 else:
-                    grid_html += '<td style="border:1px solid #2A1F4E; padding:4px; background:#1A1535;"></td>'
+                    grid_html += '<td style="border:1px solid #2A2A2A; padding:4px; background:#1A1A1A;"></td>'
         grid_html += '</tr>'
     grid_html += '</table>'
 
     st.markdown(grid_html, unsafe_allow_html=True)
 
     # 大限表示
-    da_xian_html = '<div style="margin:10px 0;"><span style="color:#C9A84C; font-weight:bold;">大限（10年運）</span> ' + z.da_xian_direction + '<br>'
+    da_xian_html = '<div style="margin:10px 0;"><span style="color:#BFA350; font-weight:bold;">大限（10年運）</span> ' + z.da_xian_direction + '<br>'
     for i, (s, e) in enumerate(z.da_xian_ages[:8]):
         palace = z.palaces[i] if i < len(z.palaces) else None
         pname = palace.palace_name if palace else ''
-        da_xian_html += f'<span style="color:#9B8FC4; font-size:0.85em;">第{i+1}限 {s}〜{e}歳（{pname}）</span><br>'
+        da_xian_html += f'<span style="color:#8A8478; font-size:0.85em;">第{i+1}限 {s}〜{e}歳（{pname}）</span><br>'
     da_xian_html += '</div>'
     st.markdown(da_xian_html, unsafe_allow_html=True)
 
     # AI鑑定文
     reading = data.get("reading", "")
     if reading:
-        st.markdown(f'<div style="color:#E8E0F0; line-height:1.8; margin:15px 0;">{reading}</div>', unsafe_allow_html=True)
+        st.markdown(f'<div style="color:#F0EBE0; line-height:1.8; margin:15px 0;">{reading}</div>', unsafe_allow_html=True)
 
     closing = data.get("closing", "")
     if closing:
@@ -651,11 +651,11 @@ def render_aisho_result(bundle1, bundle2, data: dict):
     if score:
         try:
             score_int = int(score)
-            color = "#FF6B9D" if score_int >= 80 else "#FFD700" if score_int >= 60 else "#4FC3F7"
+            color = "#D4837A" if score_int >= 80 else "#D4B96A" if score_int >= 60 else "#7CA3B8"
             score_html = f"""
 <div style="text-align:center; margin:12px 0;">
 <span style="font-size:2.5em; color:{color}; font-weight:bold;">{score_int}</span>
-<span style="color:#9B8FC4; font-size:0.9em;"> / 100</span>
+<span style="color:#8A8478; font-size:0.9em;"> / 100</span>
 </div>"""
         except ValueError:
             pass
@@ -663,30 +663,30 @@ def render_aisho_result(bundle1, bundle2, data: dict):
     # 2人のデータ比較タグ
     tags = f"""
 <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin:10px 0; font-size:0.88em;">
-<div style="text-align:center; padding:8px; border:1px solid #C9A84C; border-radius:6px;">
-<div style="color:#C9A84C; font-weight:bold; margin-bottom:4px;">{n1}</div>
-<div>日干: <span style="color:#F5D78E">{s1.nichikan}（{s1.nichikan_gogyo}）</span></div>
-<div>{w1.sun_sign_symbol} <span style="color:#F5D78E">{w1.sun_sign}</span></div>
-<div>中央星: <span style="color:#F5D78E">{s1.chuo_sei}</span></div>
+<div style="text-align:center; padding:8px; border:1px solid #BFA350; border-radius:6px;">
+<div style="color:#BFA350; font-weight:bold; margin-bottom:4px;">{n1}</div>
+<div>日干: <span style="color:#D4B96A">{s1.nichikan}（{s1.nichikan_gogyo}）</span></div>
+<div>{w1.sun_sign_symbol} <span style="color:#D4B96A">{w1.sun_sign}</span></div>
+<div>中央星: <span style="color:#D4B96A">{s1.chuo_sei}</span></div>
 </div>
-<div style="text-align:center; padding:8px; border:1px solid #FF6B9D; border-radius:6px;">
-<div style="color:#FF6B9D; font-weight:bold; margin-bottom:4px;">{n2}</div>
-<div>日干: <span style="color:#F5D78E">{s2.nichikan}（{s2.nichikan_gogyo}）</span></div>
-<div>{w2.sun_sign_symbol} <span style="color:#F5D78E">{w2.sun_sign}</span></div>
-<div>中央星: <span style="color:#F5D78E">{s2.chuo_sei}</span></div>
+<div style="text-align:center; padding:8px; border:1px solid #D4837A; border-radius:6px;">
+<div style="color:#D4837A; font-weight:bold; margin-bottom:4px;">{n2}</div>
+<div>日干: <span style="color:#D4B96A">{s2.nichikan}（{s2.nichikan_gogyo}）</span></div>
+<div>{w2.sun_sign_symbol} <span style="color:#D4B96A">{w2.sun_sign}</span></div>
+<div>中央星: <span style="color:#D4B96A">{s2.chuo_sei}</span></div>
 </div>
 </div>"""
 
-    st.markdown(f"""<div class="divination-card" style="border-color:#FF6B9D;">
-<div class="card-header" style="color:#FF6B9D;">💕 相性鑑定 💕</div>
+    st.markdown(f"""<div class="divination-card" style="border-color:#D4837A;">
+<div class="card-header" style="color:#D4837A;">💕 相性鑑定 💕</div>
 <div style="text-align:center; margin:12px 0;">
-<span style="font-size:1.2em; color:#FF6B9D; font-weight:bold;">「{headline}」</span>
+<span style="font-size:1.2em; color:#D4837A; font-weight:bold;">「{headline}」</span>
 </div>
 {score_html}
 {tags}
 <div class="reading-text" style="line-height:2.0; white-space:pre-wrap;">{reading}</div>
 <div class="gold-divider"></div>
-<div style="text-align:center; margin-top:14px; font-size:1.05em; color:#FF6B9D; font-style:italic; line-height:1.8;">
+<div style="text-align:center; margin-top:14px; font-size:1.05em; color:#D4837A; font-style:italic; line-height:1.8;">
 💕 {closing} 💕
 </div>
 </div>""", unsafe_allow_html=True)
@@ -714,19 +714,19 @@ def render_bansho_course(bundle: DivinationBundle, data: dict = None):
         kw = detail.get("keyword", "")
         pct_of_total = int(score / e.total_energy * 100) if e.total_energy > 0 else 0
         bar_w = int(score / max(e.honnou_ranking[0][1], 1) * 100)
-        colors = {"守備": "#4CAF50", "表現": "#FF5722", "魅力": "#FF9800", "攻撃": "#FFD700", "学習": "#2196F3"}
-        color = colors.get(honnou, "#C9A84C")
-        zero_mark = ' <span style="color:#FF6B6B;font-size:0.75em;">（未開発）</span>' if score == 0 else ""
+        colors = {"守備": "#7CB87C", "表現": "#C47A6A", "魅力": "#C49860", "攻撃": "#D4B96A", "学習": "#7CA3B8"}
+        color = colors.get(honnou, "#BFA350")
+        zero_mark = ' <span style="color:#C47A6A;font-size:0.75em;">（未開発）</span>' if score == 0 else ""
         ranking_rows += f"""
 <div style="margin:8px 0;">
   <div style="display:flex;align-items:center;gap:8px;margin-bottom:3px;">
     <span style="width:24px;font-size:1.1em;">{medals[i]}</span>
     <span style="color:{color};font-weight:bold;width:50px;font-size:1.05em;">{honnou}</span>
-    <span style="color:#9B8FC4;font-size:0.82em;flex:1;">{kw}</span>
-    <span style="color:#F5D78E;font-weight:bold;font-size:1.1em;">{score}点</span>
-    <span style="color:#666;font-size:0.75em;">({pct_of_total}%){zero_mark}</span>
+    <span style="color:#8A8478;font-size:0.82em;flex:1;">{kw}</span>
+    <span style="color:#D4B96A;font-weight:bold;font-size:1.1em;">{score}点</span>
+    <span style="color:#5A5A5A;font-size:0.75em;">({pct_of_total}%){zero_mark}</span>
   </div>
-  <div style="background:#2a2444;border-radius:4px;height:10px;overflow:hidden;">
+  <div style="background:#1A1A1A;border-radius:4px;height:10px;overflow:hidden;">
     <div style="background:{color};height:100%;width:{bar_w}%;border-radius:4px;"></div>
   </div>
 </div>"""
@@ -739,11 +739,11 @@ def render_bansho_course(bundle: DivinationBundle, data: dict = None):
     combo_html = ""
     if e.combo_talent:
         combo_html = f"""
-<div style="margin:12px 0; padding:12px; background:linear-gradient(135deg, #2a2444, #3a2a50); border:1px solid #C9A84C; border-radius:8px;">
-  <div style="color:#F5D78E; font-size:0.95em; font-weight:bold; text-align:center; margin-bottom:6px;">🎯 あなたの才能タイプ: {e.combo_talent}</div>
-  <div style="color:#E8E0F0; font-size:0.85em; text-align:center; line-height:1.6;">
+<div style="margin:12px 0; padding:12px; background:linear-gradient(135deg, #1A1A1A, #222222); border:1px solid #BFA350; border-radius:8px;">
+  <div style="color:#D4B96A; font-size:0.95em; font-weight:bold; text-align:center; margin-bottom:6px;">🎯 あなたの才能タイプ: {e.combo_talent}</div>
+  <div style="color:#F0EBE0; font-size:0.85em; text-align:center; line-height:1.6;">
     {e.combo_description}<br>
-    <span style="color:#9B8FC4;font-size:0.8em;">（{e.top_honnou}{e.top_score} × {e.second_honnou}{e.second_score} の掛け算）</span>
+    <span style="color:#8A8478;font-size:0.8em;">（{e.top_honnou}{e.top_score} × {e.second_honnou}{e.second_score} の掛け算）</span>
   </div>
 </div>"""
 
@@ -752,10 +752,10 @@ def render_bansho_course(bundle: DivinationBundle, data: dict = None):
     if e.zero_honnou:
         zero_names = "・".join(e.zero_honnou)
         zero_html = f"""
-<div style="margin:12px 0; padding:10px; border:1px dashed #FF6B6B44; border-radius:6px; background:#2a1a2a;">
-  <div style="color:#FF9800; font-size:0.88em; font-weight:bold; margin-bottom:4px;">🔮 0点の本能: {zero_names}</div>
-  <div style="color:#E8E0F0; font-size:0.82em; line-height:1.6;">
-    生まれ持った才能ではないが「できない」わけではない。<b style="color:#FF9800;">意識的に努力が必要な領域。</b><br>
+<div style="margin:12px 0; padding:10px; border:1px dashed #C47A6A44; border-radius:6px; background:#1A1A1A;">
+  <div style="color:#C49860; font-size:0.88em; font-weight:bold; margin-bottom:4px;">🔮 0点の本能: {zero_names}</div>
+  <div style="color:#F0EBE0; font-size:0.82em; line-height:1.6;">
+    生まれ持った才能ではないが「できない」わけではない。<b style="color:#C49860;">意識的に努力が必要な領域。</b><br>
     この本能が必要な仕事は消耗しやすい。得意な本能で補うのが正解。
   </div>
 </div>"""
@@ -764,29 +764,29 @@ def render_bansho_course(bundle: DivinationBundle, data: dict = None):
     drink_html = ""
     if e.drink_talk:
         drink_html = f"""
-<div style="margin:12px 0; padding:10px; background:#1a1a2e; border-radius:6px; border-left:3px solid #C9A84C;">
-  <div style="color:#C9A84C; font-size:0.8em; font-weight:bold; margin-bottom:4px;">🍺 くろちゃんの即答</div>
-  <div style="color:#E8E0F0; font-size:0.85em; line-height:1.7; font-style:italic;">{e.drink_talk}</div>
+<div style="margin:12px 0; padding:10px; background:#141414; border-radius:6px; border-left:3px solid #BFA350;">
+  <div style="color:#BFA350; font-size:0.8em; font-weight:bold; margin-bottom:4px;">🍺 くろちゃんの即答</div>
+  <div style="color:#F0EBE0; font-size:0.85em; line-height:1.7; font-style:italic;">{e.drink_talk}</div>
 </div>"""
 
     st.markdown(f"""
-<div class="divination-card" style="border-color:#C9A84C;">
+<div class="divination-card" style="border-color:#BFA350;">
 <div class="card-header">⚡ 万象学 ── 宿命エネルギー ⚡</div>
 
 <div style="text-align:center; margin:16px 0 8px;">
-  <div style="font-size:3em; font-weight:bold; color:#F5D78E; line-height:1;">{e.total_energy}</div>
-  <div style="font-size:0.9em; color:#C9A84C; margin-top:4px;">宿命エネルギー指数</div>
+  <div style="font-size:3em; font-weight:bold; color:#D4B96A; line-height:1;">{e.total_energy}</div>
+  <div style="font-size:0.9em; color:#BFA350; margin-top:4px;">宿命エネルギー指数</div>
 </div>
 
 <div style="text-align:center; margin:8px 0;">
   <span class="uranai-tag-gold" style="font-size:1em; padding:4px 16px;">{e.energy_type}</span>
 </div>
 
-<div style="text-align:center; font-family:monospace; color:#C9A84C; font-size:0.9em; margin:12px 0;">
-  {bar} {pct}%<span style="color:#666;font-size:0.8em;margin-left:4px;">（範囲: 89〜401）</span>
+<div style="text-align:center; font-family:monospace; color:#BFA350; font-size:0.9em; margin:12px 0;">
+  {bar} {pct}%<span style="color:#5A5A5A;font-size:0.8em;margin-left:4px;">（範囲: 89〜401）</span>
 </div>
 
-<div style="text-align:center; color:#9B8FC4; font-size:0.88em; margin:6px 0 16px;">
+<div style="text-align:center; color:#8A8478; font-size:0.88em; margin:6px 0 16px;">
   {e.energy_description}
 </div>
 
@@ -794,40 +794,40 @@ def render_bansho_course(bundle: DivinationBundle, data: dict = None):
 
 <div class="gold-divider"></div>
 
-<div style="color:#C9A84C; font-size:0.9em; font-weight:bold; margin:12px 0 6px; text-align:center;">── 五本能ランキング ──</div>
+<div style="color:#BFA350; font-size:0.9em; font-weight:bold; margin:12px 0 6px; text-align:center;">── 五本能ランキング ──</div>
 {ranking_rows}
 
 {combo_html}
 
 <div class="gold-divider"></div>
 
-<div style="margin:12px 0; padding:10px; border:1px solid #3a3652; border-radius:6px;">
-  <div style="color:#C9A84C; font-size:0.88em; font-weight:bold; margin-bottom:6px;">💡 第1本能: {e.top_honnou}（{top_detail.get('gogyo','')}/{e.top_score}点）</div>
-  <div style="color:#E8E0F0; font-size:0.85em; line-height:1.7;">
+<div style="margin:12px 0; padding:10px; border:1px solid #2A2A2A; border-radius:6px;">
+  <div style="color:#BFA350; font-size:0.88em; font-weight:bold; margin-bottom:6px;">💡 第1本能: {e.top_honnou}（{top_detail.get('gogyo','')}/{e.top_score}点）</div>
+  <div style="color:#F0EBE0; font-size:0.85em; line-height:1.7;">
     {top_detail.get('personality','')}<br>
-    <span style="color:#9B8FC4;">向いてる仕事:</span> {top_detail.get('career','')}<br>
-    <span style="color:#4CAF50;">強み:</span> {top_detail.get('strong','')}
-    <span style="color:#FF6B6B;"> 弱み:</span> {top_detail.get('weak','')}
+    <span style="color:#8A8478;">向いてる仕事:</span> {top_detail.get('career','')}<br>
+    <span style="color:#7CB87C;">強み:</span> {top_detail.get('strong','')}
+    <span style="color:#C47A6A;"> 弱み:</span> {top_detail.get('weak','')}
   </div>
 </div>
 
-<div style="margin:12px 0; padding:10px; border:1px solid #3a3652; border-radius:6px;">
-  <div style="color:#C9A84C; font-size:0.88em; font-weight:bold; margin-bottom:6px;">💡 第2本能: {e.second_honnou}（{second_detail.get('gogyo','')}/{e.second_score}点）</div>
-  <div style="color:#E8E0F0; font-size:0.85em; line-height:1.7;">
+<div style="margin:12px 0; padding:10px; border:1px solid #2A2A2A; border-radius:6px;">
+  <div style="color:#BFA350; font-size:0.88em; font-weight:bold; margin-bottom:6px;">💡 第2本能: {e.second_honnou}（{second_detail.get('gogyo','')}/{e.second_score}点）</div>
+  <div style="color:#F0EBE0; font-size:0.85em; line-height:1.7;">
     {second_detail.get('personality','')}<br>
-    <span style="color:#9B8FC4;">向いてる仕事:</span> {second_detail.get('career','')}
+    <span style="color:#8A8478;">向いてる仕事:</span> {second_detail.get('career','')}
   </div>
 </div>
 
 {zero_html}
 
-<div style="text-align:center; margin:16px 0 8px; color:#9B8FC4; font-size:0.78em; line-height:1.6;">
+<div style="text-align:center; margin:16px 0 8px; color:#8A8478; font-size:0.78em; line-height:1.6;">
   ※エネルギーの高低に良し悪しはありません。<br>
   自分のエネルギー量に合った生き方をすることが最も重要です。<br>
   第1本能と第2本能があなたの才能発揮エリアです。
 </div>
 
-<div style="text-align:center; margin-top:12px; color:#C9A84C; font-size:0.88em; font-weight:bold;">
+<div style="text-align:center; margin-top:12px; color:#BFA350; font-size:0.88em; font-weight:bold;">
   {e.energy_advice}
 </div>
 
@@ -836,7 +836,7 @@ def render_bansho_course(bundle: DivinationBundle, data: dict = None):
 
 def render_theme_result(theme_key: str, data: dict):
     """テーマ別鑑定結果を表示"""
-    theme = THEME_DISPLAY.get(theme_key, {"icon": "✦", "title": theme_key, "color": "#C9A84C"})
+    theme = THEME_DISPLAY.get(theme_key, {"icon": "✦", "title": theme_key, "color": "#BFA350"})
 
     headline = data.get("headline", "")
     reading = data.get("reading", "")

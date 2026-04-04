@@ -19,7 +19,7 @@ if not os.environ.get("GEMINI_API_KEY"):
 # ページ設定（最初に呼ぶ）
 st.set_page_config(
     page_title="占いモンスターマシーン",
-    page_icon="✦",
+    page_icon="✧",
     layout="centered",
     initial_sidebar_state="collapsed",
 )

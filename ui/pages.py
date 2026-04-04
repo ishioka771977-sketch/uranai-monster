@@ -41,10 +41,10 @@ def render_top_page():
     render_gold_divider()
 
     st.markdown("""
-<div style="text-align:center; color:#9B8FC4; font-size:0.9em; margin:20px 0 30px;">
+<div style="text-align:center; color:#8A8478; font-size:0.9em; margin:20px 0 30px;">
   生年月日を入れるだけで<br>
   算命学・西洋占星術・九星気学・数秘術・タロットで<br>
-  <span style="color:#C9A84C">あなたの本質と今年の運命を鑑定します</span>
+  <span style="color:#BFA350">あなたの本質と今年の運命を鑑定します</span>
 </div>
 """, unsafe_allow_html=True)
 
@@ -128,7 +128,7 @@ def _render_people_quick_select():
 
     names = list(people_db.keys())
     st.markdown("""
-<div style="color:#9B8FC4; font-size:0.85em; text-align:center; margin-bottom:5px;">
+<div style="color:#8A8478; font-size:0.85em; text-align:center; margin-bottom:5px;">
 前回の人をタップで選択
 </div>
 """, unsafe_allow_html=True)
@@ -372,7 +372,7 @@ def render_ura_menu_page():
 
     # コース選択ボタン
     st.markdown("""
-<div style="text-align:center; color:#9B8FC4; font-size:0.85em; margin-bottom:10px;">
+<div style="text-align:center; color:#8A8478; font-size:0.85em; margin-bottom:10px;">
   ↓ コースを選んでタップ ↓
 </div>
 """, unsafe_allow_html=True)
@@ -407,8 +407,8 @@ def render_ura_menu_page():
     # テーマ別深掘り鑑定セクション（コース選択と並列）
     st.markdown("""
 <div style="text-align:center; margin:20px 0 10px;">
-<span style="color:#C9A84C; font-size:1.15em; font-weight:bold;">✦ テーマで深掘り ✦</span><br>
-<span style="color:#9B8FC4; font-size:0.85em;">全占術を横断した深掘り鑑定</span>
+<span style="color:#BFA350; font-size:1.15em; font-weight:bold;">✦ テーマで深掘り ✦</span><br>
+<span style="color:#8A8478; font-size:0.85em;">全占術を横断した深掘り鑑定</span>
 </div>
 """, unsafe_allow_html=True)
 
@@ -562,7 +562,7 @@ def render_theme_result_page():
     # 他のテーマも見る
     st.markdown("""
 <div style="text-align:center; margin:20px 0 10px;">
-<span style="color:#C9A84C; font-size:1.0em;">✦ 他のテーマも深掘り ✦</span>
+<span style="color:#BFA350; font-size:1.0em;">✦ 他のテーマも深掘り ✦</span>
 </div>
 """, unsafe_allow_html=True)
 
@@ -732,8 +732,8 @@ def _render_theme_section(bundle):
 
     st.markdown("""
 <div style="text-align:center; margin:20px 0 10px;">
-<span style="color:#C9A84C; font-size:1.15em; font-weight:bold;">✦ もっと深く見る ✦</span><br>
-<span style="color:#9B8FC4; font-size:0.85em;">テーマを選ぶと、全占術を横断した深掘り鑑定が生成されます</span>
+<span style="color:#BFA350; font-size:1.15em; font-weight:bold;">✦ もっと深く見る ✦</span><br>
+<span style="color:#8A8478; font-size:0.85em;">テーマを選ぶと、全占術を横断した深掘り鑑定が生成されます</span>
 </div>
 """, unsafe_allow_html=True)
 
@@ -802,7 +802,7 @@ def render_aisho_input_page():
     render_gold_divider()
 
     # --- 1人目 ---
-    st.markdown('<div style="color:#C9A84C; font-size:1.1em; font-weight:bold; margin:10px 0 5px;">✦ 1人目</div>', unsafe_allow_html=True)
+    st.markdown('<div style="color:#BFA350; font-size:1.1em; font-weight:bold; margin:10px 0 5px;">✦ 1人目</div>', unsafe_allow_html=True)
     name1 = st.text_input("お名前", value="", placeholder="例: ひでさん", key="aisho_name1")
     gender1 = st.radio("性別", options=["男性", "女性", "その他"], index=0, horizontal=True, key="aisho_gender1")
 
@@ -822,7 +822,7 @@ def render_aisho_input_page():
     render_gold_divider()
 
     # --- 2人目 ---
-    st.markdown('<div style="color:#FF6B9D; font-size:1.1em; font-weight:bold; margin:10px 0 5px;">✦ 2人目</div>', unsafe_allow_html=True)
+    st.markdown('<div style="color:#D4837A; font-size:1.1em; font-weight:bold; margin:10px 0 5px;">✦ 2人目</div>', unsafe_allow_html=True)
     name2 = st.text_input("お名前", value="", placeholder="例: ゆうこ", key="aisho_name2")
     gender2 = st.radio("性別", options=["男性", "女性", "その他"], index=1, horizontal=True, key="aisho_gender2")
 
@@ -1026,7 +1026,7 @@ def render_tarot_input_page():
 
     if has_person and saved_name:
         st.markdown(f"""
-<div style="text-align:center; color:#9B8FC4; font-size:0.9em; margin-bottom:10px;">
+<div style="text-align:center; color:#8A8478; font-size:0.9em; margin-bottom:10px;">
 {saved_name}さん（{saved_year}/{saved_month}/{saved_day}生まれ）
 </div>
 """, unsafe_allow_html=True)
@@ -1057,7 +1057,7 @@ def render_tarot_input_page():
 
     # 質問入力
     st.markdown("""
-<div style="text-align:center; color:#C9A84C; font-size:1.1em; margin-bottom:8px;">
+<div style="text-align:center; color:#BFA350; font-size:1.1em; margin-bottom:8px;">
 何を占いたいですか？
 </div>
 """, unsafe_allow_html=True)
@@ -1071,7 +1071,7 @@ def render_tarot_input_page():
     )
 
     st.markdown("""
-<div style="color:#9B8FC4; font-size:0.8em; text-align:center; margin-top:-10px;">
+<div style="color:#8A8478; font-size:0.8em; text-align:center; margin-top:-10px;">
 例: 転職すべきか / 今の恋人との未来 / 今年の運勢 / AかBか
 </div>
 """, unsafe_allow_html=True)
@@ -1152,7 +1152,7 @@ def render_tarot_deepen_page():
 
     # 元の質問を表示
     st.markdown(f"""
-<div style="text-align:center; color:#9B8FC4; font-size:0.9em; margin-bottom:15px;">
+<div style="text-align:center; color:#8A8478; font-size:0.9em; margin-bottom:15px;">
 あなたの問い: 「{question}」
 </div>
 """, unsafe_allow_html=True)
@@ -1160,14 +1160,14 @@ def render_tarot_deepen_page():
     # 過去の深掘りを表示
     for h in history:
         st.markdown(f"""
-<div style="background:rgba(201,168,76,0.1); border-left:3px solid #C9A84C; padding:10px 15px; margin:8px 0; border-radius:0 6px 6px 0;">
-<div style="color:#C9A84C; font-size:0.85em;">🔮 くろちゃん</div>
-<div style="color:#E0D8C8; font-size:0.95em; margin:4px 0;">{h['empathy']}</div>
-<div style="color:#E0D8C8; font-size:0.95em; font-weight:bold;">{h['follow_up']}</div>
+<div style="background:rgba(201,168,76,0.1); border-left:3px solid #BFA350; padding:10px 15px; margin:8px 0; border-radius:0 6px 6px 0;">
+<div style="color:#BFA350; font-size:0.85em;">🔮 くろちゃん</div>
+<div style="color:#F0EBE0; font-size:0.95em; margin:4px 0;">{h['empathy']}</div>
+<div style="color:#F0EBE0; font-size:0.95em; font-weight:bold;">{h['follow_up']}</div>
 </div>
-<div style="background:rgba(155,143,196,0.1); border-left:3px solid #9B8FC4; padding:10px 15px; margin:8px 0 15px; border-radius:0 6px 6px 0;">
-<div style="color:#9B8FC4; font-size:0.85em;">🙋 あなた</div>
-<div style="color:#E0D8C8; font-size:0.95em;">{h['answer']}</div>
+<div style="background:rgba(155,143,196,0.1); border-left:3px solid #8A8478; padding:10px 15px; margin:8px 0 15px; border-radius:0 6px 6px 0;">
+<div style="color:#8A8478; font-size:0.85em;">🙋 あなた</div>
+<div style="color:#F0EBE0; font-size:0.95em;">{h['answer']}</div>
 </div>
 """, unsafe_allow_html=True)
 
@@ -1186,10 +1186,10 @@ def render_tarot_deepen_page():
 
         # くろちゃんの質問を表示
         st.markdown(f"""
-<div style="background:rgba(201,168,76,0.1); border-left:3px solid #C9A84C; padding:10px 15px; margin:8px 0; border-radius:0 6px 6px 0;">
-<div style="color:#C9A84C; font-size:0.85em;">🔮 くろちゃん</div>
-<div style="color:#E0D8C8; font-size:0.95em; margin:4px 0;">{deepen_data.get('empathy', '')}</div>
-<div style="color:#E0D8C8; font-size:0.95em; font-weight:bold;">{deepen_data.get('follow_up', '')}</div>
+<div style="background:rgba(201,168,76,0.1); border-left:3px solid #BFA350; padding:10px 15px; margin:8px 0; border-radius:0 6px 6px 0;">
+<div style="color:#BFA350; font-size:0.85em;">🔮 くろちゃん</div>
+<div style="color:#F0EBE0; font-size:0.95em; margin:4px 0;">{deepen_data.get('empathy', '')}</div>
+<div style="color:#F0EBE0; font-size:0.95em; font-weight:bold;">{deepen_data.get('follow_up', '')}</div>
 </div>
 """, unsafe_allow_html=True)
 
@@ -1230,7 +1230,7 @@ def render_tarot_deepen_page():
         )
 
         st.markdown("""
-<div style="text-align:center; color:#C9A84C; font-size:0.95em; margin:10px 0;">
+<div style="text-align:center; color:#BFA350; font-size:0.95em; margin:10px 0;">
 ✦ 占的が明確になりました ✦
 </div>
 """, unsafe_allow_html=True)
@@ -1419,7 +1419,7 @@ def render_tarot_reveal_page():
     perspective: 800px; width: {min(160, 580 // n)}px; text-align: center;
   }}
   .card-label {{
-    color: #C9A84C; font-size: 0.85em; margin-bottom: 6px; font-family: sans-serif;
+    color: #BFA350; font-size: 0.85em; margin-bottom: 6px; font-family: sans-serif;
   }}
   .card-flip {{
     position: relative; width: 100%; padding-top: 150%;
@@ -1438,28 +1438,28 @@ def render_tarot_reveal_page():
     backface-visibility: hidden; border-radius: 8px; overflow: hidden;
   }}
   .card-back {{
-    background: linear-gradient(135deg, #1a1040, #2d1b69, #1a1040);
-    border: 2px solid #C9A84C; display: flex; align-items: center;
+    background: linear-gradient(135deg, #1A1A1A, #222222, #1A1A1A);
+    border: 2px solid #BFA350; display: flex; align-items: center;
     justify-content: center; border-radius: 8px;
   }}
-  .card-back span {{ color: #C9A84C; font-size: 1.8em; letter-spacing: 5px; }}
+  .card-back span {{ color: #BFA350; font-size: 1.8em; letter-spacing: 5px; }}
   .card-front {{
-    transform: rotateY(180deg); border: 2px solid #C9A84C;
-    border-radius: 8px; background: #1a1040;
+    transform: rotateY(180deg); border: 2px solid #BFA350;
+    border-radius: 8px; background: #1A1A1A;
   }}
   .card-front img {{ width: 100%; height: 80%; object-fit: contain; background: #f5f0e0; }}
   .card-info {{
     padding: 4px; text-align: center; font-family: sans-serif;
   }}
-  .card-info .name {{ color: #C9A84C; font-size: 0.85em; font-weight: bold; }}
-  .card-info .sub {{ color: #9B8FC4; font-size: 0.7em; }}
+  .card-info .name {{ color: #BFA350; font-size: 0.85em; font-weight: bold; }}
+  .card-info .sub {{ color: #8A8478; font-size: 0.7em; }}
   .tap-hint {{
-    color: #C9A84C; font-size: 0.8em; text-align: center;
+    color: #BFA350; font-size: 0.8em; text-align: center;
     margin-top: 6px; font-family: sans-serif; animation: blink 2s infinite;
   }}
   @keyframes blink {{ 0%,100% {{ opacity:1; }} 50% {{ opacity:0.4; }} }}
   .done-msg {{
-    text-align: center; color: #C9A84C; font-size: 1.1em;
+    text-align: center; color: #BFA350; font-size: 1.1em;
     margin: 20px 0; font-family: sans-serif;
   }}
 </style>
@@ -1511,18 +1511,18 @@ cardsData.forEach((card, i) => {{
     front.innerHTML = '<img src="data:image/jpeg;base64,' + card.img + '">' +
       '<div class="card-info"><div class="name">' + card.name + '</div>' +
       '<div class="sub">' + card.name_en + '</div>' +
-      '<div class="sub" style="color:' + (card.pos_text === '逆位置' ? '#FF6B9D' : '#C9A84C') + ';">' + card.pos_text + '</div></div>';
+      '<div class="sub" style="color:' + (card.pos_text === '逆位置' ? '#D4837A' : '#BFA350') + ';">' + card.pos_text + '</div></div>';
   }} else {{
     // 小アルカナ: 画像なしの場合スートシンボル＋カード名を表示
     const sym = card.suit_symbol || '✦';
     const rotateStyle = card.pos_text === '逆位置' ? 'transform:rotate(180deg);' : '';
-    front.innerHTML = '<div style="width:100%;height:80%;background:linear-gradient(135deg,#1a1040,#2d1569);display:flex;flex-direction:column;align-items:center;justify-content:center;' + rotateStyle + '">' +
+    front.innerHTML = '<div style="width:100%;height:80%;background:linear-gradient(135deg,#1A1A1A,#222222);display:flex;flex-direction:column;align-items:center;justify-content:center;' + rotateStyle + '">' +
       '<div style="font-size:2.5em;margin-bottom:8px;">' + sym + '</div>' +
-      '<div style="color:#C9A84C;font-size:0.9em;font-weight:bold;">' + card.name + '</div>' +
+      '<div style="color:#BFA350;font-size:0.9em;font-weight:bold;">' + card.name + '</div>' +
       '</div>' +
       '<div class="card-info"><div class="name">' + card.name + '</div>' +
       '<div class="sub">' + card.name_en + '</div>' +
-      '<div class="sub" style="color:' + (card.pos_text === '逆位置' ? '#FF6B9D' : '#C9A84C') + ';">' + card.pos_text + '</div></div>';
+      '<div class="sub" style="color:' + (card.pos_text === '逆位置' ? '#D4837A' : '#BFA350') + ';">' + card.pos_text + '</div></div>';
   }}
   flip.appendChild(front);
 
@@ -1579,7 +1579,7 @@ function goToReading() {{
     }} catch(e2) {{
       // 方法3: ボタンテキスト変更でユーザーにStreamlitボタンを押すよう促す
       document.querySelector('.done-btn').textContent = '↓ 下のボタンを押してください ↓';
-      document.querySelector('.done-btn').style.background = '#9B8FC4';
+      document.querySelector('.done-btn').style.background = '#8A8478';
     }}
   }}
 }}
@@ -1605,7 +1605,7 @@ function goToReading() {{
 
     # カードをめくった後に押すボタン（常に表示）
     st.markdown("""
-<div style="text-align:center; color:#9B8FC4; font-size:0.85em; margin:10px 0;">
+<div style="text-align:center; color:#8A8478; font-size:0.85em; margin:10px 0;">
 全てのカードをめくったら ↓
 </div>
 """, unsafe_allow_html=True)
@@ -1662,7 +1662,7 @@ def render_tarot_result_page():
 
     # 質問の表示
     st.markdown(f"""
-<div style="text-align:center; color:#9B8FC4; font-size:0.9em; margin-bottom:15px;">
+<div style="text-align:center; color:#8A8478; font-size:0.9em; margin-bottom:15px;">
 「{question}」に対する {spread_info["spread_name"]} の鑑定
 </div>
 """, unsafe_allow_html=True)
@@ -1674,7 +1674,7 @@ def render_tarot_result_page():
         with cols[i]:
             pos_name = spread_info["positions"][i] if i < len(spread_info["positions"]) else f"カード{i+1}"
             st.markdown(
-                f'<div style="text-align:center; color:#C9A84C; font-size:0.85em; margin-bottom:5px;">{pos_name}</div>',
+                f'<div style="text-align:center; color:#BFA350; font-size:0.85em; margin-bottom:5px;">{pos_name}</div>',
                 unsafe_allow_html=True
             )
             render_tarot_card_simple(cards[i])
@@ -1688,21 +1688,21 @@ def render_tarot_result_page():
 
     if headline:
         st.markdown(f"""
-<div style="text-align:center; font-size:1.2em; color:#C9A84C; font-weight:bold; margin:15px 0;">
+<div style="text-align:center; font-size:1.2em; color:#BFA350; font-weight:bold; margin:15px 0;">
 「{headline}」
 </div>
 """, unsafe_allow_html=True)
 
     if reading:
         st.markdown(f"""
-<div style="line-height:2.0; font-size:0.95em; color:#E0D8C8; padding:10px 5px;">
+<div style="line-height:2.0; font-size:0.95em; color:#F0EBE0; padding:10px 5px;">
 {reading}
 </div>
 """, unsafe_allow_html=True)
 
     if closing:
         st.markdown(f"""
-<div style="text-align:center; color:#9B8FC4; font-style:italic; margin:20px 0; font-size:0.95em;">
+<div style="text-align:center; color:#8A8478; font-style:italic; margin:20px 0; font-size:0.95em;">
 — {closing}
 </div>
 """, unsafe_allow_html=True)
@@ -1733,8 +1733,8 @@ def _render_tarot_chat(bundle, question, spread_info, cards, initial_result):
 
     st.markdown("""
 <div style="text-align:center; margin:15px 0 8px;">
-<span style="color:#C9A84C; font-size:1.05em; font-weight:bold;">🔮 くろちゃんに聞く</span><br>
-<span style="color:#9B8FC4; font-size:0.8em;">追加の質問ごとに1枚カードを引いてお答えします</span>
+<span style="color:#BFA350; font-size:1.05em; font-weight:bold;">🔮 くろちゃんに聞く</span><br>
+<span style="color:#8A8478; font-size:0.8em;">追加の質問ごとに1枚カードを引いてお答えします</span>
 </div>
 """, unsafe_allow_html=True)
 
@@ -1859,8 +1859,8 @@ def _render_general_chat(bundle, course, results):
 
     st.markdown(f"""
 <div style="text-align:center; margin:15px 0 8px;">
-<span style="color:#C9A84C; font-size:1.05em; font-weight:bold;">🔮 くろちゃんに聞く</span><br>
-<span style="color:#9B8FC4; font-size:0.8em;">{name}さんの命式について、何でも聞いてください</span>
+<span style="color:#BFA350; font-size:1.05em; font-weight:bold;">🔮 くろちゃんに聞く</span><br>
+<span style="color:#8A8478; font-size:0.8em;">{name}さんの命式について、何でも聞いてください</span>
 </div>
 """, unsafe_allow_html=True)
 
@@ -1945,8 +1945,8 @@ def _render_aisho_chat(bundle1, bundle2, result):
 
     st.markdown(f"""
 <div style="text-align:center; margin:15px 0 8px;">
-<span style="color:#FF6B9D; font-size:1.05em; font-weight:bold;">💕 くろちゃんに聞く</span><br>
-<span style="color:#9B8FC4; font-size:0.8em;">{n1}さんと{n2}さんの相性について、何でも聞いてください</span>
+<span style="color:#D4837A; font-size:1.05em; font-weight:bold;">💕 くろちゃんに聞く</span><br>
+<span style="color:#8A8478; font-size:0.8em;">{n1}さんと{n2}さんの相性について、何でも聞いてください</span>
 </div>
 """, unsafe_allow_html=True)
 
@@ -2029,8 +2029,8 @@ def _render_ura_chat(bundle):
 
     st.markdown(f"""
 <div style="text-align:center; margin:15px 0 8px;">
-<span style="color:#C9A84C; font-size:1.05em; font-weight:bold;">🔮 くろちゃんに聞く</span><br>
-<span style="color:#9B8FC4; font-size:0.8em;">{name}さんの命式について自由に質問</span>
+<span style="color:#BFA350; font-size:1.05em; font-weight:bold;">🔮 くろちゃんに聞く</span><br>
+<span style="color:#8A8478; font-size:0.8em;">{name}さんの命式について自由に質問</span>
 </div>
 """, unsafe_allow_html=True)
 
@@ -2109,8 +2109,8 @@ def _render_theme_chat(bundle, theme_key, theme_data):
 
     st.markdown(f"""
 <div style="text-align:center; margin:15px 0 8px;">
-<span style="color:#C9A84C; font-size:1.05em; font-weight:bold;">🔮 くろちゃんに聞く</span><br>
-<span style="color:#9B8FC4; font-size:0.8em;">{name}さんの{theme_label}についてもっと詳しく</span>
+<span style="color:#BFA350; font-size:1.05em; font-weight:bold;">🔮 くろちゃんに聞く</span><br>
+<span style="color:#8A8478; font-size:0.8em;">{name}さんの{theme_label}についてもっと詳しく</span>
 </div>
 """, unsafe_allow_html=True)
 
