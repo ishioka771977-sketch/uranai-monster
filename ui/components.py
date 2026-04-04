@@ -632,8 +632,11 @@ def render_ziwei_course(bundle, data: dict):
     st.markdown('</div>', unsafe_allow_html=True)
 
 
-def render_aisho_result(bundle1, bundle2, data: dict):
-    """相性占い結果を表示"""
+def render_aisho_result(bundle1, bundle2, data: dict, relationship: str = "love"):
+    """相性鑑定結果を表示（エネルギー比較・五本能比較付き）"""
+    from core.bansho_energy import get_energy_percent, get_energy_band, ENERGY_BAND_DETAIL
+    from core.aisho_scoring import RELATIONSHIP_CATEGORIES
+
     s1 = bundle1.sanmei
     s2 = bundle2.sanmei
     w1 = bundle1.western
@@ -641,10 +644,14 @@ def render_aisho_result(bundle1, bundle2, data: dict):
     n1 = bundle1.person.name or "1人目"
     n2 = bundle2.person.name or "2人目"
 
+    rel_cat = RELATIONSHIP_CATEGORIES.get(relationship, RELATIONSHIP_CATEGORIES['love'])
+
     headline = data.get("headline", "")
     score = data.get("score", "")
+    score_label = data.get("score_label", "")
     reading = data.get("reading", "")
     closing = data.get("closing", "")
+    score_result = data.get("score_result", {})
 
     # スコア表示
     score_html = ""
@@ -652,10 +659,12 @@ def render_aisho_result(bundle1, bundle2, data: dict):
         try:
             score_int = int(score)
             color = "#D4837A" if score_int >= 80 else "#D4B96A" if score_int >= 60 else "#7CA3B8"
+            label_html = f'<div style="color:#8A8478; font-size:0.85em;">{score_label}</div>' if score_label else ""
             score_html = f"""
 <div style="text-align:center; margin:12px 0;">
-<span style="font-size:2.5em; color:{color}; font-weight:bold;">{score_int}</span>
+<span style="font-size:2.8em; color:{color}; font-weight:bold;">{score_int}</span>
 <span style="color:#8A8478; font-size:0.9em;"> / 100</span>
+{label_html}
 </div>"""
         except ValueError:
             pass
@@ -677,17 +686,88 @@ def render_aisho_result(bundle1, bundle2, data: dict):
 </div>
 </div>"""
 
-    st.markdown(f"""<div class="divination-card" style="border-color:#D4837A;">
-<div class="card-header" style="color:#D4837A;">💕 相性鑑定 💕</div>
+    # エネルギー比較セクション
+    e1 = s1.bansho_energy
+    e2 = s2.bansho_energy
+    energy_section = ""
+    if e1 and e2:
+        ev1, ev2 = e1.total_energy, e2.total_energy
+        et1, et2 = e1.energy_type, e2.energy_type
+        pct1 = get_energy_percent(ev1)
+        pct2 = get_energy_percent(ev2)
+        diff = abs(ev1 - ev2)
+        diff_label = score_result.get('energy_advice', {}).get('label', '')
+        diff_advice = score_result.get('energy_advice', {}).get(relationship, score_result.get('energy_advice', {}).get('general', ''))
+
+        energy_section = f"""
+<div style="margin:18px 0; padding:16px; background:#1A1A1A; border-radius:8px; border:1px solid #2A2A2A;">
+<div style="color:#BFA350; font-weight:bold; margin-bottom:12px; font-size:1.0em;">⚡ エネルギーバランス</div>
+
+<div style="margin-bottom:8px;">
+<div style="display:flex; align-items:center; margin-bottom:4px;">
+<span style="color:#BFA350; min-width:80px; font-size:0.9em;">{n1}</span>
+<span style="color:#D4B96A; font-weight:bold; min-width:40px;">{ev1}</span>
+<div style="flex:1; background:#222; border-radius:4px; height:18px; margin:0 8px; overflow:hidden;">
+<div style="width:{pct1}%; height:100%; background:linear-gradient(90deg,#BFA350,#D4B96A); border-radius:4px;"></div>
+</div>
+<span style="color:#8A8478; font-size:0.8em;">{et1}</span>
+</div>
+
+<div style="display:flex; align-items:center; margin-bottom:4px;">
+<span style="color:#D4837A; min-width:80px; font-size:0.9em;">{n2}</span>
+<span style="color:#D4B96A; font-weight:bold; min-width:40px;">{ev2}</span>
+<div style="flex:1; background:#222; border-radius:4px; height:18px; margin:0 8px; overflow:hidden;">
+<div style="width:{pct2}%; height:100%; background:linear-gradient(90deg,#D4837A,#C47A6A); border-radius:4px;"></div>
+</div>
+<span style="color:#8A8478; font-size:0.8em;">{et2}</span>
+</div>
+</div>
+
+<div style="text-align:center; margin:8px 0;">
+<span style="color:#F0EBE0; font-size:0.95em;">差: <span style="color:#D4B96A; font-weight:bold;">{diff}</span></span>
+{f'<span style="color:#8A8478; font-size:0.85em;"> ({diff_label})</span>' if diff_label else ''}
+</div>
+{f'<div style="color:#8A8478; font-size:0.85em; margin-top:6px; line-height:1.6;">💡 {diff_advice}</div>' if diff_advice else ''}
+</div>"""
+
+    # 五本能比較セクション
+    honnou_section = ""
+    if e1 and e2:
+        h1_top = e1.top_honnou
+        h2_top = e2.top_honnou if e2 else ""
+        h1_second = e1.second_honnou
+        h2_second = e2.second_honnou if e2 else ""
+        h_text = score_result.get('honnou_text', '')
+
+        honnou_section = f"""
+<div style="margin:10px 0; padding:16px; background:#1A1A1A; border-radius:8px; border:1px solid #2A2A2A;">
+<div style="color:#BFA350; font-weight:bold; margin-bottom:10px; font-size:1.0em;">🎯 五本能の相性</div>
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; font-size:0.88em;">
+<div style="text-align:center;">
+<div style="color:#BFA350; font-weight:bold;">{n1}</div>
+<div style="color:#D4B96A;">第1: {h1_top} / 第2: {h1_second}</div>
+</div>
+<div style="text-align:center;">
+<div style="color:#D4837A; font-weight:bold;">{n2}</div>
+<div style="color:#D4B96A;">第1: {h2_top} / 第2: {h2_second}</div>
+</div>
+</div>
+{f'<div style="color:#8A8478; font-size:0.85em; margin-top:8px; line-height:1.6;">💡 {h_text}</div>' if h_text else ''}
+</div>"""
+
+    st.markdown(f"""<div class="divination-card" style="border-color:#BFA350;">
+<div class="card-header" style="color:#BFA350;">{rel_cat['icon']} 相性鑑定</div>
 <div style="text-align:center; margin:12px 0;">
-<span style="font-size:1.2em; color:#D4837A; font-weight:bold;">「{headline}」</span>
+<span style="font-size:1.2em; color:#D4B96A; font-weight:bold;">「{headline}」</span>
 </div>
 {score_html}
 {tags}
+{energy_section}
+{honnou_section}
 <div class="reading-text" style="line-height:2.0; white-space:pre-wrap;">{reading}</div>
 <div class="gold-divider"></div>
-<div style="text-align:center; margin-top:14px; font-size:1.05em; color:#D4837A; font-style:italic; line-height:1.8;">
-💕 {closing} 💕
+<div style="text-align:center; margin-top:14px; font-size:1.05em; color:#BFA350; font-style:italic; line-height:1.8;">
+✦ {closing} ✦
 </div>
 </div>""", unsafe_allow_html=True)
 

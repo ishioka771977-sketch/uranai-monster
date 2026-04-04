@@ -37,6 +37,9 @@ from ui.pages import (
     render_aisho_input_page,
     render_aisho_loading_page,
     render_aisho_result_page,
+    render_team_input_page,
+    render_team_loading_page,
+    render_team_result_page,
     render_tarot_input_page,
     render_tarot_deepen_page,
     render_tarot_loading_page,
@@ -77,6 +80,12 @@ elif page == "aisho_loading":
     render_aisho_loading_page()
 elif page == "aisho_result":
     render_aisho_result_page()
+elif page == "team_input":
+    render_team_input_page()
+elif page == "team_loading":
+    render_team_loading_page()
+elif page == "team_result":
+    render_team_result_page()
 elif page == "tarot_input":
     render_tarot_input_page()
 elif page == "tarot_deepen":

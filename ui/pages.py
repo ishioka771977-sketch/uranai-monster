@@ -60,7 +60,7 @@ def render_top_page():
             st.session_state.page = "tarot_input"
             st.rerun()
         st.markdown("<br>", unsafe_allow_html=True)
-        if st.button("💕 相性占い 💕", key="btn_aisho"):
+        if st.button("✦ 相性鑑定 ✦", key="btn_aisho"):
             st.session_state.page = "aisho_input"
             st.rerun()
 
@@ -318,40 +318,96 @@ def _render_people_quick_select():
             # 一括インポート
             st.markdown("---")
             st.markdown('<div style="color:#BFA350;font-size:0.85em;font-weight:bold;">一括インポート</div>', unsafe_allow_html=True)
-            st.caption("1行1人「名前,年,月,日」形式で貼り付け。フォルダも指定可。")
+            st.caption("以下の形式に対応（自動判定）:\n・名前, 年, 月, 日\n・名前, 1990/3/15\n・名前, 1990-03-15\n・名前, H2.3.15（和暦）\n・名前, 1990/3/15, 男性\n・名前, 1990/3/15, 男性, A")
             import_text = st.text_area(
                 "一括入力", key="bulk_import", height=120, label_visibility="collapsed",
-                placeholder="太郎,1985,3,15\n花子,1990,8,22\n..."
+                placeholder="太郎, 1985/3/15\n花子, 1990/8/22\n太郎, H2.3.15\n..."
             )
             import_folder = st.text_input("インポート先フォルダ（空欄＝フォルダなし）", key="import_folder", placeholder="例: 鹿島建設セミナー", label_visibility="collapsed")
             if st.button("📥 一括登録", key="btn_bulk_import"):
                 if import_text.strip():
                     count = 0
+                    errors = []
                     for line in import_text.strip().split("\n"):
-                        parts = [p.strip() for p in line.split(",")]
-                        if len(parts) >= 4:
-                            pname, pyear, pmonth, pday = parts[0], parts[1], parts[2], parts[3]
-                            pgender = parts[4] if len(parts) > 4 else "男性"
-                            pblood = parts[5] if len(parts) > 5 else "不明"
-                            ptime = parts[6] if len(parts) > 6 else ""
+                        line = line.strip()
+                        if not line:
+                            continue
+                        # カンマまたはスペースで分割
+                        if "," in line:
+                            parts = [p.strip() for p in line.split(",")]
+                        else:
+                            parts = line.split()
+                        if len(parts) < 2:
+                            errors.append(f"形式エラー: {line}")
+                            continue
+                        pname = parts[0]
+                        date_str = parts[1]
+                        pgender = parts[2] if len(parts) > 2 else ""
+                        pblood = parts[3] if len(parts) > 3 else "不明"
+                        ptime = parts[4] if len(parts) > 4 else ""
+
+                        # 日付パース
+                        pyear, pmonth, pday = None, None, None
+                        try:
+                            if len(parts) >= 4 and parts[1].isdigit() and parts[2].isdigit() and parts[3].isdigit():
+                                # 旧形式: 名前,年,月,日
+                                pyear, pmonth, pday = int(parts[1]), int(parts[2]), int(parts[3])
+                                pgender = parts[4] if len(parts) > 4 else ""
+                                pblood = parts[5] if len(parts) > 5 else "不明"
+                                ptime = parts[6] if len(parts) > 6 else ""
+                            elif "/" in date_str:
+                                dp = date_str.split("/")
+                                pyear, pmonth, pday = int(dp[0]), int(dp[1]), int(dp[2])
+                            elif "-" in date_str:
+                                dp = date_str.split("-")
+                                pyear, pmonth, pday = int(dp[0]), int(dp[1]), int(dp[2])
+                            elif "." in date_str:
+                                # 和暦: H2.3.15, S55.1.1, R1.5.1 等
+                                import re
+                                wm = re.match(r'([MTSHR])(\d+)\.(\d+)\.(\d+)', date_str)
+                                if wm:
+                                    era_map = {"M": 1867, "T": 1911, "S": 1925, "H": 1988, "R": 2018}
+                                    base = era_map.get(wm.group(1), 1988)
+                                    pyear = base + int(wm.group(2))
+                                    pmonth, pday = int(wm.group(3)), int(wm.group(4))
+                                else:
+                                    dp = date_str.split(".")
+                                    pyear, pmonth, pday = int(dp[0]), int(dp[1]), int(dp[2])
+                            else:
+                                # 漢字形式: 平成2年3月15日
+                                import re
+                                km = re.match(r'(明治|大正|昭和|平成|令和)(\d+)年(\d+)月(\d+)日', date_str)
+                                if km:
+                                    era_map2 = {"明治": 1867, "大正": 1911, "昭和": 1925, "平成": 1988, "令和": 2018}
+                                    base = era_map2.get(km.group(1), 1988)
+                                    pyear = base + int(km.group(2))
+                                    pmonth, pday = int(km.group(3)), int(km.group(4))
+                        except (ValueError, IndexError):
+                            pass
+
+                        if pyear and pmonth and pday:
                             people_db[pname] = {
                                 "name": pname, "gender": pgender,
-                                "year": int(pyear), "month": int(pmonth), "day": int(pday),
+                                "year": pyear, "month": pmonth, "day": pday,
                                 "time": ptime, "place": "", "blood": pblood,
                                 "created_at": "",
                             }
-                            # フォルダに追加
                             if import_folder:
                                 if import_folder not in folders_db:
                                     folders_db[import_folder] = []
                                 if pname not in folders_db[import_folder]:
                                     folders_db[import_folder].append(pname)
                             count += 1
+                        else:
+                            errors.append(f"日付解析失敗: {line}")
+
                     st.session_state._people_db = people_db
                     _persist_people_db(people_db)
                     if import_folder:
                         _persist_folders_db(folders_db)
                     st.success(f"{count}人を登録しました" + (f"（📁 {import_folder}）" if import_folder else ""))
+                    if errors:
+                        st.warning("\\n".join(errors))
                     st.rerun()
 
 
@@ -998,10 +1054,12 @@ def _generate_theme(bundle, theme_key: str):
 # 相性占い: 入力画面
 # ============================================================
 def render_aisho_input_page():
-    """相性占い: 2人分の生年月日入力画面"""
-    render_star_deco("💕")
+    """相性鑑定: 2人分の生年月日入力 + 関係性選択"""
+    from core.aisho_scoring import RELATIONSHIP_CATEGORIES
+
+    render_star_deco("✦")
     st.markdown(
-        '<div class="uranai-title" style="font-size:1.5em;">相性占い</div>',
+        '<div class="uranai-title" style="font-size:1.5em;">相性鑑定</div>',
         unsafe_allow_html=True
     )
     st.markdown(
@@ -1010,83 +1068,181 @@ def render_aisho_input_page():
     )
     render_gold_divider()
 
-    # --- 1人目 ---
-    st.markdown('<div style="color:#BFA350; font-size:1.1em; font-weight:bold; margin:10px 0 5px;">✦ 1人目</div>', unsafe_allow_html=True)
-    name1 = st.text_input("お名前", value="", placeholder="例: ひでさん", key="aisho_name1")
-    gender1 = st.radio("性別", options=["男性", "女性", "その他"], index=0, horizontal=True, key="aisho_gender1")
+    # --- 1人目（ひでさん固定オプション） ---
+    use_hidesan = st.checkbox("1人目をひでさんに固定する", value=st.session_state.get("aisho_use_hidesan", False), key="aisho_use_hidesan")
 
-    c1a, c1b, c1c = st.columns(3)
-    with c1a:
-        y1 = st.selectbox("年", options=list(range(1930, date.today().year)), index=list(range(1930, date.today().year)).index(1990), key="aisho_y1")
-    with c1b:
-        m1 = st.selectbox("月", options=list(range(1, 13)), index=4, key="aisho_m1")
-    with c1c:
-        d1 = st.selectbox("日", options=list(range(1, 32)), index=14, key="aisho_d1")
+    if use_hidesan:
+        st.markdown('<div style="color:#BFA350; font-size:1.1em; font-weight:bold; margin:10px 0 5px;">✦ 1人目: ひでさん（固定）</div>', unsafe_allow_html=True)
+        st.markdown('<div style="color:#8A8478; font-size:0.85em; margin:0 0 10px;">1977/5/24 函館市 A型</div>', unsafe_allow_html=True)
+    else:
+        st.markdown('<div style="color:#BFA350; font-size:1.1em; font-weight:bold; margin:10px 0 5px;">✦ 1人目</div>', unsafe_allow_html=True)
 
-    with st.expander("▼ もっと詳しく（任意）", expanded=False):
-        t1 = st.text_input("出生時刻", value="", placeholder="HH:MM", key="aisho_t1")
-        p1 = st.text_input("出生地", value="", placeholder="都市名", key="aisho_p1")
-        b1 = st.radio("血液型", options=["不明", "A", "B", "O", "AB"], index=0, horizontal=True, key="aisho_b1")
+        # 顧客リストから選択
+        db = _load_people_db()
+        if db:
+            ppl_names = ["（手入力）"] + sorted(db.keys())
+            sel1 = st.selectbox("顧客リストから選択", options=ppl_names, index=0, key="aisho_sel1")
+            if sel1 != "（手入力）" and sel1 in db:
+                p = db[sel1]
+                st.session_state["aisho_name1_v"] = p.get("name", sel1)
+                st.session_state["aisho_y1_v"] = p.get("year", 1990)
+                st.session_state["aisho_m1_v"] = p.get("month", 5)
+                st.session_state["aisho_d1_v"] = p.get("day", 15)
+                st.session_state["aisho_gender1_v"] = p.get("gender", "男性")
+                st.session_state["aisho_t1_v"] = p.get("time", "")
+                st.session_state["aisho_p1_v"] = p.get("place", "")
+                st.session_state["aisho_b1_v"] = p.get("blood", "不明")
+
+        name1 = st.text_input("お名前", value=st.session_state.get("aisho_name1_v", ""), placeholder="例: ひでさん", key="aisho_name1")
+        gender1 = st.radio("性別", options=["男性", "女性", "その他"], index=0, horizontal=True, key="aisho_gender1")
+
+        years = list(range(1930, date.today().year))
+        c1a, c1b, c1c = st.columns(3)
+        with c1a:
+            y1 = st.selectbox("年", options=years, index=years.index(st.session_state.get("aisho_y1_v", 1990)), key="aisho_y1")
+        with c1b:
+            m1 = st.selectbox("月", options=list(range(1, 13)), index=st.session_state.get("aisho_m1_v", 5) - 1, key="aisho_m1")
+        with c1c:
+            d1 = st.selectbox("日", options=list(range(1, 32)), index=st.session_state.get("aisho_d1_v", 15) - 1, key="aisho_d1")
+
+        with st.expander("▼ もっと詳しく（任意）", expanded=False):
+            t1 = st.text_input("出生時刻", value=st.session_state.get("aisho_t1_v", ""), placeholder="HH:MM", key="aisho_t1")
+            p1 = st.text_input("出生地", value=st.session_state.get("aisho_p1_v", ""), placeholder="都市名", key="aisho_p1")
+            b1 = st.radio("血液型", options=["不明", "A", "B", "O", "AB"], index=0, horizontal=True, key="aisho_b1")
 
     render_gold_divider()
 
     # --- 2人目 ---
     st.markdown('<div style="color:#D4837A; font-size:1.1em; font-weight:bold; margin:10px 0 5px;">✦ 2人目</div>', unsafe_allow_html=True)
-    name2 = st.text_input("お名前", value="", placeholder="例: ゆうこ", key="aisho_name2")
+
+    # 顧客リストから選択
+    db = _load_people_db()
+    if db:
+        ppl_names2 = ["（手入力）"] + sorted(db.keys())
+        sel2 = st.selectbox("顧客リストから選択", options=ppl_names2, index=0, key="aisho_sel2")
+        if sel2 != "（手入力）" and sel2 in db:
+            p2 = db[sel2]
+            st.session_state["aisho_name2_v"] = p2.get("name", sel2)
+            st.session_state["aisho_y2_v"] = p2.get("year", 1990)
+            st.session_state["aisho_m2_v"] = p2.get("month", 5)
+            st.session_state["aisho_d2_v"] = p2.get("day", 15)
+            st.session_state["aisho_gender2_v"] = p2.get("gender", "女性")
+            st.session_state["aisho_t2_v"] = p2.get("time", "")
+            st.session_state["aisho_p2_v"] = p2.get("place", "")
+            st.session_state["aisho_b2_v"] = p2.get("blood", "不明")
+
+    name2 = st.text_input("お名前", value=st.session_state.get("aisho_name2_v", ""), placeholder="例: ゆうこ", key="aisho_name2")
     gender2 = st.radio("性別", options=["男性", "女性", "その他"], index=1, horizontal=True, key="aisho_gender2")
 
+    years2 = list(range(1930, date.today().year))
     c2a, c2b, c2c = st.columns(3)
     with c2a:
-        y2 = st.selectbox("年", options=list(range(1930, date.today().year)), index=list(range(1930, date.today().year)).index(1990), key="aisho_y2")
+        y2 = st.selectbox("年", options=years2, index=years2.index(st.session_state.get("aisho_y2_v", 1990)), key="aisho_y2")
     with c2b:
-        m2 = st.selectbox("月", options=list(range(1, 13)), index=4, key="aisho_m2")
+        m2 = st.selectbox("月", options=list(range(1, 13)), index=st.session_state.get("aisho_m2_v", 5) - 1, key="aisho_m2")
     with c2c:
-        d2 = st.selectbox("日", options=list(range(1, 32)), index=14, key="aisho_d2")
+        d2 = st.selectbox("日", options=list(range(1, 32)), index=st.session_state.get("aisho_d2_v", 15) - 1, key="aisho_d2")
 
     with st.expander("▼ もっと詳しく（任意）", expanded=False):
-        t2 = st.text_input("出生時刻", value="", placeholder="HH:MM", key="aisho_t2")
-        p2 = st.text_input("出生地", value="", placeholder="都市名", key="aisho_p2")
+        t2 = st.text_input("出生時刻", value=st.session_state.get("aisho_t2_v", ""), placeholder="HH:MM", key="aisho_t2")
+        p2 = st.text_input("出生地", value=st.session_state.get("aisho_p2_v", ""), placeholder="都市名", key="aisho_p2")
         b2 = st.radio("血液型", options=["不明", "A", "B", "O", "AB"], index=0, horizontal=True, key="aisho_b2")
+
+    render_gold_divider()
+
+    # --- 関係性カテゴリ選択 ---
+    st.markdown('<div style="color:#BFA350; font-size:1.1em; font-weight:bold; margin:10px 0 8px;">✦ 2人の関係性を選んでください</div>', unsafe_allow_html=True)
+
+    cat_keys = list(RELATIONSHIP_CATEGORIES.keys())
+    cat_labels = [f"{RELATIONSHIP_CATEGORIES[k]['icon']} {RELATIONSHIP_CATEGORIES[k]['label']}" for k in cat_keys]
+
+    # 2行3列のボタンレイアウト
+    row1 = st.columns(3)
+    row2 = st.columns(3)
+    rows = [row1, row2]
+
+    selected_rel = st.session_state.get("aisho_relationship", "love")
+
+    for i, key in enumerate(cat_keys):
+        cat = RELATIONSHIP_CATEGORIES[key]
+        r = i // 3
+        c = i % 3
+        with rows[r][c]:
+            is_selected = (selected_rel == key)
+            btn_style = "border:2px solid #BFA350; background:#1A1A1A;" if is_selected else "border:1px solid #2A2A2A; background:#121212;"
+            if st.button(
+                f"{cat['icon']} {cat['label']}",
+                key=f"btn_rel_{key}",
+                use_container_width=True,
+            ):
+                st.session_state.aisho_relationship = key
+                st.rerun()
+
+    # 選択中の関係性を表示
+    sel_cat = RELATIONSHIP_CATEGORIES.get(selected_rel, RELATIONSHIP_CATEGORIES['love'])
+    st.markdown(f'<div style="text-align:center; color:#8A8478; font-size:0.85em; margin:5px 0 15px;">{sel_cat["icon"]} {sel_cat["label"]}: {sel_cat["description"]}</div>', unsafe_allow_html=True)
 
     render_gold_divider()
 
     col1, col2, col3 = st.columns([1, 2, 1])
     with col2:
-        if st.button("💕 相性を鑑定する 💕", key="btn_aisho_start"):
+        if st.button("✦ 鑑定する ✦", key="btn_aisho_start"):
+            if use_hidesan:
+                bd1 = date(1977, 5, 24)
+                person1 = PersonInput(
+                    name="ひでさん", gender="男性", birth_date=bd1,
+                    birth_time="1:34", birth_place="函館市", blood_type="A",
+                )
+            else:
+                try:
+                    bd1 = date(y1, m1, d1)
+                except ValueError:
+                    st.error("1人目の日付が無効です。")
+                    return
+                time1 = st.session_state.get("aisho_t1", "").strip()
+                place1 = st.session_state.get("aisho_p1", "").strip()
+                blood1 = st.session_state.get("aisho_b1", "不明")
+                g1 = st.session_state.get("aisho_gender1", "男性")
+                person1 = PersonInput(
+                    name=name1.strip() if name1.strip() else "1人目",
+                    gender=g1, birth_date=bd1,
+                    birth_time=time1 if time1 else None,
+                    birth_place=place1 if place1 else None,
+                    blood_type=blood1 if blood1 != "不明" else None,
+                )
+
             try:
-                bd1 = date(y1, m1, d1)
                 bd2 = date(y2, m2, d2)
             except ValueError:
-                st.error("無効な日付です。正しい生年月日を入力してください。")
+                st.error("2人目の日付が無効です。")
                 return
 
-            time1 = st.session_state.get("aisho_t1", "").strip()
-            place1 = st.session_state.get("aisho_p1", "").strip()
-            blood1 = st.session_state.get("aisho_b1", "不明")
             time2 = st.session_state.get("aisho_t2", "").strip()
             place2 = st.session_state.get("aisho_p2", "").strip()
             blood2 = st.session_state.get("aisho_b2", "不明")
-
-            g1 = st.session_state.get("aisho_gender1", "男性")
             g2 = st.session_state.get("aisho_gender2", "女性")
 
-            st.session_state.aisho_person1 = PersonInput(
-                name=name1.strip() if name1.strip() else "1人目",
-                gender=g1,
-                birth_date=bd1,
-                birth_time=time1 if time1 else None,
-                birth_place=place1 if place1 else None,
-                blood_type=blood1 if blood1 != "不明" else None,
-            )
+            st.session_state.aisho_person1 = person1
             st.session_state.aisho_person2 = PersonInput(
                 name=name2.strip() if name2.strip() else "2人目",
-                gender=g2,
-                birth_date=bd2,
+                gender=g2, birth_date=bd2,
                 birth_time=time2 if time2 else None,
                 birth_place=place2 if place2 else None,
                 blood_type=blood2 if blood2 != "不明" else None,
             )
+            if "aisho_relationship" not in st.session_state:
+                st.session_state.aisho_relationship = "love"
             st.session_state.page = "aisho_loading"
+            st.rerun()
+
+    render_gold_divider()
+
+    # チーム分析への導線
+    st.markdown('<div style="text-align:center; color:#8A8478; font-size:0.85em; margin:5px 0;">3人以上のチーム全体を分析したい場合はこちら↓</div>', unsafe_allow_html=True)
+    col_t1, col_t2, col_t3 = st.columns([1, 2, 1])
+    with col_t2:
+        if st.button("👥 チーム分析", key="btn_goto_team"):
+            st.session_state.page = "team_input"
             st.rerun()
 
     if st.button("← 戻る", key="btn_back_aisho"):
@@ -1098,7 +1254,7 @@ def render_aisho_input_page():
 # 相性占い: ローディング + 鑑定生成
 # ============================================================
 def render_aisho_loading_page():
-    """相性占い: 2人分の計算 + 相性鑑定生成"""
+    """相性鑑定: 2人分の計算 + 相性鑑定生成（関係性対応版）"""
     from core.sanmei import calculate_sanmei
     from core.western import calculate_western
     from core.kyusei import calculate_kyusei
@@ -1107,13 +1263,20 @@ def render_aisho_loading_page():
     from core.models import DivinationBundle
     from core.tarot import draw_tarot
     from ai.interpreter import generate_aisho_reading
+    from core.aisho_scoring import RELATIONSHIP_CATEGORIES
 
     person1 = st.session_state.aisho_person1
     person2 = st.session_state.aisho_person2
+    relationship = st.session_state.get("aisho_relationship", "love")
+    rel_cat = RELATIONSHIP_CATEGORIES.get(relationship, RELATIONSHIP_CATEGORIES['love'])
 
-    render_star_deco("💕")
+    render_star_deco("✦")
     st.markdown(
-        '<div class="uranai-title" style="font-size:1.5em;">💕 ふたりの星を読んでいます…</div>',
+        f'<div class="uranai-title" style="font-size:1.5em;">✦ ふたりの星を読んでいます…</div>',
+        unsafe_allow_html=True
+    )
+    st.markdown(
+        f'<div style="text-align:center; color:#8A8478; font-size:0.9em;">{rel_cat["icon"]} {rel_cat["label"]}</div>',
         unsafe_allow_html=True
     )
 
@@ -1148,8 +1311,8 @@ def render_aisho_loading_page():
         )
         st.write(f"✧ {person2.name}さん ── 完了")
 
-        st.write("✧ ふたりの相性を分析中…")
-        aisho_result = generate_aisho_reading(bundle1, bundle2)
+        st.write(f"✧ {rel_cat['label']}の相性を分析中…")
+        aisho_result = generate_aisho_reading(bundle1, bundle2, relationship)
         status.update(label="✦ 相性鑑定完了 ✦", state="complete")
 
     st.session_state.aisho_bundle1 = bundle1
@@ -1163,23 +1326,30 @@ def render_aisho_loading_page():
 # 相性占い: 結果画面
 # ============================================================
 def render_aisho_result_page():
-    """相性占い結果表示"""
+    """相性鑑定 結果表示（関係性対応版）"""
     from ui.components import render_aisho_result
+    from core.aisho_scoring import RELATIONSHIP_CATEGORIES
 
     bundle1 = st.session_state.aisho_bundle1
     bundle2 = st.session_state.aisho_bundle2
     result = st.session_state.aisho_result
+    relationship = st.session_state.get("aisho_relationship", "love")
+    rel_cat = RELATIONSHIP_CATEGORIES.get(relationship, RELATIONSHIP_CATEGORIES['love'])
 
-    render_star_deco("💕")
+    render_star_deco("✦")
     n1 = bundle1.person.name or "1人目"
     n2 = bundle2.person.name or "2人目"
     st.markdown(
-        f'<div class="uranai-title" style="font-size:1.4em;">{n1} × {n2} の相性</div>',
+        f'<div class="uranai-title" style="font-size:1.4em;">{n1} × {n2}</div>',
+        unsafe_allow_html=True
+    )
+    st.markdown(
+        f'<div style="text-align:center; color:#8A8478; font-size:0.9em; margin:-5px 0 10px;">{rel_cat["icon"]} {rel_cat["label"]}</div>',
         unsafe_allow_html=True
     )
     render_gold_divider()
 
-    render_aisho_result(bundle1, bundle2, result)
+    render_aisho_result(bundle1, bundle2, result, relationship)
 
     render_gold_divider()
 
@@ -1190,7 +1360,7 @@ def render_aisho_result_page():
 
     col1, col2 = st.columns(2)
     with col1:
-        if st.button("💕 もう一組鑑定する", key="btn_aisho_again"):
+        if st.button("✦ もう一組鑑定する", key="btn_aisho_again"):
             st.session_state.page = "aisho_input"
             st.rerun()
     with col2:
@@ -2154,7 +2324,7 @@ def _render_aisho_chat(bundle1, bundle2, result):
 
     st.markdown(f"""
 <div style="text-align:center; margin:15px 0 8px;">
-<span style="color:#D4837A; font-size:1.05em; font-weight:bold;">💕 くろたんに聞く</span><br>
+<span style="color:#D4837A; font-size:1.05em; font-weight:bold;">✦ くろたんに聞く</span><br>
 <span style="color:#8A8478; font-size:0.8em;">{n1}さんと{n2}さんの相性について、何でも聞いてください</span>
 </div>
 """, unsafe_allow_html=True)
@@ -2165,7 +2335,7 @@ def _render_aisho_chat(bundle1, bundle2, result):
     for chat in st.session_state.aisho_chat_history:
         with st.chat_message("user", avatar="🙋"):
             st.write(chat["question"])
-        with st.chat_message("assistant", avatar="💕"):
+        with st.chat_message("assistant", avatar="✦"):
             st.write(chat["answer"])
 
     ac_col1, ac_col2 = st.columns([5, 1])
@@ -2213,7 +2383,7 @@ def _render_aisho_chat(bundle1, bundle2, result):
         with st.chat_message("user", avatar="🙋"):
             st.write(follow_up)
 
-        with st.chat_message("assistant", avatar="💕"):
+        with st.chat_message("assistant", avatar="✦"):
             with st.spinner("くろたんが考え中…"):
                 try:
                     answer = _call_api_text(SYSTEM_PROMPT_BASE, prompt, max_tokens=1000)
@@ -2383,3 +2553,389 @@ def _render_theme_chat(bundle, theme_key, theme_data):
             "question": follow_up,
             "answer": answer,
         })
+
+
+# ============================================================
+# チーム分析: 入力画面
+# ============================================================
+TEAM_TYPES = {
+    'workplace': {'label': '現場チーム', 'icon': '🏗'},
+    'organization': {'label': '組織', 'icon': '🏢'},
+    'friends': {'label': '仲間', 'icon': '🍻'},
+    'family': {'label': '家族', 'icon': '👨‍👧'},
+    'other': {'label': 'その他', 'icon': '📋'},
+}
+
+
+def render_team_input_page():
+    """チーム分析: メンバー選択画面"""
+    render_star_deco("👥")
+    st.markdown(
+        '<div class="uranai-title" style="font-size:1.5em;">チーム分析</div>',
+        unsafe_allow_html=True
+    )
+    st.markdown(
+        '<div class="uranai-subtitle">～ チーム全体のバランスを可視化する ～</div>',
+        unsafe_allow_html=True
+    )
+    render_gold_divider()
+
+    db = _load_people_db()
+    fdb = _load_folders_db()
+
+    # メンバー選択
+    st.markdown('<div style="color:#BFA350; font-size:1.1em; font-weight:bold; margin:10px 0 5px;">✦ メンバーを選択</div>', unsafe_allow_html=True)
+
+    # フォルダから一括追加
+    if fdb:
+        folder_names = list(fdb.keys())
+        sel_folder = st.selectbox("フォルダから一括追加", options=["（選択しない）"] + folder_names, key="team_folder_sel")
+        if sel_folder != "（選択しない）" and sel_folder in fdb:
+            folder_members = fdb[sel_folder]
+            if st.button(f"📂 「{sel_folder}」の全員を追加", key="btn_team_folder_add"):
+                if "team_selected_members" not in st.session_state:
+                    st.session_state.team_selected_members = set()
+                for m in folder_members:
+                    if m in db:
+                        st.session_state.team_selected_members.add(m)
+                st.rerun()
+
+    # 個別選択（チェックボックス）
+    if "team_selected_members" not in st.session_state:
+        st.session_state.team_selected_members = set()
+
+    if db:
+        st.markdown('<div style="color:#8A8478; font-size:0.85em; margin:8px 0;">顧客リストから個別選択:</div>', unsafe_allow_html=True)
+        for name in sorted(db.keys()):
+            is_checked = name in st.session_state.team_selected_members
+            if st.checkbox(name, value=is_checked, key=f"team_cb_{name}"):
+                st.session_state.team_selected_members.add(name)
+            else:
+                st.session_state.team_selected_members.discard(name)
+
+    selected = st.session_state.team_selected_members
+    st.markdown(f'<div style="color:#D4B96A; font-size:0.9em; margin:10px 0;">選択中: {len(selected)}名</div>', unsafe_allow_html=True)
+
+    render_gold_divider()
+
+    # チーム種類の選択
+    st.markdown('<div style="color:#BFA350; font-size:1.1em; font-weight:bold; margin:10px 0 5px;">✦ チームの種類</div>', unsafe_allow_html=True)
+    team_type = st.session_state.get("team_type", "workplace")
+    cols = st.columns(len(TEAM_TYPES))
+    for i, (key, tt) in enumerate(TEAM_TYPES.items()):
+        with cols[i]:
+            if st.button(f"{tt['icon']} {tt['label']}", key=f"btn_tt_{key}", use_container_width=True):
+                st.session_state.team_type = key
+                st.rerun()
+    sel_tt = TEAM_TYPES.get(team_type, TEAM_TYPES['workplace'])
+    st.markdown(f'<div style="text-align:center; color:#8A8478; font-size:0.85em; margin:5px 0;">{sel_tt["icon"]} {sel_tt["label"]}</div>', unsafe_allow_html=True)
+
+    render_gold_divider()
+
+    col1, col2, col3 = st.columns([1, 2, 1])
+    with col2:
+        if st.button("👥 チームを分析する", key="btn_team_start"):
+            if len(selected) < 2:
+                st.error("2名以上を選択してください。")
+                return
+            st.session_state.page = "team_loading"
+            st.rerun()
+
+    if st.button("← 戻る", key="btn_back_team"):
+        st.session_state.page = "aisho_input"
+        st.rerun()
+
+
+# ============================================================
+# チーム分析: ローディング + 計算
+# ============================================================
+def render_team_loading_page():
+    """チーム分析: 全メンバーの計算 + AI診断生成"""
+    from core.sanmei import calculate_sanmei
+    from core.western import calculate_western
+    from core.kyusei import calculate_kyusei
+    from core.numerology import calculate_numerology
+    from core.ziwei import calculate_ziwei
+    from core.models import DivinationBundle
+    from core.tarot import draw_tarot
+    from core.bansho_energy import get_energy_band, ENERGY_BAND_DETAIL, HONNOU_MAP
+
+    db = _load_people_db()
+    selected = st.session_state.get("team_selected_members", set())
+    team_type_key = st.session_state.get("team_type", "workplace")
+    team_type = TEAM_TYPES.get(team_type_key, TEAM_TYPES['workplace'])
+
+    render_star_deco("👥")
+    st.markdown(
+        f'<div class="uranai-title" style="font-size:1.5em;">👥 チームを分析中…</div>',
+        unsafe_allow_html=True
+    )
+
+    bundles = []
+    with st.status("✦ 全メンバーを計算中…", expanded=True) as status:
+        for name in sorted(selected):
+            if name not in db:
+                continue
+            p = db[name]
+            try:
+                person = PersonInput(
+                    name=name,
+                    gender=p.get("gender", ""),
+                    birth_date=date(p["year"], p["month"], p["day"]),
+                    birth_time=p.get("time") or None,
+                    birth_place=p.get("place") or None,
+                    blood_type=p.get("blood") if p.get("blood") != "不明" else None,
+                )
+                st.write(f"✧ {name}さんを計算中…")
+                s = calculate_sanmei(person)
+                w = calculate_western(person)
+                k = calculate_kyusei(person)
+                n = calculate_numerology(person)
+                t = draw_tarot(1, major_only=True)[0]
+                z = calculate_ziwei(person)
+                bundle = DivinationBundle(
+                    person=person, sanmei=s, western=w, kyusei=k,
+                    numerology=n, tarot=t, ziwei=z,
+                    has_birth_time=person.birth_time is not None,
+                    has_blood_type=person.blood_type is not None,
+                )
+                bundles.append(bundle)
+            except Exception as ex:
+                st.write(f"⚠ {name}さんの計算でエラー: {ex}")
+
+        st.write("✧ チーム分析を集計中…")
+
+        # チーム統計を計算
+        energies = []
+        honnou_totals = {"守備": 0, "表現": 0, "魅力": 0, "攻撃": 0, "学習": 0}
+        tenchusatsu_calendar = {}
+
+        for b in bundles:
+            e = b.sanmei.bansho_energy
+            if e:
+                energies.append((b.person.name, e.total_energy, e.energy_type, e.top_honnou, e.second_honnou))
+                for h, s_val in e.honnou_ranking:
+                    honnou_totals[h] = honnou_totals.get(h, 0) + s_val
+            # 天中殺年
+            tc_years = b.sanmei.tenchusatsu_years or []
+            for y in tc_years:
+                if 2026 <= y <= 2030:
+                    tenchusatsu_calendar.setdefault(y, []).append(b.person.name)
+
+        avg_energy = sum(e[1] for e in energies) // len(energies) if energies else 0
+        max_e = max(energies, key=lambda x: x[1]) if energies else ("", 0)
+        min_e = min(energies, key=lambda x: x[1]) if energies else ("", 0)
+        max_diff = max_e[1] - min_e[1] if energies else 0
+
+        # 五本能バランス（%）
+        total_honnou = sum(honnou_totals.values()) or 1
+        honnou_pcts = {h: round(v / total_honnou * 100) for h, v in honnou_totals.items()}
+        missing = [h for h, pct in honnou_pcts.items() if pct < 5]
+
+        # AI鑑定文を生成
+        st.write("✧ くろたんがチーム診断文を作成中…")
+        team_result = _generate_team_reading(
+            bundles, team_type, energies, avg_energy, max_diff,
+            max_e, min_e, honnou_pcts, missing, tenchusatsu_calendar
+        )
+
+        status.update(label="✦ チーム分析完了 ✦", state="complete")
+
+    st.session_state.team_bundles = bundles
+    st.session_state.team_energies = energies
+    st.session_state.team_avg_energy = avg_energy
+    st.session_state.team_max_diff = max_diff
+    st.session_state.team_max_e = max_e
+    st.session_state.team_min_e = min_e
+    st.session_state.team_honnou_pcts = honnou_pcts
+    st.session_state.team_missing = missing
+    st.session_state.team_tc_calendar = tenchusatsu_calendar
+    st.session_state.team_result = team_result
+    st.session_state.page = "team_result"
+    st.rerun()
+
+
+def _generate_team_reading(bundles, team_type, energies, avg_energy, max_diff,
+                           max_e, min_e, honnou_pcts, missing, tc_calendar):
+    """チーム分析のAI鑑定文を生成"""
+    from ai.interpreter import _get_client, _parse_json_response
+    from google.genai import types
+
+    member_lines = []
+    for name, energy, etype, h1, h2 in energies:
+        member_lines.append(f"- {name}: エネルギー{energy}（{etype}）, 第1本能={h1}, 第2本能={h2}")
+    member_data = "\n".join(member_lines)
+
+    tc_lines = []
+    for y in sorted(tc_calendar.keys()):
+        members = "、".join(tc_calendar[y])
+        tc_lines.append(f"- {y}年: {members}が天中殺")
+    tc_text = "\n".join(tc_lines) if tc_lines else "（2026〜2030年に天中殺メンバーなし）"
+
+    honnou_text = " / ".join(f"{h}{pct}%" for h, pct in honnou_pcts.items())
+    missing_text = "、".join(missing) if missing else "なし"
+
+    system_prompt = f"""あなたは「占いモンスターくろたん」。チーム分析の専門家。
+複数人のエネルギー指数・五本能・天中殺データを基に、チーム全体の診断を行う。
+
+【鑑定の原則】
+1. チームの強みを最初に明確にする
+2. 弱点は「補い方」とセットで提示する
+3. エネルギー差が大きいメンバー間の注意点を具体的に指摘する
+4. 誰が何を担当すべきかの役割分担を提案する
+5. 天中殺のタイミングを考慮した年間戦略を提案する
+6. 「このチームだからこそできること」をポジティブに語る
+7. 断定口調で語る。"""
+
+    user_prompt = f"""【チーム情報】
+チーム種類: {team_type['icon']} {team_type['label']}
+メンバー数: {len(energies)}名
+
+【メンバーデータ】
+{member_data}
+
+【チーム統計】
+- 平均エネルギー: {avg_energy}
+- 最大エネルギー差: {max_diff}（{max_e[0]} {max_e[1]} ↔ {min_e[0]} {min_e[1]}）
+- 五本能バランス: {honnou_text}
+- 欠落本能: {missing_text}
+- 天中殺カレンダー:
+{tc_text}
+
+以上のデータを基に、チーム総合診断を行ってください。
+2,000〜3,000文字。
+
+出力はJSON:
+{{"headline": "チームの特徴を一言で（15〜30文字）", "reading": "チーム診断本文（2,000〜3,000文字）", "closing": "チームへの締めの一言（30〜60文字）"}}"""
+
+    try:
+        client = _get_client()
+        response = client.models.generate_content(
+            model="gemini-2.5-pro",
+            contents=user_prompt,
+            config=types.GenerateContentConfig(
+                system_instruction=system_prompt,
+                max_output_tokens=5000 + 4096,
+                temperature=0.9,
+                thinking_config=types.ThinkingConfig(thinking_budget=4096),
+            ),
+        )
+        text = response.text or ""
+        result = _parse_json_response(text)
+        if result and result.get("reading"):
+            return result
+    except Exception as ex:
+        print(f"[チーム分析] AI生成エラー: {ex}")
+
+    return {
+        "headline": f"{len(energies)}名のチーム分析",
+        "reading": f"チーム平均エネルギー: {avg_energy}\n最大差: {max_diff}\n五本能: {honnou_text}",
+        "closing": "チームの強みを活かして進め。",
+    }
+
+
+# ============================================================
+# チーム分析: 結果画面
+# ============================================================
+def render_team_result_page():
+    """チーム分析の結果表示"""
+    from core.bansho_energy import get_energy_percent
+
+    bundles = st.session_state.get("team_bundles", [])
+    energies = st.session_state.get("team_energies", [])
+    avg_energy = st.session_state.get("team_avg_energy", 0)
+    max_diff = st.session_state.get("team_max_diff", 0)
+    max_e = st.session_state.get("team_max_e", ("", 0))
+    min_e = st.session_state.get("team_min_e", ("", 0))
+    honnou_pcts = st.session_state.get("team_honnou_pcts", {})
+    missing = st.session_state.get("team_missing", [])
+    tc_calendar = st.session_state.get("team_tc_calendar", {})
+    result = st.session_state.get("team_result", {})
+
+    render_star_deco("👥")
+    st.markdown(
+        f'<div class="uranai-title" style="font-size:1.4em;">👥 チーム分析結果</div>',
+        unsafe_allow_html=True
+    )
+    st.markdown(
+        f'<div style="text-align:center; color:#8A8478; font-size:0.9em;">{len(energies)}名 / 平均エネルギー {avg_energy}</div>',
+        unsafe_allow_html=True
+    )
+    render_gold_divider()
+
+    # --- エネルギーマップ ---
+    st.markdown('<div style="color:#BFA350; font-weight:bold; margin:12px 0 8px; font-size:1.1em;">⚡ チームエネルギーマップ</div>', unsafe_allow_html=True)
+    for name, energy, etype, h1, h2 in sorted(energies, key=lambda x: x[1], reverse=True):
+        pct = get_energy_percent(energy)
+        st.markdown(f"""
+<div style="display:flex; align-items:center; margin:4px 0; font-size:0.88em;">
+<span style="color:#D4B96A; min-width:80px;">{name}</span>
+<span style="color:#BFA350; font-weight:bold; min-width:40px;">{energy}</span>
+<div style="flex:1; background:#222; border-radius:4px; height:16px; margin:0 8px; overflow:hidden;">
+<div style="width:{pct}%; height:100%; background:linear-gradient(90deg,#BFA350,#D4B96A); border-radius:4px;"></div>
+</div>
+<span style="color:#8A8478; font-size:0.8em;">{etype}</span>
+</div>""", unsafe_allow_html=True)
+
+    if max_diff > 0:
+        st.markdown(f'<div style="text-align:center; color:#8A8478; font-size:0.85em; margin:8px 0;">最大差: {max_diff}（{max_e[0]} ↔ {min_e[0]}）</div>', unsafe_allow_html=True)
+
+    render_gold_divider()
+
+    # --- 五本能バランス ---
+    st.markdown('<div style="color:#BFA350; font-weight:bold; margin:12px 0 8px; font-size:1.1em;">🎯 チーム五本能バランス</div>', unsafe_allow_html=True)
+    honnou_colors = {"守備": "#7CB87C", "表現": "#D4837A", "魅力": "#D4B96A", "攻撃": "#BFA350", "学習": "#7CA3B8"}
+    for h, pct in honnou_pcts.items():
+        color = honnou_colors.get(h, "#BFA350")
+        bar_w = max(2, pct)
+        st.markdown(f"""
+<div style="display:flex; align-items:center; margin:3px 0; font-size:0.88em;">
+<span style="color:{color}; min-width:55px;">{h}</span>
+<div style="flex:1; background:#222; border-radius:4px; height:14px; margin:0 8px; overflow:hidden;">
+<div style="width:{bar_w}%; height:100%; background:{color}; border-radius:4px;"></div>
+</div>
+<span style="color:#8A8478; min-width:35px;">{pct}%</span>
+</div>""", unsafe_allow_html=True)
+
+    if missing:
+        st.markdown(f'<div style="color:#C47A6A; font-size:0.85em; margin:8px 0;">⚠ チームの弱点: {", ".join(missing)}が不足</div>', unsafe_allow_html=True)
+
+    render_gold_divider()
+
+    # --- 天中殺カレンダー ---
+    if tc_calendar:
+        st.markdown('<div style="color:#BFA350; font-weight:bold; margin:12px 0 8px; font-size:1.1em;">📅 天中殺カレンダー</div>', unsafe_allow_html=True)
+        for y in sorted(tc_calendar.keys()):
+            members = "、".join(tc_calendar[y])
+            st.markdown(f'<div style="color:#8A8478; font-size:0.88em; margin:2px 0;">{y}年: <span style="color:#C47A6A;">{members}</span> が天中殺</div>', unsafe_allow_html=True)
+        render_gold_divider()
+
+    # --- AI鑑定文 ---
+    headline = result.get("headline", "")
+    reading = result.get("reading", "")
+    closing = result.get("closing", "")
+
+    st.markdown(f"""<div class="divination-card" style="border-color:#BFA350;">
+<div class="card-header" style="color:#BFA350;">👥 くろたんのチーム診断</div>
+<div style="text-align:center; margin:12px 0;">
+<span style="font-size:1.2em; color:#D4B96A; font-weight:bold;">「{headline}」</span>
+</div>
+<div class="reading-text" style="line-height:2.0; white-space:pre-wrap;">{reading}</div>
+<div class="gold-divider"></div>
+<div style="text-align:center; margin-top:14px; font-size:1.05em; color:#BFA350; font-style:italic; line-height:1.8;">
+✦ {closing} ✦
+</div>
+</div>""", unsafe_allow_html=True)
+
+    render_gold_divider()
+
+    col1, col2 = st.columns(2)
+    with col1:
+        if st.button("👥 別のチームを分析", key="btn_team_again"):
+            st.session_state.team_selected_members = set()
+            st.session_state.page = "team_input"
+            st.rerun()
+    with col2:
+        if st.button("✧ TOPに戻る ✧", key="btn_team_top"):
+            st.session_state.page = "top"
+            st.rerun()

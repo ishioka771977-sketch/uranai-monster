@@ -1,10 +1,11 @@
 {
-  "comment": "ひでさん確定データ（将来の相性機能用・Phase 1cで使用）",
+  "comment": "ひでさん確定データ（アプリ計算結果＋原典確認済み 2026-03-30）",
   "name": "石岡秀貴",
   "birth_date": "1977-05-24",
   "birth_time": "01:34",
   "birth_place": "函館市",
   "blood_type": "A",
+  "gender": "男性",
   "sanmei": {
     "nen_kanshi": "丁巳",
     "tsuki_kanshi": "乙巳",
@@ -14,22 +15,51 @@
     "nichikan_inyo": "陰",
     "chuo_sei": "牽牛星",
     "chuo_honno": "攻撃本能",
+    "kita_sei": "車騎星",
+    "minami_sei": "禄存星",
+    "higashi_sei": "牽牛星",
+    "nishi_sei": "牽牛星",
     "tenchusatsu": "申酉天中殺",
-    "special_kakkyoku": "三巳格（火性地支一気格）"
+    "tenchusatsu_years": [2028, 2029],
+    "special_kakkyoku": "三巳格（火性地支一気格）",
+    "gogyo_balance": {"木": 1, "火": 3, "土": 0, "金": 1, "水": 0}
   },
   "western": {
     "sun_sign": "双子座",
     "sun_sign_symbol": "♊",
     "moon_sign": "獅子座",
-    "asc_sign": "水瓶座",
-    "mc_sign": "牡牛座"
+    "asc_sign": "牡羊座",
+    "mc_sign": "山羊座"
   },
   "kyusei": {
-    "honmei_sei": "六白金星",
-    "getsu_mei_sei": "七赤金星"
+    "honmei_sei": "五黄土星",
+    "getsu_mei_sei": "八白土星"
   },
   "numerology": {
     "life_path": 8,
+    "birthday_number": 6,
     "personal_year_2026": 3
+  },
+  "ziwei": {
+    "ming_gong": "辰宮",
+    "ming_gong_star": "破軍",
+    "shen_gong": "午宮",
+    "five_element": "火六局",
+    "sihua": {
+      "化禄": "太陰",
+      "化権": "天同",
+      "化科": "天機",
+      "化忌": "巨門"
+    },
+    "da_xian_direction": "逆行",
+    "current_da_xian": "第5限 46-55歳 財帛宮（七殺+地劫）",
+    "key_palaces": {
+      "命宮": "破軍＋火星",
+      "事業宮": "貪狼",
+      "遷移宮": "紫微＋天相",
+      "財帛宮": "七殺＋地劫",
+      "交友宮": "天機＋巨門（化科・化忌）",
+      "疾厄宮": "天梁＋天魁＋鈴星"
+    }
   }
 }
