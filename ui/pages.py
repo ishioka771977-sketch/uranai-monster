@@ -1072,11 +1072,10 @@ def render_aisho_input_page():
     use_hidesan = st.checkbox("1人目をひでさんに固定する", value=st.session_state.get("aisho_use_hidesan", False), key="aisho_use_hidesan")
 
     # --- ヘルパー: 顧客選択時にwidgetキーを直接書き換えてrerun ---
-    def _apply_person(db, sel_key, name_key, y_key, m_key, d_key, g_key, t_key, p_key, b_key):
-        """selectboxで顧客が選ばれたら、各widgetキーに直接値を書き込んでrerun"""
+    def _on_sel_change(db, sel_key, name_key, y_key, m_key, d_key, g_key, t_key, p_key, b_key):
+        """on_changeコールバック: 顧客選択時に各widgetキーへ直接書き込み"""
         sel = st.session_state.get(sel_key, "（手入力）")
-        prev = st.session_state.get(sel_key + "_prev", "（手入力）")
-        if sel != prev and sel != "（手入力）" and sel in db:
+        if sel != "（手入力）" and sel in db:
             p = db[sel]
             st.session_state[name_key] = p.get("name", sel)
             st.session_state[y_key] = p.get("year", 1990)
@@ -1090,9 +1089,6 @@ def render_aisho_input_page():
             bv = p.get("blood", "不明") or "不明"
             if bv in ["不明", "A", "B", "O", "AB"]:
                 st.session_state[b_key] = bv
-            st.session_state[sel_key + "_prev"] = sel
-            st.rerun()
-        st.session_state[sel_key + "_prev"] = sel
 
     if use_hidesan:
         st.markdown('<div style="color:#BFA350; font-size:1.1em; font-weight:bold; margin:10px 0 5px;">✦ 1人目: ひでさん（固定）</div>', unsafe_allow_html=True)
@@ -1104,8 +1100,9 @@ def render_aisho_input_page():
         db = _load_people_db()
         if db:
             ppl_names = ["（手入力）"] + sorted(db.keys())
-            st.selectbox("顧客リストから選択", options=ppl_names, index=0, key="aisho_sel1")
-            _apply_person(db, "aisho_sel1", "aisho_name1", "aisho_y1", "aisho_m1", "aisho_d1", "aisho_gender1", "aisho_t1", "aisho_p1", "aisho_b1")
+            _cb_args1 = (db, "aisho_sel1", "aisho_name1", "aisho_y1", "aisho_m1", "aisho_d1", "aisho_gender1", "aisho_t1", "aisho_p1", "aisho_b1")
+            st.selectbox("顧客リストから選択", options=ppl_names, index=0, key="aisho_sel1",
+                         on_change=_on_sel_change, args=_cb_args1)
 
         name1 = st.text_input("お名前", value="", placeholder="例: ひでさん", key="aisho_name1")
         gender1 = st.radio("性別", options=["男性", "女性", "その他"], index=0, horizontal=True, key="aisho_gender1")
@@ -1133,8 +1130,9 @@ def render_aisho_input_page():
     db = _load_people_db()
     if db:
         ppl_names2 = ["（手入力）"] + sorted(db.keys())
-        st.selectbox("顧客リストから選択", options=ppl_names2, index=0, key="aisho_sel2")
-        _apply_person(db, "aisho_sel2", "aisho_name2", "aisho_y2", "aisho_m2", "aisho_d2", "aisho_gender2", "aisho_t2", "aisho_p2", "aisho_b2")
+        _cb_args2 = (db, "aisho_sel2", "aisho_name2", "aisho_y2", "aisho_m2", "aisho_d2", "aisho_gender2", "aisho_t2", "aisho_p2", "aisho_b2")
+        st.selectbox("顧客リストから選択", options=ppl_names2, index=0, key="aisho_sel2",
+                     on_change=_on_sel_change, args=_cb_args2)
 
     name2 = st.text_input("お名前", value="", placeholder="例: ゆうこ", key="aisho_name2")
     gender2 = st.radio("性別", options=["男性", "女性", "その他"], index=1, horizontal=True, key="aisho_gender2")
