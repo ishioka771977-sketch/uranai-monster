@@ -29,6 +29,7 @@ YIN_YANG_MAP = {
 }
 
 HONNOU_MAP = {"木":"守備","火":"表現","土":"魅力","金":"攻撃","水":"学習"}
+GOGYO_TO_HONNOU = HONNOU_MAP  # alias
 
 # ── 蔵干（支に含まれる全天干） ──
 ZOUKAN = {
@@ -181,6 +182,120 @@ INSTANT_ENERGY_ADVICE = {
 }
 
 
+# ── エネルギー帯 詳細解説（書籍準拠） ──
+ENERGY_BAND_DETAIL = {
+    'very_low': {
+        'label': '集中特化型',
+        'range': '〜160',
+        'description': '組織には向いていない。サラリーマンとして長続きしにくい。無理に組織に合わせると陰転して病気になるリスクも。',
+        'correct_life': '一点集中。専門職・職人・フリーランス。自分のペースで生きる。',
+        'metaphor': 'F1のエンジンじゃなくてスナイパーライフル。一発の精度がすごい人。',
+        'youten_actions': [
+            '「これだ」と思えることに全力を注ぐ。余計なことは全部捨てる',
+            '少人数の環境で深い関係を築く。広く浅くは不向き',
+            '自分のペース・リズムを最優先にする生活設計',
+        ],
+        'inten_signs': [
+            '「自分は根気がない」「いい加減だ」と自己否定が始まる',
+            '組織に合わせるストレスで体調を崩す（不眠・胃腸・倦怠感）',
+        ],
+    },
+    'low': {
+        'label': '自営業向き型',
+        'range': '161〜180',
+        'description': '組織適応の下限ゾーン。会社勤めもできるが、自分のペースで動く方が力を発揮する。',
+        'correct_life': 'フリーランス・自営業・少人数の会社。自分のリズムを大事に。',
+        'metaphor': 'マイペースが武器。自分のリズムを守れる環境を選べ。',
+        'youten_actions': [
+            '大きな組織より小回りの利く環境を選ぶ',
+            '一人の時間を確保する。充電の時間が人より多く必要',
+            '得意分野に特化して「この人に頼めば間違いない」を作る',
+        ],
+        'inten_signs': [
+            '他人のペースに巻き込まれて疲弊する',
+            '「もっとがんばらないと」と自分を追い込み始める',
+        ],
+    },
+    'average': {
+        'label': '組織適応型',
+        'range': '181〜230',
+        'description': '現代日本社会で最も生きやすいゾーン。世の中の常識・規範に妥協しながら生きていける。組織の中で浮き彫りにされずに済む。',
+        'correct_life': '会社員・管理職コースが最も自然。コツコツ信頼を積み上げるのが最強の開運法。',
+        'metaphor': '一番生きやすいゾーン。安定こそが武器。',
+        'youten_actions': [
+            '組織の中で着実にキャリアを積む。信頼の積み重ねが最大の資産',
+            '200以上なら管理職・リーダーシップを積極的に取る',
+            '安定を土台にして、少しずつ挑戦の幅を広げる',
+        ],
+        'inten_signs': [
+            '安定に甘えて成長が止まる。マンネリ感が出てくる',
+            '「自分はもっとできるはず」と現状への不満が募る',
+        ],
+    },
+    'high': {
+        'label': '超活動型',
+        'range': '231〜300',
+        'description': '世の中の常識・社会の規範の中で生きていくにはかなり自分自身を傷つけることになる。多すぎるエネルギーのために自分を苦しめてしまう。',
+        'correct_life': '仕事＋趣味＋社会活動の三本柱。本業だけではエネルギーが余る。',
+        'metaphor': 'エネルギーが余って暴走する。ゴルフ・趣味・ボランティアで意識的に燃やせ。',
+        'youten_actions': [
+            '仕事以外のアウトレットを必ず持つ（スポーツ・趣味・社会活動）',
+            '複数のプロジェクト・活動を同時に走らせる',
+            'エネルギーの「はけ口」を意識的にスケジュールに組み込む',
+        ],
+        'inten_signs': [
+            '部下や家族にエネルギーを向けてしまう（パワハラ・支配的になる）',
+            '愚痴・不満が爆発する。ワンマンになり周囲と衝突する',
+        ],
+    },
+    'very_high': {
+        'label': '規格外型',
+        'range': '301〜',
+        'description': '歴史的人物クラスのエネルギー。普通の枠では収まらない。波乱万丈が「普通」。組織の中で生きていくかぎり、常識・規範との妥協が避けられない。',
+        'correct_life': '経営者・複数事業・社会的リーダーが自然な生き方。仕事3つ4つ掛け持ちしてやっとちょうどいい。',
+        'metaphor': '止まったら死ぬマグロと同じ。常に動き続けろ。',
+        'youten_actions': [
+            '複数の事業・活動・社会的リーダーシップを同時に走らせる',
+            '国や業界を動かすレベルの大きなビジョンを持つ',
+            '周囲のエネルギー差を理解し、部下や家族に合わせる意識を持つ',
+        ],
+        'inten_signs': [
+            'エネルギーの不完全燃焼が身体に出る（重大な病気のリスク）',
+            '「おれが頑張っているのだからお前たちも」と周囲を追い込む',
+        ],
+    },
+}
+
+# ── 0点本能別アドバイス ──
+ZERO_HONNOU_ADVICE = {
+    '守備': {
+        'meaning': 'コツコツ守り固めるのは生まれ持った才能ではない',
+        'advice': '「堅実にコツコツ」を求められると消耗する。得意な本能で攻めて、守りは仕組み（ルール・システム）に任せるのが正解。',
+        'alternative': '守備は「仕組み化」で補う。マニュアル・ルーティンを作って自動化せよ。',
+    },
+    '表現': {
+        'meaning': '自己表現・発信は生まれ持った才能ではない',
+        'advice': '人前で話す・書く・発信することに苦手意識がある。無理にSNSや講演をやる必要はない。',
+        'alternative': '表現は「誰かの力を借りる」で補う。ライター・デザイナー・広報を味方につけよ。',
+    },
+    '魅力': {
+        'meaning': '人を惹きつけるカリスマ性は生まれ持った才能ではない',
+        'advice': '「リーダーになれ」「人をまとめろ」は消耗する。参謀・専門家ポジションの方が輝く。',
+        'alternative': '魅力は「実績」で補う。カリスマ性がなくても、結果で人はついてくる。',
+    },
+    '攻撃': {
+        'meaning': '自分から切り拓く行動力は生まれ持った才能ではない',
+        'advice': '「営業してこい」「新規開拓しろ」は消耗する。既存の仕組みを深掘りする方が向いている。',
+        'alternative': '攻撃は「環境」で補う。自分から動かなくても案件が来る仕組みを作れ。',
+    },
+    '学習': {
+        'meaning': 'じっと座って学ぶ・分析するのは生まれ持った才能ではない',
+        'advice': '机上の勉強は向いていない。「動きながら学ぶ」「教えながら学ぶ」「実践から学ぶ」が合っている。',
+        'alternative': '学習は「実践」で補う。本を読むより現場に出ろ。教えることで自分が一番学べる。',
+    },
+}
+
+
 def get_energy_band(total: int) -> str:
     """エネルギー指数からバンドキーを返す"""
     if total <= 160:
@@ -303,6 +418,49 @@ def calc_energy_index(
     one_liner = instant.get('one_liner', '')
     drink_talk = instant.get('drink_talk', '').format(value=total_energy)
 
+    # エネルギー帯詳細
+    band_detail = ENERGY_BAND_DETAIL.get(band, {})
+
+    # 五行バランス比率（%）
+    gogyo_balance = {}
+    for gogyo_name in ["木", "火", "土", "金", "水"]:
+        score = gogyo_detail[gogyo_name]["総合計"]
+        gogyo_balance[gogyo_name] = {
+            "score": score,
+            "percent": round(score / total_energy * 100, 1) if total_energy > 0 else 0,
+            "honnou": HONNOU_MAP[gogyo_name],
+        }
+
+    # 第1本能の陰陽干キャラクター
+    top1_gogyo = honnou_ranking[0][0] if honnou_ranking else ""
+    top1_gogyo_key = {v: k for k, v in HONNOU_MAP.items()}.get(top1_gogyo, "")
+    top1_yang_detail = ""
+    top1_yin_detail = ""
+    if top1_gogyo_key:
+        gd = gogyo_detail[top1_gogyo_key]
+        yang_score = gd["陽"]
+        yin_score = gd["陰"]
+        top_h_detail = HONNOU_DETAIL.get(top1_gogyo, {})
+        if yang_score >= yin_score:
+            top1_yang_detail = top_h_detail.get("yang", "")
+            dominant_yinyang = "陽"
+        else:
+            top1_yin_detail = top_h_detail.get("yin", "")
+            dominant_yinyang = "陰"
+    else:
+        dominant_yinyang = ""
+
+    # 0点本能の詳細アドバイス
+    zero_honnou_details = []
+    for zh in zero_honnou:
+        adv = ZERO_HONNOU_ADVICE.get(zh, {})
+        zero_honnou_details.append({
+            "name": zh,
+            "meaning": adv.get("meaning", ""),
+            "advice": adv.get("advice", ""),
+            "alternative": adv.get("alternative", ""),
+        })
+
     return {
         "total_energy": total_energy,
         "energy_type": energy_type,
@@ -320,6 +478,13 @@ def calc_energy_index(
         "combo_description": combo_description,
         "one_liner": one_liner,
         "drink_talk": drink_talk,
+        "band": band,
+        "band_detail": band_detail,
+        "gogyo_balance": gogyo_balance,
+        "dominant_yinyang": dominant_yinyang,
+        "top1_yang_detail": top1_yang_detail,
+        "top1_yin_detail": top1_yin_detail,
+        "zero_honnou_details": zero_honnou_details,
     }
 
 

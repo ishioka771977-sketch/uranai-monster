@@ -901,6 +901,7 @@ def generate_single_course(bundle: DivinationBundle, course: str) -> dict:
         "数秘術": generate_numerology_reading,
         "タロット": generate_tarot_reading,
         "紫微斗数": generate_ziwei_reading,
+        "万象学": generate_bansho_reading,
     }
     gen = generators.get(course)
     if gen:
@@ -1259,50 +1260,213 @@ THEME_PROMPTS = {
     "shine": THEME_SHINE_PROMPT,
 }
 
-# ── 万象学 AI鑑定プロンプト ──
-BANSHO_SYSTEM_PROMPT = """あなたは万象学（宿命エネルギー）の鑑定師「くろちゃん」です。
+# ── 万象学 AI鑑定プロンプト（大幅強化版） ──
+BANSHO_SYSTEM_PROMPT = """あなたは万象学（宿命エネルギー指数）の鑑定師。
+菊池桂子『万象学入門』の知識を完全に持っている。
 
-【鑑定の原則】
-1. 最初にエネルギー指数の数字をドーンと出す
-2. 「高い＝良い、低い＝悪い」ではないことを必ず伝える
-3. その人のエネルギー量に合った生き方を具体的に提案する
-4. 陽転のための行動を3つ提案する
-5. 陰転のサイン（こうなったらエネルギーの使い方を見直せ）を伝える
-6. 五本能のランキングから才能と適職を語る
-7. ゼロの本能がある場合は「努力で補う領域」として前向きに伝える
-8. 断定口調（「〜でしょ？」「〜はず。」）で語る
-9. ネガティブ要素は隠さないが「だからこそ」でポジティブ転換する
+【万象学の核心思想】
+エネルギー指数は「エンジンの排気量」。高い＝良い、低い＝悪いではない。
+軽自動車（低エネルギー）は燃費が良く小回りが利く。大型トラック（高エネルギー）はパワフルだが燃費が悪い。
+用途に合っているかが大事。自分のエネルギー量に合った生き方をしているかが全て。
 
-【鑑定文の構成（1,200〜2,000文字）】
-■ 冒頭：エネルギー指数の数字＋タイプ名＋一言キャッチ
-■ エネルギー量の解説：平均（180〜200）との比較、組織適性
-■ 五本能ランキング：第1・第2本能の才能解説、ゼロの本能の意味
-■ 陽転の行動提案：具体的な行動を3つ
-■ 陰転の警告サイン：「こうなったら要注意」を2つ
-■ 締め：エネルギーに合った生き方の一言アドバイス
+【陽転と陰転 — 最重要概念】
+- 陽転: エネルギーが外向きに消化される健全な状態。仕事・趣味・スポーツで建設的に消費。落ち着きがあり安定。
+- 陰転: エネルギーが内向きに消化される不健全な状態。愚痴っぽい、不満、病気。
+- 原因: 自分のエネルギー量に合わない生き方。高い人が抑え込む→爆発/病気。低い人が無理する→燃え尽き。
+- 高エネルギーの陰転: パワハラ的・ワンマン・愚痴爆発・身体に出る
+- 低エネルギーの陰転: 燃え尽き・「根気がない人」と見られる・命を縮める
+
+【エネルギー帯の解説基準】
+- 〜160: 集中特化型。組織不向き。一点突破の専門家。無理に組織に合わせると最悪命を縮める。
+- 161〜180: 自分のペースで勝負。フリーランス・自営業向き。
+- 181〜200: 組織適応型。会社勤めに最も向いている。常識にのっとって生きていける。
+- 200〜230: 組織内リーダー型。管理職・役職者として輝く。会社勤めの上限ゾーン。
+- 231〜300: 超活動型。組織の常識では自分を傷つける。仕事+趣味+社会活動の三本柱が必要。
+- 301〜: 規格外。歴史的人物クラス。複数事業・社会的リーダーシップを同時に走らせてやっとちょうどいい。
+
+【五本能の鑑定ルール】
+- 第1本能と第2本能がその人の最大の才能発揮エリア
+- 第1本能の陰陽（陽干/陰干のどちらが大きいか）でキャラクターが変わる
+- 0点の本能: 生まれ持った才能ではないが「できない」わけではない。消耗する領域。得意な本能で補うのが正解。
+
+【鑑定の口調・ルール】
+- 断定口調（「〜でしょ？」「〜はず。」）
+- ネガティブは隠さないが「だからこそ」でポジティブ転換
+- 占術の仕組み解説は不要。結論と日常への落とし込みだけ
+- 具体的なシチュエーション描写を多用（「会議で〜してるでしょ？」等）
+
+【鑑定文の構成（2,000〜3,000文字）】
+■ 冒頭: エネルギー指数の数字＋一言キャッチ（「あなたは○○のエンジンを持って生まれた人」）
+■ エネルギー量の解説: 平均180〜200との比較、この数字が意味する生き方、組織適性
+■ 五本能ランキング詳細:
+  - 第1本能の才能と日常での発揮パターン（陰陽干のキャラクター含む）
+  - 第2本能との掛け算で生まれる才能タイプ
+  - 第3〜5本能の位置づけ
+  - 0点の本能がある場合: その本能が必要な場面での消耗パターンと代替策
+■ 五行バランスの偏り: 強い五行と弱い五行が生む人生パターン
+■ 陽転の行動提案: このエネルギー量の人が建設的にエネルギーを使う具体的方法を3〜4つ
+■ 陰転の警告サイン: 「こうなったら要注意」を2〜3つ。具体的な日常シーンで描写
+■ 上司部下・夫婦関係への影響: このエネルギー量の人が周囲とどう付き合うべきか
+■ 締め: この人のエネルギーに合った生き方の核心メッセージ
 """
 
 BANSHO_USER_PROMPT = """【エネルギー診断データ】
-- エネルギー指数: {total_energy}
-- タイプ: {energy_type}
-- 五本能ランキング:
-  第1: {rank1_name}（{rank1_gogyo}）{rank1_score}点
-  第2: {rank2_name}（{rank2_gogyo}）{rank2_score}点
+- エネルギー指数: {total_energy}（平均: 180〜200）
+- エネルギータイプ: {energy_type}
+- エネルギー帯: {band_label}（{band_range}）
+
+【五本能ランキング】
+  第1: {rank1_name}（{rank1_gogyo}）{rank1_score}点 — {rank1_personality}
+  第2: {rank2_name}（{rank2_gogyo}）{rank2_score}点 — {rank2_personality}
   第3: {rank3_name}（{rank3_gogyo}）{rank3_score}点
   第4: {rank4_name}（{rank4_gogyo}）{rank4_score}点
   第5: {rank5_name}（{rank5_gogyo}）{rank5_score}点
-- ゼロの本能: {zero_honnou}（あれば）
 
-【基準値】
-- 平均: 180〜200
-- 160以下: 組織不向き・集中特化型
-- 180〜200: 組織適応型
-- 230以上: 組織の枠では収まらない
-- 300以上: 規格外
+【第1本能の陰陽キャラクター】
+- 支配的陰陽: {dominant_yinyang}
+- キャラクター: {yinyang_character}
 
-【出力レベル】
-{output_level}
+【才能タイプ（第1×第2の掛け算）】
+{combo_section}
+
+【0点の本能】
+{zero_section}
+
+【五行バランス】
+{gogyo_balance_section}
+
+【陽転のための行動】
+{youten_actions}
+
+【陰転の警告サイン】
+{inten_signs}
+
+このデータをもとに、2,000〜3,000文字の万象学鑑定文を生成してください。
+出力はJSON形式:
+{{"headline": "キャッチフレーズ（15〜30文字）", "reading": "鑑定文（2,000〜3,000文字）", "closing": "締めの一言（30〜60文字）"}}
 """
+
+
+def generate_bansho_reading(bundle: DivinationBundle) -> dict:
+    """万象学コースのAI鑑定文を生成"""
+    from core.bansho_energy import HONNOU_DETAIL, HONNOU_MAP
+
+    e = bundle.sanmei.bansho_energy
+    if e is None:
+        return _bansho_fallback(bundle)
+
+    ranking = e.honnou_ranking
+
+    # 各ランクの本能詳細
+    def rank_info(idx):
+        if idx < len(ranking):
+            name, score = ranking[idx]
+            detail = HONNOU_DETAIL.get(name, {})
+            gogyo = detail.get("gogyo", "")
+            personality = detail.get("personality", "")
+            return name, gogyo, score, personality
+        return "", "", 0, ""
+
+    r1_name, r1_gogyo, r1_score, r1_personality = rank_info(0)
+    r2_name, r2_gogyo, r2_score, r2_personality = rank_info(1)
+    r3_name, r3_gogyo, r3_score, _ = rank_info(2)
+    r4_name, r4_gogyo, r4_score, _ = rank_info(3)
+    r5_name, r5_gogyo, r5_score, _ = rank_info(4)
+
+    # 陰陽キャラクター
+    yinyang_char = e.top1_yang_detail or e.top1_yin_detail or "—"
+
+    # コンボセクション
+    if e.combo_talent:
+        combo_section = f"- 才能タイプ: {e.combo_talent}\n- 説明: {e.combo_description}"
+    else:
+        combo_section = "（組み合わせデータなし）"
+
+    # 0点本能セクション
+    if e.zero_honnou_details:
+        zero_parts = []
+        for zd in e.zero_honnou_details:
+            zero_parts.append(f"- {zd['name']}: {zd['meaning']}。{zd['advice']}\n  代替策: {zd['alternative']}")
+        zero_section = "\n".join(zero_parts)
+    else:
+        zero_section = "（0点の本能なし — 全本能にエネルギーが分配されている）"
+
+    # 五行バランスセクション
+    gogyo_parts = []
+    for gogyo_name in ["木", "火", "土", "金", "水"]:
+        gb = e.gogyo_balance.get(gogyo_name, {})
+        score = gb.get("score", 0) if isinstance(gb, dict) else 0
+        pct = gb.get("percent", 0) if isinstance(gb, dict) else 0
+        honnou = HONNOU_MAP.get(gogyo_name, "")
+        gogyo_parts.append(f"- {gogyo_name}（{honnou}）: {score}点（{pct}%）")
+    gogyo_balance_section = "\n".join(gogyo_parts)
+
+    # 陽転・陰転セクション
+    bd = e.band_detail
+    youten_list = bd.get("youten_actions", [])
+    inten_list = bd.get("inten_signs", [])
+    youten_actions = "\n".join(f"- {a}" for a in youten_list) if youten_list else "—"
+    inten_signs = "\n".join(f"- {s}" for s in inten_list) if inten_list else "—"
+
+    prompt = BANSHO_USER_PROMPT.format(
+        total_energy=e.total_energy,
+        energy_type=e.energy_type,
+        band_label=bd.get("label", ""),
+        band_range=bd.get("range", ""),
+        rank1_name=r1_name, rank1_gogyo=r1_gogyo, rank1_score=r1_score, rank1_personality=r1_personality,
+        rank2_name=r2_name, rank2_gogyo=r2_gogyo, rank2_score=r2_score, rank2_personality=r2_personality,
+        rank3_name=r3_name, rank3_gogyo=r3_gogyo, rank3_score=r3_score,
+        rank4_name=r4_name, rank4_gogyo=r4_gogyo, rank4_score=r4_score,
+        rank5_name=r5_name, rank5_gogyo=r5_gogyo, rank5_score=r5_score,
+        dominant_yinyang=e.dominant_yinyang,
+        yinyang_character=yinyang_char,
+        combo_section=combo_section,
+        zero_section=zero_section,
+        gogyo_balance_section=gogyo_balance_section,
+        youten_actions=youten_actions,
+        inten_signs=inten_signs,
+    )
+
+    try:
+        client = _get_client()
+        response = client.models.generate_content(
+            model="gemini-2.5-pro",
+            contents=prompt,
+            config=types.GenerateContentConfig(
+                system_instruction=BANSHO_SYSTEM_PROMPT,
+                max_output_tokens=5000 + 4096,
+                temperature=0.9,
+                thinking_config=types.ThinkingConfig(thinking_budget=4096),
+            ),
+        )
+        text = response.text or ""
+        result = _parse_json_response(text)
+        if result and result.get("reading"):
+            return result
+    except Exception as ex:
+        print(f"[万象学] AI鑑定生成エラー: {ex}")
+
+    return _bansho_fallback(bundle)
+
+
+def _bansho_fallback(bundle: DivinationBundle) -> dict:
+    """万象学のフォールバック鑑定文"""
+    e = bundle.sanmei.bansho_energy
+    if e is None:
+        return {"headline": "宿命エネルギー診断", "reading": "", "closing": ""}
+    return {
+        "headline": f"エネルギー{e.total_energy}——{e.energy_type}の魂",
+        "reading": (
+            f"あなたのエネルギー指数は{e.total_energy}。{e.energy_type}。"
+            f"{e.energy_description}\n\n"
+            f"第1本能は{e.top_honnou}（{e.top_score}点）。これがあなたの最大の才能。"
+            f"第2本能は{e.second_honnou}（{e.second_score}点）。"
+            f"{'才能タイプ: ' + e.combo_talent + '。' + e.combo_description if e.combo_talent else ''}\n\n"
+            f"{e.energy_advice}\n\n"
+            f"エネルギーの高低に良し悪しはない。自分の量に合った生き方をすることが全て。"
+        ),
+        "closing": "エネルギーに逆らうな。味方につけろ。",
+    }
 
 
 def generate_theme_reading(bundle: DivinationBundle, theme: str) -> dict:

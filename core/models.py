@@ -75,6 +75,13 @@ class BanshoEnergyResult:
     combo_description: str = ""                    # コンボ説明
     one_liner: str = ""                            # 一言アドバイス
     drink_talk: str = ""                           # 飲み屋トーク
+    band: str = ""                                 # エネルギー帯キー (very_low/low/average/high/very_high)
+    band_detail: Dict = field(default_factory=dict)  # エネルギー帯詳細
+    gogyo_balance: Dict = field(default_factory=dict) # 五行バランス比率
+    dominant_yinyang: str = ""                      # 第1本能の支配的陰陽
+    top1_yang_detail: str = ""                     # 第1本能の陽干キャラクター
+    top1_yin_detail: str = ""                      # 第1本能の陰干キャラクター
+    zero_honnou_details: List[Dict] = field(default_factory=list)  # 0点本能の詳細アドバイス
 
 
 @dataclass

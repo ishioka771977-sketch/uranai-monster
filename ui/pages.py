@@ -474,8 +474,13 @@ def render_generating_page():
     )
 
     if course == "万象学":
-        # 万象学はAPI不要 → 計算結果のみで即表示
-        st.session_state.course_results["bansho"] = {}
+        # 万象学もAI鑑定文を生成
+        with st.status("✦ 万象学コース鑑定生成中…", expanded=True) as status:
+            st.write("✧ エネルギー診断からAI鑑定文を生成中…")
+            from ai.interpreter import generate_bansho_reading
+            result = generate_bansho_reading(bundle)
+            status.update(label="✦ 万象学コース鑑定完了 ✦", state="complete")
+        st.session_state.course_results["bansho"] = result
     elif course == "フルコース":
         with st.status("✦ フルコース鑑定生成中…", expanded=True) as status:
             st.write("✧ 6占術を同時に鑑定中…")

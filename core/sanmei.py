@@ -397,6 +397,13 @@ def calculate_sanmei(person: PersonInput) -> SanmeiResult:
         combo_description=energy["combo_description"],
         one_liner=energy["one_liner"],
         drink_talk=energy["drink_talk"],
+        band=energy["band"],
+        band_detail=energy["band_detail"],
+        gogyo_balance=energy["gogyo_balance"],
+        dominant_yinyang=energy["dominant_yinyang"],
+        top1_yang_detail=energy["top1_yang_detail"],
+        top1_yin_detail=energy["top1_yin_detail"],
+        zero_honnou_details=energy["zero_honnou_details"],
     )
 
     return SanmeiResult(

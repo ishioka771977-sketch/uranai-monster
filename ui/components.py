@@ -693,8 +693,8 @@ def render_aisho_result(bundle1, bundle2, data: dict):
 
 
 def render_bansho_course(bundle: DivinationBundle, data: dict = None):
-    """万象学コース: 宿命エネルギー指数の結果表示（API不要・計算結果のみ）"""
-    from core.bansho_energy import get_energy_percent, HONNOU_DETAIL
+    """万象学コース: 宿命エネルギー指数の結果表示 + AI鑑定文"""
+    from core.bansho_energy import get_energy_percent, HONNOU_DETAIL, HONNOU_MAP
 
     s = bundle.sanmei
     e = s.bansho_energy
@@ -706,7 +706,22 @@ def render_bansho_course(bundle: DivinationBundle, data: dict = None):
     bar_filled = int(pct / 5)  # 20文字幅
     bar = "█" * bar_filled + "░" * (20 - bar_filled)
 
-    # 五本能ランキング行
+    # ── エネルギースペクトル（全体の中での位置） ──
+    spectrum_markers = [
+        (89, "89"), (160, "160"), (180, "180"), (200, "200"),
+        (230, "230"), (300, "300"), (401, "401"),
+    ]
+    spectrum_pos = max(0, min(100, int((e.total_energy - 89) / (401 - 89) * 100)))
+    spectrum_zones = """
+<div style="display:flex;height:8px;border-radius:4px;overflow:hidden;margin:4px 0;">
+  <div style="flex:23;background:#7CA3B8;" title="集中特化型(〜160)"></div>
+  <div style="flex:6;background:#7CB87C;" title="自営業向き(161〜180)"></div>
+  <div style="flex:16;background:#BFA350;" title="組織適応型(181〜230)"></div>
+  <div style="flex:22;background:#C49860;" title="超活動型(231〜300)"></div>
+  <div style="flex:33;background:#C47A6A;" title="規格外型(301〜)"></div>
+</div>"""
+
+    # ── 五本能ランキング行 ──
     medals = ["🥇", "🥈", "🥉", "　", "　"]
     ranking_rows = ""
     for i, (honnou, score) in enumerate(e.honnou_ranking):
@@ -731,11 +746,21 @@ def render_bansho_course(bundle: DivinationBundle, data: dict = None):
   </div>
 </div>"""
 
-    # 第1本能の詳細
+    # ── 第1本能の詳細 ──
     top_detail = HONNOU_DETAIL.get(e.top_honnou, {})
     second_detail = HONNOU_DETAIL.get(e.second_honnou, {})
 
-    # コンボ才能セクション
+    # 陰陽キャラクター
+    yinyang_char = e.top1_yang_detail or e.top1_yin_detail
+    yinyang_html = ""
+    if yinyang_char and e.dominant_yinyang:
+        yinyang_html = f"""
+  <div style="margin-top:6px; padding:6px 10px; background:#141414; border-radius:4px;">
+    <span style="color:#C49860;font-size:0.8em;">【{e.dominant_yinyang}の{e.top_honnou}】</span>
+    <span style="color:#F0EBE0;font-size:0.82em;">{yinyang_char}</span>
+  </div>"""
+
+    # ── コンボ才能セクション ──
     combo_html = ""
     if e.combo_talent:
         combo_html = f"""
@@ -747,20 +772,89 @@ def render_bansho_course(bundle: DivinationBundle, data: dict = None):
   </div>
 </div>"""
 
-    # 0点本能セクション
+    # ── 五行バランス ──
+    gogyo_balance_html = ""
+    if e.gogyo_balance:
+        gb_rows = ""
+        gogyo_colors = {"木": "#7CB87C", "火": "#C47A6A", "土": "#C49860", "金": "#D4B96A", "水": "#7CA3B8"}
+        max_score = max((gb.get("score", 0) if isinstance(gb, dict) else 0) for gb in e.gogyo_balance.values()) or 1
+        for gname in ["木", "火", "土", "金", "水"]:
+            gb = e.gogyo_balance.get(gname, {})
+            gscore = gb.get("score", 0) if isinstance(gb, dict) else 0
+            gpct = gb.get("percent", 0) if isinstance(gb, dict) else 0
+            ghonnou = gb.get("honnou", HONNOU_MAP.get(gname, "")) if isinstance(gb, dict) else ""
+            gbar_w = int(gscore / max_score * 100)
+            gc = gogyo_colors.get(gname, "#BFA350")
+            gb_rows += f"""
+<div style="display:flex;align-items:center;gap:6px;margin:4px 0;">
+  <span style="color:{gc};width:20px;font-weight:bold;font-size:0.9em;">{gname}</span>
+  <span style="color:#8A8478;width:30px;font-size:0.75em;">{ghonnou}</span>
+  <div style="flex:1;background:#1A1A1A;border-radius:3px;height:8px;overflow:hidden;">
+    <div style="background:{gc};height:100%;width:{gbar_w}%;border-radius:3px;"></div>
+  </div>
+  <span style="color:#D4B96A;font-size:0.82em;width:40px;text-align:right;">{gscore}</span>
+  <span style="color:#5A5A5A;font-size:0.72em;width:35px;">({gpct}%)</span>
+</div>"""
+        gogyo_balance_html = f"""
+<div style="margin:12px 0; padding:10px; border:1px solid #2A2A2A; border-radius:6px;">
+  <div style="color:#BFA350; font-size:0.85em; font-weight:bold; margin-bottom:8px;">五行バランス</div>
+  {gb_rows}
+</div>"""
+
+    # ── 0点本能セクション（詳細版） ──
     zero_html = ""
-    if e.zero_honnou:
+    if e.zero_honnou_details:
+        zero_items = ""
+        for zd in e.zero_honnou_details:
+            zero_items += f"""
+<div style="margin:8px 0; padding:8px; border-left:2px solid #C47A6A; padding-left:12px;">
+  <div style="color:#C49860; font-size:0.88em; font-weight:bold;">{zd.get('name','')}</div>
+  <div style="color:#F0EBE0; font-size:0.82em; line-height:1.6; margin-top:2px;">
+    {zd.get('meaning','')}<br>
+    {zd.get('advice','')}<br>
+    <span style="color:#7CB87C;">✦ {zd.get('alternative','')}</span>
+  </div>
+</div>"""
+        zero_html = f"""
+<div style="margin:12px 0; padding:10px; border:1px dashed #C47A6A44; border-radius:6px; background:#1A1A1A;">
+  <div style="color:#C49860; font-size:0.9em; font-weight:bold; margin-bottom:6px;">🔮 0点の本能 ── 未開発の領域</div>
+  {zero_items}
+</div>"""
+    elif e.zero_honnou:
         zero_names = "・".join(e.zero_honnou)
         zero_html = f"""
 <div style="margin:12px 0; padding:10px; border:1px dashed #C47A6A44; border-radius:6px; background:#1A1A1A;">
   <div style="color:#C49860; font-size:0.88em; font-weight:bold; margin-bottom:4px;">🔮 0点の本能: {zero_names}</div>
   <div style="color:#F0EBE0; font-size:0.82em; line-height:1.6;">
-    生まれ持った才能ではないが「できない」わけではない。<b style="color:#C49860;">意識的に努力が必要な領域。</b><br>
-    この本能が必要な仕事は消耗しやすい。得意な本能で補うのが正解。
+    生まれ持った才能ではないが「できない」わけではない。<b style="color:#C49860;">意識的に努力が必要な領域。</b>
   </div>
 </div>"""
 
-    # drink_talk セクション
+    # ── 陽転・陰転セクション ──
+    bd = e.band_detail if isinstance(e.band_detail, dict) else {}
+    youten_actions = bd.get("youten_actions", [])
+    inten_signs = bd.get("inten_signs", [])
+    energy_life_html = ""
+    if youten_actions or inten_signs:
+        youten_items = ""
+        for a in youten_actions:
+            youten_items += f'<div style="color:#F0EBE0;font-size:0.82em;line-height:1.6;margin:3px 0;padding-left:14px;text-indent:-14px;">✦ {a}</div>'
+        inten_items = ""
+        for s_item in inten_signs:
+            inten_items += f'<div style="color:#F0EBE0;font-size:0.82em;line-height:1.6;margin:3px 0;padding-left:14px;text-indent:-14px;">⚠ {s_item}</div>'
+        correct_life = bd.get("correct_life", "")
+        correct_html = f'<div style="color:#F0EBE0;font-size:0.85em;line-height:1.6;margin-bottom:10px;padding:6px 10px;background:#141414;border-radius:4px;">{correct_life}</div>' if correct_life else ""
+        energy_life_html = f"""
+<div style="margin:12px 0; padding:12px; border:1px solid #2A2A2A; border-radius:6px;">
+  <div style="color:#BFA350; font-size:0.9em; font-weight:bold; margin-bottom:8px;">⚡ エネルギーの正しい使い方</div>
+  {correct_html}
+  <div style="color:#7CB87C; font-size:0.85em; font-weight:bold; margin:8px 0 4px;">陽転（健全にエネルギーを使う）</div>
+  {youten_items}
+  <div style="color:#C47A6A; font-size:0.85em; font-weight:bold; margin:10px 0 4px;">陰転サイン（こうなったら要注意）</div>
+  {inten_items}
+</div>"""
+
+    # ── drink_talk セクション ──
     drink_html = ""
     if e.drink_talk:
         drink_html = f"""
@@ -769,9 +863,27 @@ def render_bansho_course(bundle: DivinationBundle, data: dict = None):
   <div style="color:#F0EBE0; font-size:0.85em; line-height:1.7; font-style:italic;">{e.drink_talk}</div>
 </div>"""
 
+    # ── AI鑑定文セクション ──
+    ai_reading_html = ""
+    if data and data.get("reading"):
+        headline = data.get("headline", "")
+        reading = data.get("reading", "")
+        closing = data.get("closing", "")
+        ai_reading_html = f"""
+<div class="gold-divider"></div>
+<div style="color:#BFA350; font-size:0.9em; font-weight:bold; margin:12px 0 6px; text-align:center;">── くろちゃんの鑑定 ──</div>
+<div style="text-align:center; margin:8px 0 12px;">
+  <span style="font-size:1.1em; color:#D4B96A; font-weight:bold;">「{headline}」</span>
+</div>
+<div class="reading-text" style="line-height:2.0; white-space:pre-wrap;">{reading}</div>
+<div style="text-align:center; margin-top:14px; font-size:1.0em; color:#BFA350; font-style:italic; line-height:1.8;">
+  ✦ {closing} ✦
+</div>"""
+
+    # ── メインレンダリング ──
     st.markdown(f"""
 <div class="divination-card" style="border-color:#BFA350;">
-<div class="card-header">⚡ 万象学 ── 宿命エネルギー ⚡</div>
+<div class="card-header">⚡ 万象学 ── 宿命エネルギー診断 ⚡</div>
 
 <div style="text-align:center; margin:16px 0 8px;">
   <div style="font-size:3em; font-weight:bold; color:#D4B96A; line-height:1;">{e.total_energy}</div>
@@ -782,11 +894,22 @@ def render_bansho_course(bundle: DivinationBundle, data: dict = None):
   <span class="uranai-tag-gold" style="font-size:1em; padding:4px 16px;">{e.energy_type}</span>
 </div>
 
-<div style="text-align:center; font-family:monospace; color:#BFA350; font-size:0.9em; margin:12px 0;">
-  {bar} {pct}%<span style="color:#5A5A5A;font-size:0.8em;margin-left:4px;">（範囲: 89〜401）</span>
+<div style="margin:12px 20px;">
+  <div style="position:relative;">
+    {spectrum_zones}
+    <div style="position:relative;height:20px;">
+      <div style="position:absolute;left:{spectrum_pos}%;transform:translateX(-50%);text-align:center;">
+        <div style="color:#D4B96A;font-size:1.2em;line-height:1;">▼</div>
+        <div style="color:#D4B96A;font-size:0.72em;font-weight:bold;">{e.total_energy}</div>
+      </div>
+    </div>
+    <div style="display:flex;justify-content:space-between;color:#5A5A5A;font-size:0.65em;margin-top:2px;">
+      <span>89</span><span>160</span><span>200</span><span>300</span><span>401</span>
+    </div>
+  </div>
 </div>
 
-<div style="text-align:center; color:#8A8478; font-size:0.88em; margin:6px 0 16px;">
+<div style="text-align:center; color:#8A8478; font-size:0.88em; margin:6px 0 16px; line-height:1.6;">
   {e.energy_description}
 </div>
 
@@ -799,6 +922,8 @@ def render_bansho_course(bundle: DivinationBundle, data: dict = None):
 
 {combo_html}
 
+{gogyo_balance_html}
+
 <div class="gold-divider"></div>
 
 <div style="margin:12px 0; padding:10px; border:1px solid #2A2A2A; border-radius:6px;">
@@ -809,6 +934,7 @@ def render_bansho_course(bundle: DivinationBundle, data: dict = None):
     <span style="color:#7CB87C;">強み:</span> {top_detail.get('strong','')}
     <span style="color:#C47A6A;"> 弱み:</span> {top_detail.get('weak','')}
   </div>
+  {yinyang_html}
 </div>
 
 <div style="margin:12px 0; padding:10px; border:1px solid #2A2A2A; border-radius:6px;">
@@ -821,10 +947,13 @@ def render_bansho_course(bundle: DivinationBundle, data: dict = None):
 
 {zero_html}
 
+{energy_life_html}
+
+{ai_reading_html}
+
 <div style="text-align:center; margin:16px 0 8px; color:#8A8478; font-size:0.78em; line-height:1.6;">
   ※エネルギーの高低に良し悪しはありません。<br>
-  自分のエネルギー量に合った生き方をすることが最も重要です。<br>
-  第1本能と第2本能があなたの才能発揮エリアです。
+  自分のエネルギー量に合った生き方をすることが最も重要です。
 </div>
 
 <div style="text-align:center; margin-top:12px; color:#BFA350; font-size:0.88em; font-weight:bold;">
