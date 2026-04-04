@@ -1,5 +1,5 @@
 """
-占いモンスターマシーン Phase 1a
+占いモンスターくろたん Phase 1a
 メインエントリーポイント（Streamlit）
 
 画面フロー: TOP → 入力 → ローディング → 裏メニュー → 鑑定生成 → 結果
@@ -18,7 +18,7 @@ if not os.environ.get("GEMINI_API_KEY"):
 
 # ページ設定（最初に呼ぶ）
 st.set_page_config(
-    page_title="占いモンスターマシーン",
+    page_title="占いモンスターくろたん",
     page_icon="✧",
     layout="centered",
     initial_sidebar_state="collapsed",

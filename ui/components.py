@@ -859,7 +859,7 @@ def render_bansho_course(bundle: DivinationBundle, data: dict = None):
     if e.drink_talk:
         drink_html = f"""
 <div style="margin:12px 0; padding:10px; background:#141414; border-radius:6px; border-left:3px solid #BFA350;">
-  <div style="color:#BFA350; font-size:0.8em; font-weight:bold; margin-bottom:4px;">🍺 くろちゃんの即答</div>
+  <div style="color:#BFA350; font-size:0.8em; font-weight:bold; margin-bottom:4px;">🍺 くろたんの即答</div>
   <div style="color:#F0EBE0; font-size:0.85em; line-height:1.7; font-style:italic;">{e.drink_talk}</div>
 </div>"""
 
@@ -871,7 +871,7 @@ def render_bansho_course(bundle: DivinationBundle, data: dict = None):
         closing = data.get("closing", "")
         ai_reading_html = f"""
 <div class="gold-divider"></div>
-<div style="color:#BFA350; font-size:0.9em; font-weight:bold; margin:12px 0 6px; text-align:center;">── くろちゃんの鑑定 ──</div>
+<div style="color:#BFA350; font-size:0.9em; font-weight:bold; margin:12px 0 6px; text-align:center;">── くろたんの鑑定 ──</div>
 <div style="text-align:center; margin:8px 0 12px;">
   <span style="font-size:1.1em; color:#D4B96A; font-weight:bold;">「{headline}」</span>
 </div>

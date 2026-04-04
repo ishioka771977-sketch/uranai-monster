@@ -1,5 +1,5 @@
 """
-占いモンスターマシーン Phase 1a
+占いモンスターくろたん Phase 1a
 共通データモデル（dataclass）
 """
 from dataclasses import dataclass, field

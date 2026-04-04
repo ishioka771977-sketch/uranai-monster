@@ -30,7 +30,7 @@ def render_top_page():
     render_star_deco("✦ ☽ ✦")
 
     st.markdown(
-        '<div class="uranai-title">占いモンスターマシーン</div>',
+        '<div class="uranai-title">占いモンスターくろたん</div>',
         unsafe_allow_html=True
     )
     st.markdown(
@@ -447,7 +447,7 @@ def render_ura_menu_page():
 
     render_gold_divider()
 
-    # くろちゃんに自由質問（裏メニュー）
+    # くろたんに自由質問（裏メニュー）
     _render_ura_chat(bundle)
 
     # 戻るボタン
@@ -573,7 +573,7 @@ def render_theme_result_page():
 
     render_gold_divider()
 
-    # くろちゃんにテーマ関連の質問
+    # くろたんにテーマ関連の質問
     _render_theme_chat(bundle, theme_key, theme_data)
 
     render_gold_divider()
@@ -653,7 +653,7 @@ def render_result_page():
 
     render_gold_divider()
 
-    # くろちゃんに個別質問チャット
+    # くろたんに個別質問チャット
     _render_general_chat(bundle, course, results)
 
     # フッターボタン群
@@ -993,7 +993,7 @@ def render_aisho_result_page():
 
     render_gold_divider()
 
-    # くろちゃんに相性の個別質問
+    # くろたんに相性の個別質問
     _render_aisho_chat(bundle1, bundle2, result)
 
     render_gold_divider()
@@ -1099,7 +1099,7 @@ def render_tarot_input_page():
 
     col1, col2, col3 = st.columns([1, 2, 1])
     with col2:
-        if st.button("🔮 くろちゃんに相談する", key="btn_tarot_deepen"):
+        if st.button("🔮 くろたんに相談する", key="btn_tarot_deepen"):
             q = st.session_state.get("tarot_q_input", "").strip()
             if not q:
                 st.error("⚠ 質問を入力してください")
@@ -1132,7 +1132,7 @@ def render_tarot_input_page():
 
 
 def render_tarot_deepen_page():
-    """対話型タロット: くろちゃんが質問を深掘り"""
+    """対話型タロット: くろたんが質問を深掘り"""
     from ai.interpreter import generate_deepen_question
     from core.sanmei import calculate_sanmei
     from core.western import calculate_western
@@ -1163,7 +1163,7 @@ def render_tarot_deepen_page():
 
     render_star_deco("🔮")
     st.markdown(
-        '<div class="uranai-title" style="font-size:1.3em;">くろちゃんからの質問</div>',
+        '<div class="uranai-title" style="font-size:1.3em;">くろたんからの質問</div>',
         unsafe_allow_html=True
     )
 
@@ -1180,7 +1180,7 @@ def render_tarot_deepen_page():
     for h in history:
         st.markdown(f"""
 <div style="background:rgba(201,168,76,0.1); border-left:3px solid #BFA350; padding:10px 15px; margin:8px 0; border-radius:0 6px 6px 0;">
-<div style="color:#BFA350; font-size:0.85em;">🔮 くろちゃん</div>
+<div style="color:#BFA350; font-size:0.85em;">🔮 くろたん</div>
 <div style="color:#F0EBE0; font-size:0.95em; margin:4px 0;">{h['empathy']}</div>
 <div style="color:#F0EBE0; font-size:0.95em; font-weight:bold;">{h['follow_up']}</div>
 </div>
@@ -1196,17 +1196,17 @@ def render_tarot_deepen_page():
         ctx = "\n".join(f"Q: {h['follow_up']}\nA: {h['answer']}" for h in history)
 
         if f"_deepen_data_{len(history)}" not in st.session_state:
-            with st.spinner("くろちゃんが考え中…"):
+            with st.spinner("くろたんが考え中…"):
                 bundle = st.session_state.get("tarot_bundle")
                 deepen_data = generate_deepen_question(question, ctx, bundle=bundle)
                 st.session_state[f"_deepen_data_{len(history)}"] = deepen_data
         else:
             deepen_data = st.session_state[f"_deepen_data_{len(history)}"]
 
-        # くろちゃんの質問を表示
+        # くろたんの質問を表示
         st.markdown(f"""
 <div style="background:rgba(201,168,76,0.1); border-left:3px solid #BFA350; padding:10px 15px; margin:8px 0; border-radius:0 6px 6px 0;">
-<div style="color:#BFA350; font-size:0.85em;">🔮 くろちゃん</div>
+<div style="color:#BFA350; font-size:0.85em;">🔮 くろたん</div>
 <div style="color:#F0EBE0; font-size:0.95em; margin:4px 0;">{deepen_data.get('empathy', '')}</div>
 <div style="color:#F0EBE0; font-size:0.95em; font-weight:bold;">{deepen_data.get('follow_up', '')}</div>
 </div>
@@ -1728,7 +1728,7 @@ def render_tarot_result_page():
 
     render_gold_divider()
 
-    # くろちゃんに追加質問チャット
+    # くろたんに追加質問チャット
     _render_tarot_chat(bundle, question, spread_info, cards, result)
 
     render_gold_divider()
@@ -1746,13 +1746,13 @@ def render_tarot_result_page():
 
 
 def _render_tarot_chat(bundle, question, spread_info, cards, initial_result):
-    """くろちゃんへの追加質問チャット — 毎回1枚カードを引いて回答"""
+    """くろたんへの追加質問チャット — 毎回1枚カードを引いて回答"""
     from ai.interpreter import _format_all_data_summary, SYSTEM_PROMPT_BASE, _call_api_text
     from core.tarot import draw_tarot
 
     st.markdown("""
 <div style="text-align:center; margin:15px 0 8px;">
-<span style="color:#BFA350; font-size:1.05em; font-weight:bold;">🔮 くろちゃんに聞く</span><br>
+<span style="color:#BFA350; font-size:1.05em; font-weight:bold;">🔮 くろたんに聞く</span><br>
 <span style="color:#8A8478; font-size:0.8em;">追加の質問ごとに1枚カードを引いてお答えします</span>
 </div>
 """, unsafe_allow_html=True)
@@ -1878,7 +1878,7 @@ def _render_general_chat(bundle, course, results):
 
     st.markdown(f"""
 <div style="text-align:center; margin:15px 0 8px;">
-<span style="color:#BFA350; font-size:1.05em; font-weight:bold;">🔮 くろちゃんに聞く</span><br>
+<span style="color:#BFA350; font-size:1.05em; font-weight:bold;">🔮 くろたんに聞く</span><br>
 <span style="color:#8A8478; font-size:0.8em;">{name}さんの命式について、何でも聞いてください</span>
 </div>
 """, unsafe_allow_html=True)
@@ -1939,7 +1939,7 @@ def _render_general_chat(bundle, course, results):
             st.write(follow_up)
 
         with st.chat_message("assistant", avatar="🔮"):
-            with st.spinner("くろちゃんが考え中…"):
+            with st.spinner("くろたんが考え中…"):
                 try:
                     answer = _call_api_text(SYSTEM_PROMPT_BASE, prompt, max_tokens=1000)
                 except Exception:
@@ -1964,7 +1964,7 @@ def _render_aisho_chat(bundle1, bundle2, result):
 
     st.markdown(f"""
 <div style="text-align:center; margin:15px 0 8px;">
-<span style="color:#D4837A; font-size:1.05em; font-weight:bold;">💕 くろちゃんに聞く</span><br>
+<span style="color:#D4837A; font-size:1.05em; font-weight:bold;">💕 くろたんに聞く</span><br>
 <span style="color:#8A8478; font-size:0.8em;">{n1}さんと{n2}さんの相性について、何でも聞いてください</span>
 </div>
 """, unsafe_allow_html=True)
@@ -2024,7 +2024,7 @@ def _render_aisho_chat(bundle1, bundle2, result):
             st.write(follow_up)
 
         with st.chat_message("assistant", avatar="💕"):
-            with st.spinner("くろちゃんが考え中…"):
+            with st.spinner("くろたんが考え中…"):
                 try:
                     answer = _call_api_text(SYSTEM_PROMPT_BASE, prompt, max_tokens=1000)
                 except Exception:
@@ -2048,7 +2048,7 @@ def _render_ura_chat(bundle):
 
     st.markdown(f"""
 <div style="text-align:center; margin:15px 0 8px;">
-<span style="color:#BFA350; font-size:1.05em; font-weight:bold;">🔮 くろちゃんに聞く</span><br>
+<span style="color:#BFA350; font-size:1.05em; font-weight:bold;">🔮 くろたんに聞く</span><br>
 <span style="color:#8A8478; font-size:0.8em;">{name}さんの命式について自由に質問</span>
 </div>
 """, unsafe_allow_html=True)
@@ -2098,7 +2098,7 @@ def _render_ura_chat(bundle):
             st.write(follow_up)
 
         with st.chat_message("assistant", avatar="🔮"):
-            with st.spinner("くろちゃんが考え中…"):
+            with st.spinner("くろたんが考え中…"):
                 try:
                     answer = _call_api_text(SYSTEM_PROMPT_BASE, prompt, max_tokens=800)
                 except Exception:
@@ -2128,7 +2128,7 @@ def _render_theme_chat(bundle, theme_key, theme_data):
 
     st.markdown(f"""
 <div style="text-align:center; margin:15px 0 8px;">
-<span style="color:#BFA350; font-size:1.05em; font-weight:bold;">🔮 くろちゃんに聞く</span><br>
+<span style="color:#BFA350; font-size:1.05em; font-weight:bold;">🔮 くろたんに聞く</span><br>
 <span style="color:#8A8478; font-size:0.8em;">{name}さんの{theme_label}についてもっと詳しく</span>
 </div>
 """, unsafe_allow_html=True)
@@ -2182,7 +2182,7 @@ def _render_theme_chat(bundle, theme_key, theme_data):
             st.write(follow_up)
 
         with st.chat_message("assistant", avatar="🔮"):
-            with st.spinner("くろちゃんが考え中…"):
+            with st.spinner("くろたんが考え中…"):
                 try:
                     answer = _call_api_text(SYSTEM_PROMPT_BASE, prompt, max_tokens=1000)
                 except Exception:
