@@ -194,13 +194,50 @@ def render_sanmei_course(bundle: DivinationBundle, data: dict):
     if s.kakkyoku:
         kakkyoku_html = f'<div style="text-align:center; margin:6px 0;"><span class="uranai-tag-gold">特殊格局: {s.kakkyoku}</span></div>'
 
+    # 万象学エネルギー表示
+    energy_html = ""
+    if s.bansho_energy:
+        from core.bansho_energy import get_energy_percent, HONNOU_DETAIL
+        e = s.bansho_energy
+        pct = get_energy_percent(e.total_energy)
+        bar_filled = int(pct / 4)  # 25文字幅
+        bar = "█" * bar_filled + "░" * (25 - bar_filled)
+        medals = ["🥇", "🥈", "🥉", "　", "　"]
+        ranking_rows = ""
+        for i, (honnou, score) in enumerate(e.honnou_ranking):
+            detail = HONNOU_DETAIL.get(honnou, {})
+            kw = detail.get("keyword", "")
+            ranking_rows += (
+                f'<div style="display:flex;align-items:center;gap:6px;margin:2px 0;">'
+                f'<span style="width:22px;">{medals[i]}</span>'
+                f'<span style="color:#F5D78E;width:40px;">{honnou}</span>'
+                f'<span style="color:#9B8FC4;font-size:0.85em;flex:1;">{kw}</span>'
+                f'<span style="color:#C9A84C;font-weight:bold;">{score}点</span>'
+                f'</div>'
+            )
+        energy_html = f"""
+  <div style="margin:12px 0; padding:10px; border:1px solid #C9A84C; border-radius:6px; background:rgba(201,168,76,0.05);">
+    <div style="text-align:center; color:#C9A84C; font-size:0.9em; font-weight:bold; margin-bottom:8px;">═══ 宿命エネルギー ═══</div>
+    <div style="text-align:center; margin:6px 0;">
+      <span style="color:#F5D78E; font-size:1.4em; font-weight:bold;">{e.total_energy}</span>
+      <span style="color:#9B8FC4; font-size:0.85em; margin-left:6px;">{e.energy_type}</span>
+    </div>
+    <div style="text-align:center; font-family:monospace; color:#C9A84C; font-size:0.85em; margin:4px 0;">
+      {bar} {pct}%<span style="color:#666;font-size:0.8em;">（範囲: 89〜401）</span>
+    </div>
+    <div style="margin:8px 0 4px; padding-top:6px; border-top:1px solid #3a3652;">
+      {ranking_rows}
+    </div>
+    <div style="color:#9B8FC4; font-size:0.78em; margin-top:6px; text-align:center;">{e.energy_description}</div>
+  </div>"""
+
     _render_course_card(
         title="算命学が読み解く、あなたの魂",
         headline=data.get("headline", ""),
         reading=data.get("reading", data.get("nichikan_reading", "")),
         closing=data.get("closing", data.get("one_line", "")),
         data_tags=tags,
-        extra_html=jintaizu + gogyo_html + kakkyoku_html,
+        extra_html=jintaizu + gogyo_html + kakkyoku_html + energy_html,
     )
 
 

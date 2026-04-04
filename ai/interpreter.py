@@ -1119,6 +1119,19 @@ def _format_all_data_summary(bundle: DivinationBundle) -> str:
                 sihua_str = f" [{','.join(p.sihua)}]" if p.sihua else ""
                 lines.append(f"- {p.palace_name}（{p.branch}）: {stars}{sihua_str}")
 
+    # 万象学エネルギー
+    e = s.bansho_energy
+    if e is not None:
+        lines.append("\n## 万象学（宿命エネルギー）")
+        lines.append(f"- エネルギー指数: {e.total_energy}（{e.energy_type}）")
+        lines.append(f"- 第1本能: {e.top_honnou}（{e.top_score}点）")
+        lines.append(f"- 第2本能: {e.second_honnou}（{e.second_score}点）")
+        gogyo_parts = [f"{h}{score}点" for h, score in e.honnou_ranking]
+        lines.append(f"- 五本能: {' / '.join(gogyo_parts)}")
+        lines.append(f"- {e.energy_description}")
+        lines.append("※エネルギー指数の目安: 160以下=集中特化型, 180以下=自営向き, 180〜230=標準, 230以上=複数活動型, 250以上=超活動型, 300以上=規格外")
+        lines.append("※高い低いで良し悪しではない。自分のエネルギー量に合った生き方が最重要。第1本能と第2本能がその人の才能発揮エリア。")
+
     return "\n".join(lines)
 
 

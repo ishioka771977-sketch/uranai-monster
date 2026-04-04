@@ -7,7 +7,8 @@ import math
 from datetime import date, timedelta
 from pathlib import Path
 
-from .models import PersonInput, SanmeiResult
+from .models import PersonInput, SanmeiResult, BanshoEnergyResult
+from .bansho_energy import calc_energy_index
 
 # データファイルのパス
 _DATA_DIR = Path(__file__).parent.parent / "data"
@@ -378,6 +379,21 @@ def calculate_sanmei(person: PersonInput) -> SanmeiResult:
     # 特殊格局
     kakkyoku = _detect_kakkyoku(nen_kanshi, tsuki_kanshi, hi_kanshi)
 
+    # 万象学エネルギー
+    energy = calc_energy_index(nen_kan, nen_shi, tsuki_kan, tsuki_shi, nichikan, hi_shi)
+    bansho = BanshoEnergyResult(
+        total_energy=energy["total_energy"],
+        energy_type=energy["energy_type"],
+        energy_description=energy["energy_description"],
+        energy_advice=energy["energy_advice"],
+        gogyo_scores={g: d["総合計"] for g, d in energy["gogyo_detail"].items()},
+        honnou_ranking=energy["honnou_ranking"],
+        top_honnou=energy["top_honnou"],
+        top_score=energy["top_score"],
+        second_honnou=energy["second_honnou"],
+        second_score=energy["second_score"],
+    )
+
     return SanmeiResult(
         nen_kanshi=nen_kanshi,
         tsuki_kanshi=tsuki_kanshi,
@@ -401,6 +417,7 @@ def calculate_sanmei(person: PersonInput) -> SanmeiResult:
         nishi_honno=jintaizu["nishi_honno"],
         gogyo_balance=gogyo_balance,
         kakkyoku=kakkyoku,
+        bansho_energy=bansho,
         nen_kan=nen_kan,
         nen_shi=nen_shi,
         tsuki_kan=tsuki_kan,

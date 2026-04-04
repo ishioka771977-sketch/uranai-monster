@@ -3,7 +3,7 @@
 共通データモデル（dataclass）
 """
 from dataclasses import dataclass, field
-from typing import Optional, Dict, List
+from typing import Optional, Dict, List, Tuple
 from datetime import date
 
 
@@ -53,6 +53,23 @@ class SanmeiResult:
     tsuki_shi: str = ""
     hi_kan: str = ""
     hi_shi: str = ""
+    # 万象学エネルギー
+    bansho_energy: Optional['BanshoEnergyResult'] = None
+
+
+@dataclass
+class BanshoEnergyResult:
+    """万象学 宿命エネルギー指数"""
+    total_energy: int                              # エネルギー指数（総合計）
+    energy_type: str                               # 集中特化型/安定キャリア型/etc
+    energy_description: str                        # タイプの説明
+    energy_advice: str                             # アドバイス
+    gogyo_scores: Dict[str, int] = field(default_factory=dict)   # {'木':15, '火':20, ...}
+    honnou_ranking: List[Tuple[str, int]] = field(default_factory=list)  # [('攻撃',100), ...]
+    top_honnou: str = ""                           # 第1本能
+    top_score: int = 0
+    second_honnou: str = ""                        # 第2本能
+    second_score: int = 0
 
 
 @dataclass
