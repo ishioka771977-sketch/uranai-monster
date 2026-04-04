@@ -63,6 +63,10 @@ def render_top_page():
         if st.button("✦ 相性鑑定 ✦", key="btn_aisho"):
             st.session_state.page = "aisho_input"
             st.rerun()
+        st.markdown("<br>", unsafe_allow_html=True)
+        if st.button("📋 名簿管理", key="btn_meibo"):
+            st.session_state.page = "meibo"
+            st.rerun()
 
 
 # ============================================================
@@ -409,6 +413,494 @@ def _render_people_quick_select():
                     if errors:
                         st.warning("\\n".join(errors))
                     st.rerun()
+
+
+# ============================================================
+# 名簿管理画面
+# ============================================================
+
+def _parse_date_flexible(date_str: str):
+    """柔軟な日付パーサー: 西暦・和暦・漢字和暦に対応"""
+    import re
+    date_str = date_str.strip()
+
+    # yyyy/mm/dd or yyyy-mm-dd
+    for sep in ['/', '-']:
+        if sep in date_str:
+            parts = date_str.split(sep)
+            if len(parts) == 3:
+                try:
+                    return int(parts[0]), int(parts[1]), int(parts[2])
+                except ValueError:
+                    pass
+
+    # 和暦アルファベット: H2.3.15, S55.1.1, R1/5/1 等
+    wm = re.match(r'([MTSHR])(\d+)[./](\d+)[./](\d+)', date_str)
+    if wm:
+        era_map = {"M": 1867, "T": 1911, "S": 1925, "H": 1988, "R": 2018}
+        base = era_map.get(wm.group(1), 1988)
+        return base + int(wm.group(2)), int(wm.group(3)), int(wm.group(4))
+
+    # 漢字和暦: 平成2年3月15日
+    km = re.match(r'(明治|大正|昭和|平成|令和)(\d+)年(\d+)月(\d+)日', date_str)
+    if km:
+        era_map2 = {"明治": 1867, "大正": 1911, "昭和": 1925, "平成": 1988, "令和": 2018}
+        base = era_map2.get(km.group(1), 1988)
+        return base + int(km.group(2)), int(km.group(3)), int(km.group(4))
+
+    return None, None, None
+
+
+def _detect_column_mapping(headers: list) -> dict:
+    """ヘッダー行からカラム名を自動検出してマッピングを返す"""
+    mapping = {}
+    name_candidates = ["名前", "氏名", "name", "お名前", "顧客名", "Name"]
+    date_candidates = ["生年月日", "誕生日", "birthday", "birth_date", "Birthday", "生年月日（西暦）"]
+    year_candidates = ["年", "year", "Year", "生年"]
+    month_candidates = ["月", "month", "Month", "生月"]
+    day_candidates = ["日", "day", "Day", "生日"]
+    gender_candidates = ["性別", "gender", "sex", "Gender", "Sex"]
+    blood_candidates = ["血液型", "blood", "blood_type", "Blood", "血液"]
+    time_candidates = ["出生時刻", "時刻", "time", "birth_time", "Time", "生時"]
+    place_candidates = ["出生地", "場所", "place", "birth_place", "Place", "出身地"]
+
+    for i, h in enumerate(headers):
+        if h is None:
+            continue
+        h_str = str(h).strip()
+        if h_str in name_candidates:
+            mapping["name"] = i
+        elif h_str in date_candidates:
+            mapping["date"] = i
+        elif h_str in year_candidates:
+            mapping["year"] = i
+        elif h_str in month_candidates:
+            mapping["month"] = i
+        elif h_str in day_candidates:
+            mapping["day"] = i
+        elif h_str in gender_candidates:
+            mapping["gender"] = i
+        elif h_str in blood_candidates:
+            mapping["blood"] = i
+        elif h_str in time_candidates:
+            mapping["time"] = i
+        elif h_str in place_candidates:
+            mapping["place"] = i
+    return mapping
+
+
+def _parse_file_rows(rows: list, headers: list) -> list:
+    """ファイルの行データを解析して人物辞書のリストを返す"""
+    mapping = _detect_column_mapping(headers)
+    if "name" not in mapping:
+        return []
+
+    results = []
+    for row in rows:
+        try:
+            name = str(row[mapping["name"]]).strip() if mapping["name"] < len(row) and row[mapping["name"]] else ""
+            if not name:
+                continue
+
+            year, month, day = None, None, None
+            if "date" in mapping and mapping["date"] < len(row) and row[mapping["date"]]:
+                year, month, day = _parse_date_flexible(str(row[mapping["date"]]))
+            if year is None and "year" in mapping and "month" in mapping and "day" in mapping:
+                try:
+                    yi = mapping["year"]
+                    mi = mapping["month"]
+                    di = mapping["day"]
+                    if yi < len(row) and mi < len(row) and di < len(row):
+                        year = int(float(str(row[yi])))
+                        month = int(float(str(row[mi])))
+                        day = int(float(str(row[di])))
+                except (ValueError, TypeError):
+                    pass
+
+            if not year or not month or not day:
+                results.append({"name": name, "error": "日付解析失敗"})
+                continue
+
+            gender = ""
+            if "gender" in mapping and mapping["gender"] < len(row) and row[mapping["gender"]]:
+                gender = str(row[mapping["gender"]]).strip()
+            blood = "不明"
+            if "blood" in mapping and mapping["blood"] < len(row) and row[mapping["blood"]]:
+                blood = str(row[mapping["blood"]]).strip()
+            time_str = ""
+            if "time" in mapping and mapping["time"] < len(row) and row[mapping["time"]]:
+                time_str = str(row[mapping["time"]]).strip()
+            place = ""
+            if "place" in mapping and mapping["place"] < len(row) and row[mapping["place"]]:
+                place = str(row[mapping["place"]]).strip()
+
+            results.append({
+                "name": name, "year": year, "month": month, "day": day,
+                "gender": gender, "blood": blood, "time": time_str, "place": place,
+            })
+        except Exception:
+            continue
+    return results
+
+
+def render_meibo_page():
+    """名簿管理画面: 顧客データの登録・編集・インポート"""
+    import io
+    import csv
+    import re
+
+    people_db = _load_people_db()
+    folders_db = _load_folders_db()
+
+    # ── ヘッダー ──
+    render_star_deco("✦")
+    st.markdown("""
+<div style="text-align:center; margin-bottom:5px;">
+  <span style="color:#BFA350; font-size:1.5em; font-weight:bold;">✦ 名簿管理 ✦</span><br>
+  <span style="color:#8A8478; font-size:0.85em;">顧客データの登録・編集・インポート</span>
+</div>
+""", unsafe_allow_html=True)
+    render_gold_divider()
+
+    # ── セクション切り替え（タブ） ──
+    tab_upload, tab_text, tab_list, tab_folders = st.tabs([
+        "📂 ファイル取込", "📝 テキスト一括", "👥 顧客一覧", "📁 フォルダ管理"
+    ])
+
+    # ==================================================================
+    # タブA: ファイルアップロード（CSV / Excel）
+    # ==================================================================
+    with tab_upload:
+        st.markdown('<div style="color:#BFA350;font-size:0.95em;font-weight:bold;margin:8px 0;">CSV / Excelファイルから一括登録</div>', unsafe_allow_html=True)
+        st.caption("対応カラム: 名前（必須）, 生年月日 or 年/月/日, 性別, 血液型, 出生時刻, 出生地")
+
+        uploaded = st.file_uploader(
+            "CSVまたはExcelファイル", type=["csv", "xlsx"],
+            key="meibo_upload", label_visibility="collapsed"
+        )
+
+        if uploaded:
+            parsed_rows = []
+            file_headers = []
+            error_msg = None
+
+            try:
+                if uploaded.name.endswith('.csv'):
+                    content = uploaded.read().decode('utf-8-sig')
+                    reader = csv.reader(io.StringIO(content))
+                    all_rows = list(reader)
+                    if all_rows:
+                        file_headers = all_rows[0]
+                        data_rows = all_rows[1:]
+                        parsed_rows = _parse_file_rows(data_rows, file_headers)
+                elif uploaded.name.endswith('.xlsx'):
+                    try:
+                        import openpyxl
+                    except ImportError:
+                        error_msg = "openpyxlがインストールされていません。pip install openpyxl を実行してください。"
+                    if not error_msg:
+                        wb = openpyxl.load_workbook(uploaded, read_only=True)
+                        ws = wb.active
+                        all_rows_xl = list(ws.iter_rows(values_only=True))
+                        if all_rows_xl:
+                            file_headers = [str(c) if c else "" for c in all_rows_xl[0]]
+                            data_rows = [list(r) for r in all_rows_xl[1:]]
+                            parsed_rows = _parse_file_rows(data_rows, file_headers)
+                        wb.close()
+            except Exception as e:
+                error_msg = f"ファイル読み込みエラー: {e}"
+
+            if error_msg:
+                st.error(error_msg)
+            elif parsed_rows:
+                # プレビュー
+                valid = [r for r in parsed_rows if "error" not in r]
+                errors = [r for r in parsed_rows if "error" in r]
+
+                st.markdown(f'<div style="color:#D4B96A;font-size:0.9em;">検出: {len(valid)}件（エラー: {len(errors)}件）</div>', unsafe_allow_html=True)
+
+                if valid:
+                    import pandas as pd
+                    preview_data = []
+                    for r in valid:
+                        preview_data.append({
+                            "名前": r["name"],
+                            "生年月日": f"{r['year']}/{r['month']}/{r['day']}",
+                            "性別": r.get("gender", ""),
+                            "血液型": r.get("blood", "不明"),
+                            "時刻": r.get("time", ""),
+                            "出生地": r.get("place", ""),
+                        })
+                    st.dataframe(pd.DataFrame(preview_data), use_container_width=True, hide_index=True)
+
+                if errors:
+                    with st.expander(f"⚠ エラー {len(errors)}件", expanded=False):
+                        for e in errors:
+                            st.caption(f"・{e['name']}: {e.get('error', '')}")
+
+                # フォルダ選択
+                folder_options = ["（フォルダなし）"] + list(folders_db.keys())
+                upload_folder = st.selectbox("登録先フォルダ", folder_options, key="upload_folder")
+                new_folder_for_upload = st.text_input("または新規フォルダ名", key="upload_new_folder", placeholder="新しいフォルダを作成して登録")
+
+                if st.button("📥 確定して登録", key="btn_confirm_upload"):
+                    count = 0
+                    target_folder = new_folder_for_upload.strip() if new_folder_for_upload.strip() else (upload_folder if upload_folder != "（フォルダなし）" else "")
+                    for r in valid:
+                        pname = r["name"]
+                        existing = people_db.get(pname, {})
+                        people_db[pname] = {
+                            "name": pname,
+                            "gender": r.get("gender", ""),
+                            "year": r["year"], "month": r["month"], "day": r["day"],
+                            "time": r.get("time", ""),
+                            "place": r.get("place", ""),
+                            "blood": r.get("blood", "不明"),
+                            "created_at": existing.get("created_at", ""),
+                            "last_divined": existing.get("last_divined", ""),
+                            "divined_count": existing.get("divined_count", 0),
+                        }
+                        if target_folder:
+                            if target_folder not in folders_db:
+                                folders_db[target_folder] = []
+                            if pname not in folders_db[target_folder]:
+                                folders_db[target_folder].append(pname)
+                        count += 1
+                    st.session_state._people_db = people_db
+                    _persist_people_db(people_db)
+                    if target_folder:
+                        _persist_folders_db(folders_db)
+                    st.success(f"{count}人を登録しました" + (f"（📁 {target_folder}）" if target_folder else ""))
+                    st.rerun()
+            else:
+                st.warning("データが見つかりませんでした。ヘッダー行に「名前」カラムが必要です。")
+
+    # ==================================================================
+    # タブB: テキスト一括インポート
+    # ==================================================================
+    with tab_text:
+        st.markdown('<div style="color:#BFA350;font-size:0.95em;font-weight:bold;margin:8px 0;">テキスト一括インポート</div>', unsafe_allow_html=True)
+        st.caption(
+            "以下の形式に対応（自動判定）:\n"
+            "・名前, 年, 月, 日\n"
+            "・名前, 1990/3/15\n"
+            "・名前, 1990-03-15\n"
+            "・名前, H2.3.15（和暦）\n"
+            "・名前, 平成2年3月15日\n"
+            "・名前, 1990/3/15, 男性\n"
+            "・名前, 1990/3/15, 男性, A"
+        )
+        import_text = st.text_area(
+            "一括入力", key="meibo_bulk_import", height=160, label_visibility="collapsed",
+            placeholder="太郎, 1985/3/15\n花子, 1990/8/22\n次郎, H2.3.15\n..."
+        )
+
+        # フォルダ選択
+        folder_options = ["（フォルダなし）"] + list(folders_db.keys())
+        text_folder = st.selectbox("登録先フォルダ", folder_options, key="meibo_text_folder")
+        new_folder_for_text = st.text_input("または新規フォルダ名", key="meibo_text_new_folder", placeholder="新しいフォルダを作成して登録")
+
+        if st.button("📥 一括登録", key="btn_meibo_bulk"):
+            if import_text.strip():
+                count = 0
+                errors = []
+                target_folder = new_folder_for_text.strip() if new_folder_for_text.strip() else (text_folder if text_folder != "（フォルダなし）" else "")
+
+                for line in import_text.strip().split("\n"):
+                    line = line.strip()
+                    if not line:
+                        continue
+                    if "," in line:
+                        parts = [p.strip() for p in line.split(",")]
+                    else:
+                        parts = line.split()
+                    if len(parts) < 2:
+                        errors.append(f"形式エラー: {line}")
+                        continue
+
+                    pname = parts[0]
+                    date_str = parts[1]
+                    pgender = parts[2] if len(parts) > 2 else ""
+                    pblood = parts[3] if len(parts) > 3 else "不明"
+                    ptime = parts[4] if len(parts) > 4 else ""
+
+                    pyear, pmonth, pday = None, None, None
+                    try:
+                        if len(parts) >= 4 and parts[1].isdigit() and parts[2].isdigit() and parts[3].isdigit():
+                            pyear, pmonth, pday = int(parts[1]), int(parts[2]), int(parts[3])
+                            pgender = parts[4] if len(parts) > 4 else ""
+                            pblood = parts[5] if len(parts) > 5 else "不明"
+                            ptime = parts[6] if len(parts) > 6 else ""
+                        else:
+                            pyear, pmonth, pday = _parse_date_flexible(date_str)
+                    except (ValueError, IndexError):
+                        pass
+
+                    if pyear and pmonth and pday:
+                        existing = people_db.get(pname, {})
+                        people_db[pname] = {
+                            "name": pname, "gender": pgender,
+                            "year": pyear, "month": pmonth, "day": pday,
+                            "time": ptime, "place": "", "blood": pblood,
+                            "created_at": existing.get("created_at", ""),
+                            "last_divined": existing.get("last_divined", ""),
+                            "divined_count": existing.get("divined_count", 0),
+                        }
+                        if target_folder:
+                            if target_folder not in folders_db:
+                                folders_db[target_folder] = []
+                            if pname not in folders_db[target_folder]:
+                                folders_db[target_folder].append(pname)
+                        count += 1
+                    else:
+                        errors.append(f"日付解析失敗: {line}")
+
+                st.session_state._people_db = people_db
+                _persist_people_db(people_db)
+                if target_folder:
+                    _persist_folders_db(folders_db)
+                st.success(f"{count}人を登録しました" + (f"（📁 {target_folder}）" if target_folder else ""))
+                if errors:
+                    st.warning("\n".join(errors))
+                st.rerun()
+
+    # ==================================================================
+    # タブC: 顧客一覧
+    # ==================================================================
+    with tab_list:
+        st.markdown(f'<div style="color:#BFA350;font-size:0.95em;font-weight:bold;margin:8px 0;">登録顧客一覧（{len(people_db)}件）</div>', unsafe_allow_html=True)
+
+        if not people_db:
+            st.caption("まだ顧客データがありません")
+        else:
+            # 検索フィルター
+            search_q = st.text_input("🔍 名前で検索", key="meibo_search", placeholder="名前を入力...", label_visibility="collapsed")
+
+            names_sorted = sorted(people_db.keys())
+            if search_q:
+                names_sorted = [n for n in names_sorted if search_q.lower() in n.lower()]
+
+            if not names_sorted:
+                st.caption("該当する顧客がいません")
+            else:
+                # テーブル表示
+                import pandas as pd
+                table_data = []
+                for name in names_sorted:
+                    p = people_db[name]
+                    table_data.append({
+                        "名前": name,
+                        "生年月日": f"{p.get('year','')}/{p.get('month','')}/{p.get('day','')}",
+                        "性別": p.get("gender", ""),
+                        "血液型": p.get("blood", "不明"),
+                        "鑑定回数": p.get("divined_count", 0),
+                        "最終鑑定日": p.get("last_divined", "―"),
+                    })
+                st.dataframe(pd.DataFrame(table_data), use_container_width=True, hide_index=True)
+
+                # 個別削除
+                st.markdown("---")
+                st.markdown('<div style="color:#8A8478;font-size:0.8em;margin-bottom:6px;">個別削除</div>', unsafe_allow_html=True)
+                del_target = st.selectbox("削除する顧客", ["（選択）"] + names_sorted, key="meibo_del_target", label_visibility="collapsed")
+                if st.button("🗑 削除", key="btn_meibo_del"):
+                    if del_target and del_target != "（選択）" and del_target in people_db:
+                        del people_db[del_target]
+                        # フォルダからも削除
+                        for folder_member_list in folders_db.values():
+                            if del_target in folder_member_list:
+                                folder_member_list.remove(del_target)
+                        st.session_state._people_db = people_db
+                        _persist_people_db(people_db)
+                        _persist_folders_db(folders_db)
+                        st.success(f"「{del_target}」を削除しました")
+                        st.rerun()
+
+    # ==================================================================
+    # タブD: フォルダ管理
+    # ==================================================================
+    with tab_folders:
+        st.markdown('<div style="color:#BFA350;font-size:0.95em;font-weight:bold;margin:8px 0;">フォルダ管理</div>', unsafe_allow_html=True)
+
+        # 新規フォルダ作成
+        fc1, fc2 = st.columns([3, 1])
+        with fc1:
+            new_fname = st.text_input("新しいフォルダ名", key="meibo_new_folder_name", placeholder="例: 鹿島建設セミナー", label_visibility="collapsed")
+        with fc2:
+            if st.button("📁 作成", key="btn_meibo_create_folder"):
+                if new_fname and new_fname not in folders_db:
+                    folders_db[new_fname] = []
+                    _persist_folders_db(folders_db)
+                    st.rerun()
+
+        st.markdown("---")
+
+        folder_names = list(folders_db.keys())
+        if not folder_names:
+            st.caption("フォルダはまだありません")
+        else:
+            for fi, fname in enumerate(folder_names):
+                members = folders_db.get(fname, [])
+                with st.expander(f"📁 {fname}（{len(members)}件）", expanded=False):
+                    # メンバー一覧
+                    if members:
+                        for mname in members:
+                            p = people_db.get(mname)
+                            if p:
+                                st.markdown(
+                                    f'<span style="color:#F0EBE0;font-size:0.85em;">👤 {mname}　{p.get("year","")}/{p.get("month","")}/{p.get("day","")}　{p.get("gender","")}　{p.get("blood","不明")}型</span>',
+                                    unsafe_allow_html=True
+                                )
+                            else:
+                                st.markdown(f'<span style="color:#5A5A5A;font-size:0.8em;">⚠ {mname}（データなし）</span>', unsafe_allow_html=True)
+                    else:
+                        st.caption("このフォルダは空です")
+
+                    # メンバー追加
+                    available = [n for n in people_db.keys() if n not in members]
+                    if available:
+                        add_c1, add_c2 = st.columns([3, 1])
+                        with add_c1:
+                            add_sel = st.multiselect(
+                                "追加する顧客", available, key=f"meibo_add_f{fi}", label_visibility="collapsed",
+                                placeholder="顧客を選択して追加..."
+                            )
+                        with add_c2:
+                            if st.button("＋追加", key=f"btn_meibo_add_f{fi}") and add_sel:
+                                folders_db[fname].extend(add_sel)
+                                _persist_folders_db(folders_db)
+                                st.rerun()
+
+                    # メンバー削除
+                    if members:
+                        rm_c1, rm_c2 = st.columns([3, 1])
+                        with rm_c1:
+                            rm_sel = st.multiselect(
+                                "外す顧客", members, key=f"meibo_rm_f{fi}", label_visibility="collapsed",
+                                placeholder="フォルダから外す..."
+                            )
+                        with rm_c2:
+                            if st.button("－外す", key=f"btn_meibo_rm_f{fi}") and rm_sel:
+                                for rn in rm_sel:
+                                    if rn in folders_db[fname]:
+                                        folders_db[fname].remove(rn)
+                                _persist_folders_db(folders_db)
+                                st.rerun()
+
+                    # フォルダ削除
+                    st.markdown("---")
+                    if st.button(f"🗑 「{fname}」フォルダを削除", key=f"btn_meibo_delfolder_{fi}"):
+                        del folders_db[fname]
+                        _persist_folders_db(folders_db)
+                        st.rerun()
+
+    # ── 戻るボタン ──
+    st.markdown("<br>", unsafe_allow_html=True)
+    render_gold_divider()
+    col1, col2, col3 = st.columns([1, 2, 1])
+    with col2:
+        if st.button("← TOPに戻る", key="btn_back_meibo"):
+            st.session_state.page = "top"
+            st.rerun()
 
 
 # ============================================================

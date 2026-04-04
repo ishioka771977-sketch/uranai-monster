@@ -46,6 +46,7 @@ from ui.pages import (
     render_tarot_reveal_page,
     render_tarot_generating_page,
     render_tarot_result_page,
+    render_meibo_page,
 )
 
 # CSSを注入
@@ -98,6 +99,8 @@ elif page == "tarot_generating":
     render_tarot_generating_page()
 elif page == "tarot_result":
     render_tarot_result_page()
+elif page == "meibo":
+    render_meibo_page()
 else:
     st.session_state.page = "top"
     st.rerun()
