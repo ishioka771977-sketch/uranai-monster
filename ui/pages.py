@@ -71,7 +71,9 @@ def render_top_page():
 import json as _json
 import os as _os
 
-_PEOPLE_DB_PATH = _os.path.join(_os.path.dirname(_os.path.dirname(_os.path.abspath(__file__))), "data", "people_db.json")
+_DATA_DIR = _os.path.join(_os.path.dirname(_os.path.dirname(_os.path.abspath(__file__))), "data")
+_PEOPLE_DB_PATH = _os.path.join(_DATA_DIR, "people_db.json")
+_FOLDERS_DB_PATH = _os.path.join(_DATA_DIR, "folders_db.json")
 
 
 def _load_people_db() -> dict:
@@ -93,8 +95,36 @@ def _load_people_db() -> dict:
 def _persist_people_db(db: dict):
     """人物データをJSONファイルに保存"""
     try:
+        _os.makedirs(_DATA_DIR, exist_ok=True)
         with open(_PEOPLE_DB_PATH, "w", encoding="utf-8") as f:
             _json.dump(db, f, ensure_ascii=False, indent=2)
+    except Exception:
+        pass
+
+
+def _load_folders_db() -> dict:
+    """フォルダ定義を読み込み。形式: {"フォルダ名": ["名前1", "名前2", ...]}"""
+    if "_folders_db" in st.session_state and st.session_state._folders_db is not None:
+        return st.session_state._folders_db
+    try:
+        if _os.path.exists(_FOLDERS_DB_PATH):
+            with open(_FOLDERS_DB_PATH, encoding="utf-8") as f:
+                fdb = _json.load(f)
+            st.session_state._folders_db = fdb
+            return fdb
+    except Exception:
+        pass
+    st.session_state._folders_db = {}
+    return {}
+
+
+def _persist_folders_db(fdb: dict):
+    """フォルダ定義をJSONファイルに保存"""
+    try:
+        _os.makedirs(_DATA_DIR, exist_ok=True)
+        with open(_FOLDERS_DB_PATH, "w", encoding="utf-8") as f:
+            _json.dump(fdb, f, ensure_ascii=False, indent=2)
+        st.session_state._folders_db = fdb
     except Exception:
         pass
 
@@ -110,59 +140,219 @@ def _save_person(name, year, month, day, time_str="", place="", blood="不明", 
     st.session_state._saved_place = place
     st.session_state._saved_blood = blood
 
+    from datetime import datetime as _dt
     db = _load_people_db()
     if name:
+        existing = db.get(name, {})
         db[name] = {
             "name": name, "gender": gender, "year": year, "month": month, "day": day,
             "time": time_str, "place": place, "blood": blood,
+            "last_divined": _dt.now().strftime("%Y-%m-%d %H:%M"),
+            "divined_count": existing.get("divined_count", 0) + 1,
+            "created_at": existing.get("created_at", _dt.now().strftime("%Y-%m-%d")),
         }
         st.session_state._people_db = db
         _persist_people_db(db)
 
 
+def _select_person(p: dict):
+    """人物データをセッションに読み込む（選択時共通処理）"""
+    st.session_state._saved_name = p.get("name", "")
+    st.session_state._saved_gender = p.get("gender", "男性")
+    st.session_state._saved_year = int(p.get("year", 1990))
+    st.session_state._saved_month = int(p.get("month", 5))
+    st.session_state._saved_day = int(p.get("day", 15))
+    st.session_state._saved_time = p.get("time", "")
+    st.session_state._saved_place = p.get("place", "")
+    st.session_state._saved_blood = p.get("blood", "不明")
+    st.session_state._input_key_ver = st.session_state.get("_input_key_ver", 0) + 1
+    st.rerun()
+
+
+def _render_person_row(name: str, p: dict, key_prefix: str, people_db: dict, show_folder_assign: bool = False):
+    """人物1行を描画（選択ボタン + 削除ボタン）"""
+    year = p.get('year', '')
+    month = p.get('month', '')
+    day = p.get('day', '')
+    gender = p.get('gender', '')
+    blood = p.get('blood', '')
+    blood_str = f" {blood}型" if blood and blood != "不明" else ""
+    time_str = p.get('time', '')
+    time_disp = f" {time_str}生" if time_str else ""
+    divined = p.get('last_divined', '')
+    divined_str = f"  🕐{divined}" if divined else ""
+
+    col1, col2 = st.columns([5, 1])
+    with col1:
+        label = f"👤 {name}　{year}/{month}/{day}{time_disp}　{gender}{blood_str}{divined_str}"
+        if st.button(label, key=f"btn_{key_prefix}_{name}", use_container_width=True):
+            _select_person(p)
+    with col2:
+        if st.button("🗑", key=f"btn_del_{key_prefix}_{name}", help=f"{name}を削除"):
+            del people_db[name]
+            # フォルダからも削除
+            fdb = _load_folders_db()
+            for folder_names_list in fdb.values():
+                if name in folder_names_list:
+                    folder_names_list.remove(name)
+            _persist_folders_db(fdb)
+            st.session_state._people_db = people_db
+            _persist_people_db(people_db)
+            st.rerun()
+
+
 def _render_people_quick_select():
-    """登録済みの人を「顧客リスト」ボタン経由で選択（普段は非表示）"""
+    """顧客リスト — タブ切り替え式（全顧客 / 鑑定履歴 / カスタムフォルダ）"""
     people_db = _load_people_db()
-    if not people_db:
+    folders_db = _load_folders_db()
+
+    # 顧客もフォルダも空の場合は何も表示しない
+    if not people_db and not folders_db:
         return
 
-    names = list(people_db.keys())
-
-    # 「📋 顧客リスト」ボタン — 押すとリストが展開
     with st.expander("顧客リスト", expanded=False, icon="📋"):
-        for idx, name in enumerate(names):
-            p = people_db[name]
-            year = p.get('year', '')
-            month = p.get('month', '')
-            day = p.get('day', '')
-            gender = p.get('gender', '')
-            blood = p.get('blood', '')
-            blood_str = f" {blood}型" if blood and blood != "不明" else ""
-            time_str = p.get('time', '')
-            time_disp = f" {time_str}生" if time_str else ""
+        # タブ名を動的に構築
+        folder_names = list(folders_db.keys())
+        tab_labels = ["全顧客一覧", "鑑定履歴"] + [f"📁 {fn}" for fn in folder_names] + ["⚙ フォルダ管理"]
+        tabs = st.tabs(tab_labels)
 
-            col1, col2 = st.columns([4, 1])
-            with col1:
-                label = f"👤 {name}　{year}/{month}/{day}{time_disp}　{gender}{blood_str}"
-                if st.button(label, key=f"btn_quick_{idx}", use_container_width=True):
-                    st.session_state._saved_name = name
-                    st.session_state._saved_gender = p.get("gender", "男性")
-                    st.session_state._saved_year = int(p.get("year", 1990))
-                    st.session_state._saved_month = int(p.get("month", 5))
-                    st.session_state._saved_day = int(p.get("day", 15))
-                    st.session_state._saved_time = p.get("time", "")
-                    st.session_state._saved_place = p.get("place", "")
-                    st.session_state._saved_blood = p.get("blood", "不明")
-                    st.session_state._input_key_ver = st.session_state.get("_input_key_ver", 0) + 1
-                    st.rerun()
-            with col2:
-                if st.button("🗑", key=f"btn_del_{idx}", help=f"{name}を削除"):
-                    del people_db[name]
+        # ── タブ: 全顧客一覧 ──
+        with tabs[0]:
+            if not people_db:
+                st.caption("まだ顧客データがありません")
+            else:
+                names = list(people_db.keys())
+                for name in sorted(names):
+                    _render_person_row(name, people_db[name], "all", people_db)
+                st.markdown(f'<div style="color:#5A5A5A;font-size:0.72em;text-align:right;">{len(names)}件</div>', unsafe_allow_html=True)
+
+        # ── タブ: 鑑定履歴（last_divined順） ──
+        with tabs[1]:
+            divined = [(n, p) for n, p in people_db.items() if p.get("last_divined")]
+            divined.sort(key=lambda x: x[1].get("last_divined", ""), reverse=True)
+            if not divined:
+                st.caption("まだ鑑定履歴がありません")
+            else:
+                for name, p in divined:
+                    count = p.get("divined_count", 1)
+                    _render_person_row(name, p, "hist", people_db)
+                st.markdown(f'<div style="color:#5A5A5A;font-size:0.72em;text-align:right;">{len(divined)}件</div>', unsafe_allow_html=True)
+
+        # ── タブ: カスタムフォルダ（各フォルダ） ──
+        for fi, fname in enumerate(folder_names):
+            with tabs[2 + fi]:
+                members = folders_db.get(fname, [])
+                if not members:
+                    st.caption("このフォルダは空です")
+                else:
+                    for mname in members:
+                        p = people_db.get(mname)
+                        if p:
+                            _render_person_row(mname, p, f"f{fi}", people_db)
+                        else:
+                            st.markdown(f'<span style="color:#5A5A5A;font-size:0.8em;">⚠ {mname}（データなし）</span>', unsafe_allow_html=True)
+                st.markdown(f'<div style="color:#5A5A5A;font-size:0.72em;text-align:right;">{len(members)}件</div>', unsafe_allow_html=True)
+
+                # フォルダに追加
+                available = [n for n in people_db.keys() if n not in members]
+                if available:
+                    add_col1, add_col2 = st.columns([3, 1])
+                    with add_col1:
+                        selected = st.multiselect(
+                            "追加する顧客", available, key=f"add_to_f{fi}", label_visibility="collapsed",
+                            placeholder="顧客を選択して追加..."
+                        )
+                    with add_col2:
+                        if st.button("＋追加", key=f"btn_add_f{fi}") and selected:
+                            folders_db[fname].extend(selected)
+                            _persist_folders_db(folders_db)
+                            st.rerun()
+
+                # フォルダからメンバーを外す
+                if members:
+                    rm_col1, rm_col2 = st.columns([3, 1])
+                    with rm_col1:
+                        remove_sel = st.multiselect(
+                            "外す顧客", members, key=f"rm_from_f{fi}", label_visibility="collapsed",
+                            placeholder="フォルダから外す..."
+                        )
+                    with rm_col2:
+                        if st.button("－外す", key=f"btn_rm_f{fi}") and remove_sel:
+                            for rn in remove_sel:
+                                if rn in folders_db[fname]:
+                                    folders_db[fname].remove(rn)
+                            _persist_folders_db(folders_db)
+                            st.rerun()
+
+        # ── タブ: フォルダ管理 ──
+        with tabs[-1]:
+            st.markdown('<div style="color:#BFA350;font-size:0.9em;font-weight:bold;margin-bottom:8px;">フォルダ管理</div>', unsafe_allow_html=True)
+
+            # 既存フォルダ一覧 + 削除
+            if folder_names:
+                for fi, fname in enumerate(folder_names):
+                    fc1, fc2 = st.columns([4, 1])
+                    with fc1:
+                        count = len(folders_db.get(fname, []))
+                        st.markdown(f'📁 **{fname}**　<span style="color:#5A5A5A;font-size:0.8em;">({count}件)</span>', unsafe_allow_html=True)
+                    with fc2:
+                        if st.button("🗑", key=f"btn_delfolder_{fi}", help=f"フォルダ「{fname}」を削除"):
+                            del folders_db[fname]
+                            _persist_folders_db(folders_db)
+                            st.rerun()
+            else:
+                st.caption("フォルダはまだありません")
+
+            # 新規フォルダ作成
+            st.markdown("---")
+            new_col1, new_col2 = st.columns([3, 1])
+            with new_col1:
+                new_fname = st.text_input("新しいフォルダ名", key="new_folder_name", placeholder="例: 鹿島建設セミナー", label_visibility="collapsed")
+            with new_col2:
+                if st.button("📁 作成", key="btn_create_folder"):
+                    if new_fname and new_fname not in folders_db:
+                        folders_db[new_fname] = []
+                        _persist_folders_db(folders_db)
+                        st.rerun()
+
+            # 一括インポート
+            st.markdown("---")
+            st.markdown('<div style="color:#BFA350;font-size:0.85em;font-weight:bold;">一括インポート</div>', unsafe_allow_html=True)
+            st.caption("1行1人「名前,年,月,日」形式で貼り付け。フォルダも指定可。")
+            import_text = st.text_area(
+                "一括入力", key="bulk_import", height=120, label_visibility="collapsed",
+                placeholder="太郎,1985,3,15\n花子,1990,8,22\n..."
+            )
+            import_folder = st.text_input("インポート先フォルダ（空欄＝フォルダなし）", key="import_folder", placeholder="例: 鹿島建設セミナー", label_visibility="collapsed")
+            if st.button("📥 一括登録", key="btn_bulk_import"):
+                if import_text.strip():
+                    count = 0
+                    for line in import_text.strip().split("\n"):
+                        parts = [p.strip() for p in line.split(",")]
+                        if len(parts) >= 4:
+                            pname, pyear, pmonth, pday = parts[0], parts[1], parts[2], parts[3]
+                            pgender = parts[4] if len(parts) > 4 else "男性"
+                            pblood = parts[5] if len(parts) > 5 else "不明"
+                            ptime = parts[6] if len(parts) > 6 else ""
+                            people_db[pname] = {
+                                "name": pname, "gender": pgender,
+                                "year": int(pyear), "month": int(pmonth), "day": int(pday),
+                                "time": ptime, "place": "", "blood": pblood,
+                                "created_at": "",
+                            }
+                            # フォルダに追加
+                            if import_folder:
+                                if import_folder not in folders_db:
+                                    folders_db[import_folder] = []
+                                if pname not in folders_db[import_folder]:
+                                    folders_db[import_folder].append(pname)
+                            count += 1
                     st.session_state._people_db = people_db
                     _persist_people_db(people_db)
+                    if import_folder:
+                        _persist_folders_db(folders_db)
+                    st.success(f"{count}人を登録しました" + (f"（📁 {import_folder}）" if import_folder else ""))
                     st.rerun()
-
-        st.markdown(f'<div style="color:#5A5A5A;font-size:0.72em;text-align:right;">{len(names)}件</div>', unsafe_allow_html=True)
 
 
 # ============================================================
