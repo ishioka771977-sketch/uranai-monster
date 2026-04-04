@@ -14,6 +14,7 @@ from ui.components import (
     render_sanmei_course, render_western_course,
     render_kyusei_course, render_numerology_course,
     render_tarot_course, render_ziwei_course, render_synthesis_tab,
+    render_bansho_course,
     render_tarot_card_back, render_tarot_card_face,
     render_tarot_card_simple,
     render_theme_result,
@@ -395,8 +396,11 @@ def render_ura_menu_page():
         if st.button("✦ 紫微斗数", key="btn_ziwei"):
             _start_course("紫微斗数")
     with col6:
-        if st.button("✧ フルコース ✧", key="btn_full"):
-            _start_course("フルコース")
+        if st.button("⚡ 万象学", key="btn_bansho"):
+            _start_course("万象学")
+
+    if st.button("✧ フルコース ✧", key="btn_full", use_container_width=True):
+        _start_course("フルコース")
 
     render_gold_divider()
 
@@ -469,9 +473,12 @@ def render_generating_page():
         unsafe_allow_html=True
     )
 
-    if course == "フルコース":
+    if course == "万象学":
+        # 万象学はAPI不要 → 計算結果のみで即表示
+        st.session_state.course_results["bansho"] = {}
+    elif course == "フルコース":
         with st.status("✦ フルコース鑑定生成中…", expanded=True) as status:
-            st.write("✧ 5占術を同時に鑑定中…")
+            st.write("✧ 6占術を同時に鑑定中…")
             results = generate_full_course(bundle)
             status.update(label="✦ 全コース鑑定完了 ✦", state="complete")
         st.session_state.course_results = results
@@ -653,6 +660,7 @@ def _render_single_course_result(bundle, course, results):
     course_key_map = {
         "算命学": "sanmei", "星座": "western", "九星気学": "kyusei",
         "数秘術": "numerology", "タロット": "tarot", "紫微斗数": "ziwei",
+        "万象学": "bansho",
     }
     key = course_key_map.get(course, course)
     data = results.get(key, {})
@@ -669,11 +677,13 @@ def _render_single_course_result(bundle, course, results):
         render_tarot_course(bundle, data)
     elif course == "紫微斗数":
         render_ziwei_course(bundle, data)
+    elif course == "万象学":
+        render_bansho_course(bundle, data)
 
 
 def _render_full_course_result(bundle, results):
     """フルコース選択時: タブ構造で全コース表示"""
-    tab_names = ["✦ 総合", "算命学", "星座", "九星気学", "数秘術", "紫微斗数", "タロット"]
+    tab_names = ["✦ 総合", "算命学", "星座", "九星気学", "数秘術", "紫微斗数", "万象学", "タロット"]
     tabs = st.tabs(tab_names)
 
     with tabs[0]:
@@ -696,6 +706,9 @@ def _render_full_course_result(bundle, results):
         render_ziwei_course(bundle, results.get("ziwei", {}))
 
     with tabs[6]:
+        render_bansho_course(bundle)
+
+    with tabs[7]:
         render_tarot_course(bundle, results.get("tarot", {}))
 
 

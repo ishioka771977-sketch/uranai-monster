@@ -194,50 +194,13 @@ def render_sanmei_course(bundle: DivinationBundle, data: dict):
     if s.kakkyoku:
         kakkyoku_html = f'<div style="text-align:center; margin:6px 0;"><span class="uranai-tag-gold">特殊格局: {s.kakkyoku}</span></div>'
 
-    # 万象学エネルギー表示
-    energy_html = ""
-    if s.bansho_energy:
-        from core.bansho_energy import get_energy_percent, HONNOU_DETAIL
-        e = s.bansho_energy
-        pct = get_energy_percent(e.total_energy)
-        bar_filled = int(pct / 4)  # 25文字幅
-        bar = "█" * bar_filled + "░" * (25 - bar_filled)
-        medals = ["🥇", "🥈", "🥉", "　", "　"]
-        ranking_rows = ""
-        for i, (honnou, score) in enumerate(e.honnou_ranking):
-            detail = HONNOU_DETAIL.get(honnou, {})
-            kw = detail.get("keyword", "")
-            ranking_rows += (
-                f'<div style="display:flex;align-items:center;gap:6px;margin:2px 0;">'
-                f'<span style="width:22px;">{medals[i]}</span>'
-                f'<span style="color:#F5D78E;width:40px;">{honnou}</span>'
-                f'<span style="color:#9B8FC4;font-size:0.85em;flex:1;">{kw}</span>'
-                f'<span style="color:#C9A84C;font-weight:bold;">{score}点</span>'
-                f'</div>'
-            )
-        energy_html = f"""
-  <div style="margin:12px 0; padding:10px; border:1px solid #C9A84C; border-radius:6px; background:rgba(201,168,76,0.05);">
-    <div style="text-align:center; color:#C9A84C; font-size:0.9em; font-weight:bold; margin-bottom:8px;">═══ 宿命エネルギー ═══</div>
-    <div style="text-align:center; margin:6px 0;">
-      <span style="color:#F5D78E; font-size:1.4em; font-weight:bold;">{e.total_energy}</span>
-      <span style="color:#9B8FC4; font-size:0.85em; margin-left:6px;">{e.energy_type}</span>
-    </div>
-    <div style="text-align:center; font-family:monospace; color:#C9A84C; font-size:0.85em; margin:4px 0;">
-      {bar} {pct}%<span style="color:#666;font-size:0.8em;">（範囲: 89〜401）</span>
-    </div>
-    <div style="margin:8px 0 4px; padding-top:6px; border-top:1px solid #3a3652;">
-      {ranking_rows}
-    </div>
-    <div style="color:#9B8FC4; font-size:0.78em; margin-top:6px; text-align:center;">{e.energy_description}</div>
-  </div>"""
-
     _render_course_card(
         title="算命学が読み解く、あなたの魂",
         headline=data.get("headline", ""),
         reading=data.get("reading", data.get("nichikan_reading", "")),
         closing=data.get("closing", data.get("one_line", "")),
         data_tags=tags,
-        extra_html=jintaizu + gogyo_html + kakkyoku_html + energy_html,
+        extra_html=jintaizu + gogyo_html + kakkyoku_html,
     )
 
 
@@ -726,6 +689,107 @@ def render_aisho_result(bundle1, bundle2, data: dict):
 <div style="text-align:center; margin-top:14px; font-size:1.05em; color:#FF6B9D; font-style:italic; line-height:1.8;">
 💕 {closing} 💕
 </div>
+</div>""", unsafe_allow_html=True)
+
+
+def render_bansho_course(bundle: DivinationBundle, data: dict = None):
+    """万象学コース: 宿命エネルギー指数の結果表示（API不要・計算結果のみ）"""
+    from core.bansho_energy import get_energy_percent, HONNOU_DETAIL
+
+    s = bundle.sanmei
+    e = s.bansho_energy
+    if e is None:
+        st.warning("万象学のデータがありません")
+        return
+
+    pct = get_energy_percent(e.total_energy)
+    bar_filled = int(pct / 5)  # 20文字幅
+    bar = "█" * bar_filled + "░" * (20 - bar_filled)
+
+    # 五本能ランキング行
+    medals = ["🥇", "🥈", "🥉", "　", "　"]
+    ranking_rows = ""
+    for i, (honnou, score) in enumerate(e.honnou_ranking):
+        detail = HONNOU_DETAIL.get(honnou, {})
+        kw = detail.get("keyword", "")
+        pct_of_total = int(score / e.total_energy * 100) if e.total_energy > 0 else 0
+        bar_w = int(score / max(e.honnou_ranking[0][1], 1) * 100)
+        colors = {"守備": "#4CAF50", "表現": "#FF5722", "魅力": "#FF9800", "攻撃": "#FFD700", "学習": "#2196F3"}
+        color = colors.get(honnou, "#C9A84C")
+        ranking_rows += f"""
+<div style="margin:8px 0;">
+  <div style="display:flex;align-items:center;gap:8px;margin-bottom:3px;">
+    <span style="width:24px;font-size:1.1em;">{medals[i]}</span>
+    <span style="color:{color};font-weight:bold;width:50px;font-size:1.05em;">{honnou}</span>
+    <span style="color:#9B8FC4;font-size:0.82em;flex:1;">{kw}</span>
+    <span style="color:#F5D78E;font-weight:bold;font-size:1.1em;">{score}点</span>
+    <span style="color:#666;font-size:0.75em;">({pct_of_total}%)</span>
+  </div>
+  <div style="background:#2a2444;border-radius:4px;height:10px;overflow:hidden;">
+    <div style="background:{color};height:100%;width:{bar_w}%;border-radius:4px;"></div>
+  </div>
+</div>"""
+
+    # 第1本能の詳細
+    top_detail = HONNOU_DETAIL.get(e.top_honnou, {})
+    second_detail = HONNOU_DETAIL.get(e.second_honnou, {})
+
+    st.markdown(f"""
+<div class="divination-card" style="border-color:#C9A84C;">
+<div class="card-header">⚡ 万象学 ── 宿命エネルギー ⚡</div>
+
+<div style="text-align:center; margin:16px 0 8px;">
+  <div style="font-size:3em; font-weight:bold; color:#F5D78E; line-height:1;">{e.total_energy}</div>
+  <div style="font-size:0.9em; color:#C9A84C; margin-top:4px;">宿命エネルギー指数</div>
+</div>
+
+<div style="text-align:center; margin:8px 0;">
+  <span class="uranai-tag-gold" style="font-size:1em; padding:4px 16px;">{e.energy_type}</span>
+</div>
+
+<div style="text-align:center; font-family:monospace; color:#C9A84C; font-size:0.9em; margin:12px 0;">
+  {bar} {pct}%<span style="color:#666;font-size:0.8em;margin-left:4px;">（範囲: 89〜401）</span>
+</div>
+
+<div style="text-align:center; color:#9B8FC4; font-size:0.88em; margin:6px 0 16px;">
+  {e.energy_description}
+</div>
+
+<div class="gold-divider"></div>
+
+<div style="color:#C9A84C; font-size:0.9em; font-weight:bold; margin:12px 0 6px; text-align:center;">── 五本能ランキング ──</div>
+{ranking_rows}
+
+<div class="gold-divider"></div>
+
+<div style="margin:12px 0; padding:10px; border:1px solid #3a3652; border-radius:6px;">
+  <div style="color:#C9A84C; font-size:0.88em; font-weight:bold; margin-bottom:6px;">💡 第1本能: {e.top_honnou}（{top_detail.get('gogyo','')}/{e.top_score}点）</div>
+  <div style="color:#E8E0F0; font-size:0.85em; line-height:1.7;">
+    {top_detail.get('personality','')}<br>
+    <span style="color:#9B8FC4;">向いてる仕事:</span> {top_detail.get('career','')}<br>
+    <span style="color:#4CAF50;">強み:</span> {top_detail.get('strong','')}
+    <span style="color:#FF6B6B;">弱み:</span> {top_detail.get('weak','')}
+  </div>
+</div>
+
+<div style="margin:12px 0; padding:10px; border:1px solid #3a3652; border-radius:6px;">
+  <div style="color:#C9A84C; font-size:0.88em; font-weight:bold; margin-bottom:6px;">💡 第2本能: {e.second_honnou}（{second_detail.get('gogyo','')}/{e.second_score}点）</div>
+  <div style="color:#E8E0F0; font-size:0.85em; line-height:1.7;">
+    {second_detail.get('personality','')}<br>
+    <span style="color:#9B8FC4;">向いてる仕事:</span> {second_detail.get('career','')}
+  </div>
+</div>
+
+<div style="text-align:center; margin:16px 0 8px; color:#9B8FC4; font-size:0.78em; line-height:1.6;">
+  ※エネルギーの高低に良し悪しはありません。<br>
+  自分のエネルギー量に合った生き方をすることが最も重要です。<br>
+  第1本能と第2本能があなたの才能発揮エリアです。
+</div>
+
+<div style="text-align:center; margin-top:12px; color:#C9A84C; font-size:0.88em; font-weight:bold;">
+  {e.energy_advice}
+</div>
+
 </div>""", unsafe_allow_html=True)
 
 
