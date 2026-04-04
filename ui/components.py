@@ -716,6 +716,7 @@ def render_bansho_course(bundle: DivinationBundle, data: dict = None):
         bar_w = int(score / max(e.honnou_ranking[0][1], 1) * 100)
         colors = {"守備": "#4CAF50", "表現": "#FF5722", "魅力": "#FF9800", "攻撃": "#FFD700", "学習": "#2196F3"}
         color = colors.get(honnou, "#C9A84C")
+        zero_mark = ' <span style="color:#FF6B6B;font-size:0.75em;">（未開発）</span>' if score == 0 else ""
         ranking_rows += f"""
 <div style="margin:8px 0;">
   <div style="display:flex;align-items:center;gap:8px;margin-bottom:3px;">
@@ -723,7 +724,7 @@ def render_bansho_course(bundle: DivinationBundle, data: dict = None):
     <span style="color:{color};font-weight:bold;width:50px;font-size:1.05em;">{honnou}</span>
     <span style="color:#9B8FC4;font-size:0.82em;flex:1;">{kw}</span>
     <span style="color:#F5D78E;font-weight:bold;font-size:1.1em;">{score}点</span>
-    <span style="color:#666;font-size:0.75em;">({pct_of_total}%)</span>
+    <span style="color:#666;font-size:0.75em;">({pct_of_total}%){zero_mark}</span>
   </div>
   <div style="background:#2a2444;border-radius:4px;height:10px;overflow:hidden;">
     <div style="background:{color};height:100%;width:{bar_w}%;border-radius:4px;"></div>
@@ -733,6 +734,40 @@ def render_bansho_course(bundle: DivinationBundle, data: dict = None):
     # 第1本能の詳細
     top_detail = HONNOU_DETAIL.get(e.top_honnou, {})
     second_detail = HONNOU_DETAIL.get(e.second_honnou, {})
+
+    # コンボ才能セクション
+    combo_html = ""
+    if e.combo_talent:
+        combo_html = f"""
+<div style="margin:12px 0; padding:12px; background:linear-gradient(135deg, #2a2444, #3a2a50); border:1px solid #C9A84C; border-radius:8px;">
+  <div style="color:#F5D78E; font-size:0.95em; font-weight:bold; text-align:center; margin-bottom:6px;">🎯 あなたの才能タイプ: {e.combo_talent}</div>
+  <div style="color:#E8E0F0; font-size:0.85em; text-align:center; line-height:1.6;">
+    {e.combo_description}<br>
+    <span style="color:#9B8FC4;font-size:0.8em;">（{e.top_honnou}{e.top_score} × {e.second_honnou}{e.second_score} の掛け算）</span>
+  </div>
+</div>"""
+
+    # 0点本能セクション
+    zero_html = ""
+    if e.zero_honnou:
+        zero_names = "・".join(e.zero_honnou)
+        zero_html = f"""
+<div style="margin:12px 0; padding:10px; border:1px dashed #FF6B6B44; border-radius:6px; background:#2a1a2a;">
+  <div style="color:#FF9800; font-size:0.88em; font-weight:bold; margin-bottom:4px;">🔮 0点の本能: {zero_names}</div>
+  <div style="color:#E8E0F0; font-size:0.82em; line-height:1.6;">
+    生まれ持った才能ではないが「できない」わけではない。<b style="color:#FF9800;">意識的に努力が必要な領域。</b><br>
+    この本能が必要な仕事は消耗しやすい。得意な本能で補うのが正解。
+  </div>
+</div>"""
+
+    # drink_talk セクション
+    drink_html = ""
+    if e.drink_talk:
+        drink_html = f"""
+<div style="margin:12px 0; padding:10px; background:#1a1a2e; border-radius:6px; border-left:3px solid #C9A84C;">
+  <div style="color:#C9A84C; font-size:0.8em; font-weight:bold; margin-bottom:4px;">🍺 くろちゃんの即答</div>
+  <div style="color:#E8E0F0; font-size:0.85em; line-height:1.7; font-style:italic;">{e.drink_talk}</div>
+</div>"""
 
     st.markdown(f"""
 <div class="divination-card" style="border-color:#C9A84C;">
@@ -755,10 +790,14 @@ def render_bansho_course(bundle: DivinationBundle, data: dict = None):
   {e.energy_description}
 </div>
 
+{drink_html}
+
 <div class="gold-divider"></div>
 
 <div style="color:#C9A84C; font-size:0.9em; font-weight:bold; margin:12px 0 6px; text-align:center;">── 五本能ランキング ──</div>
 {ranking_rows}
+
+{combo_html}
 
 <div class="gold-divider"></div>
 
@@ -768,7 +807,7 @@ def render_bansho_course(bundle: DivinationBundle, data: dict = None):
     {top_detail.get('personality','')}<br>
     <span style="color:#9B8FC4;">向いてる仕事:</span> {top_detail.get('career','')}<br>
     <span style="color:#4CAF50;">強み:</span> {top_detail.get('strong','')}
-    <span style="color:#FF6B6B;">弱み:</span> {top_detail.get('weak','')}
+    <span style="color:#FF6B6B;"> 弱み:</span> {top_detail.get('weak','')}
   </div>
 </div>
 
@@ -779,6 +818,8 @@ def render_bansho_course(bundle: DivinationBundle, data: dict = None):
     <span style="color:#9B8FC4;">向いてる仕事:</span> {second_detail.get('career','')}
   </div>
 </div>
+
+{zero_html}
 
 <div style="text-align:center; margin:16px 0 8px; color:#9B8FC4; font-size:0.78em; line-height:1.6;">
   ※エネルギーの高低に良し悪しはありません。<br>

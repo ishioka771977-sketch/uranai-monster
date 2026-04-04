@@ -70,6 +70,11 @@ class BanshoEnergyResult:
     top_score: int = 0
     second_honnou: str = ""                        # 第2本能
     second_score: int = 0
+    zero_honnou: List[str] = field(default_factory=list)  # 0点の本能
+    combo_talent: str = ""                         # 第1×第2本能コンボ才能
+    combo_description: str = ""                    # コンボ説明
+    one_liner: str = ""                            # 一言アドバイス
+    drink_talk: str = ""                           # 飲み屋トーク
 
 
 @dataclass

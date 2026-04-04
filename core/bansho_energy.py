@@ -66,40 +66,153 @@ ENERGY_INTERPRETATION = [
 HONNOU_DETAIL = {
     "守備": {
         "gogyo": "木", "keyword": "守る・支える・コツコツ",
-        "personality": "平和主義者。コツコツ積み重ね。奉仕の人。競争は苦手。",
-        "career": "既存組織の維持・管理・公務員・事務職",
-        "strong": "忍耐力・継続力・縁の下の力持ち",
-        "weak": "変化に弱い・自己主張が苦手",
+        "personality": "平和主義者。コツコツ積み重ね。闘争を好まない。一つのことを粘り強くやり遂げる。",
+        "career": "既存組織の維持・管理・公務員・事務職。縁の下の力持ち",
+        "strong": "忍耐力・継続力・環境順応力",
+        "weak": "自己主張が苦手・変化に弱い・目立たない",
+        "yang": "大樹のようにどっしりとした存在。リーダー的な守備",
+        "yin": "草や蔓のようにしなやか。踏まれても立ち上がる柔軟な守備",
     },
     "表現": {
         "gogyo": "火", "keyword": "伝える・表現する・感性",
-        "personality": "個性的で自己主張力がある。直感・洞察力に優れる。",
-        "career": "音楽・芸術・料理・創作活動・講師・作家",
-        "strong": "発信力・感性・直感",
-        "weak": "気分屋・飽きっぽい・現実離れ",
+        "personality": "個性的で自己主張力がある。直感・洞察力に優れる。抜群の味覚を持つ人も。",
+        "career": "音楽・芸術・料理・創作活動・セミナー講師・作家・コンテンツクリエイター",
+        "strong": "発信力・感性・直感。人前で話す・書く・教えるが天職",
+        "weak": "気分屋・飽きっぽい・現実離れしやすい",
+        "yang": "太陽のように周囲を照らす表現。ダイナミック",
+        "yin": "ろうそくの炎のように繊細な表現。芸術的",
     },
     "魅力": {
         "gogyo": "土", "keyword": "惹きつける・リーダー・カリスマ",
-        "personality": "人を惹きつけるカリスマ性。自然とリーダーになる。",
-        "career": "経営者・政治家・教室運営・コミュニティ運営",
-        "strong": "人望・包容力・安定感",
+        "personality": "人を惹きつけるカリスマ性。自分の考えは簡単には変えられない。良く言えばポリシー、悪く言えば頑固。",
+        "career": "経営者・政治家・教室運営・コミュニティ運営。人が自然に集まってくる",
+        "strong": "人望・包容力・安定感。自然とリーダーになる",
         "weak": "頑固・変化を嫌う・保守的すぎる",
+        "yang": "山のようにどっしりとした魅力",
+        "yin": "田畑のように人を育てる魅力",
     },
     "攻撃": {
         "gogyo": "金", "keyword": "切り拓く・即行動・結果主義",
-        "personality": "創業者タイプ。即行動。ダイナミック。じっとしていられない。",
-        "career": "複数事業の展開・新規プロジェクト・営業・スポーツ",
-        "strong": "行動力・決断力・突破力",
-        "weak": "持久力不足・独断専行・短気",
+        "personality": "自分から物怖じせずにどんどんアタックしていける人。結果オーライの結果主義者。持久力がないので根気を求められることは不得手。",
+        "career": "複数事業の展開・新規プロジェクト・営業・スポーツ。創業者タイプ",
+        "strong": "行動力・決断力・突破力。即断即決で動ける",
+        "weak": "持久力不足・独断専行になりやすい・短気",
+        "yang": "剣のように鋭く切り込む攻撃",
+        "yin": "宝石のように磨かれた攻撃。完璧主義的な攻撃",
     },
     "学習": {
         "gogyo": "水", "keyword": "学ぶ・分析する・知的",
-        "personality": "学者肌。クールで知的。何かを作り上げる力。",
-        "career": "研究者・学者・プログラマー・戦略家",
-        "strong": "分析力・知性・創造力",
+        "personality": "理論派・理屈屋。感情にあまり左右されないクール。何かを作り上げる創造力。",
+        "career": "研究者・学者・プログラマー・戦略家・水商売の才能も（水の気）",
+        "strong": "分析力・知性・創造力。一つのことを深掘りする集中力",
         "weak": "感情表現が苦手・理屈っぽい・孤立しがち",
+        "yang": "大河のようにダイナミックな知性",
+        "yin": "雨や霧のように静かな知性。繊細な感受性",
     },
 }
+
+
+# ── 五本能の組み合わせ解釈（第1×第2本能） ──
+HONNOU_COMBINATION = {
+    ('表現', '魅力'): {
+        'talent': '人を惹きつける情報発信者',
+        'description': '表現力でカリスマ性を発揮。セミナー講師・教育者に最適。',
+    },
+    ('表現', '攻撃'): {
+        'talent': '切り拓く表現者',
+        'description': '表現力と行動力の掛け算。起業家×コンテンツクリエイター。',
+    },
+    ('攻撃', '表現'): {
+        'talent': '行動する表現者',
+        'description': 'まず動いてから発信する。実践→発信のサイクルが強い。',
+    },
+    ('攻撃', '魅力'): {
+        'talent': 'カリスマ的リーダー',
+        'description': '行動力と人望の掛け算。経営者・組織トップに最適。',
+    },
+    ('守備', '学習'): {
+        'talent': '堅実な研究者',
+        'description': 'コツコツ学び続ける力。学者・専門職・職人に最適。',
+    },
+    ('学習', '守備'): {
+        'talent': '実務的な知識人',
+        'description': '知識を実務に活かす力。管理系専門職・士業に最適。',
+    },
+    ('魅力', '守備'): {
+        'talent': '安定したリーダー',
+        'description': '人望と堅実さの掛け算。組織のまとめ役・管理職に最適。',
+    },
+    ('魅力', '表現'): {
+        'talent': '教育者・メンター',
+        'description': '人を惹きつけて教える力。塾長・師匠タイプ。',
+    },
+    ('学習', '表現'): {
+        'talent': '知的クリエイター',
+        'description': '深い知識を分かりやすく伝える力。解説者・ライターに最適。',
+    },
+    ('攻撃', '学習'): {
+        'talent': '戦略的行動者',
+        'description': '分析してから一気に動く。投資家・経営コンサルに最適。',
+    },
+}
+
+# ── 即答アドバイス（エネルギー帯別） ──
+INSTANT_ENERGY_ADVICE = {
+    'very_low': {  # 〜160
+        'one_liner': '一点集中型。余計なこと全部捨てて、これだと思ったことに全力を。',
+        'drink_talk': '「あなた{value}。少ないからダメじゃない。F1のエンジンじゃなくてスナイパーライフル。一発の精度がすごい人。」',
+    },
+    'low': {  # 161〜180
+        'one_liner': '自分のペースで勝負する人。組織より個人プレーが正解。',
+        'drink_talk': '「{value}か。会社勤めよりフリーランスの方が輝くタイプ。自分のリズムを大事にして。」',
+    },
+    'average': {  # 181〜230
+        'one_liner': 'バランス型。組織の中で着実にキャリアを積める人。',
+        'drink_talk': '「{value}。一番生きやすいゾーン。会社の中でコツコツ信頼を積み上げるのが最強の開運法。」',
+    },
+    'high': {  # 231〜300
+        'one_liner': '仕事だけじゃ足りない人。趣味・社会活動で意識的にエネルギーを燃やせ。',
+        'drink_talk': '「{value}！仕事だけじゃエネルギー余るでしょ？ゴルフとかスポーツとかやってる？やってないならすぐ始めて。イライラの原因それだから。」',
+    },
+    'very_high': {  # 301〜
+        'one_liner': '規格外。普通の枠じゃ収まらない。複数の事業・活動を同時に走らせろ。',
+        'drink_talk': '「{value}！！歴史的人物クラス。仕事3つ4つ掛け持ちして、やっとちょうどいい。止まったら死ぬマグロと同じ。」',
+    },
+}
+
+
+def get_energy_band(total: int) -> str:
+    """エネルギー指数からバンドキーを返す"""
+    if total <= 160:
+        return 'very_low'
+    elif total <= 180:
+        return 'low'
+    elif total <= 230:
+        return 'average'
+    elif total <= 300:
+        return 'high'
+    else:
+        return 'very_high'
+
+
+def energy_compatibility_reading(person_a_energy: int, person_b_energy: int) -> str:
+    """2人のエネルギー値から相性コメントを生成"""
+    diff = abs(person_a_energy - person_b_energy)
+    higher = max(person_a_energy, person_b_energy)
+    lower = min(person_a_energy, person_b_energy)
+
+    if diff <= 30:
+        return f'エネルギー差{diff}。ペースがぴったり合う。自然体でいられる関係。'
+    elif diff <= 60:
+        return f'エネルギー差{diff}。適度な差がお互いを補い合う。良い関係。'
+    elif diff <= 100:
+        return f'エネルギー差{diff}。{higher}の方が{lower}の方のペースに合わせる意識が必要。'
+    else:
+        return (
+            f'エネルギー差{diff}。生活リズムが大きく異なる。'
+            f'{higher}の方は余ったエネルギーを別のアウトレット（趣味・仕事）で消費すること。'
+            f'{lower}の方は無理に合わせず、自分のペースを守ること。'
+        )
 
 
 def calc_energy_index(
@@ -174,6 +287,22 @@ def calc_energy_index(
             energy_advice = adv
             break
 
+    # ゼロ本能
+    zero_honnou = [h for h, s in honnou_ranking if s == 0]
+
+    # 第1×第2本能コンボ
+    top1 = honnou_ranking[0][0] if honnou_ranking else ""
+    top2 = honnou_ranking[1][0] if len(honnou_ranking) > 1 else ""
+    combo = HONNOU_COMBINATION.get((top1, top2), {})
+    combo_talent = combo.get('talent', '')
+    combo_description = combo.get('description', '')
+
+    # 即答アドバイス
+    band = get_energy_band(total_energy)
+    instant = INSTANT_ENERGY_ADVICE.get(band, {})
+    one_liner = instant.get('one_liner', '')
+    drink_talk = instant.get('drink_talk', '').format(value=total_energy)
+
     return {
         "total_energy": total_energy,
         "energy_type": energy_type,
@@ -186,6 +315,11 @@ def calc_energy_index(
         "top_score": honnou_ranking[0][1] if honnou_ranking else 0,
         "second_honnou": honnou_ranking[1][0] if len(honnou_ranking) > 1 else "",
         "second_score": honnou_ranking[1][1] if len(honnou_ranking) > 1 else 0,
+        "zero_honnou": zero_honnou,
+        "combo_talent": combo_talent,
+        "combo_description": combo_description,
+        "one_liner": one_liner,
+        "drink_talk": drink_talk,
     }
 
 

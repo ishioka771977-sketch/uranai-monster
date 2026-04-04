@@ -392,6 +392,11 @@ def calculate_sanmei(person: PersonInput) -> SanmeiResult:
         top_score=energy["top_score"],
         second_honnou=energy["second_honnou"],
         second_score=energy["second_score"],
+        zero_honnou=energy["zero_honnou"],
+        combo_talent=energy["combo_talent"],
+        combo_description=energy["combo_description"],
+        one_liner=energy["one_liner"],
+        drink_talk=energy["drink_talk"],
     )
 
     return SanmeiResult(

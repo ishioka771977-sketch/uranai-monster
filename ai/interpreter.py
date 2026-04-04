@@ -1128,9 +1128,15 @@ def _format_all_data_summary(bundle: DivinationBundle) -> str:
         lines.append(f"- 第2本能: {e.second_honnou}（{e.second_score}点）")
         gogyo_parts = [f"{h}{score}点" for h, score in e.honnou_ranking]
         lines.append(f"- 五本能: {' / '.join(gogyo_parts)}")
+        if e.zero_honnou:
+            lines.append(f"- 0点の本能: {'・'.join(e.zero_honnou)}（生まれ持った才能ではないが努力で補える領域）")
+        if e.combo_talent:
+            lines.append(f"- 才能タイプ: {e.combo_talent}（{e.combo_description}）")
         lines.append(f"- {e.energy_description}")
-        lines.append("※エネルギー指数の目安: 160以下=集中特化型, 180以下=自営向き, 180〜230=標準, 230以上=複数活動型, 250以上=超活動型, 300以上=規格外")
-        lines.append("※高い低いで良し悪しではない。自分のエネルギー量に合った生き方が最重要。第1本能と第2本能がその人の才能発揮エリア。")
+        lines.append("※エネルギー指数の核心: 高い＝良い、低い＝悪いではない。エンジンの排気量のようなもの。軽自動車は燃費が良く小回りが利く、大型トラックはパワフルだが燃費が悪い。用途に合っているかが大事。")
+        lines.append("※基準値: 平均180〜200（組織適応）。160以下=集中特化型（一点突破）。230以上=組織の枠では収まらない。300以上=規格外（複数事業・歴史的人物クラス）。")
+        lines.append("※陽転（エネルギーが外向きに消化＝健全）と陰転（内向き＝愚痴・病気・不満）の概念。自分の量に合った生き方をしていないと陰転する。")
+        lines.append("※第1本能と第2本能がその人の才能発揮エリア。0点の本能は消耗する領域。")
 
     return "\n".join(lines)
 
@@ -1252,6 +1258,51 @@ THEME_PROMPTS = {
     "future10": THEME_FUTURE10_PROMPT,
     "shine": THEME_SHINE_PROMPT,
 }
+
+# ── 万象学 AI鑑定プロンプト ──
+BANSHO_SYSTEM_PROMPT = """あなたは万象学（宿命エネルギー）の鑑定師「くろちゃん」です。
+
+【鑑定の原則】
+1. 最初にエネルギー指数の数字をドーンと出す
+2. 「高い＝良い、低い＝悪い」ではないことを必ず伝える
+3. その人のエネルギー量に合った生き方を具体的に提案する
+4. 陽転のための行動を3つ提案する
+5. 陰転のサイン（こうなったらエネルギーの使い方を見直せ）を伝える
+6. 五本能のランキングから才能と適職を語る
+7. ゼロの本能がある場合は「努力で補う領域」として前向きに伝える
+8. 断定口調（「〜でしょ？」「〜はず。」）で語る
+9. ネガティブ要素は隠さないが「だからこそ」でポジティブ転換する
+
+【鑑定文の構成（1,200〜2,000文字）】
+■ 冒頭：エネルギー指数の数字＋タイプ名＋一言キャッチ
+■ エネルギー量の解説：平均（180〜200）との比較、組織適性
+■ 五本能ランキング：第1・第2本能の才能解説、ゼロの本能の意味
+■ 陽転の行動提案：具体的な行動を3つ
+■ 陰転の警告サイン：「こうなったら要注意」を2つ
+■ 締め：エネルギーに合った生き方の一言アドバイス
+"""
+
+BANSHO_USER_PROMPT = """【エネルギー診断データ】
+- エネルギー指数: {total_energy}
+- タイプ: {energy_type}
+- 五本能ランキング:
+  第1: {rank1_name}（{rank1_gogyo}）{rank1_score}点
+  第2: {rank2_name}（{rank2_gogyo}）{rank2_score}点
+  第3: {rank3_name}（{rank3_gogyo}）{rank3_score}点
+  第4: {rank4_name}（{rank4_gogyo}）{rank4_score}点
+  第5: {rank5_name}（{rank5_gogyo}）{rank5_score}点
+- ゼロの本能: {zero_honnou}（あれば）
+
+【基準値】
+- 平均: 180〜200
+- 160以下: 組織不向き・集中特化型
+- 180〜200: 組織適応型
+- 230以上: 組織の枠では収まらない
+- 300以上: 規格外
+
+【出力レベル】
+{output_level}
+"""
 
 
 def generate_theme_reading(bundle: DivinationBundle, theme: str) -> dict:
