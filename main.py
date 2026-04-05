@@ -47,6 +47,8 @@ from ui.pages import (
     render_tarot_generating_page,
     render_tarot_result_page,
     render_meibo_page,
+    render_kaiyun_input_page,
+    render_kaiyun_result_page,
 )
 
 # CSSを注入
@@ -101,6 +103,10 @@ elif page == "tarot_result":
     render_tarot_result_page()
 elif page == "meibo":
     render_meibo_page()
+elif page == "kaiyun_input":
+    render_kaiyun_input_page()
+elif page == "kaiyun_result":
+    render_kaiyun_result_page()
 else:
     st.session_state.page = "top"
     st.rerun()
