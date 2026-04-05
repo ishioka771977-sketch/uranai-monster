@@ -85,8 +85,9 @@ def _build_share_digest(title: str, headline: str, closing: str) -> str:
     return "\n".join(lines)
 
 
-def _render_share_buttons(share_text: str, key_suffix: str, pdf_html: str = ""):
-    """共有ボタン群を描画: ネイティブ共有 / コピー / PDF"""
+def _render_share_buttons(share_text: str, key_suffix: str, pdf_html: str = "",
+                          digest: str = ""):
+    """共有ボタン群を描画: LINE / ネイティブ共有 / コピー / PDF"""
     import json as _json_share
 
     st.markdown("""
@@ -96,15 +97,25 @@ def _render_share_buttons(share_text: str, key_suffix: str, pdf_html: str = ""):
 
     # JavaScriptにテキストを安全に渡すためJSON化
     text_json = _json_share.dumps(share_text, ensure_ascii=False)
+    # LINE用ダイジェスト（短縮版）
+    digest_text = digest or share_text
+    digest_encoded = _urlparse.quote(digest_text, safe='')
+    line_url = f"https://line.me/R/share?text={digest_encoded}"
 
     # streamlit.components.v1.html でJSを確実に実行
     share_html = f"""
 <div style="text-align:center; font-family: 'Zen Kaku Gothic New', sans-serif;">
+  <a href="{line_url}" target="_blank" id="btn_line_{key_suffix}" style="
+    display:inline-block; padding:10px 20px; margin:4px; border-radius:6px;
+    font-size:0.9em; font-weight:bold; cursor:pointer; text-decoration:none;
+    border: 1px solid #06C755; color:#fff; background:#06C755;
+  ">💬 LINEで送る</a>
+
   <button id="btn_share_{key_suffix}" style="
     display:inline-block; padding:10px 20px; margin:4px; border-radius:6px;
     font-size:0.9em; font-weight:bold; cursor:pointer;
     border: 1px solid #BFA350; color:#0A0A0A; background:#BFA350;
-  ">📤 LINE・メール・メッセージで共有</button>
+  ">📤 メール・メッセージで共有</button>
 
   <button id="btn_copy_{key_suffix}" style="
     display:inline-block; padding:10px 20px; margin:4px; border-radius:6px;
@@ -126,7 +137,6 @@ def _render_share_buttons(share_text: str, key_suffix: str, pdf_html: str = ""):
         text: fullText
       }}).catch(function(e) {{
         if (e.name !== 'AbortError') {{
-          // 共有がキャンセルされた場合以外はコピーにフォールバック
           fallbackCopy();
         }}
       }});
@@ -175,7 +185,7 @@ def _render_share_buttons(share_text: str, key_suffix: str, pdf_html: str = ""):
 }})();
 </script>
 """
-    _stc.html(share_html, height=100)
+    _stc.html(share_html, height=120)
 
     # PDF ダウンロード
     if pdf_html:
@@ -1531,7 +1541,8 @@ def render_theme_result_page():
     _th_subtitle = f"{d.year}年{d.month}月{d.day}日生まれ"
     _th_text = _build_share_text(_th_title, _th_subtitle, theme_data.get("headline", ""), theme_data.get("reading", ""), theme_data.get("closing", ""))
     _th_pdf = _build_pdf_html(_th_title, _th_subtitle, theme_data.get("headline", ""), theme_data.get("reading", ""), theme_data.get("closing", ""))
-    _render_share_buttons(_th_text, f"theme_{theme_key}", _th_pdf)
+    _th_digest = _build_share_digest(_th_title, theme_data.get("headline", ""), theme_data.get("closing", ""))
+    _render_share_buttons(_th_text, f"theme_{theme_key}", _th_pdf, _th_digest)
 
     render_gold_divider()
 
@@ -1626,7 +1637,8 @@ def render_result_page():
         _cr_cl = _cdata.get("closing", "")
     _cr_text = _build_share_text(_cr_title, _cr_subtitle, _cr_hl, _cr_rd, _cr_cl)
     _cr_pdf = _build_pdf_html(_cr_title, _cr_subtitle, _cr_hl, _cr_rd, _cr_cl)
-    _render_share_buttons(_cr_text, "course", _cr_pdf)
+    _cr_digest = _build_share_digest(_cr_title, _cr_hl, _cr_cl)
+    _render_share_buttons(_cr_text, "course", _cr_pdf, _cr_digest)
 
     render_gold_divider()
 
@@ -2099,7 +2111,8 @@ def render_aisho_result_page():
     _ai_subtitle = f"{_d1.year}/{_d1.month}/{_d1.day} × {_d2.year}/{_d2.month}/{_d2.day}"
     _ai_text = _build_share_text(_ai_title, _ai_subtitle, result.get("headline", ""), result.get("reading", ""), result.get("closing", ""))
     _ai_pdf = _build_pdf_html(_ai_title, _ai_subtitle, result.get("headline", ""), result.get("reading", ""), result.get("closing", ""))
-    _render_share_buttons(_ai_text, "aisho", _ai_pdf)
+    _ai_digest = _build_share_digest(_ai_title, result.get("headline", ""), result.get("closing", ""))
+    _render_share_buttons(_ai_text, "aisho", _ai_pdf, _ai_digest)
 
     render_gold_divider()
 
@@ -2845,7 +2858,8 @@ def render_tarot_result_page():
     _tr_reading = f"カード: {_card_names}\n\n{reading}" if reading else f"カード: {_card_names}"
     _tr_text = _build_share_text(_tr_title, _tr_subtitle, headline, _tr_reading, closing)
     _tr_pdf = _build_pdf_html(_tr_title, _tr_subtitle, headline, _tr_reading, closing)
-    _render_share_buttons(_tr_text, "tarot", _tr_pdf)
+    _tr_digest = _build_share_digest(_tr_title, headline, closing)
+    _render_share_buttons(_tr_text, "tarot", _tr_pdf, _tr_digest)
 
     render_gold_divider()
 
@@ -3696,7 +3710,8 @@ def render_team_result_page():
     _tm_subtitle = f"メンバー: {_tm_members}"
     _tm_text = _build_share_text(_tm_title, _tm_subtitle, headline, reading, closing)
     _tm_pdf = _build_pdf_html(_tm_title, _tm_subtitle, headline, reading, closing)
-    _render_share_buttons(_tm_text, "team", _tm_pdf)
+    _tm_digest = _build_share_digest(_tm_title, headline, closing)
+    _render_share_buttons(_tm_text, "team", _tm_pdf, _tm_digest)
 
     render_gold_divider()
 
