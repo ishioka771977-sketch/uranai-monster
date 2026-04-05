@@ -1460,6 +1460,16 @@ def render_theme_result_page():
 
     render_gold_divider()
 
+    # 共有ボタン — 結果のすぐ下
+    _theme_label = _THEME_LABELS.get(theme_key, theme_key)
+    _th_title = f"{name}さん — {_theme_label}" if name else _theme_label
+    _th_subtitle = f"{d.year}年{d.month}月{d.day}日生まれ"
+    _th_text = _build_share_text(_th_title, _th_subtitle, theme_data.get("headline", ""), theme_data.get("reading", ""), theme_data.get("closing", ""))
+    _th_pdf = _build_pdf_html(_th_title, _th_subtitle, theme_data.get("headline", ""), theme_data.get("reading", ""), theme_data.get("closing", ""))
+    _render_share_buttons(_th_text, f"theme_{theme_key}", _th_pdf)
+
+    render_gold_divider()
+
     # くろたんにテーマ関連の質問
     _render_theme_chat(bundle, theme_key, theme_data)
 
@@ -1490,16 +1500,6 @@ def render_theme_result_page():
     with tc5:
         if st.button("✨ 最大限に輝く生き方", key="btn_tr_shine"):
             _start_theme("shine")
-
-    render_gold_divider()
-
-    # 共有ボタン
-    _theme_label = _THEME_LABELS.get(theme_key, theme_key)
-    _th_title = f"{name}さん — {_theme_label}" if name else _theme_label
-    _th_subtitle = f"{d.year}年{d.month}月{d.day}日生まれ"
-    _th_text = _build_share_text(_th_title, _th_subtitle, theme_data.get("headline", ""), theme_data.get("reading", ""), theme_data.get("closing", ""))
-    _th_pdf = _build_pdf_html(_th_title, _th_subtitle, theme_data.get("headline", ""), theme_data.get("reading", ""), theme_data.get("closing", ""))
-    _render_share_buttons(_th_text, f"theme_{theme_key}", _th_pdf)
 
     render_gold_divider()
 
@@ -1545,20 +1545,9 @@ def render_result_page():
 
     render_gold_divider()
 
-    # テーマ別深掘り鑑定セクション
-    _render_theme_section(bundle)
-
-    render_gold_divider()
-
-    # くろたんに個別質問チャット
-    _render_general_chat(bundle, course, results)
-
-    render_gold_divider()
-
-    # 共有ボタン — コース結果をまとめて共有
+    # 共有ボタン — 鑑定結果のすぐ下に配置
     _cr_title = f"{name}さん — {course}" if name else course
     _cr_subtitle = f"{d.year}年{d.month}月{d.day}日生まれ"
-    # コースの主要readingを連結
     if course == "フルコース":
         _syn = results.get("synthesis", {})
         _cr_hl = _syn.get("headline", "")
@@ -1573,6 +1562,16 @@ def render_result_page():
     _cr_text = _build_share_text(_cr_title, _cr_subtitle, _cr_hl, _cr_rd, _cr_cl)
     _cr_pdf = _build_pdf_html(_cr_title, _cr_subtitle, _cr_hl, _cr_rd, _cr_cl)
     _render_share_buttons(_cr_text, "course", _cr_pdf)
+
+    render_gold_divider()
+
+    # テーマ別深掘り鑑定セクション
+    _render_theme_section(bundle)
+
+    render_gold_divider()
+
+    # くろたんに個別質問チャット
+    _render_general_chat(bundle, course, results)
 
     # フッターボタン群
     st.markdown("<br>", unsafe_allow_html=True)
@@ -2028,12 +2027,7 @@ def render_aisho_result_page():
 
     render_gold_divider()
 
-    # くろたんに相性の個別質問
-    _render_aisho_chat(bundle1, bundle2, result)
-
-    render_gold_divider()
-
-    # 共有ボタン
+    # 共有ボタン — 結果のすぐ下
     _ai_title = f"{n1} × {n2} — {_REL_LABELS.get(relationship, '相性鑑定')}"
     _d1 = bundle1.person.birth_date
     _d2 = bundle2.person.birth_date
@@ -2041,6 +2035,11 @@ def render_aisho_result_page():
     _ai_text = _build_share_text(_ai_title, _ai_subtitle, result.get("headline", ""), result.get("reading", ""), result.get("closing", ""))
     _ai_pdf = _build_pdf_html(_ai_title, _ai_subtitle, result.get("headline", ""), result.get("reading", ""), result.get("closing", ""))
     _render_share_buttons(_ai_text, "aisho", _ai_pdf)
+
+    render_gold_divider()
+
+    # くろたんに相性の個別質問
+    _render_aisho_chat(bundle1, bundle2, result)
 
     render_gold_divider()
 
@@ -2774,20 +2773,19 @@ def render_tarot_result_page():
 
     render_gold_divider()
 
-    # くろたんに追加質問チャット
-    _render_tarot_chat(bundle, question, spread_info, cards, result)
-
-    render_gold_divider()
-
-    # 共有ボタン
+    # 共有ボタン — 結果のすぐ下
     _tr_title = f"{name}さんへ — タロット鑑定" if name else "タロット鑑定"
     _tr_subtitle = f"質問: 「{question}」 / {spread_info['spread_name']}"
-    # カード情報を追加
     _card_names = " / ".join([f"{c.name}{'(R)' if c.reversed else ''}" for c in cards])
     _tr_reading = f"カード: {_card_names}\n\n{reading}" if reading else f"カード: {_card_names}"
     _tr_text = _build_share_text(_tr_title, _tr_subtitle, headline, _tr_reading, closing)
     _tr_pdf = _build_pdf_html(_tr_title, _tr_subtitle, headline, _tr_reading, closing)
     _render_share_buttons(_tr_text, "tarot", _tr_pdf)
+
+    render_gold_divider()
+
+    # くろたんに追加質問チャット
+    _render_tarot_chat(bundle, question, spread_info, cards, result)
 
     render_gold_divider()
 
