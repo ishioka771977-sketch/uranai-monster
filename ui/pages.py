@@ -20,6 +20,155 @@ from ui.components import (
     render_theme_result,
 )
 from core.models import PersonInput
+import urllib.parse as _urlparse
+import html as _html_mod
+import streamlit.components.v1 as _stc
+
+
+# ============================================================
+# 共有機能ヘルパー
+# ============================================================
+_THEME_LABELS = {
+    "love": "恋愛運", "marriage": "結婚運", "career": "仕事運",
+    "future10": "10年後の自分", "shine": "最大限に輝く生き方",
+}
+
+_REL_LABELS = {
+    "love": "恋愛相性", "marriage": "結婚相性",
+    "boss_subordinate": "上司×部下", "business": "仕事パートナー",
+    "parent_child": "親子", "friend": "友人",
+}
+
+
+def _build_share_text(title: str, subtitle: str, headline: str, reading: str, closing: str) -> str:
+    """共有用テキストを組み立てる"""
+    import re
+    # HTMLタグ除去
+    reading_clean = re.sub(r'<[^>]+>', '', reading).strip() if reading else ""
+    headline_clean = re.sub(r'<[^>]+>', '', headline).strip() if headline else ""
+    closing_clean = re.sub(r'<[^>]+>', '', closing).strip() if closing else ""
+
+    lines = ["✦ 占いモンスターくろたん ✦", ""]
+    if title:
+        lines.append(title)
+    if subtitle:
+        lines.append(subtitle)
+    lines.append("")
+    if headline_clean:
+        lines.append(f"「{headline_clean}」")
+        lines.append("")
+    if reading_clean:
+        lines.append(reading_clean)
+        lines.append("")
+    if closing_clean:
+        lines.append(f"— {closing_clean}")
+    return "\n".join(lines)
+
+
+def _render_share_buttons(share_text: str, key_suffix: str, pdf_html: str = ""):
+    """共有ボタン群を描画: コピー / LINE / メール / メッセージ / PDF"""
+    st.markdown("""
+<div style="text-align:center; margin:15px 0 8px;">
+<span style="color:#BFA350; font-size:0.95em; font-weight:bold;">✦ 鑑定結果を共有 ✦</span>
+</div>""", unsafe_allow_html=True)
+
+    encoded = _urlparse.quote(share_text, safe='')
+    # 件名
+    subject = _urlparse.quote("占いモンスターくろたん 鑑定結果", safe='')
+
+    # LINE共有URL
+    line_url = f"https://line.me/R/share?text={encoded}"
+    # メール
+    mail_url = f"mailto:?subject={subject}&body={encoded}"
+    # SMS/メッセージ
+    sms_url = f"sms:?&body={encoded}"
+
+    # ボタン群をHTMLで描画（リンクボタン）
+    btn_style = (
+        "display:inline-block; padding:8px 14px; margin:4px; border-radius:6px; "
+        "text-decoration:none; font-size:0.85em; font-weight:bold; cursor:pointer; "
+        "border: 1px solid #2A2A2A; color:#F0EBE0; background:#1A1A1A; "
+        "transition: background 0.2s;"
+    )
+
+    st.markdown(f"""
+<div style="text-align:center; margin:8px 0;">
+<a href="{line_url}" target="_blank" style="{btn_style} background:#06C755; border-color:#06C755; color:#fff;">💬 LINE</a>
+<a href="{mail_url}" style="{btn_style}">📧 メール</a>
+<a href="{sms_url}" style="{btn_style}">💬 メッセージ</a>
+</div>""", unsafe_allow_html=True)
+
+    # クリップボードコピーボタン（JavaScript）
+    escaped_text = share_text.replace('\\', '\\\\').replace('`', '\\`').replace('$', '\\$')
+    copy_js = f"""
+<div style="text-align:center; margin:6px 0;">
+<button onclick="
+  navigator.clipboard.writeText(`{escaped_text}`).then(function(){{
+    document.getElementById('copy_ok_{key_suffix}').style.display='inline';
+    setTimeout(function(){{ document.getElementById('copy_ok_{key_suffix}').style.display='none'; }}, 2000);
+  }});
+" style="{btn_style} min-width:200px;">📋 テキストをコピー</button>
+<span id="copy_ok_{key_suffix}" style="display:none; color:#7CB87C; font-size:0.85em; margin-left:8px;">✓ コピーしました</span>
+</div>"""
+    st.markdown(copy_js, unsafe_allow_html=True)
+
+    # PDF ダウンロード
+    if pdf_html:
+        st.download_button(
+            label="📄 PDF用HTMLをダウンロード",
+            data=pdf_html.encode("utf-8"),
+            file_name="鑑定結果.html",
+            mime="text/html",
+            key=f"btn_pdf_{key_suffix}",
+            use_container_width=True,
+        )
+        st.caption("ダウンロード後、ブラウザで開いて「印刷 → PDF保存」で変換できます")
+
+
+def _build_pdf_html(title: str, subtitle: str, headline: str, reading: str, closing: str) -> str:
+    """印刷用のスタイル付きHTMLを生成"""
+    import re
+    reading_clean = re.sub(r'<[^>]+>', '', reading).strip() if reading else ""
+    headline_clean = re.sub(r'<[^>]+>', '', headline).strip() if headline else ""
+    closing_clean = re.sub(r'<[^>]+>', '', closing).strip() if closing else ""
+
+    reading_html = _html_mod.escape(reading_clean).replace("\n", "<br>")
+    return f"""<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>{_html_mod.escape(title)}</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Zen+Kaku+Gothic+New&display=swap');
+  body {{ font-family: 'Zen Kaku Gothic New', sans-serif; background: #0A0A0A; color: #F0EBE0; max-width: 720px; margin: 40px auto; padding: 30px; }}
+  h1 {{ font-family: 'Noto Serif JP', serif; text-align: center; color: #BFA350; font-size: 1.5em; margin-bottom: 5px; }}
+  .subtitle {{ text-align: center; color: #8A8478; font-size: 0.9em; margin-bottom: 25px; }}
+  .headline {{ text-align: center; font-size: 1.2em; color: #D4B96A; font-weight: bold; margin: 20px 0; }}
+  .reading {{ line-height: 2.0; font-size: 0.95em; padding: 15px 0; white-space: pre-wrap; }}
+  .closing {{ text-align: center; color: #8A8478; font-style: italic; margin: 25px 0; font-size: 0.95em; }}
+  .divider {{ border-top: 1px solid #2A2A2A; margin: 20px 0; }}
+  .footer {{ text-align: center; color: #5A5A5A; font-size: 0.75em; margin-top: 30px; }}
+  @media print {{
+    body {{ background: white; color: #333; }}
+    h1 {{ color: #8B7530; }}
+    .headline {{ color: #8B7530; }}
+    .reading {{ color: #333; }}
+    .closing {{ color: #666; }}
+    .divider {{ border-color: #ccc; }}
+  }}
+</style>
+</head>
+<body>
+<h1>✦ 占いモンスターくろたん ✦</h1>
+<div class="subtitle">{_html_mod.escape(title)}<br>{_html_mod.escape(subtitle)}</div>
+<div class="divider"></div>
+{"<div class='headline'>「" + _html_mod.escape(headline_clean) + "」</div>" if headline_clean else ""}
+<div class="reading">{reading_html}</div>
+{"<div class='closing'>— " + _html_mod.escape(closing_clean) + "</div>" if closing_clean else ""}
+<div class="divider"></div>
+<div class="footer">占いモンスターくろたん — {date.today().strftime('%Y/%m/%d')} 鑑定</div>
+</body>
+</html>"""
 
 
 # ============================================================
@@ -1344,6 +1493,16 @@ def render_theme_result_page():
 
     render_gold_divider()
 
+    # 共有ボタン
+    _theme_label = _THEME_LABELS.get(theme_key, theme_key)
+    _th_title = f"{name}さん — {_theme_label}" if name else _theme_label
+    _th_subtitle = f"{d.year}年{d.month}月{d.day}日生まれ"
+    _th_text = _build_share_text(_th_title, _th_subtitle, theme_data.get("headline", ""), theme_data.get("reading", ""), theme_data.get("closing", ""))
+    _th_pdf = _build_pdf_html(_th_title, _th_subtitle, theme_data.get("headline", ""), theme_data.get("reading", ""), theme_data.get("closing", ""))
+    _render_share_buttons(_th_text, f"theme_{theme_key}", _th_pdf)
+
+    render_gold_divider()
+
     col1, col2 = st.columns(2)
     with col1:
         if st.button("✦ コース鑑定へ", key="btn_theme_to_course"):
@@ -1393,6 +1552,27 @@ def render_result_page():
 
     # くろたんに個別質問チャット
     _render_general_chat(bundle, course, results)
+
+    render_gold_divider()
+
+    # 共有ボタン — コース結果をまとめて共有
+    _cr_title = f"{name}さん — {course}" if name else course
+    _cr_subtitle = f"{d.year}年{d.month}月{d.day}日生まれ"
+    # コースの主要readingを連結
+    if course == "フルコース":
+        _syn = results.get("synthesis", {})
+        _cr_hl = _syn.get("headline", "")
+        _cr_rd = _syn.get("reading", "")
+        _cr_cl = _syn.get("closing", "")
+    else:
+        _ckey_map = {"算命学": "sanmei", "星座": "western", "九星気学": "kyusei", "数秘術": "numerology", "タロット": "tarot", "紫微斗数": "ziwei", "万象学": "bansho"}
+        _cdata = results.get(_ckey_map.get(course, course), {})
+        _cr_hl = _cdata.get("headline", _cdata.get("one_line", ""))
+        _cr_rd = _cdata.get("reading", _cdata.get("nichikan_reading", _cdata.get("sun_reading", _cdata.get("honmei_reading", _cdata.get("life_path_reading", "")))))
+        _cr_cl = _cdata.get("closing", "")
+    _cr_text = _build_share_text(_cr_title, _cr_subtitle, _cr_hl, _cr_rd, _cr_cl)
+    _cr_pdf = _build_pdf_html(_cr_title, _cr_subtitle, _cr_hl, _cr_rd, _cr_cl)
+    _render_share_buttons(_cr_text, "course", _cr_pdf)
 
     # フッターボタン群
     st.markdown("<br>", unsafe_allow_html=True)
@@ -1850,6 +2030,17 @@ def render_aisho_result_page():
 
     # くろたんに相性の個別質問
     _render_aisho_chat(bundle1, bundle2, result)
+
+    render_gold_divider()
+
+    # 共有ボタン
+    _ai_title = f"{n1} × {n2} — {_REL_LABELS.get(relationship, '相性鑑定')}"
+    _d1 = bundle1.person.birth_date
+    _d2 = bundle2.person.birth_date
+    _ai_subtitle = f"{_d1.year}/{_d1.month}/{_d1.day} × {_d2.year}/{_d2.month}/{_d2.day}"
+    _ai_text = _build_share_text(_ai_title, _ai_subtitle, result.get("headline", ""), result.get("reading", ""), result.get("closing", ""))
+    _ai_pdf = _build_pdf_html(_ai_title, _ai_subtitle, result.get("headline", ""), result.get("reading", ""), result.get("closing", ""))
+    _render_share_buttons(_ai_text, "aisho", _ai_pdf)
 
     render_gold_divider()
 
@@ -2585,6 +2776,18 @@ def render_tarot_result_page():
 
     # くろたんに追加質問チャット
     _render_tarot_chat(bundle, question, spread_info, cards, result)
+
+    render_gold_divider()
+
+    # 共有ボタン
+    _tr_title = f"{name}さんへ — タロット鑑定" if name else "タロット鑑定"
+    _tr_subtitle = f"質問: 「{question}」 / {spread_info['spread_name']}"
+    # カード情報を追加
+    _card_names = " / ".join([f"{c.name}{'(R)' if c.reversed else ''}" for c in cards])
+    _tr_reading = f"カード: {_card_names}\n\n{reading}" if reading else f"カード: {_card_names}"
+    _tr_text = _build_share_text(_tr_title, _tr_subtitle, headline, _tr_reading, closing)
+    _tr_pdf = _build_pdf_html(_tr_title, _tr_subtitle, headline, _tr_reading, closing)
+    _render_share_buttons(_tr_text, "tarot", _tr_pdf)
 
     render_gold_divider()
 
@@ -3421,6 +3624,16 @@ def render_team_result_page():
 ✦ {closing} ✦
 </div>
 </div>""", unsafe_allow_html=True)
+
+    render_gold_divider()
+
+    # 共有ボタン
+    _tm_title = f"チーム分析結果（{len(energies)}名）"
+    _tm_members = "、".join([e[0] for e in energies])
+    _tm_subtitle = f"メンバー: {_tm_members}"
+    _tm_text = _build_share_text(_tm_title, _tm_subtitle, headline, reading, closing)
+    _tm_pdf = _build_pdf_html(_tm_title, _tm_subtitle, headline, reading, closing)
+    _render_share_buttons(_tm_text, "team", _tm_pdf)
 
     render_gold_divider()
 
