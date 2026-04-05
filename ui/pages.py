@@ -65,57 +65,122 @@ def _build_share_text(title: str, subtitle: str, headline: str, reading: str, cl
     return "\n".join(lines)
 
 
+def _build_share_digest(title: str, headline: str, closing: str) -> str:
+    """共有用ダイジェスト（短縮版、300文字以内）— LINE/メール/メッセージ用"""
+    import re
+    headline_clean = re.sub(r'<[^>]+>', '', headline).strip() if headline else ""
+    closing_clean = re.sub(r'<[^>]+>', '', closing).strip() if closing else ""
+
+    lines = ["✦ 占いモンスターくろたん ✦", ""]
+    if title:
+        lines.append(title)
+    lines.append("")
+    if headline_clean:
+        lines.append(f"「{headline_clean}」")
+    if closing_clean:
+        lines.append("")
+        lines.append(f"— {closing_clean}")
+    lines.append("")
+    lines.append("▼ 全文はアプリで確認")
+    return "\n".join(lines)
+
+
 def _render_share_buttons(share_text: str, key_suffix: str, pdf_html: str = ""):
-    """共有ボタン群を描画: コピー / LINE / メール / メッセージ / PDF"""
+    """共有ボタン群を描画: ネイティブ共有 / コピー / PDF"""
+    import json as _json_share
+
     st.markdown("""
 <div style="text-align:center; margin:15px 0 8px;">
 <span style="color:#BFA350; font-size:0.95em; font-weight:bold;">✦ 鑑定結果を共有 ✦</span>
 </div>""", unsafe_allow_html=True)
 
-    encoded = _urlparse.quote(share_text, safe='')
-    # 件名
-    subject = _urlparse.quote("占いモンスターくろたん 鑑定結果", safe='')
+    # JavaScriptにテキストを安全に渡すためJSON化
+    text_json = _json_share.dumps(share_text, ensure_ascii=False)
 
-    # LINE共有URL
-    line_url = f"https://line.me/R/share?text={encoded}"
-    # メール
-    mail_url = f"mailto:?subject={subject}&body={encoded}"
-    # SMS/メッセージ
-    sms_url = f"sms:?&body={encoded}"
+    # streamlit.components.v1.html でJSを確実に実行
+    share_html = f"""
+<div style="text-align:center; font-family: 'Zen Kaku Gothic New', sans-serif;">
+  <button id="btn_share_{key_suffix}" style="
+    display:inline-block; padding:10px 20px; margin:4px; border-radius:6px;
+    font-size:0.9em; font-weight:bold; cursor:pointer;
+    border: 1px solid #BFA350; color:#0A0A0A; background:#BFA350;
+  ">📤 LINE・メール・メッセージで共有</button>
 
-    # ボタン群をHTMLで描画（リンクボタン）
-    btn_style = (
-        "display:inline-block; padding:8px 14px; margin:4px; border-radius:6px; "
-        "text-decoration:none; font-size:0.85em; font-weight:bold; cursor:pointer; "
-        "border: 1px solid #2A2A2A; color:#F0EBE0; background:#1A1A1A; "
-        "transition: background 0.2s;"
-    )
+  <button id="btn_copy_{key_suffix}" style="
+    display:inline-block; padding:10px 20px; margin:4px; border-radius:6px;
+    font-size:0.9em; font-weight:bold; cursor:pointer;
+    border: 1px solid #2A2A2A; color:#F0EBE0; background:#1A1A1A;
+  ">📋 全文をコピー</button>
 
-    st.markdown(f"""
-<div style="text-align:center; margin:8px 0;">
-<a href="{line_url}" target="_blank" style="{btn_style} background:#06C755; border-color:#06C755; color:#fff;">💬 LINE</a>
-<a href="{mail_url}" style="{btn_style}">📧 メール</a>
-<a href="{sms_url}" style="{btn_style}">💬 メッセージ</a>
-</div>""", unsafe_allow_html=True)
+  <div id="msg_{key_suffix}" style="color:#7CB87C; font-size:0.85em; margin-top:6px; min-height:20px;"></div>
+</div>
 
-    # クリップボードコピーボタン（JavaScript）
-    escaped_text = share_text.replace('\\', '\\\\').replace('`', '\\`').replace('$', '\\$')
-    copy_js = f"""
-<div style="text-align:center; margin:6px 0;">
-<button onclick="
-  navigator.clipboard.writeText(`{escaped_text}`).then(function(){{
-    document.getElementById('copy_ok_{key_suffix}').style.display='inline';
-    setTimeout(function(){{ document.getElementById('copy_ok_{key_suffix}').style.display='none'; }}, 2000);
+<script>
+(function() {{
+  var fullText = {text_json};
+
+  document.getElementById('btn_share_{key_suffix}').addEventListener('click', function() {{
+    if (navigator.share) {{
+      navigator.share({{
+        title: '占いモンスターくろたん 鑑定結果',
+        text: fullText
+      }}).catch(function(e) {{
+        if (e.name !== 'AbortError') {{
+          // 共有がキャンセルされた場合以外はコピーにフォールバック
+          fallbackCopy();
+        }}
+      }});
+    }} else {{
+      fallbackCopy();
+    }}
   }});
-" style="{btn_style} min-width:200px;">📋 テキストをコピー</button>
-<span id="copy_ok_{key_suffix}" style="display:none; color:#7CB87C; font-size:0.85em; margin-left:8px;">✓ コピーしました</span>
-</div>"""
-    st.markdown(copy_js, unsafe_allow_html=True)
+
+  document.getElementById('btn_copy_{key_suffix}').addEventListener('click', function() {{
+    doCopy(fullText, '✓ 全文をコピーしました！LINEやメールに貼り付けてください');
+  }});
+
+  function fallbackCopy() {{
+    doCopy(fullText, '✓ コピーしました！LINEやメールに貼り付けてください');
+  }}
+
+  function doCopy(text, msg) {{
+    if (navigator.clipboard && navigator.clipboard.writeText) {{
+      navigator.clipboard.writeText(text).then(function() {{
+        showMsg(msg);
+      }}).catch(function() {{
+        textAreaCopy(text, msg);
+      }});
+    }} else {{
+      textAreaCopy(text, msg);
+    }}
+  }}
+
+  function textAreaCopy(text, msg) {{
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.left = '-9999px';
+    document.body.appendChild(ta);
+    ta.select();
+    try {{ document.execCommand('copy'); showMsg(msg); }}
+    catch(e) {{ showMsg('⚠ コピーできませんでした。テキストを長押しで選択してください'); }}
+    document.body.removeChild(ta);
+  }}
+
+  function showMsg(text) {{
+    var el = document.getElementById('msg_{key_suffix}');
+    el.textContent = text;
+    setTimeout(function() {{ el.textContent = ''; }}, 3000);
+  }}
+}})();
+</script>
+"""
+    _stc.html(share_html, height=100)
 
     # PDF ダウンロード
     if pdf_html:
         st.download_button(
-            label="📄 PDF用HTMLをダウンロード",
+            label="📄 PDFで保存",
             data=pdf_html.encode("utf-8"),
             file_name="鑑定結果.html",
             mime="text/html",
