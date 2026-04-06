@@ -2275,6 +2275,10 @@ def render_tarot_input_page():
 
             st.session_state.tarot_question = q
             st.session_state.tarot_deepen_history = []
+            # 前回のbundleと深掘りデータをクリア（新しい相談者用に再計算させる）
+            st.session_state.pop("tarot_bundle", None)
+            st.session_state.pop("_deepen_data_0", None)
+            st.session_state.pop("_deepen_data_1", None)
             st.session_state.page = "tarot_deepen"
             st.rerun()
 
