@@ -389,15 +389,40 @@ def _save_person(name, year, month, day, time_str="", place="", blood="不明", 
 
 def _select_person(p: dict):
     """人物データをセッションに読み込む（選択時共通処理）"""
-    st.session_state._saved_name = p.get("name", "")
-    st.session_state._saved_gender = p.get("gender", "男性")
-    st.session_state._saved_year = int(p.get("year", 1990))
-    st.session_state._saved_month = int(p.get("month", 5))
-    st.session_state._saved_day = int(p.get("day", 15))
-    st.session_state._saved_time = p.get("time", "")
-    st.session_state._saved_place = p.get("place", "")
-    st.session_state._saved_blood = p.get("blood", "不明")
+    name = p.get("name", "")
+    gender = p.get("gender", "男性")
+    year = int(p.get("year", 1990))
+    month = int(p.get("month", 5))
+    day = int(p.get("day", 15))
+    time_val = p.get("time", "")
+    place = p.get("place", "")
+    blood = p.get("blood", "不明")
+
+    # 共通保存値（通常鑑定ページ用）
+    st.session_state._saved_name = name
+    st.session_state._saved_gender = gender
+    st.session_state._saved_year = year
+    st.session_state._saved_month = month
+    st.session_state._saved_day = day
+    st.session_state._saved_time = time_val
+    st.session_state._saved_place = place
+    st.session_state._saved_blood = blood
     st.session_state._input_key_ver = st.session_state.get("_input_key_ver", 0) + 1
+
+    # タロットページのウィジェットキーにも直接セット
+    st.session_state["tarot_name"] = name
+    st.session_state["tarot_gender"] = gender
+    st.session_state["tarot_year"] = year
+    st.session_state["tarot_month"] = month
+    st.session_state["tarot_day"] = day
+
+    # 開運ページのウィジェットキーにも直接セット
+    st.session_state["kaiyun_name"] = name
+    st.session_state["kaiyun_gender"] = gender
+    st.session_state["kaiyun_y"] = year
+    st.session_state["kaiyun_m"] = month
+    st.session_state["kaiyun_d"] = day
+
     st.rerun()
 
 
@@ -3757,19 +3782,6 @@ def render_kaiyun_input_page():
         key="kaiyun_use_hidesan",
     )
 
-    # --- ヘルパー: 顧客選択コールバック ---
-    def _on_kaiyun_sel_change(db, sel_key, name_key, y_key, m_key, d_key, g_key):
-        sel = st.session_state.get(sel_key, "（手入力）")
-        if sel != "（手入力）" and sel in db:
-            p = db[sel]
-            st.session_state[name_key] = p.get("name", sel)
-            st.session_state[y_key] = p.get("year", 1990)
-            st.session_state[m_key] = p.get("month", 5)
-            st.session_state[d_key] = p.get("day", 15)
-            gv = p.get("gender", "男性")
-            if gv in ["男性", "女性", "その他"]:
-                st.session_state[g_key] = gv
-
     if use_hidesan:
         st.markdown(
             '<div style="color:#BFA350; font-size:1.1em; font-weight:bold; margin:10px 0 5px;">'
@@ -3782,30 +3794,29 @@ def render_kaiyun_input_page():
             unsafe_allow_html=True,
         )
     else:
-        # 顧客リストから選択
-        db = _load_people_db()
-        if db:
-            ppl_names = ["（手入力）"] + sorted(db.keys())
-            _cb_args = (
-                db, "kaiyun_sel", "kaiyun_name",
-                "kaiyun_y", "kaiyun_m", "kaiyun_d", "kaiyun_gender",
-            )
-            st.selectbox(
-                "顧客リストから選択", options=ppl_names, index=0,
-                key="kaiyun_sel", on_change=_on_kaiyun_sel_change, args=_cb_args,
-            )
+        # 顧客リストから選択（ボタン一覧形式）
+        _render_people_quick_select()
 
-        name = st.text_input("お名前", value="", placeholder="例: ひでさん", key="kaiyun_name")
-        gender = st.radio("性別", options=["男性", "女性", "その他"], index=0, horizontal=True, key="kaiyun_gender")
+        saved_name = st.session_state.get("kaiyun_name", "")
+        saved_gender = st.session_state.get("kaiyun_gender", "男性")
+        saved_year = st.session_state.get("kaiyun_y", 1990)
+        saved_month = st.session_state.get("kaiyun_m", 5)
+        saved_day = st.session_state.get("kaiyun_d", 15)
+
+        name = st.text_input("お名前", value=saved_name, placeholder="例: ひでさん", key="kaiyun_name")
+        gender_options = ["男性", "女性", "その他"]
+        gender_idx = gender_options.index(saved_gender) if saved_gender in gender_options else 0
+        gender = st.radio("性別", options=gender_options, index=gender_idx, horizontal=True, key="kaiyun_gender")
 
         years = list(range(1930, date.today().year))
+        year_idx = years.index(saved_year) if saved_year in years else years.index(1990)
         ca, cb, cc = st.columns(3)
         with ca:
-            y = st.selectbox("年", options=years, index=years.index(1990), key="kaiyun_y")
+            y = st.selectbox("年", options=years, index=year_idx, key="kaiyun_y")
         with cb:
-            m = st.selectbox("月", options=list(range(1, 13)), index=4, key="kaiyun_m")
+            m = st.selectbox("月", options=list(range(1, 13)), index=max(0, saved_month - 1), key="kaiyun_m")
         with cc:
-            d = st.selectbox("日", options=list(range(1, 32)), index=14, key="kaiyun_d")
+            d = st.selectbox("日", options=list(range(1, 32)), index=max(0, saved_day - 1), key="kaiyun_d")
 
     render_gold_divider()
 
