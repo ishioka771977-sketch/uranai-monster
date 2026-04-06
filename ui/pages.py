@@ -2887,7 +2887,7 @@ def render_tarot_result_page():
     # 共有ボタン — 結果のすぐ下
     _tr_title = f"{name}さんへ — タロット鑑定" if name else "タロット鑑定"
     _tr_subtitle = f"質問: 「{question}」 / {spread_info['spread_name']}"
-    _card_names = " / ".join([f"{c.name}{'(R)' if c.reversed else ''}" for c in cards])
+    _card_names = " / ".join([f"{c.card_name}{'(R)' if c.is_reversed else ''}" for c in cards])
     _tr_reading = f"カード: {_card_names}\n\n{reading}" if reading else f"カード: {_card_names}"
     _tr_text = _build_share_text(_tr_title, _tr_subtitle, headline, _tr_reading, closing)
     _tr_pdf = _build_pdf_html(_tr_title, _tr_subtitle, headline, _tr_reading, closing)
