@@ -3862,6 +3862,9 @@ def render_kaiyun_input_page():
             st.session_state.kaiyun_person = person
             st.session_state.kaiyun_sanmei = sanmei
             st.session_state.kaiyun_person_data = person_data
+            # 前回のAI鑑定結果をクリア
+            for _ai_key in ("kaiyun_ai_daily", "kaiyun_ai_monthly", "kaiyun_ai_yearly", "kaiyun_ai_taiun"):
+                st.session_state.pop(_ai_key, None)
             st.session_state.page = "kaiyun_result"
             st.rerun()
 
@@ -4066,6 +4069,13 @@ def _render_kaiyun_daily_tab(today, person_data, name):
   </div>
 </div>
 """, unsafe_allow_html=True)
+
+    # AI鑑定文
+    render_gold_divider()
+    _render_kaiyun_ai_section(
+        "daily", name, person_data,
+        lambda ps, pd: _build_kaiyun_daily_context(today, pd),
+    )
 
 
 # --- Tab 2 helper ---
@@ -4280,6 +4290,21 @@ def _render_kaiyun_monthly_yearly_tab(today, person_data):
 </div>
 """, unsafe_allow_html=True)
 
+    # AI鑑定文 — 月運
+    _kaiyun_name = getattr(st.session_state.get("kaiyun_person"), "name", "") or ""
+    render_gold_divider()
+    _render_kaiyun_ai_section(
+        "monthly", _kaiyun_name, person_data,
+        lambda ps, pd: _build_kaiyun_monthly_context(today, pd, month_adv),
+    )
+
+    # AI鑑定文 — 年運
+    render_gold_divider()
+    _render_kaiyun_ai_section(
+        "yearly", _kaiyun_name, person_data,
+        lambda ps, pd: _build_kaiyun_yearly_context(today, pd, year_adv),
+    )
+
 
 # --- Tab 4 helper ---
 def _render_kaiyun_taiun_tab(person, person_data):
@@ -4381,3 +4406,199 @@ def _render_kaiyun_taiun_tab(person, person_data):
   {tcs_detail}
 </div>
 """, unsafe_allow_html=True)
+
+    # AI鑑定文 — 大運
+    render_gold_divider()
+    _render_kaiyun_ai_section(
+        "taiun", person.name or "",
+        person_data,
+        lambda ps, pd: _build_kaiyun_taiun_context(person, pd, taiun_list, current_taiun),
+    )
+
+
+# ============================================================
+# 開運アドバイス: AI鑑定文 共通ヘルパー
+# ============================================================
+
+def _build_person_summary_for_kaiyun(person_data: dict) -> str:
+    """開運AI用の人物サマリーを構築"""
+    sanmei = st.session_state.get("kaiyun_sanmei")
+    if not sanmei:
+        return f"日干: {person_data.get('day_kan', '不明')}"
+
+    lines = [
+        f"日干: {sanmei.nichikan}（{sanmei.nichikan_gogyo}性・{sanmei.nichikan_inyo}）",
+        f"年柱: {sanmei.nen_kanshi} / 月柱: {sanmei.tsuki_kanshi} / 日柱: {sanmei.hi_kanshi}",
+        f"中央星: {sanmei.chuo_sei}（{sanmei.chuo_honno}）",
+        f"天中殺: {sanmei.tenchusatsu}",
+    ]
+    if sanmei.kakkyoku:
+        lines.append(f"特殊格局: {sanmei.kakkyoku}")
+
+    e = sanmei.bansho_energy
+    if e:
+        lines.append(f"エネルギー指数: {e.total_energy}（{e.energy_type}）")
+        lines.append(f"第1本能: {e.top_honnou} / 第2本能: {e.second_honnou}")
+
+    return "\n".join(lines)
+
+
+def _build_kaiyun_daily_context(today, person_data: dict) -> str:
+    """日運AI用のデータコンテキスト"""
+    from core.kaiyun import calc_lucky_score, DAILY_KANSEI, ROKUYO_DETAIL, JUNICHOKU_DETAIL
+
+    r = calc_lucky_score(today, person_data)
+    kansei_info = DAILY_KANSEI.get(r["kansei"], DAILY_KANSEI["比劫"])
+    rokuyo_info = ROKUYO_DETAIL.get(r["rokuyo"], {})
+    junichoku_info = JUNICHOKU_DETAIL.get(r["junichoku"], {})
+
+    lines = [
+        f"日付: {today.strftime('%Y年%m月%d日')}",
+        f"ラッキースコア: {r['score']}/10",
+        f"日干支: {r['day_kanshi']}",
+        f"通変星関係: {r['kansei']}（{kansei_info['theme']}）",
+        f"六曜: {r['rokuyo']}（{rokuyo_info.get('luck', '')}）— {rokuyo_info.get('advice', '')}",
+        f"十二直: {r['junichoku']}（{junichoku_info.get('luck', '')}）— {junichoku_info.get('advice', '')}",
+        f"天中殺日: {'はい — 大型の決断は避ける' if r['tenchusatsu'] else 'いいえ'}",
+    ]
+    return "\n".join(lines)
+
+
+def _build_kaiyun_monthly_context(today, person_data: dict, month_adv: dict) -> str:
+    """月運AI用のデータコンテキスト"""
+    lines = [
+        f"年月: {today.year}年{today.month}月",
+        f"月干支: {month_adv['month_kanshi']}",
+        f"通変星関係: {month_adv['kansei']}（{month_adv['theme']}）",
+        f"やると良いこと: {month_adv['do']}",
+        f"注意: {month_adv['dont']}",
+        f"天中殺月: {'はい' if month_adv['tenchusatsu_month'] else 'いいえ'}",
+    ]
+    return "\n".join(lines)
+
+
+def _build_kaiyun_yearly_context(today, person_data: dict, year_adv: dict) -> str:
+    """年運AI用のデータコンテキスト"""
+    kw = "、".join(year_adv.get("keywords", []))
+    lines = [
+        f"年: {today.year}年",
+        f"年干支: {year_adv['year_kanshi']}",
+        f"通変星関係: {year_adv['kansei']}（{year_adv['theme']}）",
+        f"キーワード: {kw}",
+        f"やると良いこと: {year_adv['do']}",
+        f"注意: {year_adv['dont']}",
+        f"エネルギーの使い方: {year_adv['energy_advice']}",
+        f"天中殺年: {'はい' if year_adv['tenchusatsu_year'] else 'いいえ'}",
+    ]
+    return "\n".join(lines)
+
+
+def _build_kaiyun_taiun_context(person, person_data: dict, taiun_list: list, current_taiun: dict) -> str:
+    """大運AI用のデータコンテキスト"""
+    from core.kaiyun import DAILY_KANSEI
+
+    today = date.today()
+    current_age = today.year - person.birth_date.year
+    birth_year = person.birth_date.year
+
+    lines = [f"現在の年齢: {current_age}歳", ""]
+
+    for entry in taiun_list:
+        is_current = (entry == current_taiun)
+        marker = "★現在" if is_current else ""
+        kansei_info = DAILY_KANSEI.get(entry["kansei"], DAILY_KANSEI["比劫"])
+        tcs_mark = " [大運天中殺]" if entry["is_taiun_tenchusatsu"] else ""
+        lines.append(
+            f"{entry['start_age']}〜{entry['end_age']}歳 "
+            f"({birth_year + entry['start_age']}〜{birth_year + entry['end_age']}年) "
+            f"{entry['kanshi']}（{entry['gogyo']}・{entry['honnou']}）"
+            f" {kansei_info['theme']}{tcs_mark} {marker}"
+        )
+
+    if current_taiun:
+        ct = current_taiun
+        lines.append("")
+        lines.append(f"現在の大運: {ct['kanshi']}（{ct['start_age']}〜{ct['end_age']}歳）")
+        lines.append(f"五行: {ct['gogyo']} / 本能: {ct['honnou']} / 通変星: {ct['kansei']}")
+        if ct["is_taiun_tenchusatsu"]:
+            tcs_yrs = ", ".join(str(y) for y in ct["tenchusatsu_years"])
+            lines.append(f"大運天中殺あり。特に注意の年: {tcs_yrs}")
+
+        # 次の大運
+        idx = taiun_list.index(ct)
+        if idx + 1 < len(taiun_list):
+            nxt = taiun_list[idx + 1]
+            nxt_kansei = DAILY_KANSEI.get(nxt["kansei"], DAILY_KANSEI["比劫"])
+            lines.append(f"次の大運: {nxt['kanshi']}（{nxt['start_age']}〜{nxt['end_age']}歳）{nxt_kansei['theme']}")
+
+    return "\n".join(lines)
+
+
+def _render_kaiyun_ai_section(period_key: str, name: str, person_data: dict, context_builder):
+    """開運AI鑑定文の表示セクション（ボタン押下でAPI呼び出し）"""
+    PERIOD_LABELS = {
+        "daily": "✦ くろたんの今日のアドバイス",
+        "monthly": "✦ くろたんの今月のアドバイス",
+        "yearly": "✦ くろたんの今年のアドバイス",
+        "taiun": "✦ くろたんの大運鑑定",
+    }
+    PERIOD_FUNCS = {
+        "daily": "generate_kaiyun_daily_reading",
+        "monthly": "generate_kaiyun_monthly_reading",
+        "yearly": "generate_kaiyun_yearly_reading",
+        "taiun": "generate_kaiyun_taiun_reading",
+    }
+
+    session_key = f"kaiyun_ai_{period_key}"
+    label = PERIOD_LABELS.get(period_key, "✦ くろたんのアドバイス")
+
+    # 既にAI結果がある場合は表示
+    ai_result = st.session_state.get(session_key)
+    if ai_result and ai_result.get("reading"):
+        headline = ai_result.get("headline", "")
+        reading = ai_result["reading"]
+
+        headline_html = ""
+        if headline:
+            headline_html = f"""
+<div style="text-align:center; margin:8px 0;">
+  <span style="color:#BFA350; font-size:1.1em; font-weight:bold;">「{_html_mod.escape(headline)}」</span>
+</div>"""
+
+        st.markdown(f"""
+<div class="divination-card">
+  <div class="card-header">{label}</div>
+  {headline_html}
+  <div class="reading-text" style="line-height:2.0; white-space:pre-wrap;">{_html_mod.escape(reading)}</div>
+</div>
+""", unsafe_allow_html=True)
+        return
+
+    # ボタンで生成
+    if st.button(f"🔮 {label.replace('✦ ', '')}を聞く", key=f"btn_{session_key}"):
+        from ai.interpreter import (
+            generate_kaiyun_daily_reading,
+            generate_kaiyun_monthly_reading,
+            generate_kaiyun_yearly_reading,
+            generate_kaiyun_taiun_reading,
+        )
+
+        func_map = {
+            "daily": generate_kaiyun_daily_reading,
+            "monthly": generate_kaiyun_monthly_reading,
+            "yearly": generate_kaiyun_yearly_reading,
+            "taiun": generate_kaiyun_taiun_reading,
+        }
+
+        func = func_map[period_key]
+        person_summary = _build_person_summary_for_kaiyun(person_data)
+        context_data = context_builder(person_summary, person_data)
+
+        with st.spinner("くろたんが考え中…"):
+            result = func(name or "あなた", person_summary, context_data)
+
+        if result and result.get("reading"):
+            st.session_state[session_key] = result
+            st.rerun()
+        else:
+            st.warning("AI鑑定文の生成に失敗しました。もう一度お試しください。")

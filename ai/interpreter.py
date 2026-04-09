@@ -2071,3 +2071,144 @@ def _interactive_tarot_fallback(question: str, spread_info: dict, cards: list) -
         ),
         "closing": "カードの声に、耳を澄ませてみて。",
     }
+
+
+# ============================================================
+# 開運アドバイス AI鑑定文
+# ============================================================
+
+KAIYUN_SYSTEM_PROMPT = """あなたは「占いモンスターくろたん」。開運アドバイスの専門家。
+命式データと運勢データを基に、具体的・実践的な開運アドバイスを語る。
+
+【ルール】
+1. 「運が悪い」とは言わない。「準備の時期」「内側を充実させる時期」と表現する
+2. 具体的な行動に落とし込む（「金運が良い」ではなく「営業・商談を積極的に入れると回収率が高い」等）
+3. 天中殺年・月・日は前向きに語る（「じっくり力を蓄える時期」）
+4. 飲み屋で話せるわかりやすさを保つ
+5. 断定口調（「〜でしょ？」「〜なはず。」）で語る
+6. エネルギー指数や五本能を使って具体的に語る
+7. 相談者の名前を使って語りかける"""
+
+
+def generate_kaiyun_daily_reading(
+    person_name: str, person_summary: str, daily_data: str
+) -> str:
+    """日運のAI鑑定文を生成する（200〜400字）"""
+    prompt = f"""【{person_name}さんの命式】
+{person_summary}
+
+【今日の運勢データ】
+{daily_data}
+
+以上のデータを基に、今日の開運アドバイスを200〜400字で語ってください。
+具体的に「今日は何をすべきか」「何を避けるべきか」を断定口調で。
+冒頭に一言キャッチコピー（15字以内）を付けてください。
+
+出力形式（JSONで返してください）:
+{{"headline": "一言キャッチコピー", "reading": "本文"}}
+"""
+    try:
+        result = _call_api_with_system(KAIYUN_SYSTEM_PROMPT, prompt, max_tokens=800)
+        if "reading" in result:
+            return result
+    except Exception:
+        pass
+    return {"headline": "", "reading": ""}
+
+
+def generate_kaiyun_monthly_reading(
+    person_name: str, person_summary: str, monthly_data: str
+) -> str:
+    """月運のAI鑑定文を生成する（300〜600字）"""
+    prompt = f"""【{person_name}さんの命式】
+{person_summary}
+
+【今月の運勢データ】
+{monthly_data}
+
+以上のデータを基に、今月の開運アドバイスを300〜600字で語ってください。
+「今月のテーマ」「やるべきこと3つ」「避けること」「ベストウィーク」を含めて。
+仕事・人間関係・健康の3軸で具体的に。
+
+出力形式（JSONで返してください）:
+{{"headline": "今月の一言", "reading": "本文"}}
+"""
+    try:
+        result = _call_api_with_system(KAIYUN_SYSTEM_PROMPT, prompt, max_tokens=1200)
+        if "reading" in result:
+            return result
+    except Exception:
+        pass
+    return {"headline": "", "reading": ""}
+
+
+def generate_kaiyun_yearly_reading(
+    person_name: str, person_summary: str, yearly_data: str
+) -> str:
+    """年運のAI鑑定文を生成する（400〜800字）"""
+    prompt = f"""【{person_name}さんの命式】
+{person_summary}
+
+【今年の運勢データ】
+{yearly_data}
+
+以上のデータを基に、今年の開運アドバイスを400〜800字で語ってください。
+「今年のテーマ」「四半期ごとの過ごし方」「今年やるべき最も重要なこと1つ」を含めて。
+エネルギー指数と五本能を踏まえた具体的なアドバイスを。
+
+出力形式（JSONで返してください）:
+{{"headline": "今年の一言", "reading": "本文"}}
+"""
+    try:
+        result = _call_api_with_system(KAIYUN_SYSTEM_PROMPT, prompt, max_tokens=1500)
+        if "reading" in result:
+            return result
+    except Exception:
+        pass
+    return {"headline": "", "reading": ""}
+
+
+def generate_kaiyun_taiun_reading(
+    person_name: str, person_summary: str, taiun_data: str
+) -> str:
+    """大運のAI鑑定文を生成する（500〜1000字）"""
+    prompt = f"""【{person_name}さんの命式】
+{person_summary}
+
+【大運データ】
+{taiun_data}
+
+以上のデータを基に、人生の大きな流れを500〜1000字で語ってください。
+特に以下を含めて：
+1. 現在の大運でやるべきこと（具体的な行動）
+2. 次の大運への準備（今から始めておくこと）
+3. 過去の大運の振り返り（「あの時期こういうことがあったでしょ？」的な）
+4. 大運天中殺がある場合はその対策
+
+出力形式（JSONで返してください）:
+{{"headline": "人生の流れの一言", "reading": "本文"}}
+"""
+    try:
+        result = _call_api_with_system(KAIYUN_SYSTEM_PROMPT, prompt, max_tokens=2000)
+        if "reading" in result:
+            return result
+    except Exception:
+        pass
+    return {"headline": "", "reading": ""}
+
+
+def _call_api_with_system(system: str, prompt: str, max_tokens: int = 1500) -> dict:
+    """システムプロンプト指定付きでGemini APIを呼び、JSON応答をパースする"""
+    client = _get_client()
+    response = client.models.generate_content(
+        model="gemini-2.5-pro",
+        contents=prompt,
+        config=types.GenerateContentConfig(
+            system_instruction=system,
+            max_output_tokens=max_tokens + 4096,
+            temperature=0.9,
+            thinking_config=types.ThinkingConfig(thinking_budget=4096),
+        ),
+    )
+    text = response.text or ""
+    return _parse_json_response(text)
