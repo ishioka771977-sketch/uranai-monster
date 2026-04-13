@@ -202,11 +202,9 @@ def _render_share_buttons(share_text: str, key_suffix: str, pdf_html: str = "",
 
 def _render_email_section(title: str, subtitle: str, headline: str,
                           reading: str, closing: str, key_suffix: str):
-    """メール送信セクション: メアド入力 → Gmail SMTP送信"""
-    from core.email_sender import is_email_configured, send_result_email, build_email_html
-
-    if not is_email_configured():
-        return  # Gmail未設定なら非表示
+    """メール送信セクション: メアド入力 → Gmail作成画面を開く"""
+    from core.email_sender import build_email_text, build_gmail_url
+    import json as _json_email
 
     with st.expander("✉ 鑑定結果をメールで送る", expanded=False):
         email_key = f"email_to_{key_suffix}"
@@ -218,19 +216,33 @@ def _render_email_section(title: str, subtitle: str, headline: str,
             key=email_key,
         )
 
-        if st.button("✉ メール送信", key=f"btn_email_{key_suffix}",
-                      use_container_width=True):
-            if not email_addr or "@" not in email_addr:
-                st.error("有効なメールアドレスを入力してください")
-            else:
-                subject = f"✦ くろたん鑑定結果 — {title}"
-                html_body = build_email_html(title, subtitle, headline, reading, closing)
-                with st.spinner("送信中..."):
-                    result = send_result_email(email_addr, subject, html_body)
-                if result["ok"]:
-                    st.success(f"✓ {email_addr} に送信しました！")
-                else:
-                    st.error(result["error"])
+        subject = f"✦ くろたん鑑定結果 — {title}"
+        body = build_email_text(title, subtitle, headline, reading, closing)
+        gmail_url = build_gmail_url(email_addr or "", subject, body)
+        gmail_url_json = _json_email.dumps(gmail_url, ensure_ascii=False)
+        email_json = _json_email.dumps(email_addr or "", ensure_ascii=False)
+
+        _stc.html(f"""
+<div style="text-align:center; font-family:'Zen Kaku Gothic New',sans-serif;">
+  <button id="btn_gmail_{key_suffix}" style="
+    display:inline-block; width:100%; padding:12px 20px; border-radius:6px;
+    font-size:0.95em; font-weight:bold; cursor:pointer;
+    border:1px solid #BFA350; color:#0A0A0A; background:#BFA350;
+  ">✉ Gmailで送信</button>
+  <div id="msg_email_{key_suffix}" style="color:#7CB87C; font-size:0.85em; margin-top:6px; min-height:20px;"></div>
+</div>
+<script>
+document.getElementById('btn_gmail_{key_suffix}').addEventListener('click', function() {{
+  var email = {email_json};
+  if (!email || email.indexOf('@') < 0) {{
+    document.getElementById('msg_email_{key_suffix}').textContent = '⚠ メールアドレスを入力してください';
+    return;
+  }}
+  window.open({gmail_url_json}, '_blank');
+  document.getElementById('msg_email_{key_suffix}').textContent = '✓ Gmailの作成画面を開きました';
+}});
+</script>
+""", height=80)
 
 
 def _build_pdf_html(title: str, subtitle: str, headline: str, reading: str, closing: str) -> str:
