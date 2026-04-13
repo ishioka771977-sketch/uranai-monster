@@ -9,12 +9,13 @@ import os
 import streamlit as st
 
 # Streamlit Cloud: secretsからAPIキーを環境変数に設定
-if not os.environ.get("GEMINI_API_KEY"):
-    try:
-        if "GEMINI_API_KEY" in st.secrets:
-            os.environ["GEMINI_API_KEY"] = st.secrets["GEMINI_API_KEY"]
-    except Exception:
-        pass
+for _key in ("GEMINI_API_KEY", "GMAIL_ADDRESS", "GMAIL_APP_PASS"):
+    if not os.environ.get(_key):
+        try:
+            if _key in st.secrets:
+                os.environ[_key] = st.secrets[_key]
+        except Exception:
+            pass
 
 # ページ設定（最初に呼ぶ）
 st.set_page_config(

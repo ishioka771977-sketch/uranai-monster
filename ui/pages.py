@@ -200,6 +200,37 @@ def _render_share_buttons(share_text: str, key_suffix: str, pdf_html: str = "",
         st.caption("ダウンロード後、ブラウザで開いて「印刷 → PDF保存」で変換できます")
 
 
+def _render_email_section(title: str, subtitle: str, headline: str,
+                          reading: str, closing: str, key_suffix: str):
+    """メール送信セクション: メアド入力 → Gmail SMTP送信"""
+    from core.email_sender import is_email_configured, send_result_email, build_email_html
+
+    if not is_email_configured():
+        return  # Gmail未設定なら非表示
+
+    with st.expander("✉ 鑑定結果をメールで送る", expanded=False):
+        email_key = f"email_to_{key_suffix}"
+        email_addr = st.text_input(
+            "送信先メールアドレス",
+            placeholder="example@gmail.com",
+            key=email_key,
+        )
+
+        if st.button("✉ メール送信", key=f"btn_email_{key_suffix}",
+                      use_container_width=True):
+            if not email_addr or "@" not in email_addr:
+                st.error("有効なメールアドレスを入力してください")
+            else:
+                subject = f"✦ くろたん鑑定結果 — {title}"
+                html_body = build_email_html(title, subtitle, headline, reading, closing)
+                with st.spinner("送信中..."):
+                    result = send_result_email(email_addr, subject, html_body)
+                if result["ok"]:
+                    st.success(f"✓ {email_addr} に送信しました！")
+                else:
+                    st.error(result["error"])
+
+
 def _build_pdf_html(title: str, subtitle: str, headline: str, reading: str, closing: str) -> str:
     """印刷用のスタイル付きHTMLを生成"""
     import re
@@ -1668,6 +1699,7 @@ def render_result_page():
     _cr_pdf = _build_pdf_html(_cr_title, _cr_subtitle, _cr_hl, _cr_rd, _cr_cl)
     _cr_digest = _build_share_digest(_cr_title, _cr_hl, _cr_cl)
     _render_share_buttons(_cr_text, "course", _cr_pdf, _cr_digest)
+    _render_email_section(_cr_title, _cr_subtitle, _cr_hl, _cr_rd, _cr_cl, "course")
 
     render_gold_divider()
 
@@ -2142,6 +2174,7 @@ def render_aisho_result_page():
     _ai_pdf = _build_pdf_html(_ai_title, _ai_subtitle, result.get("headline", ""), result.get("reading", ""), result.get("closing", ""))
     _ai_digest = _build_share_digest(_ai_title, result.get("headline", ""), result.get("closing", ""))
     _render_share_buttons(_ai_text, "aisho", _ai_pdf, _ai_digest)
+    _render_email_section(_ai_title, _ai_subtitle, result.get("headline", ""), result.get("reading", ""), result.get("closing", ""), "aisho")
 
     render_gold_divider()
 
@@ -2893,6 +2926,7 @@ def render_tarot_result_page():
     _tr_pdf = _build_pdf_html(_tr_title, _tr_subtitle, headline, _tr_reading, closing)
     _tr_digest = _build_share_digest(_tr_title, headline, closing)
     _render_share_buttons(_tr_text, "tarot", _tr_pdf, _tr_digest)
+    _render_email_section(_tr_title, _tr_subtitle, headline, _tr_reading, closing, "tarot")
 
     render_gold_divider()
 
@@ -3936,6 +3970,15 @@ def render_kaiyun_result_page():
     # ================================================================
     with tab4:
         _render_kaiyun_taiun_tab(person, person_data)
+
+    # --- メール送信 ---
+    render_gold_divider()
+    _kaiyun_title = f"{name}さん — 開運アドバイス"
+    _kaiyun_subtitle = f"{person.birth_date.strftime('%Y/%m/%d')} 生 | 日干: {sanmei.hi_kan}"
+    _kaiyun_hl = f"今日の開運スコア: {calc_lucky_score(today, person_data)['score']}点"
+    _kaiyun_rd = ""
+    _kaiyun_cl = "開運アドバイスの詳細はアプリでご確認ください"
+    _render_email_section(_kaiyun_title, _kaiyun_subtitle, _kaiyun_hl, _kaiyun_rd, _kaiyun_cl, "kaiyun")
 
     # --- 戻るボタン ---
     render_gold_divider()
