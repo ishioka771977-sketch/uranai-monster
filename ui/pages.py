@@ -210,8 +210,10 @@ def _render_email_section(title: str, subtitle: str, headline: str,
 
     with st.expander("✉ 鑑定結果をメールで送る", expanded=False):
         email_key = f"email_to_{key_suffix}"
+        default_email = st.session_state.get("_saved_email", "")
         email_addr = st.text_input(
             "送信先メールアドレス",
+            value=default_email,
             placeholder="example@gmail.com",
             key=email_key,
         )
@@ -392,7 +394,7 @@ def _persist_folders_db(fdb: dict):
         pass
 
 
-def _save_person(name, year, month, day, time_str="", place="", blood="不明", gender="男性"):
+def _save_person(name, year, month, day, time_str="", place="", blood="不明", gender="男性", email=""):
     """鑑定した人のデータをsession_state + ファイルに記憶"""
     st.session_state._saved_name = name
     st.session_state._saved_gender = gender
@@ -402,6 +404,7 @@ def _save_person(name, year, month, day, time_str="", place="", blood="不明", 
     st.session_state._saved_time = time_str
     st.session_state._saved_place = place
     st.session_state._saved_blood = blood
+    st.session_state._saved_email = email
 
     from datetime import datetime as _dt
     db = _load_people_db()
@@ -409,7 +412,7 @@ def _save_person(name, year, month, day, time_str="", place="", blood="不明", 
         existing = db.get(name, {})
         db[name] = {
             "name": name, "gender": gender, "year": year, "month": month, "day": day,
-            "time": time_str, "place": place, "blood": blood,
+            "time": time_str, "place": place, "blood": blood, "email": email,
             "last_divined": _dt.now().strftime("%Y-%m-%d %H:%M"),
             "divined_count": existing.get("divined_count", 0) + 1,
             "created_at": existing.get("created_at", _dt.now().strftime("%Y-%m-%d")),
@@ -428,6 +431,7 @@ def _select_person(p: dict):
     time_val = p.get("time", "")
     place = p.get("place", "")
     blood = p.get("blood", "不明")
+    email = p.get("email", "")
 
     # 共通保存値（通常鑑定ページ用）
     st.session_state._saved_name = name
@@ -438,6 +442,7 @@ def _select_person(p: dict):
     st.session_state._saved_time = time_val
     st.session_state._saved_place = place
     st.session_state._saved_blood = blood
+    st.session_state._saved_email = email
     st.session_state._input_key_ver = st.session_state.get("_input_key_ver", 0) + 1
 
     # タロットページのウィジェットキーにも直接セット
@@ -467,12 +472,14 @@ def _render_person_row(name: str, p: dict, key_prefix: str, people_db: dict, sho
     blood_str = f" {blood}型" if blood and blood != "不明" else ""
     time_str = p.get('time', '')
     time_disp = f" {time_str}生" if time_str else ""
+    email = p.get('email', '')
+    email_str = " ✉" if email else ""
     divined = p.get('last_divined', '')
     divined_str = f"  🕐{divined}" if divined else ""
 
     col1, col2 = st.columns([5, 1])
     with col1:
-        label = f"👤 {name}　{year}/{month}/{day}{time_disp}　{gender}{blood_str}{divined_str}"
+        label = f"👤 {name}　{year}/{month}/{day}{time_disp}　{gender}{blood_str}{email_str}{divined_str}"
         if st.button(label, key=f"btn_{key_prefix}_{name}", use_container_width=True):
             _select_person(p)
     with col2:
@@ -1205,6 +1212,7 @@ def render_input_page():
     saved_time = st.session_state.get("_saved_time", "")
     saved_place = st.session_state.get("_saved_place", "")
     saved_blood = st.session_state.get("_saved_blood", "不明")
+    saved_email = st.session_state.get("_saved_email", "")
 
     years = list(range(1930, date.today().year))
     blood_options = ["不明", "A", "B", "O", "AB"]
@@ -1251,7 +1259,7 @@ def render_input_page():
         day = st.selectbox("日", options=list(range(1, 32)), index=max(0, saved_day - 1), key=f"input_day_{kv}")
 
     # 任意項目（折りたたみ）
-    has_detail = bool(saved_time or saved_place or saved_blood != "不明")
+    has_detail = bool(saved_time or saved_place or saved_blood != "不明" or saved_email)
     with st.expander("▼ もっと詳しく（任意・より正確な鑑定に）", expanded=has_detail):
         st.text_input(
             "出生時刻（例: 01:34）",
@@ -1273,6 +1281,12 @@ def render_input_page():
             horizontal=True,
             key=f"input_blood_{kv}"
         )
+        st.text_input(
+            "✉ メールアドレス（鑑定結果送信用）",
+            value=saved_email,
+            placeholder="example@gmail.com",
+            key=f"input_email_{kv}"
+        )
 
     render_gold_divider()
 
@@ -1292,6 +1306,7 @@ def render_input_page():
             input_time = st.session_state.get(f"input_time_{kv}", "").strip()
             input_place = st.session_state.get(f"input_place_{kv}", "").strip()
             input_blood = st.session_state.get(f"input_blood_{kv}", "不明")
+            input_email = st.session_state.get(f"input_email_{kv}", "").strip()
 
             # セッションステートに保存
             st.session_state.person = PersonInput(
@@ -1305,7 +1320,7 @@ def render_input_page():
 
             # 名前をキーにデータを記憶
             _save_person(
-                input_name, year, month, day, input_time, input_place, input_blood, input_gender
+                input_name, year, month, day, input_time, input_place, input_blood, input_gender, input_email
             )
 
             st.session_state.page = "loading"
