@@ -947,6 +947,7 @@ def render_meibo_page():
                             "time": r.get("time", ""),
                             "place": r.get("place", ""),
                             "blood": r.get("blood", "不明"),
+                            "email": r.get("email", existing.get("email", "")),
                             "created_at": existing.get("created_at", ""),
                             "last_divined": existing.get("last_divined", ""),
                             "divined_count": existing.get("divined_count", 0),
@@ -1033,6 +1034,7 @@ def render_meibo_page():
                             "name": pname, "gender": pgender,
                             "year": pyear, "month": pmonth, "day": pday,
                             "time": ptime, "place": "", "blood": pblood,
+                            "email": existing.get("email", ""),
                             "created_at": existing.get("created_at", ""),
                             "last_divined": existing.get("last_divined", ""),
                             "divined_count": existing.get("divined_count", 0),
@@ -1084,10 +1086,25 @@ def render_meibo_page():
                         "生年月日": f"{p.get('year','')}/{p.get('month','')}/{p.get('day','')}",
                         "性別": p.get("gender", ""),
                         "血液型": p.get("blood", "不明"),
+                        "✉ メール": p.get("email", ""),
                         "鑑定回数": p.get("divined_count", 0),
                         "最終鑑定日": p.get("last_divined", "―"),
                     })
                 st.dataframe(pd.DataFrame(table_data), use_container_width=True, hide_index=True)
+
+                # メールアドレス編集
+                st.markdown("---")
+                st.markdown('<div style="color:#BFA350;font-size:0.9em;font-weight:bold;margin-bottom:6px;">✉ メールアドレス編集</div>', unsafe_allow_html=True)
+                edit_target = st.selectbox("顧客を選択", ["（選択）"] + names_sorted, key="meibo_email_target", label_visibility="collapsed")
+                if edit_target and edit_target != "（選択）" and edit_target in people_db:
+                    current_email = people_db[edit_target].get("email", "")
+                    new_email = st.text_input("メールアドレス", value=current_email, key="meibo_email_input", placeholder="example@gmail.com")
+                    if st.button("✉ 保存", key="btn_meibo_email_save"):
+                        people_db[edit_target]["email"] = new_email.strip()
+                        st.session_state._people_db = people_db
+                        _persist_people_db(people_db)
+                        st.success(f"「{edit_target}」のメールアドレスを保存しました")
+                        st.rerun()
 
                 # 個別削除
                 st.markdown("---")
