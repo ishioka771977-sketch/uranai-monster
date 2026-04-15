@@ -14,7 +14,7 @@ from ui.components import (
     render_sanmei_course, render_western_course,
     render_kyusei_course, render_numerology_course,
     render_tarot_course, render_ziwei_course, render_synthesis_tab,
-    render_bansho_course,
+    render_bansho_course, render_shichusuimei_course,
     render_tarot_card_back, render_tarot_card_face,
     render_tarot_card_simple,
     render_theme_result,
@@ -1376,6 +1376,7 @@ def render_loading_page():
     from core.numerology import calculate_numerology
     from core.tarot import draw_tarot
     from core.ziwei import calculate_ziwei
+    from core.shichusuimei import calculate_shichusuimei
     from core.models import DivinationBundle
     from ai.interpreter import generate_recommendation
 
@@ -1410,6 +1411,19 @@ def render_loading_page():
         ziwei = calculate_ziwei(person)
         st.write(f"✧ 紫微斗数 ── 完了（{ziwei.five_element_name} / 命宮:{ziwei.ming_gong_branch}）")
 
+        st.write("✧ 四柱推命…四柱と大運を展開中…")
+        try:
+            shichusuimei = calculate_shichusuimei(person)
+            toki_tag = f"・{shichusuimei.toki_pillar.kanshi}" if shichusuimei.toki_pillar else "（時柱なし）"
+            st.write(
+                f"✧ 四柱推命 ── 完了（{shichusuimei.nen_pillar.kanshi}・"
+                f"{shichusuimei.tsuki_pillar.kanshi}・{shichusuimei.hi_pillar.kanshi}{toki_tag} / "
+                f"日主:{shichusuimei.nichikan}）"
+            )
+        except Exception as _e:
+            shichusuimei = None
+            st.write(f"✧ 四柱推命 ── スキップ（{_e}）")
+
         st.write("✧ タロットカードをシャッフル中…")
         tarot = draw_tarot(1, major_only=True)[0]
         st.write(f"✧ タロット ── 完了（{tarot.card_name}）")
@@ -1422,6 +1436,7 @@ def render_loading_page():
             numerology=numerology,
             tarot=tarot,
             ziwei=ziwei,
+            shichusuimei=shichusuimei,
             has_birth_time=person.birth_time is not None,
             has_blood_type=person.blood_type is not None,
         )
@@ -1478,6 +1493,11 @@ def render_ura_menu_page():
     with col6:
         if st.button("⚡ 万象学", key="btn_bansho"):
             _start_course("万象学")
+
+    col7, _sp1, _sp2 = st.columns(3)
+    with col7:
+        if st.button("✦ 四柱推命", key="btn_shichusuimei"):
+            _start_course("四柱推命")
 
     if st.button("✧ フルコース ✧", key="btn_full", use_container_width=True):
         _start_course("フルコース")
@@ -1577,6 +1597,7 @@ def render_generating_page():
         course_key_map = {
             "算命学": "sanmei", "星座": "western", "九星気学": "kyusei",
             "数秘術": "numerology", "タロット": "tarot", "紫微斗数": "ziwei",
+            "四柱推命": "shichusuimei",
         }
         key = course_key_map.get(course, course)
         st.session_state.course_results[key] = result
@@ -1734,7 +1755,7 @@ def render_result_page():
         _cr_rd = _syn.get("reading", "")
         _cr_cl = _syn.get("closing", "")
     else:
-        _ckey_map = {"算命学": "sanmei", "星座": "western", "九星気学": "kyusei", "数秘術": "numerology", "タロット": "tarot", "紫微斗数": "ziwei", "万象学": "bansho"}
+        _ckey_map = {"算命学": "sanmei", "星座": "western", "九星気学": "kyusei", "数秘術": "numerology", "タロット": "tarot", "紫微斗数": "ziwei", "万象学": "bansho", "四柱推命": "shichusuimei"}
         _cdata = results.get(_ckey_map.get(course, course), {})
         _cr_hl = _cdata.get("headline", _cdata.get("one_line", ""))
         _cr_rd = _cdata.get("reading", _cdata.get("nichikan_reading", _cdata.get("sun_reading", _cdata.get("honmei_reading", _cdata.get("life_path_reading", "")))))
@@ -1778,7 +1799,7 @@ def _render_single_course_result(bundle, course, results):
     course_key_map = {
         "算命学": "sanmei", "星座": "western", "九星気学": "kyusei",
         "数秘術": "numerology", "タロット": "tarot", "紫微斗数": "ziwei",
-        "万象学": "bansho",
+        "万象学": "bansho", "四柱推命": "shichusuimei",
     }
     key = course_key_map.get(course, course)
     data = results.get(key, {})
@@ -1797,6 +1818,8 @@ def _render_single_course_result(bundle, course, results):
         render_ziwei_course(bundle, data)
     elif course == "万象学":
         render_bansho_course(bundle, data)
+    elif course == "四柱推命":
+        render_shichusuimei_course(bundle, data)
 
 
 def _render_full_course_result(bundle, results):

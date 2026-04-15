@@ -632,6 +632,115 @@ def render_ziwei_course(bundle, data: dict):
     st.markdown('</div>', unsafe_allow_html=True)
 
 
+def render_shichusuimei_course(bundle: DivinationBundle, data: dict = None):
+    """四柱推命コースの鑑定結果表示"""
+    data = data or {}
+    sh = getattr(bundle, "shichusuimei", None)
+    if sh is None:
+        st.warning("四柱推命のデータがありません（出生時刻が必要です）")
+        return
+
+    headline = data.get("headline", f"日主{sh.nichikan}の命式")
+
+    st.markdown(f"""
+<div class="divination-card">
+<div class="card-header">✦ 四柱推命 ── 四柱・大運鑑定 ✦</div>
+
+<div style="text-align:center; margin:12px 0;">
+<span style="font-size:1.2em; color:#BFA350; font-weight:bold;">「{headline}」</span>
+</div>
+""", unsafe_allow_html=True)
+
+    # 四柱テーブル
+    def _row(label, p):
+        if p is None:
+            return f'<tr><td style="padding:6px; border:1px solid #2A2A2A; color:#BFA350; width:18%;">{label}</td><td colspan="5" style="padding:6px; border:1px solid #2A2A2A; color:#8A8478;">（出生時刻不明のため算出不可）</td></tr>'
+        return (
+            f'<tr>'
+            f'<td style="padding:6px; border:1px solid #2A2A2A; color:#BFA350; width:18%;">{label}</td>'
+            f'<td style="padding:6px; border:1px solid #2A2A2A; color:#F0EBE0; font-weight:bold;">{p.kanshi}</td>'
+            f'<td style="padding:6px; border:1px solid #2A2A2A; color:#F0EBE0;">{p.zoukan}<span style="color:#8A8478; font-size:0.75em;">({p.zoukan_type})</span></td>'
+            f'<td style="padding:6px; border:1px solid #2A2A2A; color:#D4B96A;">{p.tsuhensei}</td>'
+            f'<td style="padding:6px; border:1px solid #2A2A2A; color:#F0EBE0;">{p.zoukan_tsuhensei}</td>'
+            f'<td style="padding:6px; border:1px solid #2A2A2A; color:#D4B96A;">{p.juni_unsei}</td>'
+            f'</tr>'
+        )
+
+    table_html = (
+        '<table style="width:100%; border-collapse:collapse; margin:10px 0; font-size:0.88em;">'
+        '<tr style="background:#1A1A1A;">'
+        '<th style="padding:6px; border:1px solid #2A2A2A; color:#8A8478; font-weight:normal;">柱</th>'
+        '<th style="padding:6px; border:1px solid #2A2A2A; color:#8A8478; font-weight:normal;">干支</th>'
+        '<th style="padding:6px; border:1px solid #2A2A2A; color:#8A8478; font-weight:normal;">蔵干</th>'
+        '<th style="padding:6px; border:1px solid #2A2A2A; color:#8A8478; font-weight:normal;">通変星</th>'
+        '<th style="padding:6px; border:1px solid #2A2A2A; color:#8A8478; font-weight:normal;">蔵干通変</th>'
+        '<th style="padding:6px; border:1px solid #2A2A2A; color:#8A8478; font-weight:normal;">十二運</th>'
+        '</tr>'
+        + _row("年柱", sh.nen_pillar)
+        + _row("月柱", sh.tsuki_pillar)
+        + _row("日柱（日主）", sh.hi_pillar)
+        + _row("時柱", sh.toki_pillar)
+        + '</table>'
+    )
+    st.markdown(table_html, unsafe_allow_html=True)
+
+    # 日主・空亡サマリー
+    st.markdown(f"""
+<div style="margin:10px 0; color:#F0EBE0;">
+<span style="color:#BFA350;">日主</span>: {sh.nichikan}（{sh.nichikan_gogyo}・{sh.nichikan_inyo}）
+<span style="color:#BFA350;">空亡</span>: {sh.kuubou_name}
+</div>
+""", unsafe_allow_html=True)
+
+    # 神殺リスト
+    if sh.shinsatsu:
+        shinsatsu_badges = ''.join(
+            f'<span style="display:inline-block; background:rgba(191,163,80,0.08); border:1px solid rgba(191,163,80,0.3); border-radius:12px; padding:2px 10px; margin:2px; font-size:0.78em; color:#D4B96A;">{s["name"]}<span style="color:#8A8478; font-size:0.85em;">（{s.get("position","")}）</span></span>'
+            for s in sh.shinsatsu
+        )
+        st.markdown(f'<div style="margin:10px 0;"><span style="color:#BFA350;">神殺</span>：{shinsatsu_badges}</div>', unsafe_allow_html=True)
+
+    # 大運
+    taiun_html = (
+        f'<div style="margin:12px 0;"><span style="color:#BFA350; font-weight:bold;">大運（10年運）</span>　'
+        f'<span style="color:#8A8478;">{sh.taiun_direction} / 立運 数え{sh.taiun_ritsuun_age_kazoe}歳（満{sh.taiun_ritsuun_age_mansai}歳）より</span><br>'
+    )
+    for t in sh.taiun_list:
+        taiun_html += (
+            f'<span style="color:#F0EBE0; font-size:0.85em;">'
+            f'第{t.index}運 満{t.start_age_mansai}〜{t.start_age_mansai+10}歳： '
+            f'<span style="color:#D4B96A; font-weight:bold;">{t.kanshi}</span> '
+            f'（{t.tsuhensei}・{t.juni_unsei}）'
+            f'</span><br>'
+        )
+    taiun_html += '</div>'
+    st.markdown(taiun_html, unsafe_allow_html=True)
+
+    # 五行バランス
+    g = sh.gogyo_balance or {}
+    gogyo_html = (
+        '<div style="margin:10px 0;"><span style="color:#BFA350;">五行バランス</span>：'
+        + '　'.join(f'<span style="color:#F0EBE0;">{k} {g.get(k,0)}%</span>' for k in ["木","火","土","金","水"])
+        + '</div>'
+    )
+    st.markdown(gogyo_html, unsafe_allow_html=True)
+
+    # AI鑑定文
+    reading = data.get("reading", "")
+    if reading:
+        st.markdown(f'<div class="reading-text" style="margin:15px 0;">{reading}</div>', unsafe_allow_html=True)
+
+    closing = data.get("closing", "")
+    if closing:
+        st.markdown(f"""
+<div style="text-align:center; margin:15px 0; padding:10px; border:1px solid rgba(191,163,80,0.4); border-radius:8px;">
+<span style="color:#D4B96A;">✦ {closing} ✦</span>
+</div>
+""", unsafe_allow_html=True)
+
+    st.markdown('</div>', unsafe_allow_html=True)
+
+
 def render_aisho_result(bundle1, bundle2, data: dict, relationship: str = "love"):
     """相性鑑定結果を表示（エネルギー比較・五本能比較付き）"""
     from core.bansho_energy import get_energy_percent, get_energy_band, ENERGY_BAND_DETAIL

@@ -204,6 +204,62 @@ class ZiweiResult:
 
 
 @dataclass
+class Pillar:
+    """四柱推命の1柱（年・月・日・時）"""
+    kanshi: str                             # 干支（例: "辛巳"）
+    kan: str                                # 天干
+    shi: str                                # 地支
+    zoukan: str                             # 蔵干（月柱は日数で選出、他柱は本気）
+    zoukan_type: str                        # "余気" / "中気" / "本気"
+    tsuhensei: str                          # 天干の通変星（日柱は "—"）
+    juda: str                               # 算命学の十大主星対応
+    zoukan_tsuhensei: str                   # 蔵干の通変星
+    juni_unsei: str                         # 十二運星
+
+
+@dataclass
+class TaiunEntry:
+    """大運の1期（10年分）"""
+    index: int                              # 第何運（1〜8）
+    start_age_mansai: int                   # 満年齢
+    start_age_kazoe: int                    # 数え年
+    kanshi: str                             # 干支
+    kan: str
+    shi: str
+    tsuhensei: str                          # 大運干の通変星
+    juda: str                               # 算命学対応
+    juni_unsei: str                         # 大運支の十二運
+
+
+@dataclass
+class ShichusuimeiResult:
+    """四柱推命の計算結果"""
+    # 四柱
+    nen_pillar: Pillar
+    tsuki_pillar: Pillar
+    hi_pillar: Pillar
+    toki_pillar: Optional[Pillar] = None    # 出生時刻不明なら None
+    has_toki: bool = False                  # 時柱があるか
+    # 日主情報
+    nichikan: str = ""
+    nichikan_gogyo: str = ""
+    nichikan_inyo: str = ""
+    # 空亡（＝算命学の天中殺と同一）
+    kuubou: List[str] = field(default_factory=list)       # ["申", "酉"]
+    kuubou_name: str = ""                    # "申酉空亡"
+    # 神殺
+    shinsatsu: List[Dict] = field(default_factory=list)   # [{"name":"華蓋","position":"時支","element":"丑"}, ...]
+    # 大運
+    taiun_ritsuun_days: int = 0              # 節入りまでの日数
+    taiun_ritsuun_age_mansai: int = 0        # 満年齢
+    taiun_ritsuun_age_kazoe: int = 0         # 数え年
+    taiun_direction: str = ""                # "順行" / "逆行"
+    taiun_list: List[TaiunEntry] = field(default_factory=list)
+    # 五行バランス（%）
+    gogyo_balance: Dict[str, int] = field(default_factory=lambda: {"木":0,"火":0,"土":0,"金":0,"水":0})
+
+
+@dataclass
 class DivinationBundle:
     """全占術の統合結果パッケージ"""
     person: PersonInput
@@ -213,5 +269,6 @@ class DivinationBundle:
     numerology: NumerologyResult
     tarot: TarotResult
     ziwei: Optional['ZiweiResult'] = None   # 紫微斗数（出生時刻必須のためOptional）
+    shichusuimei: Optional['ShichusuimeiResult'] = None   # 四柱推命
     has_birth_time: bool = False            # 出生時刻の有無
     has_blood_type: bool = False            # 血液型の有無
