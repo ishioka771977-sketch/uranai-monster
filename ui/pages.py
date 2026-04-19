@@ -354,9 +354,12 @@ _FOLDERS_DB_PATH = _os.path.join(_DATA_DIR, "folders_db.json")
 
 
 def _load_people_db() -> dict:
-    """保存済みの人物データをファイルから読み込み、session_stateにも反映"""
-    if "_people_db" in st.session_state and st.session_state._people_db:
-        return st.session_state._people_db
+    """保存済みの人物データを毎回ファイルから読み直す（他端末の更新を反映）。
+
+    ※以前はsession_stateキャッシュを優先していたが、
+      マルチデバイスで他端末の更新が見えない問題があったため廃止。
+      ファイルI/Oは軽量（通常1万件以下）なので毎回読み直してOK。
+    """
     try:
         if _os.path.exists(_PEOPLE_DB_PATH):
             with open(_PEOPLE_DB_PATH, encoding="utf-8") as f:
@@ -380,9 +383,9 @@ def _persist_people_db(db: dict):
 
 
 def _load_folders_db() -> dict:
-    """フォルダ定義を読み込み。形式: {"フォルダ名": ["名前1", "名前2", ...]}"""
-    if "_folders_db" in st.session_state and st.session_state._folders_db is not None:
-        return st.session_state._folders_db
+    """フォルダ定義を毎回ファイルから読み直す（他端末の更新を反映）。
+    形式: {"フォルダ名": ["名前1", "名前2", ...]}
+    """
     try:
         if _os.path.exists(_FOLDERS_DB_PATH):
             with open(_FOLDERS_DB_PATH, encoding="utf-8") as f:
@@ -2109,6 +2112,22 @@ def render_aisho_input_page():
                 birth_place=place2 if place2 else None,
                 blood_type=blood2 if blood2 != "不明" else None,
             )
+
+            # 相性鑑定した2人を顧客リストに自動登録（名前がある場合のみ）
+            if person1.name and person1.name != "1人目":
+                _save_person(
+                    person1.name, bd1.year, bd1.month, bd1.day,
+                    person1.birth_time or "", person1.birth_place or "",
+                    person1.blood_type or "不明", person1.gender or "男性", "",
+                )
+            p2 = st.session_state.aisho_person2
+            if p2.name and p2.name != "2人目":
+                _save_person(
+                    p2.name, bd2.year, bd2.month, bd2.day,
+                    p2.birth_time or "", p2.birth_place or "",
+                    p2.blood_type or "不明", p2.gender or "女性", "",
+                )
+
             if "aisho_relationship" not in st.session_state:
                 st.session_state.aisho_relationship = "love"
             st.session_state.page = "aisho_loading"
