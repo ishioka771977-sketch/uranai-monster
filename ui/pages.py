@@ -190,7 +190,7 @@ def _render_share_buttons(share_text: str, key_suffix: str, pdf_html: str = "",
     # PDF ダウンロード
     if pdf_html:
         st.download_button(
-            label="📄 PDFで保存",
+            label="📄 PDFで保存（端末に保存）",
             data=pdf_html.encode("utf-8"),
             file_name="鑑定結果.html",
             mime="text/html",
@@ -198,6 +198,42 @@ def _render_share_buttons(share_text: str, key_suffix: str, pdf_html: str = "",
             use_container_width=True,
         )
         st.caption("ダウンロード後、ブラウザで開いて「印刷 → PDF保存」で変換できます")
+
+        # Gドライブ保存（Supabase + OAuth 設定済みのときだけ表示）
+        try:
+            from data import gdrive_client as _gd
+            gdrive_ok = _gd.is_configured() and _gd.is_authenticated()
+        except Exception:
+            gdrive_ok = False
+
+        if gdrive_ok:
+            if st.button(
+                "☁ Googleドライブに保存",
+                key=f"btn_gdrive_{key_suffix}",
+                use_container_width=True,
+                help="鑑定結果PDFをひでさんのGドライブ『占いモンスター/鑑定結果PDF』に保存します",
+            ):
+                with st.spinner("☁ Gドライブに保存中…"):
+                    try:
+                        pdf_bytes = _gd.html_to_pdf_bytes(pdf_html)
+                        if not pdf_bytes:
+                            st.error("PDF変換に失敗しました")
+                        else:
+                            # ファイル名: {顧客名}_{コース名}_{日付}.pdf
+                            _bundle = st.session_state.get("bundle")
+                            _person = getattr(_bundle, "person", None) if _bundle else None
+                            _name = getattr(_person, "name", None) or "顧客"
+                            _course = key_suffix.split("_")[0] if key_suffix else "鑑定"
+                            _fname = f"{_name}_{_course}_{date.today().strftime('%Y%m%d')}.pdf"
+                            result = _gd.upload_pdf_bytes(_fname, pdf_bytes)
+                            if result:
+                                st.success(f"✓ Gドライブに保存しました: {_fname}")
+                                if result.get("webViewLink"):
+                                    st.markdown(f"[📂 Gドライブで開く]({result['webViewLink']})")
+                            else:
+                                st.error("Gドライブへのアップロードに失敗しました")
+                    except Exception as e:
+                        st.error(f"保存エラー: {e}")
 
 
 def _render_email_section(title: str, subtitle: str, headline: str,
@@ -340,10 +376,17 @@ def render_top_page():
         if st.button("🌟 開運アドバイス", key="btn_kaiyun"):
             st.session_state.page = "kaiyun_input"
             st.rerun()
+        st.markdown("<br>", unsafe_allow_html=True)
+        if st.button("⚙ 設定", key="btn_settings"):
+            st.session_state.page = "settings"
+            st.rerun()
 
 
 # ============================================================
-# 入力データ記憶（JSONファイル永続化 + session_state）
+# 顧客データストア（Supabase 永続化 + ローカルJSON フォールバック）
+#
+# Supabase が利用可能なら Supabase を使う。secrets 未設定の local dev では
+# 旧来の JSON ファイル（data/people_db.json）へフォールバックする。
 # ============================================================
 import json as _json
 import os as _os
@@ -352,28 +395,30 @@ _DATA_DIR = _os.path.join(_os.path.dirname(_os.path.dirname(_os.path.abspath(__f
 _PEOPLE_DB_PATH = _os.path.join(_DATA_DIR, "people_db.json")
 _FOLDERS_DB_PATH = _os.path.join(_DATA_DIR, "folders_db.json")
 
+# Supabase クライアント（遅延import失敗時は None）
+try:
+    from data import supabase_client as _sb  # type: ignore
+except Exception:
+    _sb = None  # type: ignore
 
-def _load_people_db() -> dict:
-    """保存済みの人物データを毎回ファイルから読み直す（他端末の更新を反映）。
 
-    ※以前はsession_stateキャッシュを優先していたが、
-      マルチデバイスで他端末の更新が見えない問題があったため廃止。
-      ファイルI/Oは軽量（通常1万件以下）なので毎回読み直してOK。
-    """
+def _supabase_on() -> bool:
+    """Supabase が利用可能か"""
+    return _sb is not None and _sb.is_available()
+
+
+# ---- 旧 JSON フォールバック用ヘルパー ----
+def _json_load_people() -> dict:
     try:
         if _os.path.exists(_PEOPLE_DB_PATH):
             with open(_PEOPLE_DB_PATH, encoding="utf-8") as f:
-                db = _json.load(f)
-            st.session_state._people_db = db
-            return db
+                return _json.load(f)
     except Exception:
         pass
-    st.session_state._people_db = {}
     return {}
 
 
-def _persist_people_db(db: dict):
-    """人物データをJSONファイルに保存"""
+def _json_save_people(db: dict):
     try:
         _os.makedirs(_DATA_DIR, exist_ok=True)
         with open(_PEOPLE_DB_PATH, "w", encoding="utf-8") as f:
@@ -382,35 +427,133 @@ def _persist_people_db(db: dict):
         pass
 
 
-def _load_folders_db() -> dict:
-    """フォルダ定義を毎回ファイルから読み直す（他端末の更新を反映）。
-    形式: {"フォルダ名": ["名前1", "名前2", ...]}
+def _row_to_legacy(row: dict) -> dict:
+    """Supabase customers 行 → 旧 JSON 形式 dict（互換用）"""
+    last_div = row.get("last_divined")
+    if last_div and isinstance(last_div, str):
+        # ISO8601 → "YYYY-MM-DD HH:MM"
+        try:
+            from datetime import datetime as _dt
+            last_div = _dt.fromisoformat(last_div.replace("Z", "+00:00")).strftime("%Y-%m-%d %H:%M")
+        except Exception:
+            pass
+    return {
+        "id": row.get("id"),
+        "name": row.get("name"),
+        "real_name": row.get("real_name"),
+        "name_kana": row.get("name_kana"),
+        "gender": row.get("gender"),
+        "year": row.get("birth_year"),
+        "month": row.get("birth_month"),
+        "day": row.get("birth_day"),
+        "time": row.get("birth_time") or "",
+        "place": row.get("birth_place") or "",
+        "blood": row.get("blood_type") or "不明",
+        "email": row.get("email") or "",
+        "tags": row.get("tags") or [],
+        "memo": row.get("memo") or "",
+        "last_divined": last_div,
+        "divined_count": row.get("divined_count", 0),
+    }
+
+
+def _load_people_db(
+    order_by: str = "last_divined",
+    desc: bool = True,
+    tag_filter: list | None = None,
+    search: str | None = None,
+) -> dict:
+    """顧客データを取得。Supabase優先、未設定時は JSON。
+
+    戻り値は旧仕様互換の dict {name: {...}}。タグ絞り込み・検索もサポート。
     """
-    try:
-        if _os.path.exists(_FOLDERS_DB_PATH):
-            with open(_FOLDERS_DB_PATH, encoding="utf-8") as f:
-                fdb = _json.load(f)
-            st.session_state._folders_db = fdb
-            return fdb
-    except Exception:
-        pass
-    st.session_state._folders_db = {}
+    if _supabase_on():
+        try:
+            rows = _sb.list_customers(
+                order_by=order_by, desc=desc, tag_filter=tag_filter, search=search
+            )
+            db = {}
+            for row in rows:
+                rec = _row_to_legacy(row)
+                n = rec.get("name")
+                if n:
+                    db[n] = rec
+            return db
+        except Exception as e:
+            print(f"[people_db] Supabase list error, fallback to JSON: {e}")
+
+    # フォールバック: JSON
+    return _json_load_people()
+
+
+def _persist_people_db(db: dict):
+    """旧互換API。Supabase利用時は db 全件をバルク UPSERT、
+    未使用時は JSON に書き出す。
+    ※ 削除は検出できないので、明示的削除は _delete_person() を使うこと。
+    """
+    if _supabase_on():
+        try:
+            for name, rec in db.items():
+                if not name or not isinstance(rec, dict):
+                    continue
+                payload = {
+                    "name": name,
+                    "gender": rec.get("gender"),
+                    "birth_year": rec.get("year"),
+                    "birth_month": rec.get("month"),
+                    "birth_day": rec.get("day"),
+                    "birth_time": rec.get("time") or None,
+                    "birth_place": rec.get("place") or None,
+                    "blood_type": rec.get("blood") if rec.get("blood") and rec.get("blood") != "不明" else None,
+                    "email": rec.get("email") or None,
+                    "tags": rec.get("tags") or [],
+                    "real_name": rec.get("real_name"),
+                    "name_kana": rec.get("name_kana"),
+                    "memo": rec.get("memo"),
+                }
+                _sb.upsert_customer(payload)
+        except Exception as e:
+            print(f"[people_db] Supabase bulk upsert error: {e}")
+        return
+    _json_save_people(db)
+
+
+def _delete_person(name: str) -> bool:
+    """顧客を削除する。Supabase では delete、JSON では pop して永続化。"""
+    if not name:
+        return False
+    if _supabase_on():
+        try:
+            row = _sb.get_customer_by_name(name)
+            if row and row.get("id"):
+                return _sb.delete_customer(row["id"])
+        except Exception as e:
+            print(f"[people_db] Supabase delete error: {e}")
+        return False
+    # フォールバック
+    db = _json_load_people()
+    if name in db:
+        del db[name]
+        _json_save_people(db)
+        return True
+    return False
+
+
+def _load_folders_db() -> dict:
+    """旧フォルダ管理は廃止（タグ管理に置換）。空dictを返す互換API。"""
     return {}
 
 
 def _persist_folders_db(fdb: dict):
-    """フォルダ定義をJSONファイルに保存"""
-    try:
-        _os.makedirs(_DATA_DIR, exist_ok=True)
-        with open(_FOLDERS_DB_PATH, "w", encoding="utf-8") as f:
-            _json.dump(fdb, f, ensure_ascii=False, indent=2)
-        st.session_state._folders_db = fdb
-    except Exception:
-        pass
+    """旧フォルダ管理は廃止。no-op。"""
+    return
 
 
-def _save_person(name, year, month, day, time_str="", place="", blood="不明", gender="男性", email=""):
-    """鑑定した人のデータをsession_state + ファイルに記憶"""
+def _save_person(
+    name, year, month, day, time_str="", place="", blood="不明",
+    gender="男性", email="", tags=None, memo=None, real_name=None, name_kana=None,
+):
+    """鑑定した人のデータをSupabase(優先) or JSON に保存 + session_state更新。"""
     st.session_state._saved_name = name
     st.session_state._saved_gender = gender
     st.session_state._saved_year = year
@@ -421,19 +564,52 @@ def _save_person(name, year, month, day, time_str="", place="", blood="不明", 
     st.session_state._saved_blood = blood
     st.session_state._saved_email = email
 
-    from datetime import datetime as _dt
-    db = _load_people_db()
-    if name:
-        existing = db.get(name, {})
-        db[name] = {
-            "name": name, "gender": gender, "year": year, "month": month, "day": day,
-            "time": time_str, "place": place, "blood": blood, "email": email,
-            "last_divined": _dt.now().strftime("%Y-%m-%d %H:%M"),
-            "divined_count": existing.get("divined_count", 0) + 1,
-            "created_at": existing.get("created_at", _dt.now().strftime("%Y-%m-%d")),
+    if not name:
+        return
+
+    if _supabase_on():
+        # Supabase 経由で UPSERT。既存タグを保持するため事前取得して merge
+        existing = _sb.get_customer_by_name(name) or {}
+        merged_tags = existing.get("tags") or []
+        if tags:
+            # 既存に無い新タグだけ追加
+            for t in _sb._normalize_tags(tags):
+                if t not in merged_tags:
+                    merged_tags.append(t)
+        payload = {
+            "name": name,
+            "gender": gender,
+            "birth_year": year,
+            "birth_month": month,
+            "birth_day": day,
+            "birth_time": time_str or None,
+            "birth_place": place or None,
+            "blood_type": blood if blood and blood != "不明" else None,
+            "email": email or None,
+            "tags": merged_tags,
+            "real_name": real_name or existing.get("real_name"),
+            "name_kana": name_kana or existing.get("name_kana"),
+            "memo": memo or existing.get("memo"),
         }
-        st.session_state._people_db = db
-        _persist_people_db(db)
+        _sb.upsert_customer(payload)
+        return
+
+    # フォールバック: JSON
+    from datetime import datetime as _dt
+    db = _json_load_people()
+    existing = db.get(name, {})
+    db[name] = {
+        "name": name, "gender": gender, "year": year, "month": month, "day": day,
+        "time": time_str, "place": place, "blood": blood, "email": email,
+        "tags": _sb._normalize_tags(tags) if _sb else (tags or []),
+        "real_name": real_name or existing.get("real_name"),
+        "name_kana": name_kana or existing.get("name_kana"),
+        "memo": memo or existing.get("memo"),
+        "last_divined": _dt.now().strftime("%Y-%m-%d %H:%M"),
+        "divined_count": existing.get("divined_count", 0) + 1,
+        "created_at": existing.get("created_at", _dt.now().strftime("%Y-%m-%d")),
+    }
+    _json_save_people(db)
 
 
 def _select_person(p: dict):
@@ -477,8 +653,86 @@ def _select_person(p: dict):
     st.rerun()
 
 
+def render_settings_page():
+    """設定画面：Googleドライブ認証など"""
+    render_star_deco("✦")
+    st.markdown("""
+<div style="text-align:center; margin-bottom:5px;">
+  <span style="color:#BFA350; font-size:1.5em; font-weight:bold;">⚙ 設定</span><br>
+  <span style="color:#8A8478; font-size:0.85em;">Gドライブ連携・永続化設定</span>
+</div>
+""", unsafe_allow_html=True)
+    render_gold_divider()
+
+    # ── Supabase 状態 ──
+    st.markdown('<div style="color:#BFA350;font-size:1.05em;font-weight:bold;margin:10px 0;">📦 Supabase（顧客データベース）</div>', unsafe_allow_html=True)
+    if _supabase_on():
+        st.success("✓ Supabase接続OK。顧客データ・鑑定履歴は永続保存されます。")
+    else:
+        st.warning("⚠ Supabase未設定（ローカルJSONフォールバック動作中）")
+        st.caption("Streamlit secrets に SUPABASE_URL / SUPABASE_SERVICE_ROLE_KEY / URANAI_USER_ID を設定してください")
+
+    st.markdown("---")
+
+    # ── Google Drive 認証 ──
+    st.markdown('<div style="color:#BFA350;font-size:1.05em;font-weight:bold;margin:10px 0;">☁ Googleドライブ連携</div>', unsafe_allow_html=True)
+    try:
+        from data import gdrive_client as _gd
+    except Exception as e:
+        st.error(f"Gドライブクライアント読み込みエラー: {e}")
+        _gd = None
+
+    if _gd is None:
+        pass
+    elif not _gd.is_configured():
+        st.warning("⚠ Google OAuth 未設定")
+        st.caption(
+            "Streamlit secrets に以下を設定してください:\n"
+            "- GOOGLE_OAUTH_CLIENT_ID\n"
+            "- GOOGLE_OAUTH_CLIENT_SECRET\n"
+            "- GOOGLE_OAUTH_REDIRECT_URI （例: urn:ietf:wg:oauth:2.0:oob）"
+        )
+    elif _gd.is_authenticated():
+        st.success("✓ Googleドライブ認証済み。鑑定結果PDFを『石岡秀貴の頭脳/占いモンスター/鑑定結果PDF』に保存できます。")
+        if st.button("🔄 認証をやり直す", key="btn_gdrive_reauth"):
+            st.session_state["_gdrive_reauth"] = True
+            st.rerun()
+    else:
+        st.info("Googleドライブとの連携を行います。")
+
+    if _gd is not None and _gd.is_configured() and (
+        not _gd.is_authenticated() or st.session_state.get("_gdrive_reauth")
+    ):
+        st.markdown("#### 認証手順")
+        st.markdown("1. 下のリンクを開いてGoogleアカウントで認証")
+        auth_url = _gd.build_auth_url()
+        if auth_url:
+            st.markdown(f"[🔗 Googleで認証する]({auth_url})")
+        st.markdown("2. 表示された認証コードを下に貼り付けて『✓ 認証する』")
+        code = st.text_input("認証コード", key="_gdrive_auth_code", placeholder="4/0AY0e-...")
+        if st.button("✓ 認証する", key="btn_gdrive_authorize"):
+            if code.strip():
+                ok = _gd.exchange_code_for_token(code.strip())
+                if ok:
+                    _gd.clear_service_cache()
+                    st.session_state.pop("_gdrive_reauth", None)
+                    st.success("✓ Googleドライブ認証完了")
+                    st.rerun()
+                else:
+                    st.error("認証に失敗しました。コードをもう一度確認してください。")
+
+    # ── 戻る ──
+    st.markdown("<br>", unsafe_allow_html=True)
+    render_gold_divider()
+    col1, col2, col3 = st.columns([1, 2, 1])
+    with col2:
+        if st.button("← TOPに戻る", key="btn_back_settings"):
+            st.session_state.page = "top"
+            st.rerun()
+
+
 def _render_person_row(name: str, p: dict, key_prefix: str, people_db: dict, show_folder_assign: bool = False):
-    """人物1行を描画（選択ボタン + 削除ボタン）"""
+    """人物1行を描画（選択ボタン + タグバッジ + 削除ボタン）"""
     year = p.get('year', '')
     month = p.get('month', '')
     day = p.get('day', '')
@@ -491,234 +745,101 @@ def _render_person_row(name: str, p: dict, key_prefix: str, people_db: dict, sho
     email_str = " ✉" if email else ""
     divined = p.get('last_divined', '')
     divined_str = f"  🕐{divined}" if divined else ""
+    tags = p.get('tags') or []
 
+    confirm_key = f"_confirm_del_{key_prefix}_{name}"
     col1, col2 = st.columns([5, 1])
     with col1:
         label = f"👤 {name}　{year}/{month}/{day}{time_disp}　{gender}{blood_str}{email_str}{divined_str}"
         if st.button(label, key=f"btn_{key_prefix}_{name}", use_container_width=True):
             _select_person(p)
+        if tags:
+            badges_html = "".join(
+                f'<span style="display:inline-block; background:rgba(191,163,80,0.10); border:1px solid rgba(191,163,80,0.35); border-radius:10px; padding:1px 8px; margin:1px 3px 1px 0; font-size:0.72em; color:#D4B96A;">#{_html_mod.escape(t)}</span>'
+                for t in tags
+            )
+            st.markdown(f'<div style="margin:-6px 0 4px 4px;">{badges_html}</div>', unsafe_allow_html=True)
     with col2:
-        if st.button("🗑", key=f"btn_del_{key_prefix}_{name}", help=f"{name}を削除"):
-            del people_db[name]
-            # フォルダからも削除
-            fdb = _load_folders_db()
-            for folder_names_list in fdb.values():
-                if name in folder_names_list:
-                    folder_names_list.remove(name)
-            _persist_folders_db(fdb)
-            st.session_state._people_db = people_db
-            _persist_people_db(people_db)
-            st.rerun()
+        if st.session_state.get(confirm_key):
+            if st.button("✓削除", key=f"btn_delok_{key_prefix}_{name}", help="本当に削除"):
+                _delete_person(name)
+                people_db.pop(name, None)
+                st.session_state._people_db = people_db
+                st.session_state.pop(confirm_key, None)
+                st.rerun()
+        else:
+            if st.button("🗑", key=f"btn_del_{key_prefix}_{name}", help=f"{name}を削除（要確認）"):
+                st.session_state[confirm_key] = True
+                st.rerun()
+    if st.session_state.get(confirm_key):
+        st.warning(f"⚠ 「{name}」を削除します。鑑定履歴も全て消えます。取り消せません。")
 
 
 def _render_people_quick_select():
-    """顧客リスト — タブ切り替え式（全顧客 / 鑑定履歴 / カスタムフォルダ）"""
+    """顧客リスト — タグ管理対応版（ソート/タグ絞り込み/検索）"""
     people_db = _load_people_db()
-    folders_db = _load_folders_db()
-
-    # 顧客もフォルダも空の場合は何も表示しない
-    if not people_db and not folders_db:
+    if not people_db:
         return
 
     with st.expander("顧客リスト", expanded=False, icon="📋"):
-        # タブ名を動的に構築
-        folder_names = list(folders_db.keys())
-        tab_labels = ["全顧客一覧", "鑑定履歴"] + [f"📁 {fn}" for fn in folder_names] + ["⚙ フォルダ管理"]
-        tabs = st.tabs(tab_labels)
-
-        # ── タブ: 全顧客一覧 ──
-        with tabs[0]:
-            if not people_db:
-                st.caption("まだ顧客データがありません")
-            else:
-                names = list(people_db.keys())
-                for name in sorted(names):
-                    _render_person_row(name, people_db[name], "all", people_db)
-                st.markdown(f'<div style="color:#5A5A5A;font-size:0.72em;text-align:right;">{len(names)}件</div>', unsafe_allow_html=True)
-
-        # ── タブ: 鑑定履歴（last_divined順） ──
-        with tabs[1]:
-            divined = [(n, p) for n, p in people_db.items() if p.get("last_divined")]
-            divined.sort(key=lambda x: x[1].get("last_divined", ""), reverse=True)
-            if not divined:
-                st.caption("まだ鑑定履歴がありません")
-            else:
-                for name, p in divined:
-                    count = p.get("divined_count", 1)
-                    _render_person_row(name, p, "hist", people_db)
-                st.markdown(f'<div style="color:#5A5A5A;font-size:0.72em;text-align:right;">{len(divined)}件</div>', unsafe_allow_html=True)
-
-        # ── タブ: カスタムフォルダ（各フォルダ） ──
-        for fi, fname in enumerate(folder_names):
-            with tabs[2 + fi]:
-                members = folders_db.get(fname, [])
-                if not members:
-                    st.caption("このフォルダは空です")
-                else:
-                    for mname in members:
-                        p = people_db.get(mname)
-                        if p:
-                            _render_person_row(mname, p, f"f{fi}", people_db)
-                        else:
-                            st.markdown(f'<span style="color:#5A5A5A;font-size:0.8em;">⚠ {mname}（データなし）</span>', unsafe_allow_html=True)
-                st.markdown(f'<div style="color:#5A5A5A;font-size:0.72em;text-align:right;">{len(members)}件</div>', unsafe_allow_html=True)
-
-                # フォルダに追加
-                available = [n for n in people_db.keys() if n not in members]
-                if available:
-                    add_col1, add_col2 = st.columns([3, 1])
-                    with add_col1:
-                        selected = st.multiselect(
-                            "追加する顧客", available, key=f"add_to_f{fi}", label_visibility="collapsed",
-                            placeholder="顧客を選択して追加..."
-                        )
-                    with add_col2:
-                        if st.button("＋追加", key=f"btn_add_f{fi}") and selected:
-                            folders_db[fname].extend(selected)
-                            _persist_folders_db(folders_db)
-                            st.rerun()
-
-                # フォルダからメンバーを外す
-                if members:
-                    rm_col1, rm_col2 = st.columns([3, 1])
-                    with rm_col1:
-                        remove_sel = st.multiselect(
-                            "外す顧客", members, key=f"rm_from_f{fi}", label_visibility="collapsed",
-                            placeholder="フォルダから外す..."
-                        )
-                    with rm_col2:
-                        if st.button("－外す", key=f"btn_rm_f{fi}") and remove_sel:
-                            for rn in remove_sel:
-                                if rn in folders_db[fname]:
-                                    folders_db[fname].remove(rn)
-                            _persist_folders_db(folders_db)
-                            st.rerun()
-
-        # ── タブ: フォルダ管理 ──
-        with tabs[-1]:
-            st.markdown('<div style="color:#BFA350;font-size:0.9em;font-weight:bold;margin-bottom:8px;">フォルダ管理</div>', unsafe_allow_html=True)
-
-            # 既存フォルダ一覧 + 削除
-            if folder_names:
-                for fi, fname in enumerate(folder_names):
-                    fc1, fc2 = st.columns([4, 1])
-                    with fc1:
-                        count = len(folders_db.get(fname, []))
-                        st.markdown(f'📁 **{fname}**　<span style="color:#5A5A5A;font-size:0.8em;">({count}件)</span>', unsafe_allow_html=True)
-                    with fc2:
-                        if st.button("🗑", key=f"btn_delfolder_{fi}", help=f"フォルダ「{fname}」を削除"):
-                            del folders_db[fname]
-                            _persist_folders_db(folders_db)
-                            st.rerun()
-            else:
-                st.caption("フォルダはまだありません")
-
-            # 新規フォルダ作成
-            st.markdown("---")
-            new_col1, new_col2 = st.columns([3, 1])
-            with new_col1:
-                new_fname = st.text_input("新しいフォルダ名", key="new_folder_name", placeholder="例: 鹿島建設セミナー", label_visibility="collapsed")
-            with new_col2:
-                if st.button("📁 作成", key="btn_create_folder"):
-                    if new_fname and new_fname not in folders_db:
-                        folders_db[new_fname] = []
-                        _persist_folders_db(folders_db)
-                        st.rerun()
-
-            # 一括インポート
-            st.markdown("---")
-            st.markdown('<div style="color:#BFA350;font-size:0.85em;font-weight:bold;">一括インポート</div>', unsafe_allow_html=True)
-            st.caption("以下の形式に対応（自動判定）:\n・名前, 年, 月, 日\n・名前, 1990/3/15\n・名前, 1990-03-15\n・名前, H2.3.15（和暦）\n・名前, 1990/3/15, 男性\n・名前, 1990/3/15, 男性, A")
-            import_text = st.text_area(
-                "一括入力", key="bulk_import", height=120, label_visibility="collapsed",
-                placeholder="太郎, 1985/3/15\n花子, 1990/8/22\n太郎, H2.3.15\n..."
+        # ── ソート・検索バー ──
+        sort_col, search_col = st.columns([2, 3])
+        with sort_col:
+            sort_mode = st.radio(
+                "並び順", ["🕐 鑑定履歴順", "🔤 あいうえお順"],
+                horizontal=True, key="people_sort_mode", label_visibility="collapsed",
             )
-            import_folder = st.text_input("インポート先フォルダ（空欄＝フォルダなし）", key="import_folder", placeholder="例: 鹿島建設セミナー", label_visibility="collapsed")
-            if st.button("📥 一括登録", key="btn_bulk_import"):
-                if import_text.strip():
-                    count = 0
-                    errors = []
-                    for line in import_text.strip().split("\n"):
-                        line = line.strip()
-                        if not line:
-                            continue
-                        # カンマまたはスペースで分割
-                        if "," in line:
-                            parts = [p.strip() for p in line.split(",")]
-                        else:
-                            parts = line.split()
-                        if len(parts) < 2:
-                            errors.append(f"形式エラー: {line}")
-                            continue
-                        pname = parts[0]
-                        date_str = parts[1]
-                        pgender = parts[2] if len(parts) > 2 else ""
-                        pblood = parts[3] if len(parts) > 3 else "不明"
-                        ptime = parts[4] if len(parts) > 4 else ""
+        with search_col:
+            search_term = st.text_input(
+                "検索", key="people_search", placeholder="名前・メモ・タグで検索...",
+                label_visibility="collapsed",
+            )
 
-                        # 日付パース
-                        pyear, pmonth, pday = None, None, None
-                        try:
-                            if len(parts) >= 4 and parts[1].isdigit() and parts[2].isdigit() and parts[3].isdigit():
-                                # 旧形式: 名前,年,月,日
-                                pyear, pmonth, pday = int(parts[1]), int(parts[2]), int(parts[3])
-                                pgender = parts[4] if len(parts) > 4 else ""
-                                pblood = parts[5] if len(parts) > 5 else "不明"
-                                ptime = parts[6] if len(parts) > 6 else ""
-                            elif "/" in date_str:
-                                dp = date_str.split("/")
-                                pyear, pmonth, pday = int(dp[0]), int(dp[1]), int(dp[2])
-                            elif "-" in date_str:
-                                dp = date_str.split("-")
-                                pyear, pmonth, pday = int(dp[0]), int(dp[1]), int(dp[2])
-                            elif "." in date_str:
-                                # 和暦: H2.3.15, S55.1.1, R1.5.1 等
-                                import re
-                                wm = re.match(r'([MTSHR])(\d+)\.(\d+)\.(\d+)', date_str)
-                                if wm:
-                                    era_map = {"M": 1867, "T": 1911, "S": 1925, "H": 1988, "R": 2018}
-                                    base = era_map.get(wm.group(1), 1988)
-                                    pyear = base + int(wm.group(2))
-                                    pmonth, pday = int(wm.group(3)), int(wm.group(4))
-                                else:
-                                    dp = date_str.split(".")
-                                    pyear, pmonth, pday = int(dp[0]), int(dp[1]), int(dp[2])
-                            else:
-                                # 漢字形式: 平成2年3月15日
-                                import re
-                                km = re.match(r'(明治|大正|昭和|平成|令和)(\d+)年(\d+)月(\d+)日', date_str)
-                                if km:
-                                    era_map2 = {"明治": 1867, "大正": 1911, "昭和": 1925, "平成": 1988, "令和": 2018}
-                                    base = era_map2.get(km.group(1), 1988)
-                                    pyear = base + int(km.group(2))
-                                    pmonth, pday = int(km.group(3)), int(km.group(4))
-                        except (ValueError, IndexError):
-                            pass
+        # ── タグ絞り込み ──
+        all_tags_list = sorted({t for p in people_db.values() for t in (p.get("tags") or [])})
+        selected_tags = []
+        if all_tags_list:
+            selected_tags = st.multiselect(
+                "タグで絞り込み（AND）", all_tags_list, key="people_tag_filter",
+                placeholder="タグを選択...（複数選択でAND検索）",
+                label_visibility="collapsed",
+            )
 
-                        if pyear and pmonth and pday:
-                            people_db[pname] = {
-                                "name": pname, "gender": pgender,
-                                "year": pyear, "month": pmonth, "day": pday,
-                                "time": ptime, "place": "", "blood": pblood,
-                                "created_at": "",
-                            }
-                            if import_folder:
-                                if import_folder not in folders_db:
-                                    folders_db[import_folder] = []
-                                if pname not in folders_db[import_folder]:
-                                    folders_db[import_folder].append(pname)
-                            count += 1
-                        else:
-                            errors.append(f"日付解析失敗: {line}")
+        # ── フィルタリング ──
+        items = list(people_db.items())
+        if selected_tags:
+            items = [
+                (n, p) for n, p in items
+                if all(t in (p.get("tags") or []) for t in selected_tags)
+            ]
+        if search_term:
+            s = search_term.strip().lower()
+            def _match(p):
+                haystack = " ".join([
+                    str(p.get("name") or ""),
+                    str(p.get("real_name") or ""),
+                    str(p.get("memo") or ""),
+                    " ".join(p.get("tags") or []),
+                ]).lower()
+                return s in haystack
+            items = [(n, p) for n, p in items if _match(p)]
 
-                    st.session_state._people_db = people_db
-                    _persist_people_db(people_db)
-                    if import_folder:
-                        _persist_folders_db(folders_db)
-                    st.success(f"{count}人を登録しました" + (f"（📁 {import_folder}）" if import_folder else ""))
-                    if errors:
-                        st.warning("\\n".join(errors))
-                    st.rerun()
+        # ── ソート ──
+        if sort_mode.startswith("🕐"):
+            items.sort(key=lambda x: x[1].get("last_divined") or "", reverse=True)
+        else:
+            items.sort(key=lambda x: (x[1].get("name_kana") or x[0] or "").lower())
+
+        # ── 描画 ──
+        if not items:
+            st.caption("該当する顧客はいません")
+        else:
+            for name, p in items:
+                _render_person_row(name, p, "lst", people_db)
+            st.markdown(
+                f'<div style="color:#5A5A5A;font-size:0.72em;text-align:right;">{len(items)}件</div>',
+                unsafe_allow_html=True,
+            )
 
 
 # ============================================================
@@ -856,7 +977,6 @@ def render_meibo_page():
     import re
 
     people_db = _load_people_db()
-    folders_db = _load_folders_db()
 
     # ── ヘッダー ──
     render_star_deco("✦")
@@ -869,8 +989,8 @@ def render_meibo_page():
     render_gold_divider()
 
     # ── セクション切り替え（タブ） ──
-    tab_upload, tab_text, tab_list, tab_folders = st.tabs([
-        "📂 ファイル取込", "📝 テキスト一括", "👥 顧客一覧", "📁 フォルダ管理"
+    tab_upload, tab_text, tab_list = st.tabs([
+        "📂 ファイル取込", "📝 テキスト一括", "👥 顧客一覧"
     ])
 
     # ==================================================================
@@ -944,17 +1064,23 @@ def render_meibo_page():
                         for e in errors:
                             st.caption(f"・{e['name']}: {e.get('error', '')}")
 
-                # フォルダ選択
-                folder_options = ["（フォルダなし）"] + list(folders_db.keys())
-                upload_folder = st.selectbox("登録先フォルダ", folder_options, key="upload_folder")
-                new_folder_for_upload = st.text_input("または新規フォルダ名", key="upload_new_folder", placeholder="新しいフォルダを作成して登録")
+                # タグ指定
+                upload_tags_raw = st.text_input(
+                    "タグ（カンマ区切り。一括で全員に付与）",
+                    key="upload_tags",
+                    placeholder="例: 建設業, 石岡組, セミナー受講生",
+                )
 
                 if st.button("📥 確定して登録", key="btn_confirm_upload"):
                     count = 0
-                    target_folder = new_folder_for_upload.strip() if new_folder_for_upload.strip() else (upload_folder if upload_folder != "（フォルダなし）" else "")
+                    tags_list = [t.strip() for t in upload_tags_raw.replace("、", ",").split(",") if t.strip()]
                     for r in valid:
                         pname = r["name"]
                         existing = people_db.get(pname, {})
+                        merged_tags = list(existing.get("tags") or [])
+                        for t in tags_list:
+                            if t not in merged_tags:
+                                merged_tags.append(t)
                         people_db[pname] = {
                             "name": pname,
                             "gender": r.get("gender", ""),
@@ -963,21 +1089,18 @@ def render_meibo_page():
                             "place": r.get("place", ""),
                             "blood": r.get("blood", "不明"),
                             "email": r.get("email", existing.get("email", "")),
+                            "tags": merged_tags,
+                            "real_name": existing.get("real_name"),
+                            "name_kana": existing.get("name_kana"),
+                            "memo": existing.get("memo"),
                             "created_at": existing.get("created_at", ""),
                             "last_divined": existing.get("last_divined", ""),
                             "divined_count": existing.get("divined_count", 0),
                         }
-                        if target_folder:
-                            if target_folder not in folders_db:
-                                folders_db[target_folder] = []
-                            if pname not in folders_db[target_folder]:
-                                folders_db[target_folder].append(pname)
                         count += 1
                     st.session_state._people_db = people_db
                     _persist_people_db(people_db)
-                    if target_folder:
-                        _persist_folders_db(folders_db)
-                    st.success(f"{count}人を登録しました" + (f"（📁 {target_folder}）" if target_folder else ""))
+                    st.success(f"{count}人を登録しました" + (f"（タグ: {', '.join(tags_list)}）" if tags_list else ""))
                     st.rerun()
             else:
                 st.warning("データが見つかりませんでした。ヘッダー行に「名前」カラムが必要です。")
@@ -1002,16 +1125,18 @@ def render_meibo_page():
             placeholder="太郎, 1985/3/15\n花子, 1990/8/22\n次郎, H2.3.15\n..."
         )
 
-        # フォルダ選択
-        folder_options = ["（フォルダなし）"] + list(folders_db.keys())
-        text_folder = st.selectbox("登録先フォルダ", folder_options, key="meibo_text_folder")
-        new_folder_for_text = st.text_input("または新規フォルダ名", key="meibo_text_new_folder", placeholder="新しいフォルダを作成して登録")
+        # タグ指定
+        text_tags_raw = st.text_input(
+            "タグ（カンマ区切り。一括で全員に付与）",
+            key="meibo_text_tags",
+            placeholder="例: 建設業, 石岡組, セミナー受講生",
+        )
 
         if st.button("📥 一括登録", key="btn_meibo_bulk"):
             if import_text.strip():
                 count = 0
                 errors = []
-                target_folder = new_folder_for_text.strip() if new_folder_for_text.strip() else (text_folder if text_folder != "（フォルダなし）" else "")
+                tags_list = [t.strip() for t in text_tags_raw.replace("、", ",").split(",") if t.strip()]
 
                 for line in import_text.strip().split("\n"):
                     line = line.strip()
@@ -1045,29 +1170,30 @@ def render_meibo_page():
 
                     if pyear and pmonth and pday:
                         existing = people_db.get(pname, {})
+                        merged_tags = list(existing.get("tags") or [])
+                        for t in tags_list:
+                            if t not in merged_tags:
+                                merged_tags.append(t)
                         people_db[pname] = {
                             "name": pname, "gender": pgender,
                             "year": pyear, "month": pmonth, "day": pday,
                             "time": ptime, "place": "", "blood": pblood,
                             "email": existing.get("email", ""),
+                            "tags": merged_tags,
+                            "real_name": existing.get("real_name"),
+                            "name_kana": existing.get("name_kana"),
+                            "memo": existing.get("memo"),
                             "created_at": existing.get("created_at", ""),
                             "last_divined": existing.get("last_divined", ""),
                             "divined_count": existing.get("divined_count", 0),
                         }
-                        if target_folder:
-                            if target_folder not in folders_db:
-                                folders_db[target_folder] = []
-                            if pname not in folders_db[target_folder]:
-                                folders_db[target_folder].append(pname)
                         count += 1
                     else:
                         errors.append(f"日付解析失敗: {line}")
 
                 st.session_state._people_db = people_db
                 _persist_people_db(people_db)
-                if target_folder:
-                    _persist_folders_db(folders_db)
-                st.success(f"{count}人を登録しました" + (f"（📁 {target_folder}）" if target_folder else ""))
+                st.success(f"{count}人を登録しました" + (f"（タグ: {', '.join(tags_list)}）" if tags_list else ""))
                 if errors:
                     st.warning("\n".join(errors))
                 st.rerun()
@@ -1081,12 +1207,49 @@ def render_meibo_page():
         if not people_db:
             st.caption("まだ顧客データがありません")
         else:
-            # 検索フィルター
-            search_q = st.text_input("🔍 名前で検索", key="meibo_search", placeholder="名前を入力...", label_visibility="collapsed")
+            # 検索 + タグ絞り込み
+            sc1, sc2 = st.columns([2, 3])
+            with sc1:
+                sort_mode = st.radio(
+                    "並び順", ["🕐 鑑定履歴順", "🔤 あいうえお順"],
+                    horizontal=True, key="meibo_sort_mode", label_visibility="collapsed",
+                )
+            with sc2:
+                search_q = st.text_input(
+                    "🔍 検索", key="meibo_search",
+                    placeholder="名前・メモ・タグで検索...", label_visibility="collapsed",
+                )
 
-            names_sorted = sorted(people_db.keys())
+            all_tags_list = sorted({t for p in people_db.values() for t in (p.get("tags") or [])})
+            selected_tags = st.multiselect(
+                "タグで絞り込み（AND）", all_tags_list, key="meibo_tag_filter",
+                placeholder="タグで絞り込み（複数選択でAND）",
+                label_visibility="collapsed",
+            ) if all_tags_list else []
+
+            # 絞り込み
+            items = list(people_db.items())
+            if selected_tags:
+                items = [
+                    (n, p) for n, p in items
+                    if all(t in (p.get("tags") or []) for t in selected_tags)
+                ]
             if search_q:
-                names_sorted = [n for n in names_sorted if search_q.lower() in n.lower()]
+                s = search_q.strip().lower()
+                def _hit(p):
+                    hay = " ".join([
+                        str(p.get("name") or ""),
+                        str(p.get("real_name") or ""),
+                        str(p.get("memo") or ""),
+                        " ".join(p.get("tags") or []),
+                    ]).lower()
+                    return s in hay
+                items = [(n, p) for n, p in items if _hit(p)]
+            if sort_mode.startswith("🕐"):
+                items.sort(key=lambda x: x[1].get("last_divined") or "", reverse=True)
+            else:
+                items.sort(key=lambda x: (x[1].get("name_kana") or x[0] or "").lower())
+            names_sorted = [n for n, _ in items]
 
             if not names_sorted:
                 st.caption("該当する顧客がいません")
@@ -1101,120 +1264,61 @@ def render_meibo_page():
                         "生年月日": f"{p.get('year','')}/{p.get('month','')}/{p.get('day','')}",
                         "性別": p.get("gender", ""),
                         "血液型": p.get("blood", "不明"),
+                        "タグ": ", ".join(p.get("tags") or []),
                         "✉ メール": p.get("email", ""),
                         "鑑定回数": p.get("divined_count", 0),
                         "最終鑑定日": p.get("last_divined", "―"),
                     })
                 st.dataframe(pd.DataFrame(table_data), use_container_width=True, hide_index=True)
 
-                # メールアドレス編集
+                # ── タグ / メール 一括編集 ──
                 st.markdown("---")
-                st.markdown('<div style="color:#BFA350;font-size:0.9em;font-weight:bold;margin-bottom:6px;">✉ メールアドレス編集</div>', unsafe_allow_html=True)
+                st.markdown('<div style="color:#BFA350;font-size:0.9em;font-weight:bold;margin-bottom:6px;">✏️ 顧客編集（タグ・メール等）</div>', unsafe_allow_html=True)
                 edit_target = st.selectbox("顧客を選択", ["（選択）"] + names_sorted, key="meibo_email_target", label_visibility="collapsed")
                 if edit_target and edit_target != "（選択）" and edit_target in people_db:
-                    current_email = people_db[edit_target].get("email", "")
-                    new_email = st.text_input("メールアドレス", value=current_email, key="meibo_email_input", placeholder="example@gmail.com")
-                    if st.button("✉ 保存", key="btn_meibo_email_save"):
-                        people_db[edit_target]["email"] = new_email.strip()
+                    rec = people_db[edit_target]
+                    c1, c2 = st.columns(2)
+                    with c1:
+                        new_email = st.text_input("メールアドレス", value=rec.get("email") or "", key="meibo_email_input", placeholder="example@gmail.com")
+                        new_real = st.text_input("本名（表示名と別の場合）", value=rec.get("real_name") or "", key="meibo_real_input")
+                        new_kana = st.text_input("ふりがな", value=rec.get("name_kana") or "", key="meibo_kana_input", placeholder="あいうえお順のソート用")
+                    with c2:
+                        current_tags = ", ".join(rec.get("tags") or [])
+                        new_tags_raw = st.text_input(
+                            "タグ（カンマ区切り）", value=current_tags, key="meibo_tags_input",
+                            placeholder="建設業, 石岡組, 現場代理人",
+                        )
+                        new_memo = st.text_area(
+                            "メモ", value=rec.get("memo") or "", key="meibo_memo_input",
+                            height=90, placeholder="自由記述",
+                        )
+                    if st.button("💾 保存", key="btn_meibo_edit_save"):
+                        merged_tags = [t.strip() for t in new_tags_raw.replace("、", ",").split(",") if t.strip()]
+                        rec["email"] = new_email.strip()
+                        rec["real_name"] = new_real.strip() or None
+                        rec["name_kana"] = new_kana.strip() or None
+                        rec["tags"] = merged_tags
+                        rec["memo"] = new_memo.strip() or None
+                        people_db[edit_target] = rec
                         st.session_state._people_db = people_db
                         _persist_people_db(people_db)
-                        st.success(f"「{edit_target}」のメールアドレスを保存しました")
+                        st.success(f"「{edit_target}」の情報を保存しました")
                         st.rerun()
 
-                # 個別削除
+                # ── 個別削除 ──
                 st.markdown("---")
                 st.markdown('<div style="color:#8A8478;font-size:0.8em;margin-bottom:6px;">個別削除</div>', unsafe_allow_html=True)
                 del_target = st.selectbox("削除する顧客", ["（選択）"] + names_sorted, key="meibo_del_target", label_visibility="collapsed")
-                if st.button("🗑 削除", key="btn_meibo_del"):
-                    if del_target and del_target != "（選択）" and del_target in people_db:
-                        del people_db[del_target]
-                        # フォルダからも削除
-                        for folder_member_list in folders_db.values():
-                            if del_target in folder_member_list:
-                                folder_member_list.remove(del_target)
+                del_confirm = st.checkbox(f"「{del_target}」を削除することを確認しました（取り消せません）", key="meibo_del_confirm") if del_target and del_target != "（選択）" else False
+                if st.button("🗑 削除実行", key="btn_meibo_del"):
+                    if del_target and del_target != "（選択）" and del_target in people_db and del_confirm:
+                        _delete_person(del_target)
+                        people_db.pop(del_target, None)
                         st.session_state._people_db = people_db
-                        _persist_people_db(people_db)
-                        _persist_folders_db(folders_db)
                         st.success(f"「{del_target}」を削除しました")
                         st.rerun()
-
-    # ==================================================================
-    # タブD: フォルダ管理
-    # ==================================================================
-    with tab_folders:
-        st.markdown('<div style="color:#BFA350;font-size:0.95em;font-weight:bold;margin:8px 0;">フォルダ管理</div>', unsafe_allow_html=True)
-
-        # 新規フォルダ作成
-        fc1, fc2 = st.columns([3, 1])
-        with fc1:
-            new_fname = st.text_input("新しいフォルダ名", key="meibo_new_folder_name", placeholder="例: 鹿島建設セミナー", label_visibility="collapsed")
-        with fc2:
-            if st.button("📁 作成", key="btn_meibo_create_folder"):
-                if new_fname and new_fname not in folders_db:
-                    folders_db[new_fname] = []
-                    _persist_folders_db(folders_db)
-                    st.rerun()
-
-        st.markdown("---")
-
-        folder_names = list(folders_db.keys())
-        if not folder_names:
-            st.caption("フォルダはまだありません")
-        else:
-            for fi, fname in enumerate(folder_names):
-                members = folders_db.get(fname, [])
-                with st.expander(f"📁 {fname}（{len(members)}件）", expanded=False):
-                    # メンバー一覧
-                    if members:
-                        for mname in members:
-                            p = people_db.get(mname)
-                            if p:
-                                st.markdown(
-                                    f'<span style="color:#F0EBE0;font-size:0.85em;">👤 {mname}　{p.get("year","")}/{p.get("month","")}/{p.get("day","")}　{p.get("gender","")}　{p.get("blood","不明")}型</span>',
-                                    unsafe_allow_html=True
-                                )
-                            else:
-                                st.markdown(f'<span style="color:#5A5A5A;font-size:0.8em;">⚠ {mname}（データなし）</span>', unsafe_allow_html=True)
-                    else:
-                        st.caption("このフォルダは空です")
-
-                    # メンバー追加
-                    available = [n for n in people_db.keys() if n not in members]
-                    if available:
-                        add_c1, add_c2 = st.columns([3, 1])
-                        with add_c1:
-                            add_sel = st.multiselect(
-                                "追加する顧客", available, key=f"meibo_add_f{fi}", label_visibility="collapsed",
-                                placeholder="顧客を選択して追加..."
-                            )
-                        with add_c2:
-                            if st.button("＋追加", key=f"btn_meibo_add_f{fi}") and add_sel:
-                                folders_db[fname].extend(add_sel)
-                                _persist_folders_db(folders_db)
-                                st.rerun()
-
-                    # メンバー削除
-                    if members:
-                        rm_c1, rm_c2 = st.columns([3, 1])
-                        with rm_c1:
-                            rm_sel = st.multiselect(
-                                "外す顧客", members, key=f"meibo_rm_f{fi}", label_visibility="collapsed",
-                                placeholder="フォルダから外す..."
-                            )
-                        with rm_c2:
-                            if st.button("－外す", key=f"btn_meibo_rm_f{fi}") and rm_sel:
-                                for rn in rm_sel:
-                                    if rn in folders_db[fname]:
-                                        folders_db[fname].remove(rn)
-                                _persist_folders_db(folders_db)
-                                st.rerun()
-
-                    # フォルダ削除
-                    st.markdown("---")
-                    if st.button(f"🗑 「{fname}」フォルダを削除", key=f"btn_meibo_delfolder_{fi}"):
-                        del folders_db[fname]
-                        _persist_folders_db(folders_db)
-                        st.rerun()
+                    elif not del_confirm:
+                        st.warning("確認チェックを入れてください")
 
     # ── 戻るボタン ──
     st.markdown("<br>", unsafe_allow_html=True)
@@ -1560,6 +1664,33 @@ def _start_course(course: str):
     st.rerun()
 
 
+def _record_history(course_name: str, types: list | None = None):
+    """鑑定履歴を divination_history に1件記録（Supabase利用時のみ）
+
+    Args:
+        course_name: "算命学" / "星座" / "フルコース" / "theme_love" など
+        types: 使用した占術のリスト（省略可。フルコースは全占術、単独は当該のみ）
+    """
+    if not _supabase_on():
+        return
+    try:
+        bundle = st.session_state.get("bundle")
+        person = getattr(bundle, "person", None) if bundle else None
+        name = getattr(person, "name", None) if person else None
+        if not name:
+            return
+        # Supabase上の顧客IDを取得
+        row = _sb.get_customer_by_name(name) or {}
+        _sb.record_divination(
+            customer_id=row.get("id"),
+            customer_name=name,
+            course_name=course_name,
+            divination_types=types or [],
+        )
+    except Exception as e:
+        print(f"[history] record error: {e}")
+
+
 # ============================================================
 # 鑑定文生成画面（コース選択後のローディング）
 # ============================================================
@@ -1584,12 +1715,17 @@ def render_generating_page():
             result = generate_bansho_reading(bundle)
             status.update(label="✦ 万象学コース鑑定完了 ✦", state="complete")
         st.session_state.course_results["bansho"] = result
+        _record_history("万象学", ["万象学"])
     elif course == "フルコース":
         with st.status("✦ フルコース鑑定生成中…", expanded=True) as status:
             st.write("✧ 6占術を同時に鑑定中…")
             results = generate_full_course(bundle)
             status.update(label="✦ 全コース鑑定完了 ✦", state="complete")
         st.session_state.course_results = results
+        _record_history(
+            "フルコース",
+            ["算命学", "星座", "九星気学", "数秘術", "紫微斗数", "四柱推命"],
+        )
     else:
         with st.status(f"✦ {course}コース鑑定生成中…", expanded=True) as status:
             st.write(f"✧ {course}の鑑定文を生成中…")
@@ -1604,6 +1740,7 @@ def render_generating_page():
         }
         key = course_key_map.get(course, course)
         st.session_state.course_results[key] = result
+        _record_history(course, [course])
 
     st.session_state.page = "result"
     st.rerun()
@@ -1637,6 +1774,7 @@ def render_generating_theme_page():
     st.session_state.theme_results[theme_key] = result
     st.session_state.page = "theme_result"
     st.session_state._current_theme = theme_key
+    _record_history(f"テーマ別：{theme_name}", ["全占術横断"])
     st.rerun()
 
 
@@ -3509,23 +3647,21 @@ def render_team_input_page():
     render_gold_divider()
 
     db = _load_people_db()
-    fdb = _load_folders_db()
 
     # メンバー選択
     st.markdown('<div style="color:#BFA350; font-size:1.1em; font-weight:bold; margin:10px 0 5px;">✦ メンバーを選択</div>', unsafe_allow_html=True)
 
-    # フォルダから一括追加
-    if fdb:
-        folder_names = list(fdb.keys())
-        sel_folder = st.selectbox("フォルダから一括追加", options=["（選択しない）"] + folder_names, key="team_folder_sel")
-        if sel_folder != "（選択しない）" and sel_folder in fdb:
-            folder_members = fdb[sel_folder]
-            if st.button(f"📂 「{sel_folder}」の全員を追加", key="btn_team_folder_add"):
+    # タグから一括追加
+    all_tags_team = sorted({t for p in db.values() for t in (p.get("tags") or [])})
+    if all_tags_team:
+        sel_tag = st.selectbox("タグから一括追加", options=["（選択しない）"] + all_tags_team, key="team_tag_sel")
+        if sel_tag != "（選択しない）":
+            if st.button(f"🏷 「{sel_tag}」の全員を追加", key="btn_team_tag_add"):
                 if "team_selected_members" not in st.session_state:
                     st.session_state.team_selected_members = set()
-                for m in folder_members:
-                    if m in db:
-                        st.session_state.team_selected_members.add(m)
+                for name, p in db.items():
+                    if sel_tag in (p.get("tags") or []):
+                        st.session_state.team_selected_members.add(name)
                 st.rerun()
 
     # 個別選択（チェックボックス）

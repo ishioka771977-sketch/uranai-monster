@@ -9,7 +9,12 @@ import os
 import streamlit as st
 
 # Streamlit Cloud: secretsからAPIキーを環境変数に設定
-for _key in ("GEMINI_API_KEY", "GMAIL_ADDRESS", "GMAIL_APP_PASS"):
+for _key in (
+    "GEMINI_API_KEY", "GMAIL_ADDRESS", "GMAIL_APP_PASS",
+    "SUPABASE_URL", "SUPABASE_SERVICE_ROLE_KEY", "SUPABASE_ANON_KEY",
+    "URANAI_USER_ID",
+    "GOOGLE_OAUTH_CLIENT_ID", "GOOGLE_OAUTH_CLIENT_SECRET", "GOOGLE_OAUTH_REDIRECT_URI",
+):
     if not os.environ.get(_key):
         try:
             if _key in st.secrets:
@@ -50,6 +55,7 @@ from ui.pages import (
     render_meibo_page,
     render_kaiyun_input_page,
     render_kaiyun_result_page,
+    render_settings_page,
 )
 
 # CSSを注入
@@ -108,6 +114,8 @@ elif page == "kaiyun_input":
     render_kaiyun_input_page()
 elif page == "kaiyun_result":
     render_kaiyun_result_page()
+elif page == "settings":
+    render_settings_page()
 else:
     st.session_state.page = "top"
     st.rerun()
