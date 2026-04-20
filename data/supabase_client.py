@@ -347,6 +347,109 @@ def get_oauth_token(provider: str) -> Optional[dict]:
         return None
 
 
+def get_last_backup_at() -> Optional[datetime]:
+    """最終バックアップ実行時刻を返す（成功したもの）"""
+    client = get_supabase_client()
+    uid = get_user_id()
+    if client is None or uid is None:
+        return None
+    try:
+        res = (
+            client.table("backup_logs")
+            .select("backup_at")
+            .eq("user_id", uid)
+            .eq("status", "success")
+            .order("backup_at", desc=True)
+            .limit(1)
+            .execute()
+        )
+        rows = res.data or []
+        if not rows:
+            return None
+        raw = rows[0].get("backup_at")
+        if not raw:
+            return None
+        return datetime.fromisoformat(raw.replace("Z", "+00:00"))
+    except Exception as e:
+        print(f"[supabase] get_last_backup_at error: {e}")
+        return None
+
+
+def record_backup_log(
+    *,
+    customers_count: int,
+    history_count: int,
+    customers_file_id: Optional[str],
+    history_file_id: Optional[str],
+    triggered_by: str = "auto",
+    status: str = "success",
+    error_message: Optional[str] = None,
+) -> Optional[dict]:
+    """バックアップ実行ログを1件INSERT"""
+    client = get_supabase_client()
+    uid = get_user_id()
+    if client is None or uid is None:
+        return None
+    payload = {
+        "user_id": uid,
+        "customers_count": customers_count,
+        "history_count": history_count,
+        "customers_file_id": customers_file_id,
+        "history_file_id": history_file_id,
+        "triggered_by": triggered_by,
+        "status": status,
+        "error_message": error_message,
+    }
+    payload = {k: v for k, v in payload.items() if v is not None}
+    try:
+        res = client.table("backup_logs").insert(payload).execute()
+        rows = res.data or []
+        return rows[0] if rows else None
+    except Exception as e:
+        print(f"[supabase] record_backup_log error: {e}")
+        return None
+
+
+def fetch_all_customers_for_backup() -> list[dict]:
+    """customers 全件（バックアップ用、全カラム）"""
+    client = get_supabase_client()
+    uid = get_user_id()
+    if client is None or uid is None:
+        return []
+    try:
+        res = (
+            client.table("customers")
+            .select("*")
+            .eq("user_id", uid)
+            .order("created_at", desc=False)
+            .execute()
+        )
+        return res.data or []
+    except Exception as e:
+        print(f"[supabase] fetch_all_customers_for_backup error: {e}")
+        return []
+
+
+def fetch_all_history_for_backup() -> list[dict]:
+    """divination_history 全件（バックアップ用）"""
+    client = get_supabase_client()
+    uid = get_user_id()
+    if client is None or uid is None:
+        return []
+    try:
+        res = (
+            client.table("divination_history")
+            .select("*")
+            .eq("user_id", uid)
+            .order("divined_at", desc=False)
+            .execute()
+        )
+        return res.data or []
+    except Exception as e:
+        print(f"[supabase] fetch_all_history_for_backup error: {e}")
+        return []
+
+
 def save_oauth_token(
     provider: str,
     *,

@@ -62,6 +62,38 @@ def _get_client():
         _model = genai.Client(api_key=os.environ.get("GEMINI_API_KEY", ""))
     return _model
 
+
+# ============================================================
+# Claude (Anthropic) 対応
+# ============================================================
+_claude_client = None
+
+def _get_claude_client():
+    """Claudeクライアントを遅延初期化で取得（APIキー未設定時は None）"""
+    global _claude_client
+    if _claude_client is None:
+        try:
+            import anthropic  # type: ignore
+        except ImportError:
+            return None
+        key = os.environ.get("ANTHROPIC_API_KEY", "").strip()
+        if not key:
+            return None
+        try:
+            _claude_client = anthropic.Anthropic(api_key=key)
+        except Exception:
+            return None
+    return _claude_client
+
+
+def _active_provider() -> str:
+    """現在の AI プロバイダ: "claude" | "gemini"（デフォルト gemini）"""
+    return (os.environ.get("AI_PROVIDER", "gemini") or "gemini").lower()
+
+
+def _claude_model_name() -> str:
+    return os.environ.get("CLAUDE_MODEL", "claude-opus-4-7")
+
 # ============================================================
 # 全占術共通 システムプロンプト（くろたん完全改良版）
 # ============================================================
@@ -734,7 +766,27 @@ def _with_person(prompt: str, bundle: "DivinationBundle") -> str:
 
 
 def _call_api(prompt: str, max_tokens: int = 2500) -> dict:
-    """Gemini API 呼び出し共通処理"""
+    """AI API 呼び出し共通処理（provider に応じて Claude/Gemini を切替）
+
+    AI_PROVIDER=claude の場合は Claude Opus、それ以外は Gemini 2.5 Pro を使用。
+    Claude 呼び出し失敗時は Gemini に自動フォールバック。
+    """
+    if _active_provider() == "claude":
+        c = _get_claude_client()
+        if c is not None:
+            try:
+                effective_max = min(max_tokens + 4096, 16000)
+                response = c.messages.create(
+                    model=_claude_model_name(),
+                    max_tokens=effective_max,
+                    system=SYSTEM_PROMPT_BASE,
+                    messages=[{"role": "user", "content": prompt}],
+                )
+                text = "".join(getattr(b, "text", "") for b in response.content)
+                return _parse_json_response(text)
+            except Exception as e:
+                print(f"[interpreter] claude failed, fallback to gemini: {e}")
+    # Gemini（デフォルト / フォールバック）
     client = _get_client()
     response = client.models.generate_content(
         model="gemini-2.5-pro",
@@ -751,7 +803,22 @@ def _call_api(prompt: str, max_tokens: int = 2500) -> dict:
 
 
 def _call_api_text(system: str, prompt: str, max_tokens: int = 1000) -> str:
-    """Gemini API テキスト応答用（チャット向け）"""
+    """AI API テキスト応答用（provider に応じて Claude/Gemini を切替）"""
+    if _active_provider() == "claude":
+        c = _get_claude_client()
+        if c is not None:
+            try:
+                effective_max = min(max_tokens + 4096, 16000)
+                response = c.messages.create(
+                    model=_claude_model_name(),
+                    max_tokens=effective_max,
+                    system=system,
+                    messages=[{"role": "user", "content": prompt}],
+                )
+                return "".join(getattr(b, "text", "") for b in response.content)
+            except Exception as e:
+                print(f"[interpreter] claude failed, fallback to gemini: {e}")
+    # Gemini
     client = _get_client()
     response = client.models.generate_content(
         model="gemini-2.5-pro",

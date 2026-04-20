@@ -105,12 +105,6 @@ def _render_share_buttons(share_text: str, key_suffix: str, pdf_html: str = "",
     # streamlit.components.v1.html でJSを確実に実行
     share_html = f"""
 <div style="text-align:center; font-family: 'Zen Kaku Gothic New', sans-serif;">
-  <a href="{line_url}" target="_blank" id="btn_line_{key_suffix}" style="
-    display:inline-block; padding:10px 20px; margin:4px; border-radius:6px;
-    font-size:0.9em; font-weight:bold; cursor:pointer; text-decoration:none;
-    border: 1px solid #06C755; color:#fff; background:#06C755;
-  ">💬 LINEで送る</a>
-
   <button id="btn_share_{key_suffix}" style="
     display:inline-block; padding:10px 20px; margin:4px; border-radius:6px;
     font-size:0.9em; font-weight:bold; cursor:pointer;
@@ -121,7 +115,7 @@ def _render_share_buttons(share_text: str, key_suffix: str, pdf_html: str = "",
     display:inline-block; padding:10px 20px; margin:4px; border-radius:6px;
     font-size:0.9em; font-weight:bold; cursor:pointer;
     border: 1px solid #2A2A2A; color:#F0EBE0; background:#1A1A1A;
-  ">📋 全文をコピー</button>
+  ">📋 全文をコピー（LINE等に貼付け用）</button>
 
   <div id="msg_{key_suffix}" style="color:#7CB87C; font-size:0.85em; margin-top:6px; min-height:20px;"></div>
 </div>
@@ -153,15 +147,18 @@ def _render_share_buttons(share_text: str, key_suffix: str, pdf_html: str = "",
     doCopy(fullText, '✓ コピーしました！LINEやメールに貼り付けてください');
   }}
 
-  function doCopy(text, msg) {{
+  function doCopy(text, msg, cb) {{
     if (navigator.clipboard && navigator.clipboard.writeText) {{
       navigator.clipboard.writeText(text).then(function() {{
         showMsg(msg);
+        if (cb) cb();
       }}).catch(function() {{
         textAreaCopy(text, msg);
+        if (cb) cb();
       }});
     }} else {{
       textAreaCopy(text, msg);
+      if (cb) cb();
     }}
   }}
 
@@ -721,6 +718,44 @@ def render_settings_page():
                 else:
                     st.error("認証に失敗しました。コードをもう一度確認してください。")
 
+    st.markdown("---")
+
+    # ── 週次バックアップ ──
+    st.markdown('<div style="color:#BFA350;font-size:1.05em;font-weight:bold;margin:10px 0;">🗂 週次バックアップ（Gドライブ）</div>', unsafe_allow_html=True)
+    try:
+        from core import backup as _bk
+    except Exception as e:
+        st.error(f"バックアップモジュール読み込みエラー: {e}")
+        _bk = None
+
+    if _bk is not None:
+        gdrive_ok = _gd is not None and _gd.is_configured() and _gd.is_authenticated()
+        last_bk = _bk.get_last_backup_at()
+        if last_bk:
+            from datetime import datetime as _dt, timezone as _tz
+            delta = _dt.now(_tz.utc) - last_bk
+            days = delta.days
+            jst = last_bk.astimezone()
+            st.caption(f"最終バックアップ: {jst.strftime('%Y-%m-%d %H:%M')}（{days}日前）")
+        else:
+            st.caption("最終バックアップ: 未実行")
+
+        if not gdrive_ok:
+            st.info("Gドライブ連携を先に完了してください（上のセクション）。")
+        else:
+            cols = st.columns([2, 3])
+            with cols[0]:
+                if st.button("💾 今すぐバックアップ", key="btn_backup_now", use_container_width=True):
+                    with st.spinner("🗂 バックアップ実行中…"):
+                        result = _bk.run_backup(triggered_by="manual")
+                    if result.get("ok"):
+                        st.success(result.get("message"))
+                    else:
+                        st.error(f"失敗: {result.get('message')}")
+                    st.rerun()
+            with cols[1]:
+                st.caption("顧客と鑑定履歴をCSVでGドライブへ保存。過去4週分を自動保持。")
+
     # ── 戻る ──
     st.markdown("<br>", unsafe_allow_html=True)
     render_gold_divider()
@@ -1261,6 +1296,7 @@ def render_meibo_page():
                     p = people_db[name]
                     table_data.append({
                         "名前": name,
+                        "本名": p.get("real_name") or "",
                         "生年月日": f"{p.get('year','')}/{p.get('month','')}/{p.get('day','')}",
                         "性別": p.get("gender", ""),
                         "血液型": p.get("blood", "不明"),

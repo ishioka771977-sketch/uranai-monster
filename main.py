@@ -14,6 +14,7 @@ for _key in (
     "SUPABASE_URL", "SUPABASE_SERVICE_ROLE_KEY", "SUPABASE_ANON_KEY",
     "URANAI_USER_ID",
     "GOOGLE_OAUTH_CLIENT_ID", "GOOGLE_OAUTH_CLIENT_SECRET", "GOOGLE_OAUTH_REDIRECT_URI",
+    "ANTHROPIC_API_KEY", "AI_PROVIDER", "CLAUDE_MODEL",
 ):
     if not os.environ.get(_key):
         try:
@@ -64,6 +65,17 @@ st.markdown(CUSTOM_CSS, unsafe_allow_html=True)
 # セッション初期化
 if "page" not in st.session_state:
     st.session_state.page = "top"
+
+# 自動バックアップチェック（1セッションに1回だけ実施）
+if not st.session_state.get("_auto_backup_checked"):
+    st.session_state["_auto_backup_checked"] = True
+    try:
+        from core.backup import maybe_auto_backup
+        _bk_result = maybe_auto_backup(min_interval_days=7)
+        if _bk_result and _bk_result.get("ok"):
+            print(f"[startup] auto backup done: {_bk_result.get('message')}")
+    except Exception as _e:
+        print(f"[startup] auto backup check failed: {_e}")
 
 # ルーティング
 page = st.session_state.page

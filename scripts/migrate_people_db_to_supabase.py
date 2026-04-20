@@ -18,6 +18,14 @@ import shutil
 import sys
 from pathlib import Path
 
+# Windows cp932 対策
+if sys.stdout.encoding and sys.stdout.encoding.lower() != "utf-8":
+    try:
+        sys.stdout.reconfigure(encoding="utf-8")
+        sys.stderr.reconfigure(encoding="utf-8")
+    except Exception:
+        pass
+
 # プロジェクトルートをパスに追加
 _here = Path(__file__).resolve().parent
 _root = _here.parent

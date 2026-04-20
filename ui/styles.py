@@ -6,6 +6,39 @@ UIスタイル定義（ui/styles.py）
 CUSTOM_CSS = """
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;500;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined');
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded');
+
+/* ===== Material Icons/Symbols リガチャ文字露出対策 =====
+   Google Fonts が読めない環境（社内プロキシ等）でも、
+   「upload」「arrow_right」等の素テキストが露出しないよう隠す */
+.material-icons, .material-icons-outlined, .material-icons-round,
+.material-icons-sharp, .material-icons-two-tone,
+.material-symbols-rounded, .material-symbols-outlined, .material-symbols-sharp,
+[class*="material-symbols"], [class*="material-icons"] {
+    font-family: 'Material Symbols Rounded', 'Material Symbols Outlined',
+                 'Material Icons', sans-serif !important;
+    font-feature-settings: 'liga';
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    -webkit-font-feature-settings: 'liga';
+    -webkit-font-smoothing: antialiased;
+}
+/* フォント読み込みに失敗した環境では素テキストが出る。
+   リガチャ用文字列が表示されても見えないように color: transparent */
+@supports not (font-variation-settings: normal) {
+    .material-icons, .material-icons-outlined, .material-icons-round,
+    .material-symbols-rounded, .material-symbols-outlined, .material-symbols-sharp,
+    [class*="material-symbols"], [class*="material-icons"] {
+        color: transparent !important;
+    }
+}
 
 /* ===== グローバルフォント ===== */
 .stApp, .stApp * {
@@ -330,6 +363,72 @@ h1, h2, h3 {
 .stStatus {
     background: #121212 !important;
     border-color: #2A2A2A !important;
+}
+
+/* ===== ファイルアップローダ（Dropzone全体を強制置換） =====
+   Google Fonts が読めない環境で Material Icons のリガチャ "upload" 等が
+   素テキスト露出するのを根絶するため、Dropzone内部を全部隠して独自UIを被せる */
+[data-testid="stFileUploaderDropzone"] {
+    border: 1.5px dashed rgba(191, 163, 80, 0.45) !important;
+    background: rgba(20, 20, 20, 0.6) !important;
+    padding: 24px 20px !important;
+    border-radius: 10px !important;
+    position: relative !important;
+    min-height: 90px !important;
+}
+/* 内部要素を全て不可視化（クリック判定は残す） */
+[data-testid="stFileUploaderDropzone"] > *,
+[data-testid="stFileUploaderDropzone"] * {
+    color: transparent !important;
+    font-size: 0 !important;
+    text-shadow: none !important;
+}
+[data-testid="stFileUploaderDropzone"] svg {
+    display: none !important;
+}
+/* Dropzone 本体に独自のラベルを被せる */
+[data-testid="stFileUploaderDropzone"]::after {
+    content: "📂 ファイルをここにドロップ、またはクリックして選択（CSV / XLSX, 200MB以下）";
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #BFA350 !important;
+    font-family: 'Zen Kaku Gothic New', sans-serif !important;
+    font-size: 14px !important;
+    letter-spacing: 0.05em;
+    pointer-events: none;
+    padding: 0 12px;
+    text-align: center;
+}
+
+/* ===== expander の開閉マーカーを独自化（Material Symbols リガチャ露出対策） ===== */
+details > summary,
+summary[class*="st-emotion-cache"] {
+    list-style: none !important;
+}
+details > summary::-webkit-details-marker,
+summary[class*="st-emotion-cache"]::-webkit-details-marker {
+    display: none !important;
+}
+
+/* Streamlit expander summary の先頭にカスタムマーカー（文字で実装） */
+details > summary::before,
+summary[class*="st-emotion-cache"]::before {
+    content: "▶ ";
+    color: #BFA350;
+    margin-right: 4px;
+    font-size: 0.85em;
+}
+details[open] > summary::before {
+    content: "▼ ";
+}
+
+/* Streamlit の SVG/テキストマーカー（stExpanderIcon 以外）を隠す */
+details summary span[aria-hidden="true"]:not([data-testid="stExpanderIcon"]):empty,
+details summary svg:not([class*="uranai"]) {
+    display: none !important;
 }
 
 /* ===== スマホ対応 ===== */
