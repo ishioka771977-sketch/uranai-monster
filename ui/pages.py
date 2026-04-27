@@ -1645,6 +1645,15 @@ def render_ura_menu_page():
     if st.button("✧ フルコース ✧", key="btn_full", use_container_width=True):
         _start_course("フルコース")
 
+    # コンプリート鑑定（最上位・全占術深掘り＋根幹抽出＋時間軸統合）
+    st.markdown("""
+<div style="text-align:center; margin:6px 0 4px; color:#D4B96A; font-size:0.78em;">
+✦ 最上位コース：全占術を横断する根幹抽出＋深掘り＋時間軸統合 ✦
+</div>
+""", unsafe_allow_html=True)
+    if st.button("👑 コンプリート鑑定 👑", key="btn_complete", use_container_width=True):
+        _start_course("コンプリート鑑定")
+
     render_gold_divider()
 
     # テーマ別深掘り鑑定セクション（コース選択と並列）
@@ -1761,6 +1770,17 @@ def render_generating_page():
         _record_history(
             "フルコース",
             ["算命学", "星座", "九星気学", "数秘術", "紫微斗数", "四柱推命"],
+        )
+    elif course == "コンプリート鑑定":
+        from ai.interpreter import generate_complete_reading
+        with st.status("👑 コンプリート鑑定生成中…", expanded=True) as status:
+            st.write("✧ 全7占術データから根幹を抽出し、深掘り鑑定文を生成中…")
+            complete = generate_complete_reading(bundle)
+            status.update(label="✦ コンプリート鑑定完了 ✦", state="complete")
+        st.session_state.course_results["complete"] = complete
+        _record_history(
+            "コンプリート鑑定",
+            ["算命学", "四柱推命", "西洋占星術", "数秘術", "九星気学", "タロット", "紫微斗数", "万象学"],
         )
     else:
         with st.status(f"✦ {course}コース鑑定生成中…", expanded=True) as status:
@@ -1918,6 +1938,8 @@ def render_result_page():
 
     if course == "フルコース":
         _render_full_course_result(bundle, results)
+    elif course == "コンプリート鑑定":
+        _render_complete_reading_result(bundle, results)
     else:
         _render_single_course_result(bundle, course, results)
 
@@ -1931,6 +1953,21 @@ def render_result_page():
         _cr_hl = _syn.get("headline", "")
         _cr_rd = _syn.get("reading", "")
         _cr_cl = _syn.get("closing", "")
+    elif course == "コンプリート鑑定":
+        _cmp = results.get("complete", {})
+        _cr_hl = _cmp.get("headline", "")
+        # 8セクション全文を結合してshareテキストへ
+        _sections = [
+            ("【あなたの根幹】", _cmp.get("core_essence", "")),
+            ("【宿命の設計図】", _cmp.get("shukumei", "")),
+            ("【星が描く人生の地図】", _cmp.get("stars_map", "")),
+            ("【魂の数字】", _cmp.get("soul_numbers", "")),
+            ("【運命のカード】", _cmp.get("tarot_card", "")),
+            ("【紫微の宮殿】", _cmp.get("shibi_palace", "")),
+            ("【時間軸の鑑定】", _cmp.get("time_axis", "")),
+        ]
+        _cr_rd = "\n\n".join(f"{h}\n{b}" for h, b in _sections if b)
+        _cr_cl = _cmp.get("kuro_summary", "")
     else:
         _ckey_map = {"算命学": "sanmei", "星座": "western", "九星気学": "kyusei", "数秘術": "numerology", "タロット": "tarot", "紫微斗数": "ziwei", "万象学": "bansho", "四柱推命": "shichusuimei"}
         _cdata = results.get(_ckey_map.get(course, course), {})
@@ -1969,6 +2006,55 @@ def render_result_page():
             st.session_state.selected_course = None
             st.session_state.theme_results = {}
             st.rerun()
+
+
+def _render_complete_reading_result(bundle, results):
+    """コンプリート鑑定：8セクション縦スクロール表示"""
+    cmp = results.get("complete", {}) or {}
+    headline = cmp.get("headline", "あなたという宿命の全貌")
+
+    # ヘッドライン
+    st.markdown(
+        f'<div style="text-align:center; margin:20px 0; padding:18px; '
+        f'background:rgba(212,185,106,0.06); border:1px solid rgba(212,185,106,0.25); border-radius:8px;">'
+        f'<div style="color:#D4B96A; font-size:0.85em; letter-spacing:0.18em;">👑 コンプリート鑑定 👑</div>'
+        f'<div style="color:#F0EBE0; font-size:1.3em; font-weight:bold; font-family:Noto Serif JP, serif; margin-top:10px; line-height:1.6;">'
+        f'{headline}</div></div>',
+        unsafe_allow_html=True,
+    )
+
+    sections = [
+        ("✦", "あなたの根幹", cmp.get("core_essence", "")),
+        ("📜", "宿命の設計図 — 算命学・四柱推命", cmp.get("shukumei", "")),
+        ("✨", "星が描く人生の地図 — 西洋占星術", cmp.get("stars_map", "")),
+        ("🔢", "魂の数字 — 数秘術・九星気学", cmp.get("soul_numbers", "")),
+        ("🃏", "運命のカード — タロット", cmp.get("tarot_card", "")),
+        ("🏯", "紫微の宮殿 — 紫微斗数", cmp.get("shibi_palace", "")),
+        ("⏳", "時間軸の鑑定 — 全占術の運勢統合", cmp.get("time_axis", "")),
+    ]
+    for icon, title, body in sections:
+        if not body:
+            continue
+        st.markdown(
+            f'<div class="divination-card">'
+            f'<div class="card-header">{icon} {title}</div>'
+            f'<div class="reading-text">{body}</div>'
+            f'</div>',
+            unsafe_allow_html=True,
+        )
+
+    # 総括
+    summary = cmp.get("kuro_summary", "")
+    if summary:
+        st.markdown(
+            f'<div style="text-align:center; margin:20px 0; padding:24px; '
+            f'background:linear-gradient(135deg, rgba(191,163,80,0.12) 0%, rgba(191,163,80,0.05) 100%); '
+            f'border:2px solid rgba(212,185,106,0.5); border-radius:10px;">'
+            f'<div style="color:#D4B96A; font-size:0.85em; letter-spacing:0.15em; margin-bottom:8px;">— くろたんの総括 —</div>'
+            f'<div style="color:#F0EBE0; font-size:1.0em; font-style:italic; line-height:1.9; font-family:Noto Serif JP, serif;">'
+            f'{summary}</div></div>',
+            unsafe_allow_html=True,
+        )
 
 
 def _render_single_course_result(bundle, course, results):
@@ -2206,37 +2292,37 @@ def render_aisho_input_page():
 
     render_gold_divider()
 
-    # --- 関係性カテゴリ選択 ---
-    st.markdown('<div style="color:#BFA350; font-size:1.1em; font-weight:bold; margin:10px 0 8px;">✦ 2人の関係性を選んでください</div>', unsafe_allow_html=True)
+    # --- 関係性 自由入力（プリセット廃止：くろたん指令書 修正3） ---
+    st.markdown('<div style="color:#BFA350; font-size:1.1em; font-weight:bold; margin:10px 0 8px;">✦ 2人の関係性</div>', unsafe_allow_html=True)
+    st.caption("プリセットなし。自分の言葉で関係性を書いてください。AIがその関係に即した鑑定文を作ります。")
 
-    cat_keys = list(RELATIONSHIP_CATEGORIES.keys())
-    cat_labels = [f"{RELATIONSHIP_CATEGORIES[k]['icon']} {RELATIONSHIP_CATEGORIES[k]['label']}" for k in cat_keys]
+    rcol1, rcol2 = st.columns(2)
+    with rcol1:
+        role_a = st.text_input(
+            f"{name1.strip() if name1.strip() else '1人目'} の立場",
+            value=st.session_state.get("aisho_role_a", ""),
+            placeholder="例: 父親、社長、元請け、姉、師匠、ゴルフ仲間",
+            key="aisho_role_a_input",
+        )
+    with rcol2:
+        role_b = st.text_input(
+            f"{name2.strip() if name2.strip() else '2人目'} の立場",
+            value=st.session_state.get("aisho_role_b", ""),
+            placeholder="例: 娘、秘書、下請け、弟、弟子、ライバル",
+            key="aisho_role_b_input",
+        )
+    relationship_text = st.text_input(
+        "二人の関係",
+        value=st.session_state.get("aisho_relationship_text", ""),
+        placeholder="例: 父親と娘、社長と秘書、元請けと下請け、愛人関係、双子の兄弟、ゴルフ仲間、師匠と弟子、ライバル同士……何でもOK",
+        key="aisho_relationship_text_input",
+        help="AIがこの関係性に即して鑑定文を組み立てます",
+    )
 
-    # 2行3列のボタンレイアウト
-    row1 = st.columns(3)
-    row2 = st.columns(3)
-    rows = [row1, row2]
-
-    selected_rel = st.session_state.get("aisho_relationship", "love")
-
-    for i, key in enumerate(cat_keys):
-        cat = RELATIONSHIP_CATEGORIES[key]
-        r = i // 3
-        c = i % 3
-        with rows[r][c]:
-            is_selected = (selected_rel == key)
-            btn_style = "border:2px solid #BFA350; background:#1A1A1A;" if is_selected else "border:1px solid #2A2A2A; background:#121212;"
-            if st.button(
-                f"{cat['icon']} {cat['label']}",
-                key=f"btn_rel_{key}",
-                use_container_width=True,
-            ):
-                st.session_state.aisho_relationship = key
-                st.rerun()
-
-    # 選択中の関係性を表示
-    sel_cat = RELATIONSHIP_CATEGORIES.get(selected_rel, RELATIONSHIP_CATEGORIES['love'])
-    st.markdown(f'<div style="text-align:center; color:#8A8478; font-size:0.85em; margin:5px 0 15px;">{sel_cat["icon"]} {sel_cat["label"]}: {sel_cat["description"]}</div>', unsafe_allow_html=True)
+    # 入力をsession_stateに反映
+    st.session_state.aisho_role_a = role_a
+    st.session_state.aisho_role_b = role_b
+    st.session_state.aisho_relationship_text = relationship_text
 
     render_gold_divider()
 
@@ -2302,8 +2388,13 @@ def render_aisho_input_page():
                     p2.blood_type or "不明", p2.gender or "女性", "",
                 )
 
+            # 自由入力された関係性を確定
+            st.session_state.aisho_relationship_text = relationship_text.strip() or "二人の関係"
+            st.session_state.aisho_role_a = role_a.strip()
+            st.session_state.aisho_role_b = role_b.strip()
+            # 後方互換のためカテゴリ系のkeyも残す（loading側は新変数を見るが念のため）
             if "aisho_relationship" not in st.session_state:
-                st.session_state.aisho_relationship = "love"
+                st.session_state.aisho_relationship = "free"
             st.session_state.page = "aisho_loading"
             st.rerun()
 
@@ -2339,8 +2430,10 @@ def render_aisho_loading_page():
 
     person1 = st.session_state.aisho_person1
     person2 = st.session_state.aisho_person2
-    relationship = st.session_state.get("aisho_relationship", "love")
-    rel_cat = RELATIONSHIP_CATEGORIES.get(relationship, RELATIONSHIP_CATEGORIES['love'])
+    # 自由入力された関係性（修正3）
+    relationship_text = st.session_state.get("aisho_relationship_text", "").strip() or "二人の関係"
+    role_a = st.session_state.get("aisho_role_a", "").strip()
+    role_b = st.session_state.get("aisho_role_b", "").strip()
 
     render_star_deco("✦")
     st.markdown(
@@ -2348,7 +2441,7 @@ def render_aisho_loading_page():
         unsafe_allow_html=True
     )
     st.markdown(
-        f'<div style="text-align:center; color:#8A8478; font-size:0.9em;">{rel_cat["icon"]} {rel_cat["label"]}</div>',
+        f'<div style="text-align:center; color:#8A8478; font-size:0.9em;">✧ {relationship_text}</div>',
         unsafe_allow_html=True
     )
 
@@ -2383,8 +2476,11 @@ def render_aisho_loading_page():
         )
         st.write(f"✧ {person2.name}さん ── 完了")
 
-        st.write(f"✧ {rel_cat['label']}の相性を分析中…")
-        aisho_result = generate_aisho_reading(bundle1, bundle2, relationship)
+        st.write(f"✧ {relationship_text}の相性を分析中…")
+        aisho_result = generate_aisho_reading(
+            bundle1, bundle2, relationship_text,
+            role_a=role_a, role_b=role_b,
+        )
         status.update(label="✦ 相性鑑定完了 ✦", state="complete")
 
     st.session_state.aisho_bundle1 = bundle1
@@ -2405,8 +2501,8 @@ def render_aisho_result_page():
     bundle1 = st.session_state.aisho_bundle1
     bundle2 = st.session_state.aisho_bundle2
     result = st.session_state.aisho_result
-    relationship = st.session_state.get("aisho_relationship", "love")
-    rel_cat = RELATIONSHIP_CATEGORIES.get(relationship, RELATIONSHIP_CATEGORIES['love'])
+    # 自由入力された関係性（修正3）
+    relationship_text = st.session_state.get("aisho_relationship_text", "").strip() or "二人の関係"
 
     render_star_deco("✦")
     n1 = bundle1.person.name or "1人目"
@@ -2416,17 +2512,17 @@ def render_aisho_result_page():
         unsafe_allow_html=True
     )
     st.markdown(
-        f'<div style="text-align:center; color:#8A8478; font-size:0.9em; margin:-5px 0 10px;">{rel_cat["icon"]} {rel_cat["label"]}</div>',
+        f'<div style="text-align:center; color:#8A8478; font-size:0.9em; margin:-5px 0 10px;">✧ {relationship_text}</div>',
         unsafe_allow_html=True
     )
     render_gold_divider()
 
-    render_aisho_result(bundle1, bundle2, result, relationship)
+    render_aisho_result(bundle1, bundle2, result, relationship_text)
 
     render_gold_divider()
 
     # 共有ボタン — 結果のすぐ下
-    _ai_title = f"{n1} × {n2} — {_REL_LABELS.get(relationship, '相性鑑定')}"
+    _ai_title = f"{n1} × {n2} — {relationship_text}"
     _d1 = bundle1.person.birth_date
     _d2 = bundle2.person.birth_date
     _ai_subtitle = f"{_d1.year}/{_d1.month}/{_d1.day} × {_d2.year}/{_d2.month}/{_d2.day}"

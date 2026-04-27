@@ -1301,6 +1301,165 @@ def generate_full_course(bundle: DivinationBundle) -> dict:
 
 
 # ============================================================
+# コンプリート鑑定（最上位・全占術深掘り＋根幹抽出）
+# ============================================================
+COMPLETE_PROMPT = """以下の7占術データを使って、最上位の「コンプリート鑑定」を生成せよ。
+
+# 最も重要な作業
+1. **全占術を横断して、同じ方向を指している要素を見つけろ**
+   → これがその人の「根幹」。鑑定文の冒頭で断定的に語れ。
+   → 例：算命学の中央星（性格）／西洋の太陽星座（本質）／数秘LP（人生数）／九星（年運）が
+       同じ方向を指していたら、それは動かしがたい宿命。
+2. 根幹を語った後で、各占術の独自の視点を展開せよ
+3. 最後に時間軸（今年〜数年後）を全占術の視点で重ねろ
+
+# 構成（必ず以下の順で書く）
+1. 【あなたの根幹】— 全占術に共通する核心（200-300字）
+2. 【宿命の設計図】— 算命学＋四柱推命の深掘り（300-400字）
+3. 【星が描く人生の地図】— 西洋占星術の深掘り（300-400字）
+4. 【魂の数字】— 数秘術＋九星気学の深掘り（200-300字）
+5. 【運命のカード】— タロット（150-200字）
+6. 【紫微の宮殿】— 紫微斗数の深掘り（200-300字）
+7. 【時間軸の鑑定】— 全占術の運勢を時間軸で統合（300-400字）
+8. 【くろたんの総括】— 全体を踏まえた断定的メッセージ（150-200字）
+
+複数占術が同じことを言っている＝動かしがたい宿命。
+1占術だけが言っている＝隠れた才能や注意点。
+この「共通と独自」の対比こそコンプリート鑑定の価値。
+
+# 占術データ
+{occult_data}
+
+# 出力（JSON。各セクションを別フィールドで返す）
+{{
+  "headline": "全体を表すキャッチコピー1行（メタファー含む）",
+  "core_essence": "1. あなたの根幹（マークダウン記法は使わずプレーン本文）",
+  "shukumei": "2. 宿命の設計図（算命学＋四柱推命）",
+  "stars_map": "3. 星が描く人生の地図（西洋占星術）",
+  "soul_numbers": "4. 魂の数字（数秘＋九星）",
+  "tarot_card": "5. 運命のカード（タロット）",
+  "shibi_palace": "6. 紫微の宮殿（紫微斗数）",
+  "time_axis": "7. 時間軸の鑑定（運勢統合）",
+  "kuro_summary": "8. くろたんの総括（断定的メッセージ）"
+}}
+"""
+
+
+def _build_complete_occult_data(bundle: DivinationBundle) -> str:
+    """コンプリート鑑定用に、bundleから全占術の生データを抽出"""
+    s = bundle.sanmei
+    w = bundle.western
+    k = bundle.kyusei
+    n = bundle.numerology
+    t = bundle.tarot
+    z = bundle.ziwei
+    sh = bundle.shichusuimei
+    p = bundle.person
+
+    lines = []
+    lines.append(f"【人物情報】 {p.name}（{p.gender}, {p.birth_date}, 出生時刻={p.birth_time or '不明'}, 出生地={p.birth_place or '不明'}, 血液型={p.blood_type or '不明'}）")
+
+    # 算命学
+    lines.append(f"\n【算命学】")
+    lines.append(f"  日干: {s.nichikan}（{s.nichikan_gogyo}性）")
+    lines.append(f"  中央星: {s.chuo_sei}（{s.chuo_honno}）")
+    lines.append(f"  人体図: 北={s.kita_sei} / 東={s.higashi_sei} / 中央={s.chuo_sei} / 西={s.nishi_sei} / 南={s.minami_sei}")
+    lines.append(f"  天中殺: {s.tenchusatsu}")
+    lines.append(f"  五行バランス: {s.gogyo_balance}")
+    lines.append(f"  キーワード: {', '.join(s.keywords[:5])}")
+    if hasattr(s, "tokushu_kakkyoku") and s.tokushu_kakkyoku:
+        lines.append(f"  特殊格局: {s.tokushu_kakkyoku}")
+
+    # 四柱推命
+    if sh:
+        lines.append(f"\n【四柱推命】")
+        try:
+            lines.append(f"  年柱: {sh.nen_pillar.kanshi}（{sh.nen_pillar.tsuhensei}）")
+            lines.append(f"  月柱: {sh.tsuki_pillar.kanshi}（{sh.tsuki_pillar.tsuhensei}）")
+            lines.append(f"  日柱: {sh.hi_pillar.kanshi}（日干）")
+            if sh.toki_pillar:
+                lines.append(f"  時柱: {sh.toki_pillar.kanshi}（{sh.toki_pillar.tsuhensei}）")
+            else:
+                lines.append(f"  時柱: 不明（三柱推命）")
+            if hasattr(sh, "shinsatsu") and sh.shinsatsu:
+                lines.append(f"  神殺: {', '.join(sh.shinsatsu[:5])}")
+        except Exception:
+            pass
+
+    # 西洋占星術
+    lines.append(f"\n【西洋占星術】")
+    lines.append(f"  太陽: {w.sun_sign}（{w.sun_element}）")
+    if w.moon_sign:
+        lines.append(f"  月: {w.moon_sign}")
+    if w.asc_sign:
+        lines.append(f"  ASC: {w.asc_sign}")
+    if w.mc_sign:
+        lines.append(f"  MC: {w.mc_sign}")
+    if hasattr(w, "main_aspects") and w.main_aspects:
+        lines.append(f"  主要アスペクト: {', '.join(w.main_aspects[:5])}")
+
+    # 数秘術
+    lines.append(f"\n【数秘術】")
+    lines.append(f"  ライフパス: {n.life_path} ({n.life_path_meaning})")
+    if hasattr(n, "personal_year"):
+        lines.append(f"  個人年（今年）: {n.personal_year}")
+
+    # 九星気学
+    lines.append(f"\n【九星気学】")
+    lines.append(f"  本命星: {k.honmei_sei}")
+    if hasattr(k, "gekkmei_sei"):
+        lines.append(f"  月命星: {k.gekkmei_sei}")
+    if hasattr(k, "current_year_unsei"):
+        lines.append(f"  今年の運勢: {k.current_year_unsei}")
+
+    # タロット
+    lines.append(f"\n【タロット】")
+    lines.append(f"  引いたカード: {t.name_jp}（{'正位置' if t.upright else '逆位置'}）")
+    lines.append(f"  意味: {t.upright_meaning if t.upright else t.reversed_meaning}")
+
+    # 紫微斗数
+    lines.append(f"\n【紫微斗数】")
+    if hasattr(z, "mei_kyu"):
+        lines.append(f"  命宮: {z.mei_kyu}")
+    if hasattr(z, "main_stars") and z.main_stars:
+        lines.append(f"  主星: {', '.join(str(x) for x in z.main_stars[:3])}")
+    if hasattr(z, "kyoku_str"):
+        lines.append(f"  局: {z.kyoku_str}")
+
+    # 万象学
+    if hasattr(bundle, "bansho") and bundle.bansho:
+        b = bundle.bansho
+        lines.append(f"\n【万象学】")
+        if hasattr(b, "energy_index"):
+            lines.append(f"  エネルギー指数: {b.energy_index}")
+        if hasattr(b, "honnou_top"):
+            lines.append(f"  第1本能: {b.honnou_top}")
+
+    return "\n".join(lines)
+
+
+def generate_complete_reading(bundle: DivinationBundle) -> dict:
+    """コンプリート鑑定（最上位）：根幹抽出＋全占術深掘り＋時間軸統合"""
+    occult_data = _build_complete_occult_data(bundle)
+    prompt = COMPLETE_PROMPT.format(occult_data=occult_data)
+    try:
+        return _call_api(_with_person(prompt, bundle), max_tokens=4500)
+    except Exception as e:
+        print(f"[くろたん] コンプリート鑑定 API エラー: {e}")
+        return {
+            "headline": "あなたという宿命の全貌",
+            "core_essence": "全占術が同じあなたの本質を語っています。",
+            "shukumei": "宿命の設計図は唯一無二。",
+            "stars_map": "星々があなたの道を示しています。",
+            "soul_numbers": "数と気が共鳴しています。",
+            "tarot_card": "今このカードがあなたに語りかけています。",
+            "shibi_palace": "紫微の宮殿があなたを支えています。",
+            "time_axis": "時間の流れの中で、あなたは正しい場所にいます。",
+            "kuro_summary": "あなたはあなたのまま、進んでいい。",
+        }
+
+
+# ============================================================
 # フォールバック鑑定文（API失敗時）
 # ============================================================
 def _sanmei_fallback(bundle: DivinationBundle) -> dict:
@@ -2038,8 +2197,15 @@ def generate_aisho_reading(
     bundle1: DivinationBundle,
     bundle2: DivinationBundle,
     relationship: str = "love",
+    role_a: str = "",
+    role_b: str = "",
 ) -> dict:
-    """相性鑑定を生成（関係性カテゴリ対応版）"""
+    """相性鑑定を生成。
+
+    relationship: ユーザーが自由入力した関係性テキスト（例: "父親と娘", "元請けと下請け"）
+                  または旧プリセットkey（"love"/"marriage"/"boss_subordinate"等）
+    role_a/role_b: 各人の立場（例: "父親", "娘"）。空文字なら使用しない。
+    """
     from core.aisho_scoring import calc_aisho_score
 
     name1 = bundle1.person.name or "1人目"
@@ -2048,8 +2214,10 @@ def generate_aisho_reading(
     data1 = _format_all_data_summary(bundle1)
     data2 = _format_all_data_summary(bundle2)
 
-    # スコア計算
-    score_result = calc_aisho_score(bundle1, bundle2, relationship)
+    # スコア計算（旧プリセット key に該当しない自由入力なら "love" を内部キーに）
+    legacy_keys = {"love", "marriage", "boss_subordinate", "business", "parent_child", "friend"}
+    scoring_key = relationship if relationship in legacy_keys else "love"
+    score_result = calc_aisho_score(bundle1, bundle2, scoring_key)
 
     # エネルギー情報
     e1 = bundle1.sanmei.bansho_energy
@@ -2064,9 +2232,28 @@ def generate_aisho_reading(
     honnou1_b = e2.top_honnou if e2 else ""
     honnou2_b = e2.second_honnou if e2 else ""
 
-    category_prompt = AISHO_CATEGORY_PROMPTS.get(relationship, AISHO_CATEGORY_PROMPTS['love'])
+    # 関係性プロンプト：自由入力なら専用テンプレ、旧プリセットなら従来のテンプレ
+    if relationship in legacy_keys:
+        category_prompt = AISHO_CATEGORY_PROMPTS.get(relationship, AISHO_CATEGORY_PROMPTS['love'])
+    else:
+        role_line = ""
+        if role_a or role_b:
+            role_line = f"\n- {name1}さんの立場: {role_a or '不明'}\n- {name2}さんの立場: {role_b or '不明'}"
+        category_prompt = (
+            f"【関係性：{relationship}】"
+            f"{role_line}\n\n"
+            f"以下の観点で鑑定してください：\n"
+            f"1. この関係性（{relationship}）における相性の核心。一般的な恋愛・夫婦の枠ではなく、{relationship}としての相性を語る\n"
+            f"2. {role_a or name1+'さん'}の立場から見た{role_b or name2+'さん'}との付き合い方／活かし方\n"
+            f"3. {role_b or name2+'さん'}の立場から見た{role_a or name1+'さん'}との関わり方\n"
+            f"4. この関係における強み・噛み合うポイント\n"
+            f"5. 注意点・摩擦が起きうる場面と乗り越え方\n"
+            f"6. この関係を発展させるカギ（具体的なアクション3つ）\n"
+            f"\n※「{relationship}」という関係性の文脈を必ず踏まえること。恋愛の相性鑑定で誤魔化さないこと。\n"
+        )
+
     energy_adv = score_result['energy_advice']
-    energy_advice_text = energy_adv.get(relationship, energy_adv.get('general', ''))
+    energy_advice_text = energy_adv.get(scoring_key, energy_adv.get('general', ''))
 
     prompt = AISHO_PROMPT_V2.format(
         name1=name1, name2=name2,
@@ -2087,19 +2274,8 @@ def generate_aisho_reading(
     )
 
     try:
-        client = _get_client()
-        response = client.models.generate_content(
-            model="gemini-2.5-pro",
-            contents=prompt,
-            config=types.GenerateContentConfig(
-                system_instruction=AISHO_SYSTEM_PROMPT_V2,
-                max_output_tokens=5000 + 4096,
-                temperature=0.9,
-                thinking_config=types.ThinkingConfig(thinking_budget=4096),
-            ),
-        )
-        text = response.text or ""
-        result = _parse_json_response(text)
+        result = _call_api_text(AISHO_SYSTEM_PROMPT_V2, prompt, max_tokens=5000)
+        result = _parse_json_response(result) if isinstance(result, str) else result
         if result and result.get("reading"):
             result["score"] = str(score_result['score'])
             result["score_label"] = score_result['label']
