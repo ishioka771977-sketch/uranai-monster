@@ -2292,37 +2292,71 @@ def render_aisho_input_page():
 
     render_gold_divider()
 
-    # --- 関係性 自由入力（プリセット廃止：くろたん指令書 修正3） ---
+    # --- 関係性：プリセット6カテゴリ ＋ 自由入力（ハイブリッド方式） ---
     st.markdown('<div style="color:#BFA350; font-size:1.1em; font-weight:bold; margin:10px 0 8px;">✦ 2人の関係性</div>', unsafe_allow_html=True)
-    st.caption("プリセットなし。自分の言葉で関係性を書いてください。AIがその関係に即した鑑定文を作ります。")
+    st.caption("典型的な関係はボタンで選択、特殊な関係（父娘・元請けと下請け・師弟など）は下の自由入力欄に書いてください。")
 
-    rcol1, rcol2 = st.columns(2)
-    with rcol1:
-        role_a = st.text_input(
-            f"{name1.strip() if name1.strip() else '1人目'} の立場",
-            value=st.session_state.get("aisho_role_a", ""),
-            placeholder="例: 父親、社長、元請け、姉、師匠、ゴルフ仲間",
-            key="aisho_role_a_input",
-        )
-    with rcol2:
-        role_b = st.text_input(
-            f"{name2.strip() if name2.strip() else '2人目'} の立場",
-            value=st.session_state.get("aisho_role_b", ""),
-            placeholder="例: 娘、秘書、下請け、弟、弟子、ライバル",
-            key="aisho_role_b_input",
-        )
-    relationship_text = st.text_input(
-        "二人の関係",
-        value=st.session_state.get("aisho_relationship_text", ""),
-        placeholder="例: 父親と娘、社長と秘書、元請けと下請け、愛人関係、双子の兄弟、ゴルフ仲間、師匠と弟子、ライバル同士……何でもOK",
-        key="aisho_relationship_text_input",
-        help="AIがこの関係性に即して鑑定文を組み立てます",
-    )
+    cat_keys = list(RELATIONSHIP_CATEGORIES.keys())
+    row1 = st.columns(3)
+    row2 = st.columns(3)
+    rows = [row1, row2]
+    selected_rel = st.session_state.get("aisho_relationship", "love")
 
-    # 入力をsession_stateに反映
-    st.session_state.aisho_role_a = role_a
-    st.session_state.aisho_role_b = role_b
-    st.session_state.aisho_relationship_text = relationship_text
+    for i, key in enumerate(cat_keys):
+        cat = RELATIONSHIP_CATEGORIES[key]
+        r = i // 3
+        c = i % 3
+        with rows[r][c]:
+            if st.button(
+                f"{cat['icon']} {cat['label']}",
+                key=f"btn_rel_{key}",
+                use_container_width=True,
+            ):
+                st.session_state.aisho_relationship = key
+                # プリセット選択時は自由入力をクリア（プリセット優先）
+                st.session_state.aisho_relationship_text = ""
+                st.rerun()
+
+    sel_cat = RELATIONSHIP_CATEGORIES.get(selected_rel, RELATIONSHIP_CATEGORIES['love'])
+    free_text_now = st.session_state.get("aisho_relationship_text", "").strip()
+    if free_text_now:
+        st.markdown(
+            f'<div style="text-align:center; color:#D4B96A; font-size:0.9em; margin:5px 0 10px;">✧ 選択中: {free_text_now}（自由入力）</div>',
+            unsafe_allow_html=True,
+        )
+    else:
+        st.markdown(
+            f'<div style="text-align:center; color:#8A8478; font-size:0.85em; margin:5px 0 10px;">{sel_cat["icon"]} {sel_cat["label"]}: {sel_cat["description"]}</div>',
+            unsafe_allow_html=True,
+        )
+
+    # 自由入力（オプション。書けばプリセットより優先）
+    with st.expander("📝 もっと細かく関係性を指定する（任意・書けばこちらが優先）"):
+        rcol1, rcol2 = st.columns(2)
+        with rcol1:
+            role_a = st.text_input(
+                f"{name1.strip() if name1.strip() else '1人目'} の立場",
+                value=st.session_state.get("aisho_role_a", ""),
+                placeholder="例: 父親、社長、元請け、師匠",
+                key="aisho_role_a_input",
+            )
+        with rcol2:
+            role_b = st.text_input(
+                f"{name2.strip() if name2.strip() else '2人目'} の立場",
+                value=st.session_state.get("aisho_role_b", ""),
+                placeholder="例: 娘、秘書、下請け、弟子",
+                key="aisho_role_b_input",
+            )
+        relationship_text = st.text_input(
+            "二人の関係（自由入力）",
+            value=st.session_state.get("aisho_relationship_text", ""),
+            placeholder="例: 父親と娘、元請けと下請け、ホステスと客、師匠と弟子……何でもOK",
+            key="aisho_relationship_text_input",
+            help="ここに書けば上のボタン選択より優先されます。プリセットに無い特殊な関係に最適。",
+        )
+        st.session_state.aisho_role_a = role_a
+        st.session_state.aisho_role_b = role_b
+        st.session_state.aisho_relationship_text = relationship_text
 
     render_gold_divider()
 
@@ -2388,13 +2422,12 @@ def render_aisho_input_page():
                     p2.blood_type or "不明", p2.gender or "女性", "",
                 )
 
-            # 自由入力された関係性を確定
-            st.session_state.aisho_relationship_text = relationship_text.strip() or "二人の関係"
-            st.session_state.aisho_role_a = role_a.strip()
-            st.session_state.aisho_role_b = role_b.strip()
-            # 後方互換のためカテゴリ系のkeyも残す（loading側は新変数を見るが念のため）
+            # 自由入力があればそちらを優先、なければプリセット選択を使う
             if "aisho_relationship" not in st.session_state:
-                st.session_state.aisho_relationship = "free"
+                st.session_state.aisho_relationship = "love"
+            st.session_state.aisho_role_a = (role_a or "").strip()
+            st.session_state.aisho_role_b = (role_b or "").strip()
+            st.session_state.aisho_relationship_text = (relationship_text or "").strip()
             st.session_state.page = "aisho_loading"
             st.rerun()
 
@@ -2430,10 +2463,19 @@ def render_aisho_loading_page():
 
     person1 = st.session_state.aisho_person1
     person2 = st.session_state.aisho_person2
-    # 自由入力された関係性（修正3）
-    relationship_text = st.session_state.get("aisho_relationship_text", "").strip() or "二人の関係"
+    # 自由入力があれば優先、なければプリセット
+    free_text = st.session_state.get("aisho_relationship_text", "").strip()
+    preset_key = st.session_state.get("aisho_relationship", "love")
     role_a = st.session_state.get("aisho_role_a", "").strip()
     role_b = st.session_state.get("aisho_role_b", "").strip()
+
+    if free_text:
+        relationship_for_ai = free_text
+        relationship_label = free_text
+    else:
+        rel_cat = RELATIONSHIP_CATEGORIES.get(preset_key, RELATIONSHIP_CATEGORIES['love'])
+        relationship_for_ai = preset_key  # プリセットkey でAISHO_CATEGORY_PROMPTSが当たる
+        relationship_label = f"{rel_cat['icon']} {rel_cat['label']}"
 
     render_star_deco("✦")
     st.markdown(
@@ -2441,7 +2483,7 @@ def render_aisho_loading_page():
         unsafe_allow_html=True
     )
     st.markdown(
-        f'<div style="text-align:center; color:#8A8478; font-size:0.9em;">✧ {relationship_text}</div>',
+        f'<div style="text-align:center; color:#8A8478; font-size:0.9em;">✧ {relationship_label}</div>',
         unsafe_allow_html=True
     )
 
@@ -2476,9 +2518,9 @@ def render_aisho_loading_page():
         )
         st.write(f"✧ {person2.name}さん ── 完了")
 
-        st.write(f"✧ {relationship_text}の相性を分析中…")
+        st.write(f"✧ {relationship_label}の相性を分析中…")
         aisho_result = generate_aisho_reading(
-            bundle1, bundle2, relationship_text,
+            bundle1, bundle2, relationship_for_ai,
             role_a=role_a, role_b=role_b,
         )
         status.update(label="✦ 相性鑑定完了 ✦", state="complete")
@@ -2501,8 +2543,16 @@ def render_aisho_result_page():
     bundle1 = st.session_state.aisho_bundle1
     bundle2 = st.session_state.aisho_bundle2
     result = st.session_state.aisho_result
-    # 自由入力された関係性（修正3）
-    relationship_text = st.session_state.get("aisho_relationship_text", "").strip() or "二人の関係"
+    # プリセット or 自由入力（自由入力優先）
+    free_text = st.session_state.get("aisho_relationship_text", "").strip()
+    preset_key = st.session_state.get("aisho_relationship", "love")
+    if free_text:
+        relationship_for_ai = free_text
+        relationship_label = free_text
+    else:
+        rel_cat = RELATIONSHIP_CATEGORIES.get(preset_key, RELATIONSHIP_CATEGORIES['love'])
+        relationship_for_ai = preset_key
+        relationship_label = f"{rel_cat['icon']} {rel_cat['label']}"
 
     render_star_deco("✦")
     n1 = bundle1.person.name or "1人目"
@@ -2512,17 +2562,17 @@ def render_aisho_result_page():
         unsafe_allow_html=True
     )
     st.markdown(
-        f'<div style="text-align:center; color:#8A8478; font-size:0.9em; margin:-5px 0 10px;">✧ {relationship_text}</div>',
+        f'<div style="text-align:center; color:#8A8478; font-size:0.9em; margin:-5px 0 10px;">✧ {relationship_label}</div>',
         unsafe_allow_html=True
     )
     render_gold_divider()
 
-    render_aisho_result(bundle1, bundle2, result, relationship_text)
+    render_aisho_result(bundle1, bundle2, result, relationship_for_ai)
 
     render_gold_divider()
 
     # 共有ボタン — 結果のすぐ下
-    _ai_title = f"{n1} × {n2} — {relationship_text}"
+    _ai_title = f"{n1} × {n2} — {relationship_label}"
     _d1 = bundle1.person.birth_date
     _d2 = bundle2.person.birth_date
     _ai_subtitle = f"{_d1.year}/{_d1.month}/{_d1.day} × {_d2.year}/{_d2.month}/{_d2.day}"
