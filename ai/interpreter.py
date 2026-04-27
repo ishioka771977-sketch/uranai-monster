@@ -95,6 +95,23 @@ def _claude_model_name() -> str:
     return os.environ.get("CLAUDE_MODEL", "claude-opus-4-7")
 
 # ============================================================
+# 現在日時の取得（鑑定文の年号誤認防止）
+# ============================================================
+def _current_time_context() -> str:
+    """毎回最新の日時情報を返す。LLMが「現在は2024年」等と誤認しないようガード。"""
+    from datetime import datetime
+    now = datetime.now()
+    return (
+        "## 【最重要：現在の日時情報】\n"
+        f"- 今日の日付: {now.year}年{now.month}月{now.day}日\n"
+        f"- 現在の年: **{now.year}年**\n"
+        f"- 鑑定文中で「現在」「今年」「今」に言及する場合は、必ず**{now.year}年**を基準にすること\n"
+        f"- {now.year - 1}年以前を「現在」「今年」と表現してはならない（学習データの過去日付に引きずられないこと）\n"
+        f"- 「今年の運勢」「今年〜来年」等を語るときの『今年』は{now.year}年、『来年』は{now.year + 1}年\n"
+    )
+
+
+# ============================================================
 # 全占術共通 システムプロンプト（くろたん完全改良版）
 # ============================================================
 SYSTEM_PROMPT_BASE = """あなたは「占いモンスターくろたん」——何千人もの鑑定をこなしてきた本物の占い師AI。
@@ -771,6 +788,8 @@ def _call_api(prompt: str, max_tokens: int = 2500) -> dict:
     AI_PROVIDER=claude の場合は Claude Opus、それ以外は Gemini 2.5 Pro を使用。
     Claude 呼び出し失敗時は Gemini に自動フォールバック。
     """
+    # 現在日時を毎回先頭に注入（LLMが学習データの過去日付に引きずられるのを防ぐ）
+    system_with_time = _current_time_context() + "\n" + SYSTEM_PROMPT_BASE
     if _active_provider() == "claude":
         c = _get_claude_client()
         if c is not None:
@@ -779,7 +798,7 @@ def _call_api(prompt: str, max_tokens: int = 2500) -> dict:
                 response = c.messages.create(
                     model=_claude_model_name(),
                     max_tokens=effective_max,
-                    system=SYSTEM_PROMPT_BASE,
+                    system=system_with_time,
                     messages=[{"role": "user", "content": prompt}],
                 )
                 text = "".join(getattr(b, "text", "") for b in response.content)
@@ -792,7 +811,7 @@ def _call_api(prompt: str, max_tokens: int = 2500) -> dict:
         model="gemini-2.5-pro",
         contents=prompt,
         config=types.GenerateContentConfig(
-            system_instruction=SYSTEM_PROMPT_BASE,
+            system_instruction=system_with_time,
             max_output_tokens=max_tokens + 4096,
             temperature=0.9,
             thinking_config=types.ThinkingConfig(thinking_budget=4096),
@@ -804,6 +823,8 @@ def _call_api(prompt: str, max_tokens: int = 2500) -> dict:
 
 def _call_api_text(system: str, prompt: str, max_tokens: int = 1000) -> str:
     """AI API テキスト応答用（provider に応じて Claude/Gemini を切替）"""
+    # 現在日時を system 先頭に注入（学習データの過去日付に引きずられるのを防ぐ）
+    system_with_time = _current_time_context() + "\n" + system
     if _active_provider() == "claude":
         c = _get_claude_client()
         if c is not None:
@@ -812,7 +833,7 @@ def _call_api_text(system: str, prompt: str, max_tokens: int = 1000) -> str:
                 response = c.messages.create(
                     model=_claude_model_name(),
                     max_tokens=effective_max,
-                    system=system,
+                    system=system_with_time,
                     messages=[{"role": "user", "content": prompt}],
                 )
                 return "".join(getattr(b, "text", "") for b in response.content)
@@ -824,7 +845,7 @@ def _call_api_text(system: str, prompt: str, max_tokens: int = 1000) -> str:
         model="gemini-2.5-pro",
         contents=prompt,
         config=types.GenerateContentConfig(
-            system_instruction=system,
+            system_instruction=system_with_time,
             max_output_tokens=max_tokens + 4096,
             temperature=0.9,
             thinking_config=types.ThinkingConfig(thinking_budget=4096),
