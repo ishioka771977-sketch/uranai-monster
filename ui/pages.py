@@ -4375,13 +4375,25 @@ def render_kaiyun_result_page():
     with tab4:
         _render_kaiyun_taiun_tab(person, person_data)
 
-    # --- メール送信 ---
+    # --- 共有・メール送信 ---
     render_gold_divider()
+    _kaiyun_score = calc_lucky_score(today, person_data)
+    _kaiyun_kansei = DAILY_KANSEI.get(_kaiyun_score["kansei"], DAILY_KANSEI["比劫"])
     _kaiyun_title = f"{name}さん — 開運アドバイス"
     _kaiyun_subtitle = f"{person.birth_date.strftime('%Y/%m/%d')} 生 | 日干: {sanmei.hi_kan}"
-    _kaiyun_hl = f"今日の開運スコア: {calc_lucky_score(today, person_data)['score']}点"
-    _kaiyun_rd = ""
+    _kaiyun_hl = f"今日の開運スコア: {_kaiyun_score['score']}点 ({today.strftime('%Y/%m/%d')})"
+    _kaiyun_rd = (
+        f"日干支: {_kaiyun_score['day_kanshi']} / 六曜: {_kaiyun_score['rokuyo']} / "
+        f"十二直: {_kaiyun_score['junichoku']}"
+        + ("\n⚠ 今日は天中殺日です" if _kaiyun_score.get("tenchusatsu") else "")
+        + f"\n\n✦ {_kaiyun_kansei['theme']}（{_kaiyun_score['kansei']}）\n"
+        + _kaiyun_score.get("advice", "")
+    )
     _kaiyun_cl = "開運アドバイスの詳細はアプリでご確認ください"
+    _kaiyun_text = _build_share_text(_kaiyun_title, _kaiyun_subtitle, _kaiyun_hl, _kaiyun_rd, _kaiyun_cl)
+    _kaiyun_pdf = _build_pdf_html(_kaiyun_title, _kaiyun_subtitle, _kaiyun_hl, _kaiyun_rd, _kaiyun_cl)
+    _kaiyun_digest = _build_share_digest(_kaiyun_title, _kaiyun_hl, _kaiyun_cl)
+    _render_share_buttons(_kaiyun_text, "kaiyun", _kaiyun_pdf, _kaiyun_digest)
     _render_email_section(_kaiyun_title, _kaiyun_subtitle, _kaiyun_hl, _kaiyun_rd, _kaiyun_cl, "kaiyun")
 
     # --- 戻るボタン ---

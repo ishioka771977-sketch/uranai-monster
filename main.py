@@ -15,6 +15,7 @@ for _key in (
     "URANAI_USER_ID",
     "GOOGLE_OAUTH_CLIENT_ID", "GOOGLE_OAUTH_CLIENT_SECRET", "GOOGLE_OAUTH_REDIRECT_URI",
     "ANTHROPIC_API_KEY", "AI_PROVIDER", "CLAUDE_MODEL",
+    "AUTH_API_BASE",
 ):
     if not os.environ.get(_key):
         try:
@@ -50,41 +51,45 @@ def _get_app_password() -> str | None:
     return None
 
 
-def check_password() -> bool:
-    """パスワード認証。secrets未設定時は素通り（ローカル開発用）。"""
+def _legacy_password_pass() -> bool:
+    """旧 APP_PASSWORD が認証通過済みか判定（UI出さない）。
+    secrets未設定（ローカル開発）の場合は素通り扱い。"""
     expected = _get_app_password()
     if not expected:
-        # secrets未設定（ローカル開発）→ 認証スキップ
         return True
-    if st.session_state.get("authenticated"):
-        return True
+    return bool(st.session_state.get("authenticated"))
 
-    # ログイン画面
-    st.markdown(
-        '<div style="text-align:center; margin-top:60px;">'
-        '<div style="font-size:2em; color:#BFA350; letter-spacing:0.2em; '
-        'font-family:Noto Serif JP, serif;">✧ 占いモンスターくろたん ✧</div>'
-        '<div style="color:#8A8478; margin-top:8px; letter-spacing:0.1em;">— 入場するにはパスワードを入力してください —</div>'
-        '</div>',
-        unsafe_allow_html=True,
+
+def _legacy_password_login_inline():
+    """旧 APP_PASSWORD のログインUIを描画（login_page.py の旧パスワードタブから呼ぶ）。"""
+    expected = _get_app_password()
+    if not expected:
+        st.info("APP_PASSWORD 未設定（ローカル開発モード）")
+        return
+    password = st.text_input(
+        "パスワード", type="password", key="_legacy_password",
+        placeholder="合言葉を入力", label_visibility="collapsed",
     )
-    st.markdown("<br>", unsafe_allow_html=True)
-    col1, col2, col3 = st.columns([1, 2, 1])
-    with col2:
-        password = st.text_input(
-            "パスワード", type="password", key="_login_password",
-            placeholder="合言葉を入力", label_visibility="collapsed",
-        )
-        if st.button("✦ 入場する ✦", use_container_width=True, key="_login_btn"):
-            if password == expected:
-                st.session_state.authenticated = True
-                st.rerun()
-            else:
-                st.error("パスワードが違います")
-    return False
+    if st.button("✦ 入場する ✦", use_container_width=True, key="_legacy_login_btn"):
+        if password == expected:
+            st.session_state.authenticated = True
+            st.rerun()
+        else:
+            st.error("パスワードが違います")
 
 
-if not check_password():
+# ============================================================
+# 認証ゲート: Supabase Auth (Phase 1) または 旧 APP_PASSWORD のどちらかが通れば access OK
+# 並行運用期間 (2〜3日) 後、APP_PASSWORD は撤去予定
+# ============================================================
+import auth as _auth_mod
+from ui.login_page import render_login_page as _render_login_page
+
+_auth_ok = _auth_mod.try_auto_login()
+_legacy_ok = _legacy_password_pass()
+
+if not (_auth_ok or _legacy_ok):
+    _render_login_page(legacy_password_check_fn=_legacy_password_login_inline)
     st.stop()
 
 
@@ -119,15 +124,26 @@ from ui.pages import (
 # CSSを注入
 st.markdown(CUSTOM_CSS, unsafe_allow_html=True)
 
-# サイドバーにログアウトボタン（パスワード認証が有効なときのみ）
-if _get_app_password() and st.session_state.get("authenticated"):
+# サイドバーにログアウトボタン (Auth or 旧 APP_PASSWORD のいずれかで認証中なら表示)
+if _auth_ok or (_get_app_password() and st.session_state.get("authenticated")):
     with st.sidebar:
         st.markdown('<div style="color:#BFA350; font-size:0.9em; padding:6px 0;">✧ メニュー ✧</div>', unsafe_allow_html=True)
+        # 認証中ユーザー名表示 (Auth 経由の場合のみ)
+        _disp = _auth_mod.get_display_name()
+        if _disp:
+            st.markdown(
+                f'<div style="color:#8A8478; font-size:0.82em; padding:2px 0 6px;">'
+                f'👤 {_disp} さん</div>',
+                unsafe_allow_html=True,
+            )
         if st.button("🚪 ログアウト", key="_logout_btn", use_container_width=True):
-            st.session_state.authenticated = False
-            # セッション状態を念のためクリア
+            # Auth セッションクリア
+            _auth_mod.logout()
+            # 旧 APP_PASSWORD フラグ
+            st.session_state["authenticated"] = False
+            # その他セッション状態
             for _k in list(st.session_state.keys()):
-                if _k != "_login_password":
+                if _k not in ("_login_password", "_legacy_password"):
                     try:
                         del st.session_state[_k]
                     except Exception:
