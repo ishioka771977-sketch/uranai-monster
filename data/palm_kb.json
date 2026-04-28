@@ -1,0 +1,655 @@
+{
+  "version": "1.1",
+  "compiled_date": "2026-04-28",
+  "review_date": "2026-04-28",
+  "review_status": "GO",
+  "review_by": "くろたん",
+  "compiled_by": "こどたん（Grok 4.1 Fast + GPT-4o-mini 統合）",
+  "purpose": "占いモンスター 手相鑑定エンジン用 構造化知識ベース",
+  "schools_used": ["western", "japanese_traditional"],
+  "v11_changelog": [
+    "Q2: 旅行線を phase2_candidates に追加",
+    "Q3: マスカケ線の特別演出ガイドを presentation_guidance に追加",
+    "Q4: 仏眼の控えめ演出ガイドを presentation_guidance に追加",
+    "Q6: 万象学の対応関係を「直接対応」→「類似性の示唆」に修正",
+    "Q7: 大三角形・四角紋を special_marks に追加（10→12種）"
+  ],
+  "lines": [
+    {
+      "line_name": "生命線",
+      "english_name": "Life Line",
+      "position": "親指の付け根から中指の付け根に向かって手のひらの外周を大きく湾曲して走る線。人差し指と親指の間（生命丘）から始まり、親指球を回り込んで手首に向かう。",
+      "reading_target": "身体的健康、活力、寿命の傾向、人生の大きな変化、生活の安定性",
+      "variations": [
+        {"pattern": "長い・明瞭", "meaning": "長寿で活力旺盛。安定した健康と精神。"},
+        {"pattern": "短い", "meaning": "短命ではなく、変化の少ない人生を好む。または変化が多い。"},
+        {"pattern": "明瞭で深い", "meaning": "強靭な体力と安定した人生。"},
+        {"pattern": "不明瞭・鎖状", "meaning": "健康不安定、胃腸・神経系の弱さ。"},
+        {"pattern": "二重線（姫線）", "meaning": "非常に強い生命力、守護される運。"},
+        {"pattern": "切断", "meaning": "人生の大きな転機や事故の可能性。"},
+        {"pattern": "末端の分岐", "meaning": "晩年の選択肢が多い。"},
+        {"pattern": "島紋", "meaning": "病気やストレス期を示す。"}
+      ],
+      "branches": {
+        "上向き分岐": "成功や向上心の兆し",
+        "下向き分岐": "障害や喪失の可能性"
+      },
+      "depth": {
+        "深い": "強い活力と健康",
+        "浅い": "体力が弱く、注意が必要"
+      },
+      "combination": {
+        "運命線との交差": "仕事による健康影響",
+        "頭脳線との起始点共有": "知性による人生コントロール"
+      },
+      "caveats": "西洋手相学では寿命に直接関連せず活力重視。日本手相学では精神面も含む。短い線を短命と誤解しないよう注意。"
+    },
+    {
+      "line_name": "頭脳線",
+      "english_name": "Head Line",
+      "position": "生命線の中間または人差し指下から水平に手のひらを横断。中指方向へ向かう。",
+      "reading_target": "知性、思考パターン、精神集中力、判断力、創造性",
+      "variations": [
+        {"pattern": "長い", "meaning": "論理的思考が強く、持続力あり。"},
+        {"pattern": "短い", "meaning": "実践的・直感的な思考。"},
+        {"pattern": "明瞭で直線的", "meaning": "分析力が高く現実的。"},
+        {"pattern": "不明瞭・曲がりくねる", "meaning": "精神不安定や集中力散漫。"},
+        {"pattern": "二重線", "meaning": "創造性豊か、多才。"},
+        {"pattern": "切断", "meaning": "精神的な危機や転職。"},
+        {"pattern": "末端の分岐", "meaning": "多角的思考。"},
+        {"pattern": "島紋", "meaning": "頭痛や精神ストレス期。"}
+      ],
+      "branches": {
+        "上向き分岐": "創造性・理想主義向上",
+        "下向き分岐": "現実的制約や挫折"
+      },
+      "depth": {
+        "深い": "強い意志と集中力",
+        "浅い": "優柔不断や精神疲労"
+      },
+      "combination": {
+        "感情線との交差": "感情と理性の葛藤",
+        "生命線から分岐": "健康が知性に影響"
+      },
+      "caveats": "西洋では創造性重視、日本では学業・仕事運も。起始位置で性格差（人差し指下=理想主義、中指下=現実主義）。"
+    },
+    {
+      "line_name": "感情線",
+      "english_name": "Heart Line",
+      "position": "小指下（水星丘）から人差し指または中指下に向かって手のひら上部を水平に走る。",
+      "reading_target": "感情表現、恋愛観、人間関係、心の健康",
+      "variations": [
+        {"pattern": "長い", "meaning": "情熱的で献身的。"},
+        {"pattern": "短い", "meaning": "感情抑制型、冷静。"},
+        {"pattern": "明瞭で曲線的", "meaning": "感受性豊か、ロマンチスト。"},
+        {"pattern": "直線的", "meaning": "現実的で安定した愛情。"},
+        {"pattern": "二重線", "meaning": "複雑な恋愛運、魅力大。"},
+        {"pattern": "切断", "meaning": "失恋や心労。"},
+        {"pattern": "末端の分岐", "meaning": "選択肢が多い。"},
+        {"pattern": "鎖状", "meaning": "感情不安定、恋多難。"}
+      ],
+      "branches": {
+        "上向き分岐": "理想的な恋愛志向",
+        "下向き分岐": "現実的・嫉妬深い"
+      },
+      "depth": {
+        "深い": "情熱的で深い愛情",
+        "浅い": "感情薄く、ドライ"
+      },
+      "combination": {
+        "頭脳線との交差": "理性が感情を抑える",
+        "太陽線との交差": "恋愛が成功に影響"
+      },
+      "caveats": "西洋: 起始位置で性格差（人差し指下=理想型、中指下=現実型）。日本: 家族運も含む。"
+    },
+    {
+      "line_name": "運命線",
+      "english_name": "Fate Line / Saturn Line",
+      "position": "手首または月丘から中指下（土星丘）に向かって垂直に走る。",
+      "reading_target": "人生の方向性、キャリア、社会的地位、運命の流れ",
+      "variations": [
+        {"pattern": "長く・明瞭", "meaning": "安定したキャリア成功。"},
+        {"pattern": "短い・不明瞭", "meaning": "運命不定、自己開拓型。"},
+        {"pattern": "二重線", "meaning": "複数のキャリアパス。"},
+        {"pattern": "切断", "meaning": "転職や人生転機。"},
+        {"pattern": "分岐", "meaning": "選択による運命分岐。"},
+        {"pattern": "島紋", "meaning": "仕事の停滞期。"},
+        {"pattern": "鎖状", "meaning": "キャリア不安定。"},
+        {"pattern": "起始遅れ（手のひら中央以降から開始）", "meaning": "後発成功型。"}
+      ],
+      "branches": {
+        "上向き分岐": "昇進・成功",
+        "下向き分岐": "挫折・降格"
+      },
+      "depth": {
+        "深い": "強い運命力、社会的成功",
+        "浅い": "運命弱く、努力次第"
+      },
+      "combination": {
+        "生命線起始共有": "生来の運命強し",
+        "頭脳線交差": "知性によるキャリア成功"
+      },
+      "caveats": "西洋: 土星線、日本: 運命線。存在しない場合も多く、ない=自由運命と解釈する流派あり。"
+    },
+    {
+      "line_name": "太陽線",
+      "english_name": "Sun Line / Apollo Line",
+      "position": "薬指下（太陽丘）から手首または月丘方向へ垂直に下る線。",
+      "reading_target": "名声、成功、創造性、芸術的才能、社会的評価",
+      "variations": [
+        {"pattern": "長く・明瞭", "meaning": "大成功、名声。"},
+        {"pattern": "短い", "meaning": "局所的成功。"},
+        {"pattern": "二重線", "meaning": "多分野での成功。"},
+        {"pattern": "切断", "meaning": "成功の中断。"},
+        {"pattern": "分岐", "meaning": "成功の多方向性。"},
+        {"pattern": "島紋", "meaning": "評判低下期。"},
+        {"pattern": "起始早い", "meaning": "若手成功。"},
+        {"pattern": "不明瞭", "meaning": "才能未発揮。"}
+      ],
+      "branches": {
+        "上向き分岐": "栄光の拡大",
+        "下向き分岐": "名声の喪失"
+      },
+      "depth": {
+        "深い": "輝かしい成功",
+        "浅い": "控えめな評価"
+      },
+      "combination": {
+        "運命線との合流": "仕事経由の名声",
+        "感情線交差": "恋愛が成功に寄与"
+      },
+      "caveats": "西洋: アポロ線、日本: 太陽線・成功線。ない場合も才能はある。"
+    },
+    {
+      "line_name": "結婚線",
+      "english_name": "Marriage Line / Affection Line",
+      "position": "小指下（水星丘）の横、感情線上部の短い水平線群。",
+      "reading_target": "結婚、恋愛、パートナーシップの回数と質",
+      "variations": [
+        {"pattern": "長い", "meaning": "結婚が長続き、安定。"},
+        {"pattern": "短い", "meaning": "短期間の関係。"},
+        {"pattern": "明瞭", "meaning": "真剣な恋愛・結婚。"},
+        {"pattern": "不明瞭・多数", "meaning": "恋多きが結婚遅れ。"},
+        {"pattern": "二重線", "meaning": "同時期の複数関係。"},
+        {"pattern": "末端のフォーク（分岐）", "meaning": "不安定な結婚。"},
+        {"pattern": "島紋", "meaning": "離婚・破局期。"},
+        {"pattern": "上向き", "meaning": "幸福な結婚。"}
+      ],
+      "branches": {
+        "上向き分岐": "結婚による幸運",
+        "下向き分岐": "結婚の障害"
+      },
+      "depth": {
+        "深い": "強い絆の結婚",
+        "浅い": "軽い関係"
+      },
+      "combination": {
+        "感情線に接する": "情熱的な結婚",
+        "太陽線に接する": "結婚が成功をもたらす"
+      },
+      "caveats": "西洋: 恋愛全般を示す。日本: 結婚特化。線の数=結婚回数ではない（質を重視）。"
+    },
+    {
+      "line_name": "財運線",
+      "english_name": "Mercury Line / Money Line",
+      "position": "小指下（水星丘）から手のひら上部を垂直に下る線。",
+      "reading_target": "金運、ビジネス成功、商才、健康（副次的）",
+      "variations": [
+        {"pattern": "長く・明瞭", "meaning": "安定した財運。"},
+        {"pattern": "短い", "meaning": "一時的金運。"},
+        {"pattern": "二重線", "meaning": "複数収入源。"},
+        {"pattern": "切断", "meaning": "金銭トラブル。"},
+        {"pattern": "分岐", "meaning": "投資多岐。"},
+        {"pattern": "島紋", "meaning": "出費期。"},
+        {"pattern": "鎖状", "meaning": "不安定な金運。"},
+        {"pattern": "運命線に合流", "meaning": "仕事経由の富。"}
+      ],
+      "branches": {
+        "上向き分岐": "金運向上",
+        "下向き分岐": "金銭損失"
+      },
+      "depth": {
+        "深い": "強い商才",
+        "浅い": "金運弱"
+      },
+      "combination": {
+        "生命線交差": "健康が金運に影響",
+        "太陽線合流": "名声が富を生む"
+      },
+      "caveats": "西洋: 健康線寄りの位置に重なる場合あり。日本: 財運特化。副線として見る流派が多い。"
+    },
+    {
+      "line_name": "健康線",
+      "english_name": "Health Line",
+      "position": "月丘から水星丘へ斜めに走る線（財運線と重なる場合あり）。",
+      "reading_target": "神経・消化器系の健康、精神衛生",
+      "variations": [
+        {"pattern": "長い・直線", "meaning": "良好な健康。"},
+        {"pattern": "短い・不明瞭", "meaning": "健康注意。"},
+        {"pattern": "二重線", "meaning": "回復力強。"},
+        {"pattern": "切断", "meaning": "手術・重病。"},
+        {"pattern": "分岐", "meaning": "慢性疾患。"},
+        {"pattern": "島紋", "meaning": "病気期。"},
+        {"pattern": "鎖状", "meaning": "神経過敏。"},
+        {"pattern": "曲線的", "meaning": "回復早い。"}
+      ],
+      "branches": {
+        "上向き分岐": "健康回復",
+        "下向き分岐": "悪化兆候"
+      },
+      "depth": {
+        "深い": "頑健",
+        "浅い": "虚弱"
+      },
+      "combination": {
+        "生命線交差": "重大疾患注意",
+        "頭脳線交差": "精神疾患"
+      },
+      "caveats": "西洋: 独立線。日本: 財運線と兼用する流派あり。健康線が存在しない=健康良好と解釈。"
+    },
+    {
+      "line_name": "直感線",
+      "english_name": "Intuition Line",
+      "position": "月丘または水星丘付近から手のひら上部へ短く曲線的に走る線。",
+      "reading_target": "直感力、霊感、予知能力、創造的ひらめき",
+      "variations": [
+        {"pattern": "長く・曲線的", "meaning": "強い直感力。"},
+        {"pattern": "短い", "meaning": "時折のひらめき。"},
+        {"pattern": "明瞭", "meaning": "信頼できる直感。"},
+        {"pattern": "二重線", "meaning": "超人的直感。"},
+        {"pattern": "分岐", "meaning": "多様なインスピレーション。"},
+        {"pattern": "島紋", "meaning": "直感混乱期。"},
+        {"pattern": "不明瞭", "meaning": "直感未開発。"},
+        {"pattern": "起始月丘", "meaning": "芸術的直感。"}
+      ],
+      "branches": {
+        "上向き分岐": "直感成功",
+        "下向き分岐": "誤った直感"
+      },
+      "depth": {
+        "深い": "鋭い第六の感覚",
+        "浅い": "弱い直感"
+      },
+      "combination": {
+        "感情線に接する": "恋愛直感強",
+        "頭脳線に接する": "知的ひらめき"
+      },
+      "caveats": "西洋では稀有な線。日本では芸術家に多いとされる。過信は禁物。"
+    }
+  ],
+  "mounts": [
+    {
+      "mount_name": "木星丘",
+      "english_name": "Jupiter Mount",
+      "ruling_planet": "木星",
+      "position": "人差し指の下、親指と中指の間あたり",
+      "reading_target": "リーダーシップ、野心、自己尊重",
+      "developed": "強いリーダーシップ、自信家、成功運が高い",
+      "normal": "バランスの取れた野心と謙虚さ",
+      "weak": "自信不足、消極的、依存的",
+      "excessive": "傲慢、自己中心、権力中毒"
+    },
+    {
+      "mount_name": "土星丘",
+      "english_name": "Saturn Mount",
+      "ruling_planet": "土星",
+      "position": "中指の下",
+      "reading_target": "責任感、忍耐、運命観",
+      "developed": "真面目、責任感が強く、忍耐強い",
+      "normal": "現実的で堅実な性格",
+      "weak": "悲観的、孤独感、内省的すぎる",
+      "excessive": "抑うつ、運命論者、自己犠牲的"
+    },
+    {
+      "mount_name": "太陽丘",
+      "english_name": "Apollo / Sun Mount",
+      "ruling_planet": "太陽",
+      "position": "薬指の下",
+      "reading_target": "創造性、名声、芸術的才能",
+      "developed": "創造力豊か、名声を得やすい、楽観的",
+      "normal": "適度な創造性と社交性",
+      "weak": "自信不足、芸術センスに欠ける",
+      "excessive": "浮ついた性格、虚栄心が強すぎる"
+    },
+    {
+      "mount_name": "水星丘",
+      "english_name": "Mercury Mount",
+      "ruling_planet": "水星",
+      "position": "小指の下、手首寄り",
+      "reading_target": "知性、コミュニケーション、ビジネスセンス",
+      "developed": "頭の回転が速く、商才に恵まれる",
+      "normal": "普通のコミュニケーション能力",
+      "weak": "口下手、ビジネス苦手、内向的",
+      "excessive": "狡猾、欺瞞的、信用を失う"
+    },
+    {
+      "mount_name": "金星丘",
+      "english_name": "Venus Mount",
+      "ruling_planet": "金星",
+      "position": "親指の付け根あたり、親指と第一火星丘の間",
+      "reading_target": "愛情、情熱、肉体的活力",
+      "developed": "情熱的、愛情深い、魅力的な性格",
+      "normal": "健全な愛情表現と肉体的活力",
+      "weak": "愛情薄い、活力不足、内向的",
+      "excessive": "性的放縦、情欲過多、自己制御不能"
+    },
+    {
+      "mount_name": "月丘",
+      "english_name": "Luna / Moon Mount",
+      "ruling_planet": "月",
+      "position": "手のひらの端、手首寄りの小指側",
+      "reading_target": "想像力、直感、神秘性",
+      "developed": "豊かな想像力、直感力が高い",
+      "normal": "普通の想像力と感受性",
+      "weak": "想像力欠如、現実主義過剰",
+      "excessive": "妄想癖、精神不安定、現実逃避"
+    },
+    {
+      "mount_name": "第一火星丘",
+      "english_name": "Mars Positive",
+      "ruling_planet": "火星",
+      "position": "親指の上、金星丘の外側",
+      "reading_target": "勇気、積極性、戦闘力",
+      "developed": "勇敢、行動力があり、積極的",
+      "normal": "適度な勇気と積極性",
+      "weak": "臆病、優柔不断、消極的",
+      "excessive": "暴力性、破壊的、好戦的"
+    },
+    {
+      "mount_name": "第二火星丘",
+      "english_name": "Mars Negative",
+      "ruling_planet": "火星",
+      "position": "薬指の下、太陽丘の外側",
+      "reading_target": "自衛本能、抵抗力、防御力",
+      "developed": "強い自衛本能、危機回避能力が高い",
+      "normal": "普通の抵抗力と防御力",
+      "weak": "脆弱、ストレス耐性低い",
+      "excessive": "復讐心、執念深い、敵対的"
+    },
+    {
+      "mount_name": "火星平原",
+      "english_name": "Plain of Mars",
+      "ruling_planet": "火星",
+      "position": "手のひらの中央、第一・第二火星丘の間",
+      "reading_target": "活力、エネルギー、精神力",
+      "developed": "エネルギッシュ、活力に満ちている",
+      "normal": "普通の活力と精神力",
+      "weak": "無気力、怠惰、精神的に弱い",
+      "excessive": "過剰な緊張、ストレス過多、神経質"
+    }
+  ],
+  "hand_shapes": [
+    {
+      "type_name": "地の手",
+      "element": "地",
+      "english_name": "Earth Hand",
+      "physical_features": "四角い掌と短い指、厚みのある手、関節が目立つ、骨ばった印象",
+      "personality": "現実的、堅実、忍耐強い、保守的",
+      "strengths": "信頼性、勤勉さ、長期的な計画力",
+      "weaknesses": "変化を嫌う、柔軟性に欠ける、冒険心がない",
+      "compatible_career": ["農家", "建築家", "銀行員", "管理職", "職人"]
+    },
+    {
+      "type_name": "風の手",
+      "element": "風",
+      "english_name": "Air Hand",
+      "physical_features": "四角い掌と長い指、細長い手、指がまっすぐ、知的な印象",
+      "personality": "知的、社交的、論理的、好奇心旺盛",
+      "strengths": "分析力、コミュニケーション能力、適応力",
+      "weaknesses": "感情表現が苦手、優柔不断、冷徹に見える",
+      "compatible_career": ["弁護士", "ジャーナリスト", "教師", "営業", "外交官"]
+    },
+    {
+      "type_name": "水の手",
+      "element": "水",
+      "english_name": "Water Hand",
+      "physical_features": "長くて細い掌と指、柔らかい手、指先が尖っている、繊細な印象",
+      "personality": "感受性豊か、感情的、直感的、芸術的",
+      "strengths": "共感力、創造性、想像力",
+      "weaknesses": "感情不安定、優柔不断、現実逃避",
+      "compatible_career": ["芸術家", "心理カウンセラー", "音楽家", "詩人", "占い師"]
+    },
+    {
+      "type_name": "火の手",
+      "element": "火",
+      "english_name": "Fire Hand",
+      "physical_features": "短い掌と長い指、温かみのある手、指が尖っている、エネルギッシュな印象",
+      "personality": "情熱的、積極的、冒険好き、リーダーシップがある",
+      "strengths": "行動力、創造性、カリスマ性",
+      "weaknesses": "短気、衝動的、我慢ができない",
+      "compatible_career": ["起業家", "俳優", "スポーツ選手", "政治家", "広告"]
+    }
+  ],
+  "special_marks": [
+    {
+      "mark_name": "マスカケ線",
+      "english_name": "Simian Line",
+      "description": "感情線と頭脳線が1本に融合し、手のひらを横断する線",
+      "position": "手のひら中央",
+      "meaning": "天下取りの相。集中力・決断力が極めて強い。徳川家康・織田信長の手にあったとされる。日本では「百握り」とも呼ばれ、握力と運の強さの象徴。",
+      "rarity": "5〜10%程度",
+      "caveats": "両手にあると更に強運。片手のみは半マスカケと呼ばれ、変則的な才能。"
+    },
+    {
+      "mark_name": "神秘十字",
+      "english_name": "Mystic Cross",
+      "description": "頭脳線と感情線の間に十字形が現れる",
+      "position": "手のひら中央、感情線と頭脳線の間",
+      "meaning": "深い直感・霊感、精神的な洞察力、危機を回避する守護力",
+      "rarity": "10%前後",
+      "caveats": "他の線と無関係に独立した十字形であることが条件。霊的職業（占い師・聖職者）に多い。"
+    },
+    {
+      "mark_name": "ソロモンの環",
+      "english_name": "Ring of Solomon",
+      "description": "人差し指の付け根を半円状に囲む線",
+      "position": "木星丘",
+      "meaning": "知恵・指導力・カウンセリング能力。人を導く才能。リーダーや教師に多い。",
+      "rarity": "5%程度",
+      "caveats": "完全な環は稀。半円でも意味を持つ。"
+    },
+    {
+      "mark_name": "覇王線",
+      "english_name": "Ruler's Line / Triple Ascending Line",
+      "description": "運命線・太陽線・財運線の3つが1点から放射状に出る、または同じ起点を共有する形",
+      "position": "手のひら中央〜上部",
+      "meaning": "億万長者の相。事業・名声・富の三冠を意味する。経営者・芸能人に多い。",
+      "rarity": "1%以下、極めて稀",
+      "caveats": "3線がそれぞれ明瞭であることが条件。完全な覇王線は生涯に出会えない手相師もいる。"
+    },
+    {
+      "mark_name": "仏眼",
+      "english_name": "Buddha Eye",
+      "description": "親指第一関節の腹側に、目の形（楕円＋中央の点）が現れる",
+      "position": "親指第一関節（爪に近い側）",
+      "meaning": "直感力・記憶力・先祖の守護。霊感が強い。仏教圏で重視される。",
+      "rarity": "20〜30%程度（よく出現）",
+      "caveats": "両手の親指にあるとより強い。片手のみでも意味を持つ。"
+    },
+    {
+      "mark_name": "スター（星紋）",
+      "english_name": "Star",
+      "description": "5本以上の短い線が放射状に交差し、星の形を描く",
+      "position": "丘の上（特に木星丘・太陽丘）に出現すると吉",
+      "meaning": "突発的な幸運・成功・名声。出現する位置によって意味が変わる（木星丘=出世、太陽丘=名声、金星丘=突発的恋愛）",
+      "rarity": "稀",
+      "caveats": "土星丘の星紋は注意（突発的な不運の暗示）。"
+    },
+    {
+      "mark_name": "島紋",
+      "english_name": "Island",
+      "description": "線の途中に楕円形の閉じた輪ができる",
+      "position": "各主要線上",
+      "meaning": "エネルギーの停滞、停滞期、健康・運気の低下を示す",
+      "rarity": "比較的よく出現",
+      "caveats": "島紋の前後で線が再度明瞭になれば、停滞期を経て回復する暗示。深刻に解釈しすぎない。"
+    },
+    {
+      "mark_name": "鎖状",
+      "english_name": "Chained",
+      "description": "線が小さな輪を繰り返す鎖のような連なり",
+      "position": "各主要線上",
+      "meaning": "不安定さ、困難の連続、精神的な揺らぎ",
+      "rarity": "中程度",
+      "caveats": "鎖状の部分は弱まりを示すが、その先が直線に戻れば改善する。"
+    },
+    {
+      "mark_name": "三角紋",
+      "english_name": "Triangle",
+      "description": "3本の線が独立して三角形を形成する",
+      "position": "丘の上または線の交差点",
+      "meaning": "知性・才能・成功。出現する位置によって意味が変化（木星丘=リーダー、太陽丘=芸術、水星丘=ビジネス成功）",
+      "rarity": "比較的稀",
+      "caveats": "他の線が三角形を成しているように見えるだけのものは無効。3本が独立していること。"
+    },
+    {
+      "mark_name": "格子状（グリル）",
+      "english_name": "Grille",
+      "description": "縦横の線が格子状に交差する模様",
+      "position": "丘の上",
+      "meaning": "エネルギーの過剰または分散。混乱・選択の迷い・葛藤を示す",
+      "rarity": "中程度",
+      "caveats": "金星丘の格子は感情の過剰、月丘の格子は妄想癖を示す。"
+    },
+    {
+      "mark_name": "大三角形",
+      "english_name": "Great Triangle",
+      "description": "生命線・頭脳線・健康線で囲まれる三角形",
+      "position": "手のひら中央",
+      "meaning": "バランスの良い人格、健康と知性と生命力の調和",
+      "rarity": "中程度（検出しやすい）",
+      "caveats": "三角形が広いほど運気が強く、狭いほど消極的傾向。鑑定文で素材として使いやすい。"
+    },
+    {
+      "mark_name": "四角紋",
+      "english_name": "Square",
+      "description": "4本の独立した線が四角形を形成する。または線の切断部を囲む形",
+      "position": "丘の上または線の切断部",
+      "meaning": "保護のマーク。線の切断部にあると「困難を乗り越える」意味。建設業の経営者層への語り口に最適",
+      "rarity": "中程度",
+      "caveats": "切断部の四角紋は「危機を回避できる」と語る。独立した四角紋は「保護された運気」と語る。"
+    }
+  ],
+  "hands_left_right": {
+    "dominant_hand_meaning": "利き手は後天的・現在の人生、経験、環境の影響、努力の結果、潜在能力の発揮度を示す。日常の行動パターンや達成したスキルが反映され、変化しやすい。",
+    "non_dominant_hand_meaning": "非利き手は先天的・生まれ持った素質、潜在能力、運命の基盤、幼少期の影響を示す。比較的変化しにくく、本質的な性格や遺伝的要素を表す。",
+    "japanese_school": "日本流派主流：左手=先天（潜在・生まれ持った運命）、右手=後天（現在の状況・努力結果）。古典では性別逆転説あり（女性は右=先天）が、現代日本では性別問わず左手先天・右手後天が標準。",
+    "western_school": "西洋流派：利き手（通常右手）=現在の人生・意識的行動・現実、非利き手（通常左手）=潜在意識・無意識・過去の影響。性別差異は薄く、利き手基準が主流。",
+    "both_hands_comparison": [
+      "左手線が右より強い：潜在能力が高く、努力次第で大成（例：生命線が長い場合）",
+      "右手線が左より強い：後天的努力で運命改善（例：頭脳線が枝分かれ）",
+      "両手で線形状一致：運命固定型、変化しにくい人生",
+      "両手で線途切れ位置違い：人生転機多め、適応力高い",
+      "左手丘発達・右手未発達：才能が眠っている、開花の必要あり",
+      "右手感情線乱れ・左手安定：環境ストレスによる感情不安定",
+      "両手指長さ違い：潜在性格と現実行動のギャップ大"
+    ],
+    "gender_traditions": {
+      "classical": "古典（特に日本・中国）：男性=右手先天・左手後天（外向活動中心）、女性=左手先天・右手後天（内向家事中心）",
+      "modern": "現代：性別差を無視、利き手基準または左手先天・右手後天で統一。日本のアプリでは性別選択で自動調整推奨"
+    }
+  },
+  "schools_comparison": {
+    "western": {
+      "origin": "古代ギリシャ・ローマ起源、17世紀イギリスで体系化（Cheiro, Benham）。20世紀アメリカでポップ化",
+      "key_focus": "三大線（生命・知能・感情線）、指形状・爪、丘（金星・月・木星丘）",
+      "distinctive_techniques": "線分岐・島・枝の心理分析、指節比率による性格診断、惑星対応丘の強弱",
+      "philosophical_basis": "占星術・ヘルメス哲学、人相学との統合、心理分析的アプローチ",
+      "strengths": "直感的・心理カウンセリング向き、線変化で成長追跡可能、初心者向き",
+      "limitations": "文化特異性高、科学的エビデンス薄、細部過多で混乱招く",
+      "typical_use_cases": "恋愛・キャリア相談、性格診断、メンタルヘルス補助"
+    },
+    "eastern_japanese_chinese": {
+      "origin": "中国漢代起源（鬼谷子）、日本江戸時代独自発展、現代では水晶玉子等が体系化。中国は四柱推命と連動",
+      "key_focus": "十大線（結婚線・干渉線等細分化）、手指紋・爪の長さ、運命周期分析",
+      "distinctive_techniques": "左右比較・性別差、年齢特定（流年法）、干支対応の運気予測",
+      "philosophical_basis": "陰陽五行・気学、算命学・九星気学との統合、運命改変論",
+      "strengths": "運勢予測の精度が高い、日本人になじみ深い、既存占術（四柱推命・九星）と親和性抜群",
+      "limitations": "流派分裂多、性別ルール複雑、画像品質依存大",
+      "typical_use_cases": "結婚・転職タイミング、金運・健康寿命、家族運鑑定"
+    },
+    "indian_vedic": {
+      "origin": "ヴェーダ経典（紀元前1500年）、パラシャラ師系譜、現代タミル・ベンガル流派",
+      "key_focus": "ナディ（運命線細分）、指紋・指印、丘・指の惑星対応",
+      "distinctive_techniques": "指紋パターン（ループ・渦）によるカルマ診断、前世線分析、ムドラ（手印）活用",
+      "philosophical_basis": "ヴェーダ占星術（ジョーティシュ）、カルマ・輪廻思想、アーユルヴェーダ連動",
+      "strengths": "スピリチュアル深度大、前世・来世予測、ホリスティック健康診断",
+      "limitations": "専門性高・学習曲線急、日本人になじみ薄い、線定義が曖昧",
+      "typical_use_cases": "魂の目的探求、業（カルマ）解消、結婚相性・子宝相談"
+    }
+  },
+  "recommended_school_for_uranai_monster": {
+    "primary": "eastern_japanese_chinese",
+    "secondary": "western",
+    "rationale": "日本の利用者向けに最適。日本流派が親和性最高（認知度No.1）、左手先天・右手後天が直感的。既存占術との整合：算命学・四柱推命・九星気学と陰陽五行を共有しクロス分析可能（例：生命線+九星で健康運強化）。紫微斗数・万象学とも東洋系で親和。西洋をsecondaryに：三大線で心理・恋愛補完（タロット・数秘との連携）。インド流派はニッチすぎて日本ユーザーが離脱するリスクあり。アプリ設計：性別選択で左右自動反転、十大線で詳細運勢、三大線で簡易モードを提供。"
+  },
+  "presentation_guidance": {
+    "masakake": {
+      "level": "特別演出",
+      "rules": [
+        "鑑定文の冒頭で「特別な手相が検出されました」と表示",
+        "「百人にひとりの手だ」と断言する語り口",
+        "徳川家康・織田信長の逸話を添える",
+        "片手のみは「半マスカケ」として変則的才能扱い",
+        "出やすくする調整は禁止（出ないときは出ない、だから価値がある）"
+      ]
+    },
+    "buddha_eye": {
+      "level": "控えめ演出",
+      "rules": [
+        "「直感が鋭い傾向がありますね」程度の言及に留める",
+        "マスカケ線・覇王線とは演出レベルを明確に差別化",
+        "スピリチュアル過剰は禁止（建設業の経営者層が引く）"
+      ]
+    },
+    "haoh_line": {
+      "level": "最大演出",
+      "rules": [
+        "1%以下の希少性を全面に出す",
+        "「億万長者の相」と語る",
+        "経営者・芸能人の例を引用"
+      ]
+    },
+    "great_triangle": {
+      "level": "通常演出",
+      "rules": [
+        "「バランスの良い人柄」「健康と知性の調和」",
+        "三角形が広いほど運気が強いと語る"
+      ]
+    },
+    "square": {
+      "level": "建設業経営者向け特化演出",
+      "rules": [
+        "「保護の印」「困難を乗り越える力」",
+        "建設業の経営者層を念頭に「危機を回避できる手相」と語る"
+      ]
+    }
+  },
+  "integration_with_uranai_monster": {
+    "with_sanmei_kenushi_star": "牽牛星（リーダー）→ 木星丘の発達と一致確認",
+    "with_shichusuimei_jikkan": "日干の強弱 → 生命線の強さと相関",
+    "with_kyusei_honmeiboshi": "本命星 → 各丘の発達パターンと対応",
+    "with_shibi_meigung": "命宮の主星 → 運命線の起始位置と対応",
+    "with_bansho_gogyo": "万象学の五行と手の形状（地/風/水/火）は『類似性の示唆』として扱う。万象学の五行は干支計算からの数値、手の形状は物理特徴。算出根拠が異なるので「直接対応」とは語らず、「偶然ではない一致」「両方が同じ方向を指している」と表現する",
+    "with_seiyou_taiyou": "太陽宮 → 太陽丘・太陽線の発達",
+    "with_suuhi_lifepath": "ライフパス → 主要線の構造パターン",
+    "with_tarot_arcana": "大アルカナ → 特殊マーク（マスカケ・神秘十字等）と物語的に対応"
+  },
+  "phase2_candidates": [
+    {
+      "name": "旅行線（Travel Line）",
+      "description": "月丘から出る短い横線。出張・海外運",
+      "rationale": "建設業経営者は現場を飛び回る → 顧客層に刺さる素材。Phase 2 で追加価値"
+    },
+    {
+      "name": "流年法",
+      "description": "線の位置から年齢を推定（生命線中央=30〜40歳など）",
+      "rationale": "精度が低いため v1 では入れない。Phase 2 で『時間軸の鑑定』として実装"
+    },
+    {
+      "name": "太陽の輪 / 土星の輪",
+      "description": "薬指・中指の付け根を囲む線",
+      "rationale": "検出難度が高い。Phase 2 で精度の高い画像認識APIに切替後に検討"
+    }
+  ]
+}

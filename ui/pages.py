@@ -374,6 +374,10 @@ def render_top_page():
             st.session_state.page = "kaiyun_input"
             st.rerun()
         st.markdown("<br>", unsafe_allow_html=True)
+        if st.button("✋ 手相鑑定", key="btn_palm"):
+            st.session_state.page = "palm_input"
+            st.rerun()
+        st.markdown("<br>", unsafe_allow_html=True)
         if st.button("⚙ 設定", key="btn_settings"):
             st.session_state.page = "settings"
             st.rerun()
@@ -5061,3 +5065,244 @@ def _render_kaiyun_ai_section(period_key: str, name: str, person_data: dict, con
             st.rerun()
         else:
             st.warning("AI鑑定文の生成に失敗しました。もう一度お試しください。")
+
+
+# ============================================================
+# 手相鑑定 (Palm Reading) — Round 6 実装 2026-04-28
+# ============================================================
+
+def render_palm_input_page():
+    """手相鑑定 入力画面: プライバシー宣言＋撮影/アップロード＋利き手選択"""
+    render_star_deco("✋")
+    st.markdown(
+        '<div class="uranai-title" style="font-size:1.4em;">✋ 手相鑑定</div>',
+        unsafe_allow_html=True,
+    )
+    st.markdown(
+        '<div style="text-align:center; color:#8A8478; font-size:0.85em;">'
+        '〜 手のひらに刻まれた宿命を読む 〜</div>',
+        unsafe_allow_html=True,
+    )
+    render_gold_divider()
+
+    # プライバシー宣言
+    st.info(
+        "🔒 **プライバシー保護**\n\n"
+        "- 撮影した画像は鑑定中のみメモリ上で処理されます\n"
+        "- 鑑定後、画像は **即座に破棄** されます\n"
+        "- サーバー・データベース・ログに **一切保存されません**"
+    )
+
+    # 撮り方ガイド
+    with st.expander("📸 撮り方のコツ（初めての方はクリック）", expanded=False):
+        st.markdown(
+            "### 鑑定精度を高めるコツ\n\n"
+            "1. **明るい場所** で撮影（自然光・蛍光灯OK、フラッシュは禁）\n"
+            "2. スマホを **真上から** 構える\n"
+            "3. **指を全部開く**（指の間も見えるように）\n"
+            "4. **手首から指先まで** フレームに収める\n"
+            "5. 解像度は **横1000px以上** が望ましい（最近のスマホは自動でクリア）\n\n"
+            "📌 **iPhone Safari でカメラが動かない場合** は、写真アプリで撮影してから\n"
+            "「写真をアップロード」を選んでください。"
+        )
+
+    # 撮影方法
+    method = st.radio(
+        "撮影方法を選んでください",
+        ["📁 写真をアップロード（推奨）", "📷 カメラで撮影（PC向け）"],
+        horizontal=True,
+        index=0,
+        key="_palm_method",
+    )
+
+    image_file = None
+    if "カメラ" in method:
+        image_file = st.camera_input("手のひらを撮影", key="_palm_camera")
+    else:
+        image_file = st.file_uploader(
+            "手のひらの写真をアップロード",
+            type=["jpg", "jpeg", "png", "heic"],
+            key="_palm_upload",
+        )
+
+    # 利き手選択
+    hand_label = st.radio(
+        "どちらの手ですか？",
+        ["右手（後天・現在の状況）", "左手（先天・本質）"],
+        horizontal=True,
+        index=0,
+        key="_palm_hand_radio",
+    )
+    hand = "right" if "右" in hand_label else "left"
+
+    # 開始ボタン
+    if image_file:
+        if st.button("✦ 鑑定を始める ✦", use_container_width=True, key="_palm_start"):
+            from core.palm import preprocess_image, check_quality
+            with st.spinner("画像を確認しています..."):
+                processed = preprocess_image(image_file)
+                quality = check_quality(processed["bytes"])
+
+            if not quality["ok"]:
+                st.error("画像の品質に問題があります：")
+                for issue in quality["issues"]:
+                    st.markdown(f"- {issue}")
+                st.stop()
+
+            # session_state へ（鑑定処理中のみ保持）
+            st.session_state["_palm_image_bytes"] = processed["bytes"]
+            st.session_state["_palm_hand"] = hand
+            st.session_state["page"] = "palm_loading"
+            st.rerun()
+
+    render_gold_divider()
+    if st.button("← TOPに戻る", key="_palm_back_input"):
+        st.session_state["page"] = "top"
+        st.rerun()
+
+
+def render_palm_loading_page():
+    """手相鑑定 ローディング画面: Gemini分析 → Claude鑑定文生成"""
+    from ai.palm_interpreter import run_palm_pipeline
+    from core.palm import log_palm_reading_audit, cleanup_session_state
+
+    img_bytes = st.session_state.get("_palm_image_bytes")
+    hand = st.session_state.get("_palm_hand", "right")
+
+    if not img_bytes:
+        st.session_state["page"] = "palm_input"
+        st.rerun()
+        return
+
+    render_star_deco("✋")
+    st.markdown(
+        '<div class="uranai-title" style="font-size:1.2em;">手相を読み取り中...</div>',
+        unsafe_allow_html=True,
+    )
+
+    user_profile = st.session_state.get("_auth_profile", {}) or {}
+    user_id = user_profile.get("employee_number") or "anon"
+
+    # 既存占術データ（あれば）
+    existing = st.session_state.get("_existing_uranai_results") or {}
+
+    with st.spinner("🖐️ Geminiが線・丘・マークを読み取っています..."):
+        result = run_palm_pipeline(img_bytes, hand=hand, existing=existing)
+
+    # 監査ログ
+    try:
+        log_palm_reading_audit(user_id, hand, img_bytes)
+    except Exception:
+        pass
+
+    # 画像の即時破棄
+    if "_palm_image_bytes" in st.session_state:
+        del st.session_state["_palm_image_bytes"]
+
+    if not result.get("ok"):
+        st.error(f"鑑定エラー: {result.get('error', '不明なエラー')}")
+        if st.button("入力画面に戻る", key="_palm_loading_back"):
+            cleanup_session_state(st)
+            st.session_state["page"] = "palm_input"
+            st.rerun()
+        return
+
+    # 結果保存
+    st.session_state["_palm_result"] = {
+        "palm_json": result["palm_json"],
+        "rationale": result["rationale"],
+        "hand": hand,
+    }
+    st.session_state["page"] = "palm_result"
+    st.rerun()
+
+
+def render_palm_result_page():
+    """手相鑑定 結果画面"""
+    from core.palm import cleanup_session_state
+
+    result = st.session_state.get("_palm_result")
+    if not result:
+        st.session_state["page"] = "palm_input"
+        st.rerun()
+        return
+
+    palm_json = result["palm_json"]
+    rationale = result["rationale"]
+    hand_label = "右手（後天）" if result["hand"] == "right" else "左手（先天）"
+
+    render_star_deco("✋")
+    st.markdown(
+        f'<div class="uranai-title" style="font-size:1.4em;">✋ 手相鑑定結果（{hand_label}）</div>',
+        unsafe_allow_html=True,
+    )
+    render_gold_divider()
+
+    # 検出サマリ（小さめに表示）
+    hs = palm_json.get("hand_shape", {}) or {}
+    hand_type = hs.get("type", "unknown")
+    hand_type_jp = {
+        "earth": "地（Earth）",
+        "air": "風（Air）",
+        "water": "水（Water）",
+        "fire": "火（Fire）",
+        "unknown": "判定不能",
+    }.get(hand_type, hand_type)
+
+    iq = palm_json.get("image_quality", {}) or {}
+    quality_jp = {"good": "良好", "acceptable": "許容範囲", "poor": "不足"}.get(
+        iq.get("rating", ""), iq.get("rating", "")
+    )
+
+    # 検出されたマーク一覧
+    detected_marks = [m["name"] for m in palm_json.get("special_marks", []) if m.get("detected")]
+    mark_jp_map = {
+        "simian_line": "マスカケ線",
+        "mystic_cross": "神秘十字",
+        "ring_of_solomon": "ソロモンの環",
+        "haoh_line": "覇王線",
+        "buddha_eye": "仏眼",
+        "star": "スター紋",
+        "great_triangle": "大三角形",
+        "square": "四角紋",
+    }
+    detected_marks_jp = [mark_jp_map.get(m, m) for m in detected_marks]
+
+    with st.expander("🔍 検出データ（Gemini 2.5 Pro）", expanded=False):
+        st.markdown(
+            f"- **手の形**: {hand_type_jp}\n"
+            f"- **手の形の判定理由**: {hs.get('rationale', '—')}\n"
+            f"- **画像品質**: {quality_jp}\n"
+            f"- **検出された特殊マーク**: {', '.join(detected_marks_jp) if detected_marks_jp else 'なし（通常運勢）'}"
+        )
+        st.json(palm_json)
+
+    # 鑑定文（Claude が生成したもの）
+    st.markdown("### くろたんの鑑定")
+    st.markdown(rationale)
+
+    # 共有ボタン（既存の統一実装に乗せる）
+    palm_title = f"手相鑑定 ({hand_label})"
+    palm_subtitle = f"手の形: {hand_type_jp}"
+    palm_hl = palm_json.get("overall_summary", "")
+    palm_text = _build_share_text(palm_title, palm_subtitle, palm_hl, rationale, "")
+    palm_pdf = _build_pdf_html(palm_title, palm_subtitle, palm_hl, rationale, "")
+    palm_digest = _build_share_digest(palm_title, palm_hl, "")
+    _render_share_buttons(palm_text, "palm", palm_pdf, palm_digest)
+
+    render_gold_divider()
+
+    # 戻るボタン
+    col1, col2 = st.columns(2)
+    with col1:
+        if st.button("✋ 別の手も鑑定", key="_palm_again"):
+            cleanup_session_state(st)
+            st.session_state["page"] = "palm_input"
+            st.rerun()
+    with col2:
+        if st.button("← TOPに戻る", key="_palm_back_top"):
+            cleanup_session_state(st)
+            st.session_state["page"] = "top"
+            st.rerun()
+
+    st.success("✓ 画像はメモリから消去済みです。安心してご利用ください。")

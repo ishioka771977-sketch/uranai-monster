@@ -71,6 +71,9 @@ from ui.pages import (
     render_meibo_page,
     render_kaiyun_input_page,
     render_kaiyun_result_page,
+    render_palm_input_page,
+    render_palm_loading_page,
+    render_palm_result_page,
     render_settings_page,
 )
 
@@ -161,6 +164,12 @@ elif page == "kaiyun_input":
     render_kaiyun_input_page()
 elif page == "kaiyun_result":
     render_kaiyun_result_page()
+elif page == "palm_input":
+    render_palm_input_page()
+elif page == "palm_loading":
+    render_palm_loading_page()
+elif page == "palm_result":
+    render_palm_result_page()
 elif page == "settings":
     render_settings_page()
 else:
