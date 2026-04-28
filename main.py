@@ -53,10 +53,11 @@ def _get_app_password() -> str | None:
 
 def _legacy_password_pass() -> bool:
     """旧 APP_PASSWORD が認証通過済みか判定（UI出さない）。
-    secrets未設定（ローカル開発）の場合は素通り扱い。"""
+    APP_PASSWORD が secrets に設定されていない場合は False（バイパス禁止）。
+    Auth 経由のログインを必須にする。"""
     expected = _get_app_password()
     if not expected:
-        return True
+        return False
     return bool(st.session_state.get("authenticated"))
 
 
@@ -124,8 +125,8 @@ from ui.pages import (
 # CSSを注入
 st.markdown(CUSTOM_CSS, unsafe_allow_html=True)
 
-# サイドバーにログアウトボタン (Auth or 旧 APP_PASSWORD のいずれかで認証中なら表示)
-if _auth_ok or (_get_app_password() and st.session_state.get("authenticated")):
+# サイドバーにログアウトボタン (Auth または APP_PASSWORD で認証中なら表示)
+if _auth_ok or st.session_state.get("authenticated"):
     with st.sidebar:
         st.markdown('<div style="color:#BFA350; font-size:0.9em; padding:6px 0;">✧ メニュー ✧</div>', unsafe_allow_html=True)
         # 認証中ユーザー名表示 (Auth 経由の場合のみ)
