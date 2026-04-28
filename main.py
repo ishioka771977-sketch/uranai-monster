@@ -31,6 +31,63 @@ st.set_page_config(
     initial_sidebar_state="collapsed",
 )
 
+# ============================================================
+# パスワード認証（緊急ブロック指令 2026-04-26）
+# ============================================================
+def _get_app_password() -> str | None:
+    """secrets から app password を取得。未設定ならNone。"""
+    try:
+        if "app" in st.secrets and "password" in st.secrets["app"]:
+            return st.secrets["app"]["password"]
+    except Exception:
+        pass
+    # 後方互換: フラットな APP_PASSWORD も許容
+    try:
+        if "APP_PASSWORD" in st.secrets:
+            return st.secrets["APP_PASSWORD"]
+    except Exception:
+        pass
+    return None
+
+
+def check_password() -> bool:
+    """パスワード認証。secrets未設定時は素通り（ローカル開発用）。"""
+    expected = _get_app_password()
+    if not expected:
+        # secrets未設定（ローカル開発）→ 認証スキップ
+        return True
+    if st.session_state.get("authenticated"):
+        return True
+
+    # ログイン画面
+    st.markdown(
+        '<div style="text-align:center; margin-top:60px;">'
+        '<div style="font-size:2em; color:#BFA350; letter-spacing:0.2em; '
+        'font-family:Noto Serif JP, serif;">✧ 占いモンスターくろたん ✧</div>'
+        '<div style="color:#8A8478; margin-top:8px; letter-spacing:0.1em;">— 入場するにはパスワードを入力してください —</div>'
+        '</div>',
+        unsafe_allow_html=True,
+    )
+    st.markdown("<br>", unsafe_allow_html=True)
+    col1, col2, col3 = st.columns([1, 2, 1])
+    with col2:
+        password = st.text_input(
+            "パスワード", type="password", key="_login_password",
+            placeholder="合言葉を入力", label_visibility="collapsed",
+        )
+        if st.button("✦ 入場する ✦", use_container_width=True, key="_login_btn"):
+            if password == expected:
+                st.session_state.authenticated = True
+                st.rerun()
+            else:
+                st.error("パスワードが違います")
+    return False
+
+
+if not check_password():
+    st.stop()
+
+
 from ui.styles import CUSTOM_CSS
 from ui.pages import (
     render_top_page,
@@ -61,6 +118,21 @@ from ui.pages import (
 
 # CSSを注入
 st.markdown(CUSTOM_CSS, unsafe_allow_html=True)
+
+# サイドバーにログアウトボタン（パスワード認証が有効なときのみ）
+if _get_app_password() and st.session_state.get("authenticated"):
+    with st.sidebar:
+        st.markdown('<div style="color:#BFA350; font-size:0.9em; padding:6px 0;">✧ メニュー ✧</div>', unsafe_allow_html=True)
+        if st.button("🚪 ログアウト", key="_logout_btn", use_container_width=True):
+            st.session_state.authenticated = False
+            # セッション状態を念のためクリア
+            for _k in list(st.session_state.keys()):
+                if _k != "_login_password":
+                    try:
+                        del st.session_state[_k]
+                    except Exception:
+                        pass
+            st.rerun()
 
 # セッション初期化
 if "page" not in st.session_state:
