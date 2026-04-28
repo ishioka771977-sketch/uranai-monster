@@ -10,12 +10,23 @@ from typing import Optional
 import requests
 import streamlit as st
 
+def _get_auth_api_base() -> str:
+    """環境変数 → secrets.toml → デフォルトの順で AUTH_API_BASE を取得。
+    secrets.toml が存在しなくても安全に動作。"""
+    env_val = os.environ.get("AUTH_API_BASE")
+    if env_val:
+        return env_val
+    try:
+        if "AUTH_API_BASE" in st.secrets:
+            return st.secrets["AUTH_API_BASE"]
+    except Exception:
+        # StreamlitSecretNotFoundError 等は無視
+        pass
+    return "https://yukyu-navi.vercel.app"
+
+
 # 認証ハブ: 有給ナビの /api/auth/* を呼ぶ
-AUTH_API_BASE = (
-    os.environ.get("AUTH_API_BASE")
-    or (st.secrets.get("AUTH_API_BASE") if hasattr(st, "secrets") and "AUTH_API_BASE" in st.secrets else None)
-    or "https://yukyu-navi.vercel.app"
-)
+AUTH_API_BASE = _get_auth_api_base()
 
 APP_NAME = "uranai-monster"
 
