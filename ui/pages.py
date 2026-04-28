@@ -5220,6 +5220,7 @@ def render_palm_loading_page():
 def render_palm_result_page():
     """手相鑑定 結果画面"""
     from core.palm import cleanup_session_state
+    from core.palm_diagram import generate_palm_diagram, generate_legend_html
 
     result = st.session_state.get("_palm_result")
     if not result:
@@ -5229,13 +5230,29 @@ def render_palm_result_page():
 
     palm_json = result["palm_json"]
     rationale = result["rationale"]
-    hand_label = "右手（後天）" if result["hand"] == "right" else "左手（先天）"
+    hand_key = result["hand"]
+    hand_label = "右手（後天）" if hand_key == "right" else "左手（先天）"
 
     render_star_deco("✋")
     st.markdown(
         f'<div class="uranai-title" style="font-size:1.4em;">✋ 手相鑑定結果（{hand_label}）</div>',
         unsafe_allow_html=True,
     )
+    render_gold_divider()
+
+    # ========================================================
+    # 手のひらイラスト（SVG）+ 凡例
+    # ========================================================
+    svg = generate_palm_diagram(palm_json, hand=hand_key, width=360, height=480)
+    legend_html = generate_legend_html(palm_json)
+
+    # PC: イラスト 3 : 凡例 2 の横並び。スマホは Streamlit が自動で縦積みに
+    col_img, col_legend = st.columns([3, 2])
+    with col_img:
+        st.markdown(svg, unsafe_allow_html=True)
+    with col_legend:
+        st.markdown(legend_html, unsafe_allow_html=True)
+
     render_gold_divider()
 
     # 検出サマリ（小さめに表示）
