@@ -33,64 +33,16 @@ st.set_page_config(
 )
 
 # ============================================================
-# パスワード認証（緊急ブロック指令 2026-04-26）
-# ============================================================
-def _get_app_password() -> str | None:
-    """secrets から app password を取得。未設定ならNone。"""
-    try:
-        if "app" in st.secrets and "password" in st.secrets["app"]:
-            return st.secrets["app"]["password"]
-    except Exception:
-        pass
-    # 後方互換: フラットな APP_PASSWORD も許容
-    try:
-        if "APP_PASSWORD" in st.secrets:
-            return st.secrets["APP_PASSWORD"]
-    except Exception:
-        pass
-    return None
-
-
-def _legacy_password_pass() -> bool:
-    """旧 APP_PASSWORD が認証通過済みか判定（UI出さない）。
-    APP_PASSWORD が secrets に設定されていない場合は False（バイパス禁止）。
-    Auth 経由のログインを必須にする。"""
-    expected = _get_app_password()
-    if not expected:
-        return False
-    return bool(st.session_state.get("authenticated"))
-
-
-def _legacy_password_login_inline():
-    """旧 APP_PASSWORD のログインUIを描画（login_page.py の旧パスワードタブから呼ぶ）。"""
-    expected = _get_app_password()
-    if not expected:
-        st.info("APP_PASSWORD 未設定（ローカル開発モード）")
-        return
-    password = st.text_input(
-        "パスワード", type="password", key="_legacy_password",
-        placeholder="合言葉を入力", label_visibility="collapsed",
-    )
-    if st.button("✦ 入場する ✦", use_container_width=True, key="_legacy_login_btn"):
-        if password == expected:
-            st.session_state.authenticated = True
-            st.rerun()
-        else:
-            st.error("パスワードが違います")
-
-
-# ============================================================
-# 認証ゲート: Supabase Auth (Phase 1) または 旧 APP_PASSWORD のどちらかが通れば access OK
-# 並行運用期間 (2〜3日) 後、APP_PASSWORD は撤去予定
+# 認証ゲート: Supabase Auth (device-token 方式)
+# 旧 APP_PASSWORD は 2026-04-28 に完全撤去
 # ============================================================
 import auth as _auth_mod
 from ui.login_page import render_login_page as _render_login_page
 
 _auth_ok = _auth_mod.try_auto_login()
-_legacy_ok = _legacy_password_pass()
 
-if not (_auth_ok or _legacy_ok):
-    _render_login_page(legacy_password_check_fn=_legacy_password_login_inline)
+if not _auth_ok:
+    _render_login_page()
     st.stop()
 
 
@@ -125,11 +77,10 @@ from ui.pages import (
 # CSSを注入
 st.markdown(CUSTOM_CSS, unsafe_allow_html=True)
 
-# サイドバーにログアウトボタン (Auth または APP_PASSWORD で認証中なら表示)
-if _auth_ok or st.session_state.get("authenticated"):
+# サイドバーにログアウトボタン
+if _auth_ok:
     with st.sidebar:
         st.markdown('<div style="color:#BFA350; font-size:0.9em; padding:6px 0;">✧ メニュー ✧</div>', unsafe_allow_html=True)
-        # 認証中ユーザー名表示 (Auth 経由の場合のみ)
         _disp = _auth_mod.get_display_name()
         if _disp:
             st.markdown(
@@ -138,17 +89,12 @@ if _auth_ok or st.session_state.get("authenticated"):
                 unsafe_allow_html=True,
             )
         if st.button("🚪 ログアウト", key="_logout_btn", use_container_width=True):
-            # Auth セッションクリア
             _auth_mod.logout()
-            # 旧 APP_PASSWORD フラグ
-            st.session_state["authenticated"] = False
-            # その他セッション状態
             for _k in list(st.session_state.keys()):
-                if _k not in ("_login_password", "_legacy_password"):
-                    try:
-                        del st.session_state[_k]
-                    except Exception:
-                        pass
+                try:
+                    del st.session_state[_k]
+                except Exception:
+                    pass
             st.rerun()
 
 # セッション初期化

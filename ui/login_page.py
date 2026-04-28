@@ -1,7 +1,6 @@
 """
 占いモンスター ログイン画面 (Phase 1 Auth)
 - ペアリング (6桁コード) または 管理者ログイン (社員番号のみ)
-- 並行運用期間中: 旧 APP_PASSWORD パスもタブで提供
 """
 import platform
 
@@ -46,15 +45,8 @@ def _localize_login_error(code: str) -> str:
 # ----------------------------------------------------------------------
 # メイン描画
 # ----------------------------------------------------------------------
-def render_login_page(legacy_password_check_fn=None):
-    """
-    ログイン画面を描画する。
-
-    legacy_password_check_fn:
-      旧 APP_PASSWORD 認証用の関数（main.py 側の check_password を渡す）。
-      渡されればタブ「🔑 旧パスワード（廃止予定）」を出す。
-      None なら旧パスワードタブは出さない。
-    """
+def render_login_page():
+    """ログイン画面を描画する（ペアリング / 管理者ログインの2タブ）。"""
     # ヘッダー（占いモンスター風: 紫＋金）
     st.markdown(
         '<div style="text-align:center; margin:50px 0 16px;">'
@@ -69,15 +61,9 @@ def render_login_page(legacy_password_check_fn=None):
     # 中央寄せコンテナ
     col_left, col_main, col_right = st.columns([1, 4, 1])
     with col_main:
-        if legacy_password_check_fn:
-            tab_pair, tab_admin, tab_legacy = st.tabs(
-                ["📥 ペアリング", "👑 管理者ログイン", "🔑 旧パスワード"]
-            )
-        else:
-            tab_pair, tab_admin = st.tabs(
-                ["📥 ペアリング", "👑 管理者ログイン"]
-            )
-            tab_legacy = None
+        tab_pair, tab_admin = st.tabs(
+            ["📥 ペアリング", "👑 管理者ログイン"]
+        )
 
         # ----- タブ1: 6桁コードペアリング -----
         with tab_pair:
@@ -166,16 +152,3 @@ def render_login_page(legacy_password_check_fn=None):
                     else:
                         st.success("ログイン成功！")
                         st.rerun()
-
-        # ----- タブ3: 旧 APP_PASSWORD（廃止予定） -----
-        if tab_legacy is not None:
-            with tab_legacy:
-                st.markdown(
-                    '<div style="color:#C47A6A; font-size:0.85em; padding:8px 0 12px; line-height:1.6;">'
-                    '⚠ <strong>旧パスワード認証は廃止予定です。</strong><br>'
-                    '上の「ペアリング」または「管理者ログイン」をご利用ください。'
-                    '</div>',
-                    unsafe_allow_html=True,
-                )
-                # main.py 側の check_password を呼ぶだけ
-                legacy_password_check_fn()
