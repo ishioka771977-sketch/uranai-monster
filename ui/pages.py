@@ -5085,10 +5085,59 @@ def render_palm_input_page():
     )
     render_gold_divider()
 
+    # ========================================================
+    # 鑑定する人 — 履歴選択 + 名前 + 生年月日（任意）
+    # ========================================================
+    st.markdown(
+        '<div style="color:#BFA350; font-weight:bold; font-size:1.0em; margin:8px 0 6px;">'
+        '👤 鑑定する人</div>',
+        unsafe_allow_html=True,
+    )
+    st.caption("生年月日があると、9占術と組み合わせた**統合鑑定**ができます。手相だけの鑑定もOK。")
+
+    _render_people_quick_select()
+
+    saved_name = st.session_state.get("_palm_name", "")
+    name = st.text_input(
+        "お名前（任意）",
+        value=saved_name,
+        placeholder="例: ひでさん（空欄でも鑑定できます）",
+        key="_palm_name",
+    )
+
+    use_birthday = st.checkbox(
+        "生年月日を入力する（9占術統合鑑定が有効になる）",
+        value=st.session_state.get("_palm_use_birthday", False),
+        key="_palm_use_birthday",
+    )
+
+    if use_birthday:
+        gender_options = ["男性", "女性", "その他"]
+        saved_gender = st.session_state.get("_palm_gender", "男性")
+        gender_idx = gender_options.index(saved_gender) if saved_gender in gender_options else 0
+        st.radio("性別", options=gender_options, index=gender_idx, horizontal=True, key="_palm_gender")
+
+        years = list(range(1930, date.today().year + 1))
+        saved_year = st.session_state.get("_palm_year", 1990)
+        year_idx = years.index(saved_year) if saved_year in years else years.index(1990)
+        ca, cb, cc = st.columns(3)
+        with ca:
+            st.selectbox("年", options=years, index=year_idx, key="_palm_year")
+        with cb:
+            saved_month = st.session_state.get("_palm_month", 5)
+            st.selectbox("月", options=list(range(1, 13)), index=max(0, saved_month - 1), key="_palm_month")
+        with cc:
+            saved_day = st.session_state.get("_palm_day", 15)
+            st.selectbox("日", options=list(range(1, 32)), index=max(0, saved_day - 1), key="_palm_day")
+
+    render_gold_divider()
+
+    # ========================================================
     # プライバシー宣言
+    # ========================================================
     st.info(
         "🔒 **プライバシー保護**\n\n"
-        "- 撮影した画像は鑑定中のみメモリ上で処理されます\n"
+        "- 撮影した手のひら画像は鑑定中のみメモリ上で処理されます\n"
         "- 鑑定後、画像は **即座に破棄** されます\n"
         "- サーバー・データベース・ログに **一切保存されません**"
     )
@@ -5139,6 +5188,7 @@ def render_palm_input_page():
     if image_file:
         if st.button("✦ 鑑定を始める ✦", use_container_width=True, key="_palm_start"):
             from core.palm import preprocess_image, check_quality
+
             with st.spinner("画像を確認しています..."):
                 processed = preprocess_image(image_file)
                 quality = check_quality(processed["bytes"])
@@ -5149,9 +5199,24 @@ def render_palm_input_page():
                     st.markdown(f"- {issue}")
                 st.stop()
 
+            # 既存占術データを計算（生年月日入力時のみ）
+            existing = {}
+            if st.session_state.get("_palm_use_birthday"):
+                try:
+                    yv = st.session_state.get("_palm_year", 1990)
+                    mv = st.session_state.get("_palm_month", 5)
+                    dv = st.session_state.get("_palm_day", 15)
+                    gv = st.session_state.get("_palm_gender", "男性")
+                    nv = (st.session_state.get("_palm_name") or "").strip() or "依頼者"
+                    person = PersonInput(birth_date=date(yv, mv, dv), name=nv, gender=gv)
+                    existing = _compute_existing_uranai_for_palm(person)
+                except Exception as _e:
+                    st.warning(f"占術計算でエラー: {_e}（手相だけで鑑定します）")
+
             # session_state へ（鑑定処理中のみ保持）
             st.session_state["_palm_image_bytes"] = processed["bytes"]
             st.session_state["_palm_hand"] = hand
+            st.session_state["_existing_uranai_results"] = existing
             st.session_state["page"] = "palm_loading"
             st.rerun()
 
@@ -5159,6 +5224,52 @@ def render_palm_input_page():
     if st.button("← TOPに戻る", key="_palm_back_input"):
         st.session_state["page"] = "top"
         st.rerun()
+
+
+def _compute_existing_uranai_for_palm(person) -> dict:
+    """生年月日から既存占術の主要データを計算（手相のStep 2 で文脈として使う）"""
+    out = {}
+    # 算命学
+    try:
+        from core.sanmei import calculate_sanmei
+        sm = calculate_sanmei(person)
+        out["sanmei"] = {
+            "中央星": getattr(sm, "chusei", "") or "",
+            "日干": getattr(sm, "hi_kan", "") or "",
+            "天中殺": getattr(sm, "tenchusatsu", "") or "",
+            "格局": getattr(sm, "kakkyoku", "") or "",
+        }
+    except Exception:
+        pass
+    # 西洋占星術（太陽星座のみ簡易）
+    try:
+        from core.western import get_sun_sign
+        out["western"] = {"太陽星座": get_sun_sign(person.birth_date)}
+    except Exception:
+        pass
+    # 九星気学
+    try:
+        from core.kyusei import calc_honmei
+        out["kyusei"] = {"本命星": calc_honmei(person.birth_date)}
+    except Exception:
+        pass
+    # 数秘術
+    try:
+        from core.numerology import life_path
+        out["numerology"] = {"ライフパス": life_path(person.birth_date)}
+    except Exception:
+        pass
+    # 四柱推命
+    try:
+        from core.shichusuimei import calculate_shichusuimei
+        sci = calculate_shichusuimei(person)
+        out["shichusuimei"] = {
+            "日干": getattr(sci, "day_master", "") or "",
+            "格局": getattr(sci, "kakkyoku", "") or "",
+        }
+    except Exception:
+        pass
+    return out
 
 
 def render_palm_loading_page():
@@ -5243,13 +5354,22 @@ def render_palm_result_page():
     # ========================================================
     # 手のひらイラスト（SVG）+ 凡例
     # ========================================================
-    svg = generate_palm_diagram(palm_json, hand=hand_key, width=360, height=480)
+    # viewBox は 360x660 だが、components.v1.html で表示するときは
+    # iframe 高さを少し大きめに（影とパディング込み）
+    svg = generate_palm_diagram(palm_json, hand=hand_key, width=360, height=660)
     legend_html = generate_legend_html(palm_json)
 
     # PC: イラスト 3 : 凡例 2 の横並び。スマホは Streamlit が自動で縦積みに
+    # SVG は st.markdown だと Streamlit にサニタイズされて <image> が消えるので
+    # components.v1.html で iframe 表示する
+    import streamlit.components.v1 as _components
     col_img, col_legend = st.columns([3, 2])
     with col_img:
-        st.markdown(svg, unsafe_allow_html=True)
+        _components.html(
+            f'<div style="background:#FFF8F0; padding:8px; border-radius:20px;">{svg}</div>',
+            height=700,
+            scrolling=False,
+        )
     with col_legend:
         st.markdown(legend_html, unsafe_allow_html=True)
 
