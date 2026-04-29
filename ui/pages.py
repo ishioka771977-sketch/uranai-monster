@@ -770,6 +770,31 @@ def render_settings_page():
             st.rerun()
 
 
+def _format_dt_jst(dt_str) -> str:
+    """ISO形式の日時文字列（UTC想定）を JST に変換して表示用フォーマット。
+    タイムゾーン情報がなければ UTC とみなす。パース不能ならそのまま返す。
+    """
+    if not dt_str:
+        return ""
+    s = str(dt_str).strip()
+    if not s:
+        return ""
+    try:
+        from datetime import datetime as _dt2, timezone as _tz, timedelta as _td
+        # "Z" を "+00:00" に変換して fromisoformat に対応
+        normalized = s.replace("Z", "+00:00")
+        # 末尾に小数秒なしの場合も問題なくパース可能
+        d = _dt2.fromisoformat(normalized)
+        if d.tzinfo is None:
+            # tzinfo なし → UTC とみなす（Supabase は UTC で返す）
+            d = d.replace(tzinfo=_tz.utc)
+        d_jst = d.astimezone(_tz(_td(hours=9)))
+        return d_jst.strftime("%Y/%m/%d %H:%M")
+    except Exception:
+        # 既に "%Y-%m-%d %H:%M" 形式（ローカル時刻保存）の場合はそのまま
+        return s
+
+
 def _render_person_row(name: str, p: dict, key_prefix: str, people_db: dict, show_folder_assign: bool = False):
     """人物1行を描画（選択ボタン + タグバッジ + 削除ボタン）"""
     year = p.get('year', '')
@@ -782,14 +807,19 @@ def _render_person_row(name: str, p: dict, key_prefix: str, people_db: dict, sho
     time_disp = f" {time_str}生" if time_str else ""
     email = p.get('email', '')
     email_str = " ✉" if email else ""
-    divined = p.get('last_divined', '')
+    divined_raw = p.get('last_divined', '')
+    divined = _format_dt_jst(divined_raw)  # UTC→JST 変換
     divined_str = f"  🕐{divined}" if divined else ""
     tags = p.get('tags') or []
+
+    # 本名表示: 表示名（本名）。同じか本名なしなら表示名のみ。
+    real_name = (p.get('real_name') or '').strip()
+    disp_name = name if (not real_name or real_name == name) else f"{name}（{real_name}）"
 
     confirm_key = f"_confirm_del_{key_prefix}_{name}"
     col1, col2 = st.columns([5, 1])
     with col1:
-        label = f"👤 {name}　{year}/{month}/{day}{time_disp}　{gender}{blood_str}{email_str}{divined_str}"
+        label = f"👤 {disp_name}　{year}/{month}/{day}{time_disp}　{gender}{blood_str}{email_str}{divined_str}"
         if st.button(label, key=f"btn_{key_prefix}_{name}", use_container_width=True):
             _select_person(p)
         if tags:

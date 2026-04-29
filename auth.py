@@ -63,6 +63,8 @@ def perform_pairing(employee_number: str, code: str, device_label: str = "") -> 
         data = res.json()
         st.session_state[KEY_DEVICE_TOKEN] = data["deviceToken"]
         st.session_state[KEY_USER] = data.get("user", {})
+        # ブラウザ localStorage にも保存（永続化）
+        _save_token_to_browser(data["deviceToken"])
         return {"ok": True, "user": data.get("user", {})}
 
     try:
@@ -106,6 +108,8 @@ def perform_device_login(
         # path R の場合、新規 device_token も同梱されてくる
         if data.get("deviceToken"):
             st.session_state[KEY_DEVICE_TOKEN] = data["deviceToken"]
+            # 管理者ログイン経路でもブラウザに永続化
+            _save_token_to_browser(data["deviceToken"])
         return {"ok": True, "data": data}
 
     try:
@@ -151,19 +155,84 @@ def is_admin() -> bool:
 
 
 def logout():
-    """全認証関連 session_state をクリア"""
+    """全認証関連 session_state とブラウザ localStorage をクリア"""
     for key in (KEY_DEVICE_TOKEN, KEY_USER, KEY_SESSION, KEY_PROFILE):
         st.session_state.pop(key, None)
+    _clear_token_from_browser()
+
+
+# ----------------------------------------------------------------------
+# localStorage 永続化（Streamlit セッション切れても、ブラウザ閉じても保持）
+# ----------------------------------------------------------------------
+LS_KEY = "uranai_device_token"
+
+
+def _load_token_from_browser() -> Optional[str]:
+    """ブラウザ localStorage から device_token を読み込み。
+    streamlit-js-eval は同期的でないため、初回呼び出しは None を返す可能性。
+    """
+    try:
+        from streamlit_js_eval import streamlit_js_eval
+        val = streamlit_js_eval(
+            js_expressions=f"localStorage.getItem('{LS_KEY}')",
+            key="_load_palm_token_js",
+            want_output=True,
+        )
+        if val and isinstance(val, str) and val.strip() and val != "null":
+            return val.strip()
+    except Exception:
+        pass
+    return None
+
+
+def _save_token_to_browser(token: str):
+    """ブラウザ localStorage に device_token を保存"""
+    try:
+        from streamlit_js_eval import streamlit_js_eval
+        # シングルクォート内の値はエスケープ済みである必要があるが
+        # 今回のトークンは hex なので問題なし
+        streamlit_js_eval(
+            js_expressions=f"localStorage.setItem('{LS_KEY}', '{token}'); 'ok'",
+            key=f"_save_token_js_{hash(token) % 1000000}",
+            want_output=False,
+        )
+    except Exception:
+        pass
+
+
+def _clear_token_from_browser():
+    """ブラウザ localStorage から device_token を削除"""
+    try:
+        from streamlit_js_eval import streamlit_js_eval
+        streamlit_js_eval(
+            js_expressions=f"localStorage.removeItem('{LS_KEY}'); 'ok'",
+            key="_clear_token_js",
+            want_output=False,
+        )
+    except Exception:
+        pass
 
 
 def try_auto_login() -> bool:
-    """device_token が session_state にあれば自動ログイン試行"""
+    """device_token が session_state または localStorage にあれば自動ログイン試行"""
     if is_authenticated():
         return True
+
+    # session_state を優先
     token = st.session_state.get(KEY_DEVICE_TOKEN)
+
+    # session_state に無ければ localStorage から復元
+    if not token:
+        token = _load_token_from_browser()
+        if token:
+            st.session_state[KEY_DEVICE_TOKEN] = token
+
     if not token:
         return False
+
     result = perform_device_login(device_token=token)
     if not result["ok"]:
+        # トークン失効時は localStorage もクリア
+        _clear_token_from_browser()
         return False
     return is_authenticated()

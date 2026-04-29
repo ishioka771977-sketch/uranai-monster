@@ -99,25 +99,63 @@ def build_gemini_prompt(hand: str) -> str:
 
 
 def _extract_json(text: str) -> dict | None:
-    """``` json ... ``` のコードブロックを抽出して dict に変換"""
+    """Gemini/Claude の応答テキストから JSON を確実に抽出する。
+
+    対応パターン:
+    - 純粋な JSON（response_mime_type=application/json で返される場合）
+    - ```json ... ``` のコードブロックで囲まれている場合
+    - 前後に説明文が付いている場合（最初の { から最後の } を切り出す）
+    """
     if not text:
         return None
-    m = re.search(r"```(?:json)?\s*(.*?)```", text, re.DOTALL)
-    json_str = m.group(1).strip() if m else text.strip()
+    text = text.strip()
+
+    # まずそのまま JSON パース試行
     try:
-        return json.loads(json_str)
+        return json.loads(text)
     except json.JSONDecodeError:
-        return None
+        pass
+
+    # ```json ... ``` フェンスを除去
+    fence = re.search(r"```(?:json)?\s*(.*?)```", text, re.DOTALL)
+    if fence:
+        json_str = fence.group(1).strip()
+        try:
+            return json.loads(json_str)
+        except json.JSONDecodeError:
+            pass
+
+    # 最初の { から最後の } を切り出す
+    start = text.find("{")
+    end = text.rfind("}") + 1
+    if start >= 0 and end > start:
+        candidate = text[start:end]
+        try:
+            return json.loads(candidate)
+        except json.JSONDecodeError:
+            pass
+
+    return None
 
 
 def call_gemini_palm(img_bytes: bytes, hand: str = "right") -> dict | None:
-    """Gemini 2.5 Pro で画像分析。構造化JSONを返す"""
+    """Gemini 2.5 Pro で画像分析。構造化JSONを返す。
+    パース失敗時は raw レスポンスをログに残す。
+    """
+    import logging
     api_key = os.environ.get("GEMINI_API_KEY")
     if not api_key:
+        logging.error("call_gemini_palm: GEMINI_API_KEY 未設定")
         return None
 
     client = genai.Client(api_key=api_key)
     prompt = build_gemini_prompt(hand)
+
+    # response_mime_type を指定して JSON 強制
+    config = types.GenerateContentConfig(
+        response_mime_type="application/json",
+        temperature=0.2,
+    )
 
     for model_id in ["gemini-2.5-pro", "gemini-2.0-flash-exp", "gemini-2.0-flash", "gemini-1.5-pro"]:
         try:
@@ -127,11 +165,51 @@ def call_gemini_palm(img_bytes: bytes, hand: str = "right") -> dict | None:
                     types.Part.from_bytes(data=img_bytes, mime_type="image/jpeg"),
                     prompt,
                 ],
+                config=config,
             )
-            return _extract_json(response.text)
+            raw = response.text or ""
+            logging.info(
+                f"call_gemini_palm: model={model_id} hand={hand} "
+                f"raw_len={len(raw)} preview={raw[:200]!r}"
+            )
+            parsed = _extract_json(raw)
+            if parsed is None:
+                logging.error(
+                    f"call_gemini_palm: JSON parse failed. model={model_id} "
+                    f"full_response={raw!r}"
+                )
+                # response_mime_type 不対応モデルの場合に備え、次モデルへ
+                continue
+            return parsed
         except Exception as e:
             err_str = str(e).lower()
-            if "404" in err_str or "not found" in err_str or "model" in err_str:
+            logging.warning(f"call_gemini_palm: model={model_id} error={e}")
+            if (
+                "404" in err_str
+                or "not found" in err_str
+                or "model" in err_str
+                or "response_mime_type" in err_str
+                or "unsupported" in err_str
+            ):
+                # response_mime_type 非対応モデルの可能性 → config なしで再試行
+                try:
+                    response = client.models.generate_content(
+                        model=model_id,
+                        contents=[
+                            types.Part.from_bytes(data=img_bytes, mime_type="image/jpeg"),
+                            prompt,
+                        ],
+                    )
+                    raw = response.text or ""
+                    logging.info(
+                        f"call_gemini_palm (no mime): model={model_id} "
+                        f"raw_len={len(raw)} preview={raw[:200]!r}"
+                    )
+                    parsed = _extract_json(raw)
+                    if parsed is not None:
+                        return parsed
+                except Exception:
+                    pass
                 continue
             raise
     return None
