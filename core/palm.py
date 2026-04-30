@@ -167,6 +167,9 @@ PALM_SESSION_KEYS = [
     "_palm_quality",
     "_palm_hand",
     "_palm_result",
+    "_palm_result_left",
+    "_palm_result_right",
+    "_palm_both_hands_summary",
 ]
 
 

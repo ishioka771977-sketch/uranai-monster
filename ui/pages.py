@@ -5349,11 +5349,15 @@ def render_palm_loading_page():
         return
 
     # 結果保存
-    st.session_state["_palm_result"] = {
+    payload = {
         "palm_json": result["palm_json"],
         "rationale": result["rationale"],
+        "step1_result": result.get("step1_result"),
         "hand": hand,
     }
+    st.session_state["_palm_result"] = payload
+    # 左右比較用に手別キーでも保持（両手揃ったら左右比較鑑定可能）
+    st.session_state[f"_palm_result_{hand}"] = payload
     st.session_state["page"] = "palm_result"
     st.rerun()
 
@@ -5459,16 +5463,57 @@ def render_palm_result_page():
 
     render_gold_divider()
 
+    # ========================================================
+    # 左右比較鑑定（両手の Step 1 結果が揃っているときだけ表示）
+    # ========================================================
+    left_payload = st.session_state.get("_palm_result_left")
+    right_payload = st.session_state.get("_palm_result_right")
+    both_ready = (
+        left_payload is not None
+        and right_payload is not None
+        and left_payload.get("step1_result")
+        and right_payload.get("step1_result")
+    )
+
+    if both_ready:
+        st.markdown("### ✋✋ 左右の手が揃いました")
+        st.caption("左手（先天）と右手（後天）の対比から、生き方の総合鑑定が読めます。")
+
+        cached_summary = st.session_state.get("_palm_both_hands_summary")
+        if cached_summary:
+            st.markdown("### くろたんの左右比較鑑定")
+            st.markdown(cached_summary)
+        else:
+            if st.button("✋✋ 両手の総合鑑定を生成する", key="_palm_both_hands_btn"):
+                from ai.palm_interpreter import call_claude_both_hands_summary
+                existing = st.session_state.get("_existing_uranai_results") or {}
+                with st.spinner("✋✋ 左右の対比から人生観を読み解いています..."):
+                    summary = call_claude_both_hands_summary(
+                        left_step1=left_payload["step1_result"],
+                        right_step1=right_payload["step1_result"],
+                        palm_left=left_payload["palm_json"],
+                        palm_right=right_payload["palm_json"],
+                        existing=existing,
+                    )
+                st.session_state["_palm_both_hands_summary"] = summary
+                st.rerun()
+
+        render_gold_divider()
+
     # 戻るボタン
     col1, col2 = st.columns(2)
     with col1:
         if st.button("✋ 別の手も鑑定", key="_palm_again"):
-            cleanup_session_state(st)
+            # 左右比較キャッシュは残し、入力画面に戻る（_palm_result_<hand> は引き継ぐ）
+            st.session_state.pop("_palm_result", None)
             st.session_state["page"] = "palm_input"
             st.rerun()
     with col2:
         if st.button("← TOPに戻る", key="_palm_back_top"):
             cleanup_session_state(st)
+            # 左右比較データもまとめてクリア
+            for k in ("_palm_result_left", "_palm_result_right", "_palm_both_hands_summary"):
+                st.session_state.pop(k, None)
             st.session_state["page"] = "top"
             st.rerun()
 
