@@ -651,6 +651,14 @@ def _select_person(p: dict):
     st.session_state["kaiyun_m"] = month
     st.session_state["kaiyun_d"] = day
 
+    # 手相ページのウィジェットキーにも直接セット（顧客選択で生年月日も自動投入）
+    st.session_state["_palm_name"] = name
+    st.session_state["_palm_gender"] = gender
+    st.session_state["_palm_year"] = year
+    st.session_state["_palm_month"] = month
+    st.session_state["_palm_day"] = day
+    st.session_state["_palm_use_birthday"] = True
+
     st.rerun()
 
 
