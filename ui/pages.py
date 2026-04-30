@@ -659,7 +659,9 @@ def _select_person(p: dict):
     st.session_state["_palm_day"] = day
     st.session_state["_palm_use_birthday"] = True
 
-    st.rerun()
+    # NOTE: on_click コールバック経由で呼ばれる場合、Streamlit が自動で rerun する。
+    # 通常パスから直接呼ばれた場合に備えて rerun は呼ばない（コールバック内では rerun
+    # 禁止のため）。on_click でない呼び方をするコードは無いはず。
 
 
 def render_settings_page():
@@ -828,8 +830,16 @@ def _render_person_row(name: str, p: dict, key_prefix: str, people_db: dict, sho
     col1, col2 = st.columns([5, 1])
     with col1:
         label = f"👤 {disp_name}　{year}/{month}/{day}{time_disp}　{gender}{blood_str}{email_str}{divined_str}"
-        if st.button(label, key=f"btn_{key_prefix}_{name}", use_container_width=True):
-            _select_person(p)
+        # on_click コールバック経由で widget key を書き換えること。
+        # 同一ページに既存 widget がある（手相ページ等）場合、コールバック外からの
+        # widget key 書き換えは反映されないため。
+        st.button(
+            label,
+            key=f"btn_{key_prefix}_{name}",
+            use_container_width=True,
+            on_click=_select_person,
+            args=(p,),
+        )
         if tags:
             badges_html = "".join(
                 f'<span style="display:inline-block; background:rgba(191,163,80,0.10); border:1px solid rgba(191,163,80,0.35); border-radius:10px; padding:1px 8px; margin:1px 3px 1px 0; font-size:0.72em; color:#D4B96A;">#{_html_mod.escape(t)}</span>'
