@@ -39,7 +39,22 @@ st.set_page_config(
 import auth as _auth_mod
 from ui.login_page import render_login_page as _render_login_page
 
-_auth_ok = _auth_mod.try_auto_login()
+_auth_state = _auth_mod.try_auto_login_state()
+
+if _auth_state == "loading":
+    # localStorage チェック中。JS 完了を待つため『確認中』表示してすぐ rerun。
+    st.markdown(
+        '<div style="text-align:center; margin-top:80px;">'
+        '<div style="font-size:2.5em; color:#BFA350; letter-spacing:0.2em;">✧</div>'
+        '<div style="color:#8A8478; margin-top:12px; letter-spacing:0.1em;">認証情報を確認中…</div>'
+        '</div>',
+        unsafe_allow_html=True,
+    )
+    import time as _time_t
+    _time_t.sleep(0.4)
+    st.rerun()
+
+_auth_ok = _auth_state == "ok"
 
 if not _auth_ok:
     _render_login_page()

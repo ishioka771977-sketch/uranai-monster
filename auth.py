@@ -166,36 +166,59 @@ def logout():
 # ----------------------------------------------------------------------
 LS_KEY = "uranai_device_token"
 
+# localStorage 確認の状態フラグ（session_state キー）
+KEY_LS_CHECK_DONE = "_auth_ls_check_done"
+KEY_LS_VALUE = "_auth_ls_value"
 
-def _load_token_from_browser() -> Optional[str]:
-    """ブラウザ localStorage から device_token を読み込み。
-    streamlit-js-eval は同期的でないため、初回呼び出しは None を返す可能性。
+
+def _load_token_from_browser_state() -> tuple[Optional[str], bool]:
+    """localStorage から token を取得。
+    Returns: (token, is_loaded)
+      - is_loaded=False: JS未完了。次の rerun で再試行すべき
+      - is_loaded=True: 確定。token は値 or None
     """
+    # 既に取得済みなら session_state から返す
+    if st.session_state.get(KEY_LS_CHECK_DONE):
+        return st.session_state.get(KEY_LS_VALUE), True
+
     try:
         from streamlit_js_eval import streamlit_js_eval
+        # streamlit_js_eval は初回呼び出しで None を返し、JS 実行後に rerun で値が来る
         val = streamlit_js_eval(
-            js_expressions=f"localStorage.getItem('{LS_KEY}')",
-            key="_load_palm_token_js",
-            want_output=True,
+            js_expressions=f"localStorage.getItem('{LS_KEY}') || ''",
+            key="_palm_token_loader_v3",
         )
-        if val and isinstance(val, str) and val.strip() and val != "null":
-            return val.strip()
     except Exception:
-        pass
-    return None
+        # ライブラリエラーは確定扱いで None
+        st.session_state[KEY_LS_CHECK_DONE] = True
+        st.session_state[KEY_LS_VALUE] = None
+        return None, True
+
+    if val is None:
+        # JS 未完了
+        return None, False
+
+    # JS 完了。値があれば保存。"null" or 空文字列なら None
+    s = str(val).strip()
+    token = s if s and s != "null" else None
+    st.session_state[KEY_LS_CHECK_DONE] = True
+    st.session_state[KEY_LS_VALUE] = token
+    return token, True
 
 
 def _save_token_to_browser(token: str):
     """ブラウザ localStorage に device_token を保存"""
     try:
         from streamlit_js_eval import streamlit_js_eval
-        # シングルクォート内の値はエスケープ済みである必要があるが
-        # 今回のトークンは hex なので問題なし
+        # キーをタイムスタンプ込みでユニーク化（重複呼び出し回避）
+        import time as _t
         streamlit_js_eval(
-            js_expressions=f"localStorage.setItem('{LS_KEY}', '{token}'); 'ok'",
-            key=f"_save_token_js_{hash(token) % 1000000}",
-            want_output=False,
+            js_expressions=f"localStorage.setItem('{LS_KEY}', '{token}'); 'saved'",
+            key=f"_save_token_js_{int(_t.time() * 1000) % 1000000000}",
         )
+        # session_state にも反映（次回ロード時の高速化）
+        st.session_state[KEY_LS_CHECK_DONE] = True
+        st.session_state[KEY_LS_VALUE] = token
     except Exception:
         pass
 
@@ -204,35 +227,54 @@ def _clear_token_from_browser():
     """ブラウザ localStorage から device_token を削除"""
     try:
         from streamlit_js_eval import streamlit_js_eval
+        import time as _t
         streamlit_js_eval(
-            js_expressions=f"localStorage.removeItem('{LS_KEY}'); 'ok'",
-            key="_clear_token_js",
-            want_output=False,
+            js_expressions=f"localStorage.removeItem('{LS_KEY}'); 'cleared'",
+            key=f"_clear_token_js_{int(_t.time() * 1000) % 1000000000}",
         )
     except Exception:
         pass
+    # session_state も明示的にクリア
+    st.session_state[KEY_LS_CHECK_DONE] = True
+    st.session_state[KEY_LS_VALUE] = None
 
 
 def try_auto_login() -> bool:
-    """device_token が session_state または localStorage にあれば自動ログイン試行"""
-    if is_authenticated():
-        return True
+    """device_token が session_state または localStorage にあれば自動ログイン試行。
+    互換性のため bool 戻り値（True=ログイン済 / False=未ログイン or 確認中）。
+    確認中も含めた状態が必要な場合は try_auto_login_state() を使う。
+    """
+    state = try_auto_login_state()
+    return state == "ok"
 
-    # session_state を優先
+
+def try_auto_login_state() -> str:
+    """自動ログイン状態を返す。
+    - "ok": ログイン済み
+    - "loading": localStorage 確認中（JS未完了）。呼び出し側は『認証情報確認中』を表示してすぐ rerun
+    - "ng": トークン無し or 失効。ログイン画面へ
+    """
+    if is_authenticated():
+        return "ok"
+
+    # session_state にトークンあれば即試行
     token = st.session_state.get(KEY_DEVICE_TOKEN)
 
-    # session_state に無ければ localStorage から復元
+    # 無ければ localStorage から取得
     if not token:
-        token = _load_token_from_browser()
+        token, is_loaded = _load_token_from_browser_state()
+        if not is_loaded:
+            return "loading"
         if token:
             st.session_state[KEY_DEVICE_TOKEN] = token
 
     if not token:
-        return False
+        return "ng"
 
+    # device-login で検証
     result = perform_device_login(device_token=token)
     if not result["ok"]:
-        # トークン失効時は localStorage もクリア
+        # 失効トークン → localStorage クリア
         _clear_token_from_browser()
-        return False
-    return is_authenticated()
+        return "ng"
+    return "ok" if is_authenticated() else "ng"
