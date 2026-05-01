@@ -1,8 +1,9 @@
 """
 占いモンスター 認証モジュール
-- 石岡組共通 Supabase Auth (device-token方式) を HTTP経由で利用
-- 既存4アプリ (有給ナビ/KYナビ/鉄知/型知) と同じ /api/auth/* を呼び出す
+- 主: パスワード1個認証（ひでさん専用、Streamlit Cloud Secrets `ADMIN_LOGIN_PASSWORD`）
+- 副: 旧 Supabase Auth (device-token方式) — 後方互換のため関数は残す
 """
+import hashlib
 import os
 import platform
 from typing import Optional
@@ -35,6 +36,40 @@ KEY_DEVICE_TOKEN = "_auth_device_token"
 KEY_USER = "_auth_user"
 KEY_SESSION = "_auth_session"
 KEY_PROFILE = "_auth_profile"
+KEY_PASSWORD_OK = "_auth_password_ok"
+
+
+# ----------------------------------------------------------------------
+# パスワード認証（メイン経路、ひでさん専用）
+# ----------------------------------------------------------------------
+def get_admin_password() -> str:
+    """secrets / 環境変数から管理者パスワードを取得。未設定なら空文字。"""
+    pw = os.environ.get("ADMIN_LOGIN_PASSWORD", "")
+    if pw:
+        return pw
+    try:
+        return str(st.secrets.get("ADMIN_LOGIN_PASSWORD", "")) or ""
+    except Exception:
+        return ""
+
+
+def _password_token(password: str) -> str:
+    """パスワードのハッシュをトークンとして使う（localStorage 保存用）"""
+    return "pw:" + hashlib.sha256(password.encode("utf-8")).hexdigest()
+
+
+def perform_password_login(password: str) -> dict:
+    """パスワード一致でセッション確立。device-token として password hash を保存。"""
+    expected = get_admin_password()
+    if not expected:
+        return {"ok": False, "error": "admin_password_not_set"}
+    if password != expected:
+        return {"ok": False, "error": "wrong_password"}
+    token = _password_token(password)
+    st.session_state[KEY_PASSWORD_OK] = True
+    st.session_state[KEY_DEVICE_TOKEN] = token
+    _save_token_to_browser(token)
+    return {"ok": True}
 
 
 # ----------------------------------------------------------------------
@@ -125,10 +160,14 @@ def perform_device_login(
 
 
 # ----------------------------------------------------------------------
-# 認証状態クエリ
+# 認証状態クエリ（パスワード経路 と 旧Supabase経路 の両対応）
 # ----------------------------------------------------------------------
 def is_authenticated() -> bool:
-    """Auth セッションが確立済みかつ enabled_apps に占いモンスターが含まれているか"""
+    """認証済みかチェック。パスワード経路 or 旧Supabase経路 どちらでも True を返す"""
+    # 新: パスワード認証フラグ
+    if st.session_state.get(KEY_PASSWORD_OK):
+        return True
+    # 旧: Supabase Auth 経路（後方互換）
     if not st.session_state.get(KEY_SESSION):
         return False
     prof = st.session_state.get(KEY_PROFILE) or {}
@@ -145,18 +184,27 @@ def get_user() -> Optional[dict]:
 
 
 def get_display_name() -> str:
+    """表示名。パスワード経路ならひでさん固定、旧Supabaseならprofileから取る"""
     user = get_user() or {}
-    return user.get("displayName", "")
+    name = user.get("displayName", "")
+    if name:
+        return name
+    if st.session_state.get(KEY_PASSWORD_OK):
+        return "ひでさん"
+    return ""
 
 
 def is_admin() -> bool:
+    """admin 判定。ひでさん専用なのでパスワード経路なら常に True"""
+    if st.session_state.get(KEY_PASSWORD_OK):
+        return True
     prof = get_profile() or {}
     return prof.get("role") == "admin"
 
 
 def logout():
     """全認証関連 session_state とブラウザ localStorage をクリア"""
-    for key in (KEY_DEVICE_TOKEN, KEY_USER, KEY_SESSION, KEY_PROFILE):
+    for key in (KEY_DEVICE_TOKEN, KEY_USER, KEY_SESSION, KEY_PROFILE, KEY_PASSWORD_OK):
         st.session_state.pop(key, None)
     _clear_token_from_browser()
 
@@ -271,7 +319,17 @@ def try_auto_login_state() -> str:
     if not token:
         return "ng"
 
-    # device-login で検証
+    # 新: パスワードトークン (`pw:...`) なら secrets と比較
+    if token.startswith("pw:"):
+        expected = get_admin_password()
+        if expected and token == _password_token(expected):
+            st.session_state[KEY_PASSWORD_OK] = True
+            return "ok"
+        # 失効（パスワード変更等） → クリア
+        _clear_token_from_browser()
+        return "ng"
+
+    # 旧: Supabase device-login で検証（後方互換）
     result = perform_device_login(device_token=token)
     if not result["ok"]:
         # 失効トークン → localStorage クリア
