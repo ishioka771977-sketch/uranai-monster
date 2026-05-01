@@ -319,20 +319,22 @@ def try_auto_login_state() -> str:
     if not token:
         return "ng"
 
-    # 新: パスワードトークン (`pw:...`) なら secrets と比較
-    if token.startswith("pw:"):
-        expected = get_admin_password()
-        if expected and token == _password_token(expected):
-            st.session_state[KEY_PASSWORD_OK] = True
-            return "ok"
-        # 失効（パスワード変更等） → クリア
+    # パスワードトークン (`pw:...`) のみを受け入れる。
+    # 旧 Supabase device-token (`pw:` で始まらない) は受け入れない →
+    # 過去のセッションで発行された device-token による自動ログインを完全に塞ぐ。
+    if not token.startswith("pw:"):
+        # 旧トークン → 即クリア + ログイン画面へ
         _clear_token_from_browser()
         return "ng"
 
-    # 旧: Supabase device-login で検証（後方互換）
-    result = perform_device_login(device_token=token)
-    if not result["ok"]:
-        # 失効トークン → localStorage クリア
+    expected = get_admin_password()
+    if not expected:
         _clear_token_from_browser()
         return "ng"
-    return "ok" if is_authenticated() else "ng"
+    if token != _password_token(expected):
+        # パスワード変更等 → 失効
+        _clear_token_from_browser()
+        return "ng"
+
+    st.session_state[KEY_PASSWORD_OK] = True
+    return "ok"
