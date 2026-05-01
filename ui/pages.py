@@ -5143,40 +5143,58 @@ def render_palm_input_page():
     )
     st.caption("生年月日があると、9占術と組み合わせた**統合鑑定**ができます。手相だけの鑑定もOK。")
 
+    # ── widget 用 session_state の事前初期化 ──
+    # value/index 引数を使わずに key のみで描画することで、
+    # Streamlit の「value と session_state 併用エラー」を回避し、
+    # _select_person からの session_state 書き込みが確実に widget に反映されるようにする
+    for _k, _default in [
+        ("_palm_name", ""),
+        ("_palm_use_birthday", False),
+        ("_palm_gender", "男性"),
+        ("_palm_year", 1990),
+        ("_palm_month", 5),
+        ("_palm_day", 15),
+    ]:
+        if _k not in st.session_state:
+            st.session_state[_k] = _default
+
     _render_people_quick_select()
 
-    saved_name = st.session_state.get("_palm_name", "")
     name = st.text_input(
         "お名前（任意）",
-        value=saved_name,
         placeholder="例: ひでさん（空欄でも鑑定できます）",
         key="_palm_name",
     )
 
     use_birthday = st.checkbox(
         "生年月日を入力する（9占術統合鑑定が有効になる）",
-        value=st.session_state.get("_palm_use_birthday", False),
         key="_palm_use_birthday",
     )
 
     if use_birthday:
         gender_options = ["男性", "女性", "その他"]
-        saved_gender = st.session_state.get("_palm_gender", "男性")
-        gender_idx = gender_options.index(saved_gender) if saved_gender in gender_options else 0
-        st.radio("性別", options=gender_options, index=gender_idx, horizontal=True, key="_palm_gender")
+        # session_state の値が options に無い場合の保険
+        if st.session_state["_palm_gender"] not in gender_options:
+            st.session_state["_palm_gender"] = "男性"
+        st.radio("性別", options=gender_options, horizontal=True, key="_palm_gender")
 
         years = list(range(1930, date.today().year + 1))
-        saved_year = st.session_state.get("_palm_year", 1990)
-        year_idx = years.index(saved_year) if saved_year in years else years.index(1990)
+        if st.session_state["_palm_year"] not in years:
+            st.session_state["_palm_year"] = 1990
+        months = list(range(1, 13))
+        if st.session_state["_palm_month"] not in months:
+            st.session_state["_palm_month"] = 5
+        days = list(range(1, 32))
+        if st.session_state["_palm_day"] not in days:
+            st.session_state["_palm_day"] = 15
+
         ca, cb, cc = st.columns(3)
         with ca:
-            st.selectbox("年", options=years, index=year_idx, key="_palm_year")
+            st.selectbox("年", options=years, key="_palm_year")
         with cb:
-            saved_month = st.session_state.get("_palm_month", 5)
-            st.selectbox("月", options=list(range(1, 13)), index=max(0, saved_month - 1), key="_palm_month")
+            st.selectbox("月", options=months, key="_palm_month")
         with cc:
-            saved_day = st.session_state.get("_palm_day", 15)
-            st.selectbox("日", options=list(range(1, 32)), index=max(0, saved_day - 1), key="_palm_day")
+            st.selectbox("日", options=days, key="_palm_day")
 
     render_gold_divider()
 
