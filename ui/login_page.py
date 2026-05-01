@@ -1,12 +1,24 @@
 """
 占いモンスター ログイン画面 (Phase 1 Auth)
-- ペアリング (6桁コード) または 管理者ログイン (社員番号のみ)
+- ペアリング (6桁コード) または 管理者ログイン (社員番号 + 管理者パスワード)
 """
+import os
 import platform
 
 import streamlit as st
 
 import auth as _auth
+
+
+def _get_admin_password() -> str:
+    """secrets / 環境変数から管理者パスワードを取得。未設定なら空文字。"""
+    pw = os.environ.get("ADMIN_LOGIN_PASSWORD", "")
+    if pw:
+        return pw
+    try:
+        return str(st.secrets.get("ADMIN_LOGIN_PASSWORD", "")) or ""
+    except Exception:
+        return ""
 
 
 # ----------------------------------------------------------------------
@@ -122,33 +134,49 @@ def render_login_page():
 
         # ----- タブ2: 管理者/テストアカウント直接ログイン -----
         with tab_admin:
-            st.markdown(
-                '<div style="color:#8A8478; font-size:0.86em; padding:8px 0 12px; line-height:1.6;">'
-                '<strong>管理者・テストアカウント専用</strong> の即時ログインです。<br>'
-                'ペアリング不要、社員番号のみでログインできます。'
-                '</div>',
-                unsafe_allow_html=True,
-            )
-            admin_emp = st.text_input(
-                "社員番号 (4桁)",
-                max_chars=4,
-                key="_admin_emp_num",
-                placeholder="例: 0001",
-            )
-            if st.button("✦ ログイン ✦", use_container_width=True, key="_btn_admin_login"):
-                if not admin_emp.strip():
-                    st.error("社員番号を入力してください")
-                else:
-                    with st.spinner("ログイン中..."):
-                        result = _auth.perform_device_login(
-                            employee_number=admin_emp.strip()
-                        )
-                    if not result["ok"]:
-                        st.error(_localize_login_error(result.get("error", "")))
-                    elif not _auth.is_authenticated():
-                        st.error(
-                            "このアカウントには占いモンスターへのアクセス権がありません。"
-                        )
+            _admin_pw_required = _get_admin_password()
+            if not _admin_pw_required:
+                st.error(
+                    "🔒 管理者ログインは現在無効化されています。\n\n"
+                    "Streamlit Cloud Secrets の `ADMIN_LOGIN_PASSWORD` が未設定です。"
+                    "管理者にお問い合わせください。"
+                )
+            else:
+                st.markdown(
+                    '<div style="color:#8A8478; font-size:0.86em; padding:8px 0 12px; line-height:1.6;">'
+                    '<strong>管理者・テストアカウント専用</strong> の即時ログインです。<br>'
+                    '社員番号と <strong>管理者パスワード</strong> の両方が必要です。'
+                    '</div>',
+                    unsafe_allow_html=True,
+                )
+                admin_emp = st.text_input(
+                    "社員番号 (4桁)",
+                    max_chars=4,
+                    key="_admin_emp_num",
+                    placeholder="例: 0001",
+                )
+                admin_pw_input = st.text_input(
+                    "管理者パスワード",
+                    type="password",
+                    key="_admin_pw_input",
+                    placeholder="管理者から伝えられたパスワードを入力",
+                )
+                if st.button("✦ ログイン ✦", use_container_width=True, key="_btn_admin_login"):
+                    if not admin_emp.strip() or not admin_pw_input:
+                        st.error("社員番号と管理者パスワードを入力してください")
+                    elif admin_pw_input != _admin_pw_required:
+                        st.error("管理者パスワードが正しくありません")
                     else:
-                        st.success("ログイン成功！")
-                        st.rerun()
+                        with st.spinner("ログイン中..."):
+                            result = _auth.perform_device_login(
+                                employee_number=admin_emp.strip()
+                            )
+                        if not result["ok"]:
+                            st.error(_localize_login_error(result.get("error", "")))
+                        elif not _auth.is_authenticated():
+                            st.error(
+                                "このアカウントには占いモンスターへのアクセス権がありません。"
+                            )
+                        else:
+                            st.success("ログイン成功！")
+                            st.rerun()
