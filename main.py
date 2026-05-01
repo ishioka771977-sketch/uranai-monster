@@ -33,6 +33,24 @@ st.set_page_config(
 )
 
 # ============================================================
+# バージョン情報（リビルドが反映されたか確認用）
+# - 環境変数 STREAMLIT_RUNTIME_BUILD_ID は Streamlit Cloud がビルドごとに設定
+# - フォールバックでデプロイファイルの mtime を簡易表示
+# ============================================================
+def _get_build_info() -> str:
+    bid = os.environ.get("STREAMLIT_RUNTIME_BUILD_ID")
+    if bid:
+        return f"build:{bid[:8]}"
+    try:
+        import datetime as _dt
+        ts = os.path.getmtime(__file__)
+        return "mtime:" + _dt.datetime.fromtimestamp(ts).strftime("%m/%d %H:%M")
+    except Exception:
+        return "build:?"
+
+_BUILD_INFO = _get_build_info()
+
+# ============================================================
 # 認証ゲート: Supabase Auth (device-token 方式)
 # 旧 APP_PASSWORD は 2026-04-28 に完全撤去
 # ============================================================
@@ -114,6 +132,8 @@ if _auth_ok:
                 except Exception:
                     pass
             st.rerun()
+        # ビルド情報（リビルドが反映されたか確認用）
+        st.caption(f"🔧 {_BUILD_INFO}")
 
 # セッション初期化
 if "page" not in st.session_state:
