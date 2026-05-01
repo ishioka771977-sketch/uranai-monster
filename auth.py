@@ -59,7 +59,10 @@ def _password_token(password: str) -> str:
 
 
 def perform_password_login(password: str) -> dict:
-    """パスワード一致でセッション確立。device-token として password hash を保存。"""
+    """パスワード一致でセッション確立。device-token として password hash を保存。
+    ※ localStorage への保存は main.py の認証済み時に行う（rerun 直前に
+       streamlit_js_eval を呼んでも component が描画されず JS が実行されないため）。
+    """
     expected = get_admin_password()
     if not expected:
         return {"ok": False, "error": "admin_password_not_set"}
@@ -68,8 +71,26 @@ def perform_password_login(password: str) -> dict:
     token = _password_token(password)
     st.session_state[KEY_PASSWORD_OK] = True
     st.session_state[KEY_DEVICE_TOKEN] = token
-    _save_token_to_browser(token)
+    # localStorage への保存はここではしない。main.py 側で「認証済みかつ未保存」を
+    # 検知して ensure_token_persisted() を呼ぶ。
     return {"ok": True}
+
+
+def ensure_token_persisted():
+    """認証済みのときに localStorage への保存を確実に実行する。
+    main.py の認証ゲート通過直後に毎 rerun で呼ぶことを想定。
+    既に保存済みなら何もしない（streamlit_js_eval を毎回呼ぶと無駄なので）。
+    """
+    if not st.session_state.get(KEY_PASSWORD_OK):
+        return
+    token = st.session_state.get(KEY_DEVICE_TOKEN)
+    if not token:
+        return
+    # 既に同じ token を localStorage に書いた記録があればスキップ
+    if st.session_state.get("_token_persisted_value") == token:
+        return
+    _save_token_to_browser(token)
+    st.session_state["_token_persisted_value"] = token
 
 
 # ----------------------------------------------------------------------

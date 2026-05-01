@@ -42,20 +42,26 @@ def render_login_page():
             unsafe_allow_html=True,
         )
 
-        password = st.text_input(
-            "パスワード",
-            type="password",
-            key="_login_password",
-            placeholder="管理者パスワード（長文）",
-        )
-        # 機器ラベルは記録用。サーバー保存はしないが、UI に「複数機器を使い分けてる感」を残す
-        st.text_input(
-            "この機器の名前 (任意・記録用)",
-            value=f"占いモンスター ({platform.system()})",
-            key="_login_device_label",
-        )
+        # st.form を使うことで:
+        # - 「Press Enter to apply」が消える（ボタン押下で全 widget 値が一括確定）
+        # - Enter キーでも submit_button が押せる
+        # - rerun のタイミングが制御できる
+        with st.form("login_form", clear_on_submit=False):
+            password = st.text_input(
+                "パスワード",
+                type="password",
+                key="_login_password",
+                placeholder="管理者パスワード（長文）",
+            )
+            # 機器ラベルは記録用。サーバー保存はしないが、UI に「複数機器を使い分けてる感」を残す
+            st.text_input(
+                "この機器の名前 (任意・記録用)",
+                value=f"占いモンスター ({platform.system()})",
+                key="_login_device_label",
+            )
+            submitted = st.form_submit_button("✦ ログイン ✦", use_container_width=True)
 
-        if st.button("✦ ログイン ✦", use_container_width=True, key="_btn_login"):
+        if submitted:
             if not password:
                 st.error("パスワードを入力してください")
             else:

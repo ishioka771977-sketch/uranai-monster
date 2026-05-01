@@ -78,6 +78,12 @@ if not _auth_ok:
     _render_login_page()
     st.stop()
 
+# 認証済み → localStorage への token 保存を確実に実行（自動ログイン用）
+# perform_password_login の直後に streamlit_js_eval を呼んでも、その後 st.rerun() で
+# component が描画されないため JS が実行されない。ここで毎 rerun 確認することで、
+# component が画面に embed されて setItem が走る。
+_auth_mod.ensure_token_persisted()
+
 
 from ui.styles import CUSTOM_CSS
 from ui.pages import (
