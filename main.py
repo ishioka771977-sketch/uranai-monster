@@ -35,7 +35,9 @@ st.set_page_config(
 # ============================================================
 # バージョン情報（リビルドが反映されたか確認用）
 # - 環境変数 STREAMLIT_RUNTIME_BUILD_ID は Streamlit Cloud がビルドごとに設定
-# - フォールバックでデプロイファイルの mtime を簡易表示
+# - フォールバックでデプロイファイルの mtime を JST 表示
+# - main.py だけでなく ai/interpreter.py の更新時刻も見る
+#   （プロンプト更新だけpushされた場合に main.py の mtime が古いままになるバグ対策）
 # ============================================================
 def _get_build_info() -> str:
     bid = os.environ.get("STREAMLIT_RUNTIME_BUILD_ID")
@@ -43,8 +45,17 @@ def _get_build_info() -> str:
         return f"build:{bid[:8]}"
     try:
         import datetime as _dt
-        ts = os.path.getmtime(__file__)
-        return "mtime:" + _dt.datetime.fromtimestamp(ts).strftime("%m/%d %H:%M")
+        # チェック対象ファイル一覧（複数ファイルの最新更新時刻を採用）
+        files = [__file__]
+        base = os.path.dirname(os.path.abspath(__file__))
+        for rel in ("ai/interpreter.py", "ai/palm_interpreter.py", "auth.py", "ui/login_page.py"):
+            p = os.path.join(base, rel)
+            if os.path.exists(p):
+                files.append(p)
+        latest_ts = max((os.path.getmtime(f) for f in files), default=0)
+        # JST (UTC+9) で表示
+        jst = _dt.timezone(_dt.timedelta(hours=9))
+        return "JST " + _dt.datetime.fromtimestamp(latest_ts, tz=jst).strftime("%m/%d %H:%M")
     except Exception:
         return "build:?"
 
