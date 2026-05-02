@@ -1289,7 +1289,8 @@ def generate_sanmei_reading(bundle: DivinationBundle) -> dict:
         keywords='、'.join(s.keywords) if s.keywords else "なし",
     )
     try:
-        return _call_api(_with_person(prompt, bundle), max_tokens=3200)
+        # v2 補強レイヤー追加で出力長が拡張されたため 3200 → 4000 に増量
+        return _call_api(_with_person(prompt, bundle), max_tokens=4000)
     except Exception as e:
         print(f"[くろたん] 算命学API エラー: {e}")
         return _sanmei_fallback(bundle)
@@ -1334,7 +1335,8 @@ def generate_western_reading(bundle: DivinationBundle) -> dict:
         )
 
     try:
-        return _call_api(_with_person(prompt, bundle), max_tokens=2800)
+        # v2 補強レイヤー追加で出力長が拡張されたため 2800 → 4000 に増量
+        return _call_api(_with_person(prompt, bundle), max_tokens=4000)
     except Exception as e:
         print(f"[くろたん] 西洋占星術API エラー: {e}")
         return _western_fallback(bundle)
@@ -1532,7 +1534,9 @@ def generate_shichusuimei_reading(bundle: DivinationBundle) -> dict:
         water=gogyo.get("水", 0),
     )
     try:
-        return _call_api(_with_person(prompt, bundle), max_tokens=3000)
+        # v2 補強レイヤー追加で出力長が拡張されたため 3000 → 4000 に増量
+        # （ひでさん指摘: 「早咲きを禁じられた長距離走者」が末尾切れで脱落していた）
+        return _call_api(_with_person(prompt, bundle), max_tokens=4000)
     except Exception as e:
         print(f"[くろたん] 四柱推命API エラー: {e}")
         return _shichusuimei_fallback(bundle)
