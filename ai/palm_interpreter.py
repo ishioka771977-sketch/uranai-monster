@@ -313,12 +313,13 @@ def call_claude_step1(palm_json: dict, hand: str) -> dict | None:
     client = anthropic.Anthropic(api_key=api_key)
     prompt = build_step1_prompt(palm_json, hand)
 
+    # NOTE: claude-opus-4-7 は temperature パラメータが deprecated のため指定しない
+    # （指定すると BadRequestError 400 が発生し、フォールバック判定にも引っかからない）
     for model_id in ["claude-opus-4-7", "claude-sonnet-4-6", "claude-haiku-4-5-20251001"]:
         try:
             response = client.messages.create(
                 model=model_id,
                 max_tokens=4000,
-                temperature=0.2,
                 messages=[{"role": "user", "content": prompt}],
             )
             text = response.content[0].text
