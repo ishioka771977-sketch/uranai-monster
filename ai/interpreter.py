@@ -1490,6 +1490,55 @@ def _with_person(prompt: str, bundle: "DivinationBundle") -> str:
     return prompt + _person_context_block(bundle)
 
 
+def _format_sanmei_context(bundle: "DivinationBundle") -> str:
+    """算命学の主要データを各流派プロンプト用のサマリーに整形する。
+
+    v3 ブラッシュアップ準備として、紫微斗数・万象学等の他流派プロンプトに
+    「算命学=背骨」を共通で渡すための共通ヘルパー。これにより
+    『東の星も西の数字も同じ宿命を指している』型の東東/東西共鳴フレーズが
+    本番鑑定で出るようになる（v2 で発動しなかった構造的問題の対策）。
+    """
+    s = getattr(bundle, "sanmei", None)
+    if not s:
+        return ""
+
+    lines = ["【★ 参考: この人の算命学データ（東東/東西共鳴で必ず接続せよ）★】"]
+    lines.append(f"- 三柱: {s.nen_kanshi}・{s.tsuki_kanshi}・{s.hi_kanshi}")
+    lines.append(f"- 日干: {s.nichikan}（{s.nichikan_gogyo}・{s.nichikan_inyo}）")
+    lines.append(f"- 中央星: {s.chuo_sei}（{s.chuo_honno}）")
+
+    # 周辺4星
+    pos_pairs = [
+        (s.kita_sei, "北"), (s.minami_sei, "南"),
+        (s.higashi_sei, "東"), (s.nishi_sei, "西"),
+    ]
+    around = " / ".join(f"{pos}={name}" for name, pos in pos_pairs if name)
+    if around:
+        lines.append(f"- 周辺星: {around}")
+
+    # 同星複数チェック（3連変化＝美学的攻撃の三重装甲 等の人格極化に必須）
+    from collections import Counter
+    all_stars = [s.chuo_sei] + [name for name, _ in pos_pairs if name]
+    counts = Counter(x for x in all_stars if x)
+    multi = [(n, c) for n, c in counts.items() if c >= 2]
+    if multi:
+        ms = " / ".join(f"{n}×{c}" for n, c in multi)
+        lines.append(f"- 同星複数（重要・人格の極化要因）: {ms}")
+
+    if s.kakkyoku:
+        lines.append(f"- 特殊格局: {s.kakkyoku}")
+    lines.append(f"- 天中殺: {s.tenchusatsu}")
+
+    if s.gogyo_balance:
+        gb = s.gogyo_balance
+        lines.append(
+            f"- 五行バランス: 木{gb.get('木',0)} 火{gb.get('火',0)} "
+            f"土{gb.get('土',0)} 金{gb.get('金',0)} 水{gb.get('水',0)}"
+        )
+
+    return "\n".join(lines) + "\n"
+
+
 def _call_api(prompt: str, max_tokens: int = 2500) -> dict:
     """AI API 呼び出し共通処理（provider に応じて Claude/Gemini を切替）
 
@@ -1776,6 +1825,8 @@ def generate_ziwei_reading(bundle: DivinationBundle) -> dict:
             current_daxian = f"第{i+1}限 {s}〜{e}歳（{pname}）"
             break
 
+    sanmei_block = _format_sanmei_context(bundle)
+
     prompt = f"""あなたは紫微斗数に精通した占い師「くろたん」。
 口調はカジュアルで温かく、でも鑑定は本格的。相手の人生に寄り添い、具体的に語る。
 
@@ -1793,6 +1844,8 @@ def generate_ziwei_reading(bundle: DivinationBundle) -> dict:
 
 【十二宮の配置】
 {palaces_text}
+
+{sanmei_block}
 
 【鑑定の基本観点】
 1. 命宮の主星から性格・本質を読む（空宮なら対宮の影響を語る）
@@ -2858,7 +2911,13 @@ BANSHO_USER_PROMPT = """【エネルギー診断データ】
 【陰転の警告サイン】
 {inten_signs}
 
+{sanmei_context_section}
 このデータをもとに、2,000〜3,000文字の万象学鑑定文を生成してください。
+
+★算命学データが上記に提示されている場合、必ず「東東共鳴」フレーズを織り込むこと。
+ 例: 「算命学では○○、万象学では△△点。東の星と数字が同じ宿命を語っている」
+ 例: 「同星×3 が示す『美学的攻撃の三重装甲』を、342という燃料量で燃やしている」
+
 出力はJSON形式:
 {{"headline": "キャッチフレーズ（15〜30文字）", "reading": "鑑定文（2,000〜3,000文字）", "closing": "締めの一言（30〜60文字）"}}
 """
@@ -2942,6 +3001,7 @@ def generate_bansho_reading(bundle: DivinationBundle) -> dict:
         gogyo_balance_section=gogyo_balance_section,
         youten_actions=youten_actions,
         inten_signs=inten_signs,
+        sanmei_context_section=_format_sanmei_context(bundle),
     )
 
     try:
