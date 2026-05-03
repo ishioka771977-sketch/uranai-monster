@@ -2478,22 +2478,22 @@ def _build_complete_occult_data(bundle: DivinationBundle) -> str:
     lines.append(f"  天中殺: {s.tenchusatsu}")
     lines.append(f"  五行バランス: {s.gogyo_balance}")
     lines.append(f"  キーワード: {', '.join(s.keywords[:5])}")
-    if hasattr(s, "tokushu_kakkyoku") and s.tokushu_kakkyoku:
-        lines.append(f"  特殊格局: {s.tokushu_kakkyoku}")
+    if getattr(s, "kakkyoku", ""):
+        lines.append(f"  特殊格局: {s.kakkyoku}")
 
     # 四柱推命
     if sh:
         lines.append(f"\n【四柱推命】")
         try:
-            lines.append(f"  年柱: {sh.nen_pillar.kanshi}（{sh.nen_pillar.tsuhensei}）")
-            lines.append(f"  月柱: {sh.tsuki_pillar.kanshi}（{sh.tsuki_pillar.tsuhensei}）")
+            lines.append(f"  年柱: {sh.nen_pillar.kanshi}（{getattr(sh.nen_pillar, 'tsuhensei', '')}）")
+            lines.append(f"  月柱: {sh.tsuki_pillar.kanshi}（{getattr(sh.tsuki_pillar, 'tsuhensei', '')}）")
             lines.append(f"  日柱: {sh.hi_pillar.kanshi}（日干）")
             if sh.toki_pillar:
-                lines.append(f"  時柱: {sh.toki_pillar.kanshi}（{sh.toki_pillar.tsuhensei}）")
+                lines.append(f"  時柱: {sh.toki_pillar.kanshi}（{getattr(sh.toki_pillar, 'tsuhensei', '')}）")
             else:
                 lines.append(f"  時柱: 不明（三柱推命）")
-            if hasattr(sh, "shinsatsu") and sh.shinsatsu:
-                lines.append(f"  神殺: {', '.join(sh.shinsatsu[:5])}")
+            if getattr(sh, "shinsatsu", None):
+                lines.append(f"  神殺: {', '.join(str(x) for x in sh.shinsatsu[:5])}")
         except Exception:
             pass
 
@@ -2506,45 +2506,55 @@ def _build_complete_occult_data(bundle: DivinationBundle) -> str:
         lines.append(f"  ASC: {w.asc_sign}")
     if w.mc_sign:
         lines.append(f"  MC: {w.mc_sign}")
-    if hasattr(w, "main_aspects") and w.main_aspects:
-        lines.append(f"  主要アスペクト: {', '.join(w.main_aspects[:5])}")
+    aspects = getattr(w, "aspects", None) or []
+    if aspects:
+        aspect_strs = [f"{a.planet1}{a.aspect_type}{a.planet2}" for a in aspects[:5]]
+        lines.append(f"  主要アスペクト: {', '.join(aspect_strs)}")
 
     # 数秘術
     lines.append(f"\n【数秘術】")
     lines.append(f"  ライフパス: {n.life_path} ({n.life_path_meaning})")
-    if hasattr(n, "personal_year"):
+    if getattr(n, "personal_year", None):
         lines.append(f"  個人年（今年）: {n.personal_year}")
 
     # 九星気学
     lines.append(f"\n【九星気学】")
     lines.append(f"  本命星: {k.honmei_sei}")
-    if hasattr(k, "gekkmei_sei"):
-        lines.append(f"  月命星: {k.gekkmei_sei}")
-    if hasattr(k, "current_year_unsei"):
-        lines.append(f"  今年の運勢: {k.current_year_unsei}")
+    if getattr(k, "getsu_mei_sei", ""):
+        lines.append(f"  月命星: {k.getsu_mei_sei}")
+    if getattr(k, "year_theme", ""):
+        lines.append(f"  今年の運勢: {k.year_theme}")
 
     # タロット
-    lines.append(f"\n【タロット】")
-    lines.append(f"  引いたカード: {t.name_jp}（{'正位置' if t.upright else '逆位置'}）")
-    lines.append(f"  意味: {t.upright_meaning if t.upright else t.reversed_meaning}")
+    if t:
+        lines.append(f"\n【タロット】")
+        position = "逆位置" if getattr(t, "is_reversed", False) else "正位置"
+        lines.append(f"  引いたカード: {t.card_name}（{position}）")
+        msg = getattr(t, "message", "") or ", ".join(getattr(t, "keywords", []) or [])
+        if msg:
+            lines.append(f"  意味: {msg}")
 
     # 紫微斗数
-    lines.append(f"\n【紫微斗数】")
-    if hasattr(z, "mei_kyu"):
-        lines.append(f"  命宮: {z.mei_kyu}")
-    if hasattr(z, "main_stars") and z.main_stars:
-        lines.append(f"  主星: {', '.join(str(x) for x in z.main_stars[:3])}")
-    if hasattr(z, "kyoku_str"):
-        lines.append(f"  局: {z.kyoku_str}")
+    if z:
+        lines.append(f"\n【紫微斗数】")
+        if getattr(z, "ming_gong_branch", ""):
+            lines.append(f"  命宮: {z.ming_gong_branch}宮")
+        if getattr(z, "five_element_name", ""):
+            lines.append(f"  局: {z.five_element_name}")
+        # 命宮の主星を取り出す
+        palaces = getattr(z, "palaces", []) or []
+        ming_palace = next((p for p in palaces if getattr(p, "palace_name", "") == "命宮"), None)
+        if ming_palace and getattr(ming_palace, "main_stars", None):
+            lines.append(f"  命宮主星: {', '.join(ming_palace.main_stars[:3])}")
 
-    # 万象学
-    if hasattr(bundle, "bansho") and bundle.bansho:
-        b = bundle.bansho
+    # 万象学（SanmeiResult.bansho_energy 経由）
+    bansho = getattr(s, "bansho_energy", None)
+    if bansho:
         lines.append(f"\n【万象学】")
-        if hasattr(b, "energy_index"):
-            lines.append(f"  エネルギー指数: {b.energy_index}")
-        if hasattr(b, "honnou_top"):
-            lines.append(f"  第1本能: {b.honnou_top}")
+        if getattr(bansho, "total_energy", None):
+            lines.append(f"  エネルギー指数: {bansho.total_energy}")
+        if getattr(bansho, "top_honnou", ""):
+            lines.append(f"  第1本能: {bansho.top_honnou}")
 
     return "\n".join(lines)
 
