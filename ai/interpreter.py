@@ -1519,17 +1519,33 @@ def _person_context_block(bundle: "DivinationBundle") -> str:
     )
 
 
-def _v3_critical_prefix() -> str:
+def _v3_critical_prefix(bundle: "DivinationBundle" = None) -> str:
     """v3 包括的改善仕様の中で最も外せない最優先ルールを、プロンプト先頭にも掲げる。
 
     後続の構造指示に埋もれて H8 が無視されないよう、開始時点でも宣言する。
+    bundle が渡されれば現在年齢を明示してミス防止する。
     """
-    return """
+    age_block = ""
+    if bundle is not None:
+        try:
+            age = _calc_current_age(bundle)
+            current_year = date.today().year
+            age_block = (
+                f"\n## 【★★★ 鑑定対象者の現在年齢（絶対遵守）★★★】\n"
+                f"**この人は {current_year}年現在、満 {age} 歳です。**\n"
+                f"鑑定文中で年齢を語るなら必ず「満{age}歳」と記すこと。\n"
+                f"大運・大限の年齢範囲（例: 46〜56歳）は範囲表示であって現在の年齢ではない。\n"
+                f"範囲の数字を「あなたの年齢」と誤読して書いた場合は鑑定失敗扱い。\n\n"
+            )
+        except Exception:
+            pass
+    return age_block + """
 ## 【★★★ v3 絶対遵守ルール（読み始めに目に入れること）★★★】
 
 1. **専門用語には必ず優しい解説を添える。** 「中心星」「牽牛星」「天中殺」「身宮」「殺破狼」「離宮回座」「ライフパス」「ASC」「アスペクト」「用神」等を **そのまま投げない**。初出時にカッコか短いフレーズで意味を添えるか、情景に溶かす。読み手は土建屋のおじさん・OLさん・初めて占いに触れる人。**解説が無い鑑定文は v3 失敗扱い**。
 2. 「あなたは○○な人です」型のタイプ分類は禁止（所作・数値・情景で見せる）。
 3. 文字数の上限・下限は設けない。**自然に必要な長さで書く**。長さ自体は目標ではない。「読み手が最後まで読みたくなるか」だけが判断基準。
+4. **鑑定対象者の年齢を間違えない。** 上記の「満X歳」を絶対に踏襲。大運レンジ等の数字を年齢と誤読しない。
 
 詳細ルールはプロンプト末尾の「v3 包括的改善指針」を必ず読むこと。
 
@@ -1540,7 +1556,7 @@ def _v3_critical_prefix() -> str:
 
 def _with_person(prompt: str, bundle: "DivinationBundle", v3_polish: bool = False) -> str:
     if v3_polish:
-        out = _v3_critical_prefix() + prompt + _person_context_block(bundle) + _v3_polish_directive()
+        out = _v3_critical_prefix(bundle) + prompt + _person_context_block(bundle) + _v3_polish_directive()
     else:
         out = prompt + _person_context_block(bundle)
     return out
@@ -1664,15 +1680,31 @@ def _v3_polish_directive() -> str:
 """
 
 
+def _calc_current_age(bundle: "DivinationBundle") -> int:
+    """満年齢を正確に計算する（誕生日前後を考慮）。
+
+    例: 1977-07-15生まれを 2026-05-05 時点で計算 → 満48歳（誕生日前なので49ではなく48）
+    """
+    bd = bundle.person.birth_date
+    today = date.today()
+    age = today.year - bd.year
+    if (today.month, today.day) < (bd.month, bd.day):
+        age -= 1
+    return age
+
+
 def _format_sanmei_dynamic_context(bundle: "DivinationBundle") -> str:
     """算命学の動的データ（今年が天中殺か / 現在大運=四柱推命データ流用）を整形 (v3)"""
     s = getattr(bundle, "sanmei", None)
     if not s:
         return ""
     current_year = date.today().year
-    current_age = current_year - bundle.person.birth_date.year
+    current_age = _calc_current_age(bundle)
 
-    lines = [f"\n【★ 今のあなた（{current_year}年・満{current_age}歳）★】"]
+    lines = [
+        f"\n【★ 今のあなた（{current_year}年・**満{current_age}歳**）★】",
+        f"※ 鑑定文中で年齢を語るなら必ず「満{current_age}歳」と記すこと。これ以外の年齢を書いてはいけない。",
+    ]
 
     # 天中殺年判定
     is_tenchusatsu_now = current_year in (s.tenchusatsu_years or [])
@@ -1692,14 +1724,16 @@ def _format_sanmei_dynamic_context(bundle: "DivinationBundle") -> str:
     if sh and getattr(sh, "taiun_list", None):
         for t in sh.taiun_list:
             if t.start_age_mansai <= current_age < t.start_age_mansai + 10:
+                year_in_taiun = current_age - t.start_age_mansai + 1
                 lines.append(
-                    f"- 現在の大運: {t.kanshi}（{t.start_age_mansai}〜{t.start_age_mansai+10}歳）"
+                    f"- 現在の大運: {t.kanshi}（{t.start_age_mansai}〜{t.start_age_mansai+10}歳の10年）"
                     f" — 算命学では「{t.juni_unsei}運の10年」"
+                    f"\n  → **満{current_age}歳は、この大運の{year_in_taiun}年目**（{t.start_age_mansai}〜{t.start_age_mansai+10}は範囲表示であり現在の年齢ではない）"
                 )
                 lines.append(f"  ★ この10年の主旋律。鑑定文では必ずこの流れを語ること。")
                 break
 
-    if len(lines) == 1:
+    if len(lines) == 2:  # ヘッダー + 注意書きしかない
         return ""
     return "\n".join(lines) + "\n"
 
@@ -1709,7 +1743,7 @@ def _current_taiun_section(sh, bundle: "DivinationBundle") -> str:
     if not sh or not getattr(sh, "taiun_list", None):
         return ""
     current_year = date.today().year
-    current_age = current_year - bundle.person.birth_date.year
+    current_age = _calc_current_age(bundle)
     current = None
     for t in sh.taiun_list:
         if t.start_age_mansai <= current_age < t.start_age_mansai + 10:
@@ -1717,11 +1751,13 @@ def _current_taiun_section(sh, bundle: "DivinationBundle") -> str:
             break
     if not current:
         return ""
+    year_in_taiun = current_age - current.start_age_mansai + 1
     return (
-        f"\n【★ 今のあなた（{current_year}年・満{current_age}歳）★】\n"
-        f"- 現在の大運: 第{current.index}運 "
-        f"{current.start_age_mansai}〜{current.start_age_mansai+10}歳: "
+        f"\n【★ 今のあなた（{current_year}年・**満{current_age}歳**）★】\n"
+        f"※ 鑑定文中で年齢を語るなら必ず「満{current_age}歳」と記すこと。\n"
+        f"- 現在の大運: 第{current.index}運（範囲: {current.start_age_mansai}〜{current.start_age_mansai+10}歳）: "
         f"{current.kanshi}（通変星={current.tsuhensei} / 十二運={current.juni_unsei}）\n"
+        f"  → **満{current_age}歳は、この大運の{year_in_taiun}年目**（範囲数字は現在の年齢ではない）\n"
         f"  ★ この10年があなたの「今のテーマ」。鑑定文では必ずこの大運を主軸に語ること。\n"
     )
 
@@ -2054,14 +2090,18 @@ def generate_ziwei_reading(bundle: DivinationBundle) -> dict:
 
     sihua_text = '、'.join(f'{star}({hua})' for star, hua in z.sihua_assignments.items())
 
-    # 大限のうち現在の年齢に近い部分
-    current_age = date.today().year - bundle.person.birth_date.year
+    # 大限のうち現在の年齢に近い部分（誕生日前後を考慮した正確な満年齢）
+    current_age = _calc_current_age(bundle)
     current_daxian = ""
     for i, (s, e) in enumerate(z.da_xian_ages):
         if s <= current_age <= e:
             palace = z.palaces[i] if i < len(z.palaces) else None
             pname = palace.palace_name if palace else '不明'
-            current_daxian = f"第{i+1}限 {s}〜{e}歳（{pname}）"
+            year_in_daxian = current_age - s + 1
+            current_daxian = (
+                f"第{i+1}限（範囲: {s}〜{e}歳の10年）/ 宮: {pname}"
+                f"\n  → **満{current_age}歳は、この大限の{year_in_daxian}年目**（{s}〜{e}は範囲表示であり現在の年齢ではない）"
+            )
             break
 
     # 流年命宮の計算（v3 動的データ）
@@ -2098,8 +2138,9 @@ def generate_ziwei_reading(bundle: DivinationBundle) -> dict:
 - 身宮: {z.shen_gong_branch}宮
 - 大限方向: {z.da_xian_direction}
 
-【★ 今のあなた（{current_year}年・動的データ）★】
-- 現在の大限: {current_daxian}（10年単位の人生章）
+【★ 今のあなた（{current_year}年・**満{current_age}歳**）★】
+※ 鑑定文中で年齢を語るなら必ず「満{current_age}歳」と記すこと。これ以外の年齢を書いてはいけない。
+- 現在の大限: {current_daxian}
 - {flow_year_text}
 - 四化: {sihua_text}
 
