@@ -28,6 +28,19 @@ import streamlit.components.v1 as _stc
 # ============================================================
 # 共有機能ヘルパー
 # ============================================================
+def render_back_to_top_button(key_suffix: str, label: str = "← TOPに戻る"):
+    """全ページ共通の「TOPに戻る」ボタン（フッター用）
+
+    各 render_*_page 関数の最後で呼ぶ。重複防止のため key_suffix で一意化する。
+    """
+    render_gold_divider()
+    col1, col2, col3 = st.columns([1, 2, 1])
+    with col2:
+        if st.button(label, key=f"btn_back_top_{key_suffix}", use_container_width=True):
+            st.session_state.page = "top"
+            st.rerun()
+
+
 _THEME_LABELS = {
     "love": "恋愛運", "marriage": "結婚運", "career": "仕事運",
     "future10": "10年後の自分", "shine": "最大限に輝く生き方",
@@ -1899,6 +1912,9 @@ def render_ura_menu_page():
         st.session_state.page = "input"
         st.rerun()
 
+    # TOPへ戻る（共通フッター）
+    render_back_to_top_button("ura_menu")
+
 
 def _start_theme(theme_key: str):
     """テーマ鑑定を生成して結果画面へ遷移"""
@@ -2125,6 +2141,9 @@ def render_theme_result_page():
             st.session_state.theme_results = {}
             st.rerun()
 
+    # TOPへ戻る（共通フッター）
+    render_back_to_top_button("theme_result")
+
 
 # ============================================================
 # 結果画面
@@ -2215,6 +2234,9 @@ def render_result_page():
             st.session_state.selected_course = None
             st.session_state.theme_results = {}
             st.rerun()
+
+    # TOPへ戻る（共通フッター）
+    render_back_to_top_button("result")
 
 
 def _render_complete_reading_result(bundle, results):
@@ -3072,6 +3094,9 @@ def render_tarot_deepen_page():
             st.session_state.page = "tarot_loading"
             st.rerun()
 
+    # TOPへ戻る（共通フッター）
+    render_back_to_top_button("tarot_deepen")
+
 
 def render_tarot_loading_page():
     """対話型タロット: 占術計算 + スプレッド選択 + カード引き"""
@@ -3438,6 +3463,9 @@ function goToReading() {{
             st.session_state.tarot_revealed = n
             st.session_state.page = "tarot_generating"
             st.rerun()
+
+    # TOPへ戻る（共通フッター）
+    render_back_to_top_button("tarot_reveal")
 
 
 def render_tarot_generating_page():
@@ -4099,6 +4127,9 @@ def render_team_input_page():
     if st.button("← 戻る", key="btn_back_team"):
         st.session_state.page = "aisho_input"
         st.rerun()
+
+    # TOPへ戻る（共通フッター）
+    render_back_to_top_button("team_input")
 
 
 # ============================================================
