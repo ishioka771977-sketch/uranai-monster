@@ -458,6 +458,36 @@ def _row_to_legacy(row: dict) -> dict:
     }
 
 
+def _make_people_key(name: str, year=None, month=None, day=None) -> str:
+    """同名異人を区別するための辞書キーを生成。
+
+    例: 「田中太郎」「田中太郎|1990-05-04」
+    生年月日がある場合は付与、無い場合は名前のみ（後方互換）。
+    """
+    if not name:
+        return ""
+    if year and month and day:
+        return f"{name}|{int(year):04d}-{int(month):02d}-{int(day):02d}"
+    return str(name)
+
+
+def _people_key_to_display(key: str) -> str:
+    """辞書キー → UI表示名に変換。例: 「田中太郎|1990-05-04」→「田中太郎 (1990-05-04生)」"""
+    if not key:
+        return ""
+    if "|" in key:
+        name, birth = key.split("|", 1)
+        return f"{name} ({birth}生)"
+    return key
+
+
+def _people_key_to_name(key: str) -> str:
+    """辞書キー → 純粋な名前部分のみ抽出"""
+    if not key:
+        return ""
+    return key.split("|", 1)[0]
+
+
 def _load_people_db(
     order_by: str = "last_divined",
     desc: bool = True,
@@ -466,7 +496,9 @@ def _load_people_db(
 ) -> dict:
     """顧客データを取得。Supabase優先、未設定時は JSON。
 
-    戻り値は旧仕様互換の dict {name: {...}}。タグ絞り込み・検索もサポート。
+    戻り値は dict {key: {...}}。
+    キーは _make_people_key() で生成（同名異人の場合は「名前|生年月日」型）。
+    タグ絞り込み・検索もサポート。
     """
     if _supabase_on():
         try:
@@ -477,13 +509,21 @@ def _load_people_db(
             for row in rows:
                 rec = _row_to_legacy(row)
                 n = rec.get("name")
-                if n:
-                    db[n] = rec
+                if not n:
+                    continue
+                key = _make_people_key(n, rec.get("year"), rec.get("month"), rec.get("day"))
+                # 同名同生年月日が万一あれば（双子等）連番付与
+                if key in db:
+                    suffix = 2
+                    while f"{key}#{suffix}" in db:
+                        suffix += 1
+                    key = f"{key}#{suffix}"
+                db[key] = rec
             return db
         except Exception as e:
             print(f"[people_db] Supabase list error, fallback to JSON: {e}")
 
-    # フォールバック: JSON
+    # フォールバック: JSON（旧形式は name キーのまま、新規追加分のみ複合キー）
     return _json_load_people()
 
 
@@ -494,11 +534,15 @@ def _persist_people_db(db: dict):
     """
     if _supabase_on():
         try:
-            for name, rec in db.items():
-                if not name or not isinstance(rec, dict):
+            for key, rec in db.items():
+                if not key or not isinstance(rec, dict):
+                    continue
+                # キーは「name」or「name|YYYY-MM-DD」。実際の保存名は rec から取る
+                actual_name = rec.get("name") or _people_key_to_name(key)
+                if not actual_name:
                     continue
                 payload = {
-                    "name": name,
+                    "name": actual_name,
                     "gender": rec.get("gender"),
                     "birth_year": rec.get("year"),
                     "birth_month": rec.get("month"),
@@ -519,13 +563,30 @@ def _persist_people_db(db: dict):
     _json_save_people(db)
 
 
-def _delete_person(name: str) -> bool:
-    """顧客を削除する。Supabase では delete、JSON では pop して永続化。"""
-    if not name:
+def _delete_person(key_or_name: str, year=None, month=None, day=None) -> bool:
+    """顧客を削除する。Supabase では delete、JSON では pop して永続化。
+
+    Args:
+        key_or_name: 辞書キー（「名前」or「名前|YYYY-MM-DD」）または純粋な名前
+        year/month/day: 生年月日（同名異人を区別する場合に指定）
+    """
+    if not key_or_name:
         return False
+    # キー形式なら生年月日を抽出
+    name = _people_key_to_name(key_or_name)
+    if "|" in key_or_name and year is None:
+        try:
+            birth_part = key_or_name.split("|", 1)[1]
+            year, month, day = [int(x) for x in birth_part.split("-")]
+        except Exception:
+            pass
     if _supabase_on():
         try:
-            row = _sb.get_customer_by_name(name)
+            # 生年月日が指定されていればそれで検索、なければ名前のみ
+            if year and month and day:
+                row = _sb.get_customer_by_name_and_birth(name, year, month, day)
+            else:
+                row = _sb.get_customer_by_name(name)
             if row and row.get("id"):
                 return _sb.delete_customer(row["id"])
         except Exception as e:
@@ -533,8 +594,8 @@ def _delete_person(name: str) -> bool:
         return False
     # フォールバック
     db = _json_load_people()
-    if name in db:
-        del db[name]
+    if key_or_name in db:
+        del db[key_or_name]
         _json_save_people(db)
         return True
     return False
@@ -569,8 +630,8 @@ def _save_person(
         return
 
     if _supabase_on():
-        # Supabase 経由で UPSERT。既存タグを保持するため事前取得して merge
-        existing = _sb.get_customer_by_name(name) or {}
+        # Supabase 経由で UPSERT。同名異人を区別するため 名前+生年月日 で既存を検索
+        existing = _sb.get_customer_by_name_and_birth(name, year, month, day) or {}
         merged_tags = existing.get("tags") or []
         if tags:
             # 既存に無い新タグだけ追加
@@ -805,8 +866,15 @@ def _format_dt_jst(dt_str) -> str:
         return s
 
 
-def _render_person_row(name: str, p: dict, key_prefix: str, people_db: dict, show_folder_assign: bool = False):
-    """人物1行を描画（選択ボタン + タグバッジ + 削除ボタン）"""
+def _render_person_row(key: str, p: dict, key_prefix: str, people_db: dict, show_folder_assign: bool = False):
+    """人物1行を描画（選択ボタン + タグバッジ + 削除ボタン）
+
+    Args:
+        key: people_db の辞書キー（「名前」or「名前|YYYY-MM-DD」）
+        p: 顧客レコード
+    """
+    # 表示用の名前（実際の名前部分のみ）
+    actual_name = p.get("name") or _people_key_to_name(key)
     year = p.get('year', '')
     month = p.get('month', '')
     day = p.get('day', '')
@@ -824,9 +892,11 @@ def _render_person_row(name: str, p: dict, key_prefix: str, people_db: dict, sho
 
     # 本名表示: 表示名（本名）。同じか本名なしなら表示名のみ。
     real_name = (p.get('real_name') or '').strip()
-    disp_name = name if (not real_name or real_name == name) else f"{name}（{real_name}）"
+    disp_name = actual_name if (not real_name or real_name == actual_name) else f"{actual_name}（{real_name}）"
 
-    confirm_key = f"_confirm_del_{key_prefix}_{name}"
+    # widget key は dict key（ユニーク）を使う
+    safe_key = key.replace("|", "_").replace("-", "_").replace("#", "_")
+    confirm_key = f"_confirm_del_{key_prefix}_{safe_key}"
     col1, col2 = st.columns([5, 1])
     with col1:
         label = f"👤 {disp_name}　{year}/{month}/{day}{time_disp}　{gender}{blood_str}{email_str}{divined_str}"
@@ -835,7 +905,7 @@ def _render_person_row(name: str, p: dict, key_prefix: str, people_db: dict, sho
         # widget key 書き換えは反映されないため。
         st.button(
             label,
-            key=f"btn_{key_prefix}_{name}",
+            key=f"btn_{key_prefix}_{safe_key}",
             use_container_width=True,
             on_click=_select_person,
             args=(p,),
@@ -848,18 +918,18 @@ def _render_person_row(name: str, p: dict, key_prefix: str, people_db: dict, sho
             st.markdown(f'<div style="margin:-6px 0 4px 4px;">{badges_html}</div>', unsafe_allow_html=True)
     with col2:
         if st.session_state.get(confirm_key):
-            if st.button("✓削除", key=f"btn_delok_{key_prefix}_{name}", help="本当に削除"):
-                _delete_person(name)
-                people_db.pop(name, None)
+            if st.button("✓削除", key=f"btn_delok_{key_prefix}_{safe_key}", help="本当に削除"):
+                _delete_person(key)
+                people_db.pop(key, None)
                 st.session_state._people_db = people_db
                 st.session_state.pop(confirm_key, None)
                 st.rerun()
         else:
-            if st.button("🗑", key=f"btn_del_{key_prefix}_{name}", help=f"{name}を削除（要確認）"):
+            if st.button("🗑", key=f"btn_del_{key_prefix}_{safe_key}", help=f"{actual_name}を削除（要確認）"):
                 st.session_state[confirm_key] = True
                 st.rerun()
     if st.session_state.get(confirm_key):
-        st.warning(f"⚠ 「{name}」を削除します。鑑定履歴も全て消えます。取り消せません。")
+        st.warning(f"⚠ 「{disp_name} ({year}/{month}/{day}生)」を削除します。鑑定履歴も全て消えます。取り消せません。")
 
 
 def _render_people_quick_select():
@@ -921,8 +991,8 @@ def _render_people_quick_select():
         if not items:
             st.caption("該当する顧客はいません")
         else:
-            for name, p in items:
-                _render_person_row(name, p, "lst", people_db)
+            for key, p in items:
+                _render_person_row(key, p, "lst", people_db)
             st.markdown(
                 f'<div style="color:#5A5A5A;font-size:0.72em;text-align:right;">{len(items)}件</div>',
                 unsafe_allow_html=True,
@@ -1076,9 +1146,81 @@ def render_meibo_page():
     render_gold_divider()
 
     # ── セクション切り替え（タブ） ──
-    tab_upload, tab_text, tab_list = st.tabs([
-        "📂 ファイル取込", "📝 テキスト一括", "👥 顧客一覧"
+    tab_single, tab_upload, tab_text, tab_list = st.tabs([
+        "✏️ 1人ずつ登録", "📂 ファイル取込", "📝 テキスト一括", "👥 顧客一覧"
     ])
+
+    # ==================================================================
+    # タブ0: 1人ずつ手動登録（鑑定実行を経由せずに名簿入りできる）
+    # ==================================================================
+    with tab_single:
+        st.markdown('<div style="color:#BFA350;font-size:0.95em;font-weight:bold;margin:8px 0;">1人ずつ手動で名簿に追加</div>', unsafe_allow_html=True)
+        st.caption("名前と生年月日があれば登録できます。同名異人は生年月日で区別されます。")
+
+        with st.form("meibo_single_add_form", clear_on_submit=True):
+            r1c1, r1c2 = st.columns(2)
+            with r1c1:
+                add_name = st.text_input("表示名（必須）", key="add_name", placeholder="田中太郎")
+                add_gender = st.selectbox("性別", ["男性", "女性"], key="add_gender")
+                add_year = st.number_input("生年（西暦・必須）", min_value=1900, max_value=2030, value=1980, step=1, key="add_year")
+                add_month = st.number_input("月（必須）", min_value=1, max_value=12, value=1, step=1, key="add_month")
+                add_day = st.number_input("日（必須）", min_value=1, max_value=31, value=1, step=1, key="add_day")
+                add_blood = st.selectbox("血液型", ["不明", "A", "B", "O", "AB"], key="add_blood")
+            with r1c2:
+                add_real = st.text_input("本名（表示名と別なら）", key="add_real", placeholder="例: 山田太郎（戸籍名）")
+                add_kana = st.text_input("ふりがな", key="add_kana", placeholder="あいうえお順のソート用")
+                add_time = st.text_input("出生時刻 (任意)", key="add_time", placeholder="例: 14:30")
+                add_place = st.text_input("出生地 (任意)", key="add_place", placeholder="例: 北海道函館市")
+                add_email = st.text_input("メールアドレス (任意)", key="add_email", placeholder="example@gmail.com")
+
+            add_tags_raw = st.text_input(
+                "タグ（カンマ区切り・任意）",
+                key="add_tags_raw",
+                placeholder="例: 建設業, 石岡組, 現場代理人",
+            )
+            add_memo = st.text_area("メモ（任意）", key="add_memo", height=80, placeholder="自由記述")
+
+            submitted = st.form_submit_button("📥 名簿に登録", use_container_width=True)
+            if submitted:
+                add_name_clean = add_name.strip()
+                if not add_name_clean:
+                    st.error("表示名を入力してください")
+                else:
+                    add_tags_list = [t.strip() for t in add_tags_raw.replace("、", ",").split(",") if t.strip()]
+                    payload = {
+                        "name": add_name_clean,
+                        "real_name": add_real.strip() or None,
+                        "name_kana": add_kana.strip() or None,
+                        "gender": add_gender,
+                        "birth_year": int(add_year),
+                        "birth_month": int(add_month),
+                        "birth_day": int(add_day),
+                        "birth_time": add_time.strip() or None,
+                        "birth_place": add_place.strip() or None,
+                        "blood_type": add_blood if add_blood != "不明" else None,
+                        "email": add_email.strip() or None,
+                        "tags": add_tags_list,
+                        "memo": add_memo.strip() or None,
+                    }
+                    if _supabase_on():
+                        _sb.upsert_customer(payload)
+                    else:
+                        # JSON フォールバック
+                        pkey = _make_people_key(add_name_clean, add_year, add_month, add_day)
+                        people_db[pkey] = {
+                            "name": add_name_clean,
+                            "gender": add_gender,
+                            "year": int(add_year), "month": int(add_month), "day": int(add_day),
+                            "time": add_time.strip(), "place": add_place.strip(),
+                            "blood": add_blood, "email": add_email.strip(),
+                            "tags": add_tags_list,
+                            "real_name": add_real.strip() or None,
+                            "name_kana": add_kana.strip() or None,
+                            "memo": add_memo.strip() or None,
+                        }
+                        _persist_people_db(people_db)
+                    st.success(f"「{add_name_clean}（{int(add_year)}-{int(add_month):02d}-{int(add_day):02d}生）」を名簿に追加しました")
+                    st.rerun()
 
     # ==================================================================
     # タブA: ファイルアップロード（CSV / Excel）
@@ -1163,12 +1305,13 @@ def render_meibo_page():
                     tags_list = [t.strip() for t in upload_tags_raw.replace("、", ",").split(",") if t.strip()]
                     for r in valid:
                         pname = r["name"]
-                        existing = people_db.get(pname, {})
+                        pkey = _make_people_key(pname, r.get("year"), r.get("month"), r.get("day"))
+                        existing = people_db.get(pkey, {})
                         merged_tags = list(existing.get("tags") or [])
                         for t in tags_list:
                             if t not in merged_tags:
                                 merged_tags.append(t)
-                        people_db[pname] = {
+                        people_db[pkey] = {
                             "name": pname,
                             "gender": r.get("gender", ""),
                             "year": r["year"], "month": r["month"], "day": r["day"],
@@ -1256,12 +1399,13 @@ def render_meibo_page():
                         pass
 
                     if pyear and pmonth and pday:
-                        existing = people_db.get(pname, {})
+                        pkey = _make_people_key(pname, pyear, pmonth, pday)
+                        existing = people_db.get(pkey, {})
                         merged_tags = list(existing.get("tags") or [])
                         for t in tags_list:
                             if t not in merged_tags:
                                 merged_tags.append(t)
-                        people_db[pname] = {
+                        people_db[pkey] = {
                             "name": pname, "gender": pgender,
                             "year": pyear, "month": pmonth, "day": pday,
                             "time": ptime, "place": "", "blood": pblood,
@@ -1344,10 +1488,10 @@ def render_meibo_page():
                 # テーブル表示
                 import pandas as pd
                 table_data = []
-                for name in names_sorted:
-                    p = people_db[name]
+                for key in names_sorted:
+                    p = people_db[key]
                     table_data.append({
-                        "名前": name,
+                        "名前": p.get("name") or _people_key_to_name(key),
                         "本名": p.get("real_name") or "",
                         "生年月日": f"{p.get('year','')}/{p.get('month','')}/{p.get('day','')}",
                         "性別": p.get("gender", ""),
@@ -1362,7 +1506,11 @@ def render_meibo_page():
                 # ── タグ / メール 一括編集 ──
                 st.markdown("---")
                 st.markdown('<div style="color:#BFA350;font-size:0.9em;font-weight:bold;margin-bottom:6px;">✏️ 顧客編集（タグ・メール等）</div>', unsafe_allow_html=True)
-                edit_target = st.selectbox("顧客を選択", ["（選択）"] + names_sorted, key="meibo_email_target", label_visibility="collapsed")
+                edit_target = st.selectbox(
+                    "顧客を選択", ["（選択）"] + names_sorted, key="meibo_email_target",
+                    format_func=lambda k: "（選択）" if k == "（選択）" else _people_key_to_display(k),
+                    label_visibility="collapsed",
+                )
                 if edit_target and edit_target != "（選択）" and edit_target in people_db:
                     rec = people_db[edit_target]
                     c1, c2 = st.columns(2)
@@ -1390,20 +1538,25 @@ def render_meibo_page():
                         people_db[edit_target] = rec
                         st.session_state._people_db = people_db
                         _persist_people_db(people_db)
-                        st.success(f"「{edit_target}」の情報を保存しました")
+                        st.success(f"「{_people_key_to_display(edit_target)}」の情報を保存しました")
                         st.rerun()
 
                 # ── 個別削除 ──
                 st.markdown("---")
                 st.markdown('<div style="color:#8A8478;font-size:0.8em;margin-bottom:6px;">個別削除</div>', unsafe_allow_html=True)
-                del_target = st.selectbox("削除する顧客", ["（選択）"] + names_sorted, key="meibo_del_target", label_visibility="collapsed")
-                del_confirm = st.checkbox(f"「{del_target}」を削除することを確認しました（取り消せません）", key="meibo_del_confirm") if del_target and del_target != "（選択）" else False
+                del_target = st.selectbox(
+                    "削除する顧客", ["（選択）"] + names_sorted, key="meibo_del_target",
+                    format_func=lambda k: "（選択）" if k == "（選択）" else _people_key_to_display(k),
+                    label_visibility="collapsed",
+                )
+                del_display = _people_key_to_display(del_target) if del_target and del_target != "（選択）" else ""
+                del_confirm = st.checkbox(f"「{del_display}」を削除することを確認しました（取り消せません）", key="meibo_del_confirm") if del_display else False
                 if st.button("🗑 削除実行", key="btn_meibo_del"):
                     if del_target and del_target != "（選択）" and del_target in people_db and del_confirm:
                         _delete_person(del_target)
                         people_db.pop(del_target, None)
                         st.session_state._people_db = people_db
-                        st.success(f"「{del_target}」を削除しました")
+                        st.success(f"「{del_display}」を削除しました")
                         st.rerun()
                     elif not del_confirm:
                         st.warning("確認チェックを入れてください")
@@ -1776,8 +1929,12 @@ def _record_history(course_name: str, types: list | None = None):
         name = getattr(person, "name", None) if person else None
         if not name:
             return
-        # Supabase上の顧客IDを取得
-        row = _sb.get_customer_by_name(name) or {}
+        # 同名異人を区別するため 名前+生年月日 で顧客を検索
+        bd = getattr(person, "birth_date", None)
+        by = bd.year if bd else None
+        bm = bd.month if bd else None
+        bdd = bd.day if bd else None
+        row = _sb.get_customer_by_name_and_birth(name, by, bm, bdd) or {}
         _sb.record_divination(
             customer_id=row.get("id"),
             customer_name=name,

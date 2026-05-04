@@ -115,7 +115,10 @@ def list_customers(
 
 
 def get_customer_by_name(name: str) -> Optional[dict]:
-    """表示名で顧客を1件取得"""
+    """表示名で顧客を1件取得（同名複数の場合は最初の1件・後方互換用）
+
+    ※同名異人を区別したい場合は get_customer_by_name_and_birth を使うこと
+    """
     client = get_supabase_client()
     uid = get_user_id()
     if client is None or uid is None or not name:
@@ -136,9 +139,43 @@ def get_customer_by_name(name: str) -> Optional[dict]:
         return None
 
 
-def upsert_customer(data: dict) -> Optional[dict]:
-    """顧客をINSERT or UPDATE。`name` をキーに UPSERT。
+def get_customer_by_name_and_birth(
+    name: str,
+    birth_year: Optional[int],
+    birth_month: Optional[int],
+    birth_day: Optional[int],
+) -> Optional[dict]:
+    """名前+生年月日で顧客を1件取得（同名異人の区別用）"""
+    client = get_supabase_client()
+    uid = get_user_id()
+    if client is None or uid is None or not name:
+        return None
+    try:
+        q = (
+            client.table("customers")
+            .select(_CUSTOMER_COLUMNS)
+            .eq("user_id", uid)
+            .eq("name", name)
+        )
+        if birth_year is not None:
+            q = q.eq("birth_year", birth_year)
+        if birth_month is not None:
+            q = q.eq("birth_month", birth_month)
+        if birth_day is not None:
+            q = q.eq("birth_day", birth_day)
+        res = q.limit(1).execute()
+        rows = res.data or []
+        return rows[0] if rows else None
+    except Exception as e:
+        print(f"[supabase] get_customer_by_name_and_birth error: {e}")
+        return None
 
+
+def upsert_customer(data: dict) -> Optional[dict]:
+    """顧客をINSERT or UPDATE。`name + 生年月日` をキーに UPSERT。
+
+    同名異人を区別するため (user_id, name, birth_year, birth_month, birth_day)
+    の複合ユニーク制約を前提とする（Supabase migration 適用済みであること）。
     既存レコードがあれば updated_at だけ新しくして他フィールドは上書き。
     """
     client = get_supabase_client()
@@ -169,7 +206,7 @@ def upsert_customer(data: dict) -> Optional[dict]:
     try:
         res = (
             client.table("customers")
-            .upsert(payload, on_conflict="user_id,name")
+            .upsert(payload, on_conflict="user_id,name,birth_year,birth_month,birth_day")
             .execute()
         )
         rows = res.data or []
