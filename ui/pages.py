@@ -1773,6 +1773,8 @@ def render_loading_page():
         st.write(f"✧ 紫微斗数 ── 完了（{ziwei.five_element_name} / 命宮:{ziwei.ming_gong_branch}）")
 
         st.write("✧ 四柱推命…四柱と大運を展開中…")
+        # 例外詳細を session_state に残し、後で UI に表示できるようにする
+        st.session_state._shichu_error = None
         try:
             shichusuimei = calculate_shichusuimei(person)
             toki_tag = f"・{shichusuimei.toki_pillar.kanshi}" if shichusuimei.toki_pillar else "（時柱なし）"
@@ -1783,7 +1785,17 @@ def render_loading_page():
             )
         except Exception as _e:
             shichusuimei = None
-            st.write(f"✧ 四柱推命 ── スキップ（{_e}）")
+            import traceback as _tb
+            err_detail = f"{type(_e).__name__}: {_e}"
+            err_trace = _tb.format_exc()
+            st.session_state._shichu_error = {
+                "summary": err_detail,
+                "trace": err_trace,
+                "person_birth": str(person.birth_date),
+                "person_time": person.birth_time or "(なし)",
+                "person_gender": person.gender or "(なし)",
+            }
+            st.write(f"✧ 四柱推命 ── スキップ（{err_detail}）")
 
         st.write("✧ タロットカードをシャッフル中…")
         tarot = draw_tarot(1, major_only=True)[0]

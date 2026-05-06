@@ -637,7 +637,26 @@ def render_shichusuimei_course(bundle: DivinationBundle, data: dict = None):
     data = data or {}
     sh = getattr(bundle, "shichusuimei", None)
     if sh is None:
-        st.warning("四柱推命のデータがありません（出生時刻が必要です）")
+        # ローディング画面で計算失敗した場合、エラー詳細を表示する
+        err = st.session_state.get("_shichu_error")
+        if err:
+            st.error(
+                "四柱推命の計算に失敗しました。詳細を以下に表示します（ひでさんに共有してください）。"
+            )
+            st.markdown(
+                f"**入力データ**:\n"
+                f"- 生年月日: `{err.get('person_birth','?')}`\n"
+                f"- 出生時刻: `{err.get('person_time','?')}`\n"
+                f"- 性別: `{err.get('person_gender','?')}`\n\n"
+                f"**エラー内容**: `{err.get('summary','?')}`"
+            )
+            with st.expander("スタックトレース（コドたんに渡す用）", expanded=False):
+                st.code(err.get("trace", ""), language="text")
+        else:
+            st.warning(
+                "四柱推命のデータがありません。鑑定スタートからやり直してみてください。"
+                "（生年月日があれば計算できますが、何らかの理由で失敗しました）"
+            )
         return
 
     headline = data.get("headline", f"日主{sh.nichikan}の命式")
