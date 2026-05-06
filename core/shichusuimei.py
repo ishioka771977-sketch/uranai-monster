@@ -198,9 +198,27 @@ SETSUDO_KIJIN_TABLE = {
 # =============================================================================
 
 def _parse_time(birth_time: str) -> Tuple[int, int]:
-    """'HH:MM' を (hour, minute) にパース"""
-    h, m = birth_time.split(":")
-    return int(h), int(m)
+    """'HH:MM' を (hour, minute) にパース。全角コロン・全角数字・余分な空白も許容"""
+    s = (birth_time or "").strip()
+    # 全角→半角の正規化
+    s = s.translate(str.maketrans({
+        "：": ":", "．": ":", "、": ":",
+        "0": "0", "1": "1", "2": "2", "3": "3", "4": "4",
+        "5": "5", "6": "6", "7": "7", "8": "8", "9": "9",
+        "時": ":", "分": "", " ": "",
+    }))
+    # 末尾コロン除去（"10時" → "10:" → "10"）
+    s = s.rstrip(":")
+    if ":" in s:
+        h, m = s.split(":", 1)
+        return int(h), int(m or 0)
+    # ":"が無い場合: 4桁数字（"1000"=10時00分）or 1-2桁数字（"10"=10時）として扱う
+    if s.isdigit():
+        if len(s) == 4:
+            return int(s[:2]), int(s[2:])
+        if len(s) <= 2:
+            return int(s), 0
+    raise ValueError(f"unrecognized time format: {birth_time!r}")
 
 
 def _calc_toki_kanshi(birth_time: str, nichikan: str) -> str:
