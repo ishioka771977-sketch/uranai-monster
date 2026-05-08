@@ -3832,7 +3832,7 @@ def _render_aisho_chat(bundle1, bundle2, result):
     for chat in st.session_state.aisho_chat_history:
         with st.chat_message("user", avatar="🙋"):
             st.write(chat["question"])
-        with st.chat_message("assistant", avatar="✦"):
+        with st.chat_message("assistant", avatar="🔮"):
             st.write(chat["answer"])
 
     ac_col1, ac_col2 = st.columns([5, 1])
@@ -3880,7 +3880,7 @@ def _render_aisho_chat(bundle1, bundle2, result):
         with st.chat_message("user", avatar="🙋"):
             st.write(follow_up)
 
-        with st.chat_message("assistant", avatar="✦"):
+        with st.chat_message("assistant", avatar="🔮"):
             with st.spinner("くろたんが考え中…"):
                 try:
                     answer = _call_api_text(SYSTEM_PROMPT_BASE, prompt, max_tokens=1000)
