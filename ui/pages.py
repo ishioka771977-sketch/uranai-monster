@@ -1899,6 +1899,15 @@ def render_ura_menu_page():
     if st.button("✧ フルコース ✧", key="btn_full", use_container_width=True):
         _start_course("フルコース")
 
+    # 開運習慣メニュー（Phase 1: L1+L2）
+    st.markdown("""
+<div style="text-align:center; margin:14px 0 4px; color:#D4B96A; font-size:0.78em;">
+🌱 「あなたは何者か」ではなく、「だからどう生きるか」
+</div>
+""", unsafe_allow_html=True)
+    if st.button("🌱 開運に繋がる当たり前の日常 🌱", key="btn_kaiun_habits", use_container_width=True):
+        _start_course("開運習慣")
+
     # コンプリート鑑定（最上位・全占術深掘り＋根幹抽出＋時間軸統合）
     st.markdown("""
 <div style="text-align:center; margin:6px 0 4px; color:#D4B96A; font-size:0.78em;">
@@ -2043,6 +2052,14 @@ def render_generating_page():
             "コンプリート鑑定",
             ["算命学", "四柱推命", "西洋占星術", "数秘術", "九星気学", "タロット", "紫微斗数", "万象学"],
         )
+    elif course == "開運習慣":
+        from ai.interpreter import generate_kaiun_habits
+        with st.status("🌱 開運習慣メニュー生成中…", expanded=True) as status:
+            st.write("✧ 7流派のデータから、毎日と週単位の習慣を提案中…")
+            kaiun = generate_kaiun_habits(bundle)
+            status.update(label="✦ 開運習慣 提案完了 ✦", state="complete")
+        st.session_state.course_results["kaiun_habits"] = kaiun
+        _record_history("開運習慣", ["全占術横断"])
     else:
         with st.status(f"✦ {course}コース鑑定生成中…", expanded=True) as status:
             st.write(f"✧ {course}の鑑定文を生成中…")
@@ -2053,7 +2070,7 @@ def render_generating_page():
         course_key_map = {
             "算命学": "sanmei", "星座": "western", "九星気学": "kyusei",
             "数秘術": "numerology", "タロット": "tarot", "紫微斗数": "ziwei",
-            "四柱推命": "shichusuimei",
+            "四柱推命": "shichusuimei", "古神道": "kojindo",
         }
         key = course_key_map.get(course, course)
         st.session_state.course_results[key] = result
@@ -2204,6 +2221,8 @@ def render_result_page():
         _render_full_course_result(bundle, results)
     elif course == "コンプリート鑑定":
         _render_complete_reading_result(bundle, results)
+    elif course == "開運習慣":
+        _render_kaiun_habits_result(bundle, results)
     else:
         _render_single_course_result(bundle, course, results)
 
@@ -2232,8 +2251,20 @@ def render_result_page():
         ]
         _cr_rd = "\n\n".join(f"{h}\n{b}" for h, b in _sections if b)
         _cr_cl = _cmp.get("kuro_summary", "")
+    elif course == "開運習慣":
+        _kdata = results.get("kaiun_habits", {})
+        _cr_hl = _kdata.get("headline", "")
+        _cr_rd = (
+            f"【L1 毎日の土台】{_kdata.get('l1_title','')}\n"
+            f"なぜ: {_kdata.get('l1_why','')}\n"
+            f"動作: {_kdata.get('l1_action','')}\n\n"
+            f"【L2 週単位の発展】{_kdata.get('l2_title','')}\n"
+            f"なぜ: {_kdata.get('l2_why','')}\n"
+            f"動作: {_kdata.get('l2_action','')}"
+        )
+        _cr_cl = _kdata.get("closing", "")
     else:
-        _ckey_map = {"算命学": "sanmei", "星座": "western", "九星気学": "kyusei", "数秘術": "numerology", "タロット": "tarot", "紫微斗数": "ziwei", "万象学": "bansho", "四柱推命": "shichusuimei"}
+        _ckey_map = {"算命学": "sanmei", "星座": "western", "九星気学": "kyusei", "数秘術": "numerology", "タロット": "tarot", "紫微斗数": "ziwei", "万象学": "bansho", "四柱推命": "shichusuimei", "古神道": "kojindo"}
         _cdata = results.get(_ckey_map.get(course, course), {})
         _cr_hl = _cdata.get("headline", _cdata.get("one_line", ""))
         _cr_rd = _cdata.get("reading", _cdata.get("nichikan_reading", _cdata.get("sun_reading", _cdata.get("honmei_reading", _cdata.get("life_path_reading", "")))))
@@ -2322,6 +2353,84 @@ def _render_complete_reading_result(bundle, results):
             f'{summary}</div></div>',
             unsafe_allow_html=True,
         )
+
+
+def _render_kaiun_habits_result(bundle, results):
+    """開運習慣メニュー: L1（毎日）+ L2（週単位）の習慣提案"""
+    k = results.get("kaiun_habits", {})
+    if not k:
+        st.warning("開運習慣のデータがありません。鑑定スタートからやり直してください。")
+        return
+
+    headline = k.get("headline", "")
+    closing = k.get("closing", "")
+
+    # ヘッダー
+    st.markdown(f"""
+<div class="divination-card">
+<div class="card-header">🌱 あなたの開運に繋がる当たり前の日常 🌱</div>
+
+<div style="text-align:center; margin:14px 0;">
+<span style="font-size:1.2em; color:#D4B96A; font-weight:bold; font-family:Noto Serif JP, serif;">「{headline}」</span>
+</div>
+
+<div style="text-align:center; margin:8px 0 20px; color:#8A8478; font-size:0.85em;">
+「あなたは何者か」ではなく、「だからどう生きるか」<br>
+やってみたくなる、無理しない、続けられる 2 つの習慣
+</div>
+""", unsafe_allow_html=True)
+
+    # L1 — 毎日の土台
+    l1_title = k.get("l1_title", "")
+    l1_why = k.get("l1_why", "")
+    l1_action = k.get("l1_action", "")
+    st.markdown(f"""
+<div style="margin:14px 0; padding:16px; background:rgba(191,163,80,0.06); border-left:4px solid #D4B96A; border-radius:6px;">
+<div style="color:#8A8478; font-size:0.78em; letter-spacing:0.1em; margin-bottom:4px;">— L1: 毎日の土台 —</div>
+<div style="color:#D4B96A; font-size:1.1em; font-weight:bold; margin-bottom:10px;">🌅 {l1_title}</div>
+<div style="color:#F0EBE0; font-size:0.92em; line-height:1.85; margin-bottom:8px;">
+<span style="color:#BFA350;">なぜ:</span> {l1_why}
+</div>
+<div style="color:#F0EBE0; font-size:0.92em; line-height:1.85;">
+<span style="color:#BFA350;">動作:</span> {l1_action}
+</div>
+</div>
+""", unsafe_allow_html=True)
+
+    # L2 — 週単位の発展
+    l2_title = k.get("l2_title", "")
+    l2_why = k.get("l2_why", "")
+    l2_action = k.get("l2_action", "")
+    st.markdown(f"""
+<div style="margin:14px 0; padding:16px; background:rgba(212,131,122,0.06); border-left:4px solid #D4837A; border-radius:6px;">
+<div style="color:#8A8478; font-size:0.78em; letter-spacing:0.1em; margin-bottom:4px;">— L2: 週単位の発展 —</div>
+<div style="color:#D4837A; font-size:1.1em; font-weight:bold; margin-bottom:10px;">🌊 {l2_title}</div>
+<div style="color:#F0EBE0; font-size:0.92em; line-height:1.85; margin-bottom:8px;">
+<span style="color:#BFA350;">なぜ:</span> {l2_why}
+</div>
+<div style="color:#F0EBE0; font-size:0.92em; line-height:1.85;">
+<span style="color:#BFA350;">動作:</span> {l2_action}
+</div>
+</div>
+""", unsafe_allow_html=True)
+
+    # 締め
+    if closing:
+        st.markdown(f"""
+<div style="text-align:center; margin:20px 0; padding:14px; background:linear-gradient(135deg, rgba(191,163,80,0.10) 0%, rgba(191,163,80,0.02) 100%); border:1px solid rgba(212,185,106,0.5); border-radius:10px;">
+<span style="color:#D4B96A; font-style:italic; font-family:Noto Serif JP, serif;">🌱 {closing} 🌱</span>
+</div>
+""", unsafe_allow_html=True)
+
+    # 注釈
+    st.markdown("""
+<div style="text-align:center; margin:14px 0; color:#5A5A5A; font-size:0.7em;">
+※ この提案はPhase1版です。月単位（L3 方位）・年単位（L4 儀式）・10年単位（L5 人生設計）は今後拡張されます。<br>
+※ 続けられない時は、続けられない自分を責めない。やりたい時に戻ってくれば十分です。
+</div>
+""", unsafe_allow_html=True)
+
+    st.markdown('</div>', unsafe_allow_html=True)
 
 
 def _render_single_course_result(bundle, course, results):
