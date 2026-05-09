@@ -2489,11 +2489,182 @@ def generate_single_course(bundle: DivinationBundle, course: str) -> dict:
         "紫微斗数": generate_ziwei_reading,
         "万象学": generate_bansho_reading,
         "四柱推命": generate_shichusuimei_reading,
+        "古神道": generate_kojindo_reading,
     }
     gen = generators.get(course)
     if gen:
         return gen(bundle)
     return {}
+
+
+# ============================================================
+# 古神道占い（最上位レイヤー・8流派目）
+# ============================================================
+KOJINDO_PROMPT = """あなたは「占いモンスターくろたん」——古神道占いの最上位鑑定師。
+7流派（算命学・四柱推命・西洋占星術・九星気学・数秘術・紫微斗数・万象学）の上に立つ
+最上位レイヤーとして、対象者の宿命を「**古事記の神の物語**」として再構成する。
+
+## 古神道占いの設計思想（必読・最優先）
+
+7流派が「あなたは何者か」を計器で測るのに対し、古神道占いは
+**「あなたの宿命がどの神話に重なっているか」** を解くストーリー装置。
+7流派が燃料計と設計図なら、古神道占いは **取扱説明書としての神話**。
+
+★★★ 開幕は必ず「**あなたの人生は{god_name}の物語です**」型の1行で始める ★★★
+
+## この人の三層データ
+
+### 1. 守護神（中心星から導出）
+- 神名: **{god_name}**（{god_reading}）
+- 物語タイプ: {god_story_type}
+- 神話の一行: 「{god_headline}」
+- 鑑定の核フレーズ（参考・そのまま or 変形して使う）: 「{god_template}」
+- メタ軸: {meta_axis}系
+- 推奨参拝候補: {god_shrine}
+
+### 2. 6龍タイプ（=算命学{tenchusatsu}天中殺グループに対応）
+- 龍名: **{rokuryu_name}**（{rokuryu_element}）
+- キーワード: {rokuryu_keyword}
+
+### 3. 144タイプID
+{type_id}
+
+## 現在の人生フェーズ
+
+- **満{current_age}歳** — 「{phase_name}」の時期
+- 神話エピソード: **{phase_episode}**
+- フェーズの一行: 「{phase_line}」
+- 次のフェーズ: {next_phase_name}（{next_phase_episode}）
+
+## 7流派の鑑定結果サマリー（背景情報）
+
+{seven_schools_summary}
+
+---
+
+## 鑑定文の構成ルール（必須）
+
+### 開幕（1行）
+「あなたの人生は{god_name}の物語です」または同等の宣言で始める。
+この1行が古神道占いの核心。
+
+### 本文の構成（自然な長さで）
+1. **守護神の物語** — 神話のエピソードを「あなたの人生」として語り直す
+2. **6龍の質感** — {rokuryu_name}としての宿命の働き方
+3. **メタ軸の意味** — {meta_axis}系であることの生き方への影響
+4. **現在の人生フェーズ** — 満{current_age}歳・「{phase_name}」をどう生きるか
+5. **7流派との接続** — 算命学・四柱推命・西洋占星術等が同じ宿命を別の言葉で示している接続点を1-2箇所
+6. **推奨参拝（押し付けない）** — 「もし足が向くなら{god_shrine}」型の温度感
+
+### 締め
+次のフェーズへの橋渡し。または問いで閉じる。
+
+## 品質基準（v3 包括的改善仕様準拠）
+
+★ 自然に必要な長さで書く（長さ自体は目標ではない）
+★ 専門用語には必ず優しい解説を添える:
+  - 「瓊瓊杵尊（ににぎのみこと・天孫降臨の主役、三種の神器を携えて高天原から地上に降り立った神）」
+  - 「6龍（生年月日から導かれる六つの宿命タイプ）」
+  - 「天つ神（高天原・統治・秩序の系譜）」「国つ神（葦原中国・土着・現場の系譜）」
+★ 「あなたは○○な人です」型のタイプ分類禁止
+★ 感情語（嬉しい・悲しい・素晴らしい）禁止 — 所作・物・音・数量で代弁
+★ 一語反転で締めるか、問いで閉じる
+★ 7流派の鑑定結果と矛盾しない（上に乗るレイヤーなので、下の結果を否定しない）
+
+## 倫理ガードレール（北極流批判への対策）
+
+- 「神様が降りている」「霊的に視た」等の検証不能主張は**禁止**
+- 推奨参拝は「参考情報」として提示。回数強要・特定神社への偏重なし
+- 神話エピソードは古事記の標準的解釈に基づく（独自史観の押し付け禁止）
+- 占いモンスター独自の物語化であることを暗に示す（断定しすぎない）
+
+---
+
+## 出力形式（JSON）
+
+{{
+  "headline": "守護神を一行で表す核心フレーズ（15〜30文字）",
+  "reading": "本文（v3・自然な長さ・専門用語に解説必須）",
+  "closing": "締めの一言（30〜60文字）"
+}}
+"""
+
+
+def _format_seven_schools_summary(bundle: DivinationBundle) -> str:
+    """7流派の核心データを古神道プロンプト用に短縮して整形"""
+    s = bundle.sanmei
+    w = bundle.western
+    k = bundle.kyusei
+    n = bundle.numerology
+    z = bundle.ziwei
+    sh = bundle.shichusuimei
+
+    lines = []
+    lines.append(f"- 算命学: 日干={s.nichikan}({s.nichikan_gogyo})、中央星={s.chuo_sei}、{s.tenchusatsu}")
+    if s.kakkyoku:
+        lines.append(f"  特殊格局: {s.kakkyoku}")
+    lines.append(f"- 西洋占星術: 太陽={w.sun_sign}({w.sun_element})" + (f"、月={w.moon_sign}" if w.moon_sign else "") + (f"、ASC={w.asc_sign}" if w.asc_sign else ""))
+    lines.append(f"- 九星気学: 本命星={k.honmei_sei}")
+    lines.append(f"- 数秘術: ライフパス{n.life_path}（{n.life_path_title}）、個人年{n.personal_year}")
+    if sh:
+        lines.append(f"- 四柱推命: {sh.nen_pillar.kanshi}・{sh.tsuki_pillar.kanshi}・{sh.hi_pillar.kanshi}、空亡={sh.kuubou_name}")
+    if z:
+        lines.append(f"- 紫微斗数: {z.five_element_name}、命宮={z.ming_gong_branch}宮")
+    if s.bansho_energy:
+        e = s.bansho_energy
+        lines.append(f"- 万象学: エネルギー指数={e.total_energy}（{e.energy_type}）、第1本能={e.top_honnou}")
+    return "\n".join(lines)
+
+
+def generate_kojindo_reading(bundle: DivinationBundle) -> dict:
+    """古神道占い（最上位レイヤー）の鑑定文を生成"""
+    k = getattr(bundle, "kojindo", None)
+    if k is None:
+        return {
+            "headline": "古神道占いのデータがありません",
+            "reading": "鑑定スタートからやり直してください。",
+            "closing": "",
+        }
+
+    seven_summary = _format_seven_schools_summary(bundle)
+
+    prompt = KOJINDO_PROMPT.format(
+        god_name=k.god_name,
+        god_reading=k.god_reading,
+        god_story_type=k.god_story_type,
+        god_headline=k.god_headline,
+        god_template=k.god_template,
+        meta_axis=k.meta_axis,
+        god_shrine=k.god_shrine,
+        rokuryu_name=k.rokuryu_name,
+        rokuryu_element=k.rokuryu_element,
+        rokuryu_keyword=k.rokuryu_keyword,
+        tenchusatsu=k.rokuryu_tenchusatsu,
+        type_id=k.type_id,
+        current_age=k.current_age,
+        phase_name=k.phase_name,
+        phase_episode=k.phase_episode,
+        phase_line=k.phase_line,
+        next_phase_name=k.next_phase_name,
+        next_phase_episode=k.next_phase_episode,
+        seven_schools_summary=seven_summary,
+    )
+
+    try:
+        return _call_api(_with_person(prompt, bundle, v3_polish=True), max_tokens=4000)
+    except Exception as e:
+        print(f"[くろたん] 古神道占いAPI エラー: {e}")
+        return {
+            "headline": f"{k.god_name}の物語を生きる人",
+            "reading": (
+                f"あなたの人生は{k.god_name}の物語です。"
+                f"{k.god_template}\n\n"
+                f"6龍タイプは{k.rokuryu_name}（{k.rokuryu_keyword}）。"
+                f"今は満{k.current_age}歳・「{k.phase_name}」の時期で、{k.phase_line}。\n\n"
+                f"もし足が向くなら、{k.god_shrine}に立ち寄ってみてください。"
+            ),
+            "closing": k.god_headline,
+        }
 
 
 # ============================================================

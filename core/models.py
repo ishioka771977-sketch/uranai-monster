@@ -260,6 +260,35 @@ class ShichusuimeiResult:
 
 
 @dataclass
+class KojinDoResult:
+    """古神道占い（最上位レイヤー）の計算結果"""
+    # 6龍タイプ（=申酉天中殺グループに対応）
+    rokuryu_name: str               # "地龍" 等
+    rokuryu_element: str            # "地" 等
+    rokuryu_keyword: str            # "堅実な基盤" 等
+    rokuryu_tenchusatsu: str        # "申酉" 等（元の天中殺グループ）
+    # 守護神（中心星から導出）
+    god_name: str                   # "瓊瓊杵尊" 等
+    god_reading: str                # "ににぎのみこと" 等
+    god_type: str                   # "天つ神" / "国つ神" / "天つ神→国つ神"
+    god_shrine: str                 # "霧島神宮・高千穂神社" 等
+    god_story_type: str             # "天孫の長征" 等
+    god_headline: str               # "三つの神器を抱えて雲を降りた者" 等
+    god_template: str               # "背に日を負わぬ進路を選ぶ。..." 等
+    # メタ軸（天つ神/国つ神）
+    meta_axis: str                  # "天つ神" / "国つ神" / "両方"
+    # 人生フェーズ
+    current_age: int                # 満年齢
+    phase_name: str                 # "国造り" 等
+    phase_episode: str              # "少彦名との協働" 等
+    phase_line: str                 # 一行解釈
+    next_phase_name: str            # 次のフェーズ
+    next_phase_episode: str         # 次のフェーズの神話
+    # 144タイプID（"地龍_瓊瓊杵尊_天つ神"）
+    type_id: str
+
+
+@dataclass
 class DivinationBundle:
     """全占術の統合結果パッケージ"""
     person: PersonInput
@@ -270,5 +299,6 @@ class DivinationBundle:
     tarot: TarotResult
     ziwei: Optional['ZiweiResult'] = None   # 紫微斗数（出生時刻必須のためOptional）
     shichusuimei: Optional['ShichusuimeiResult'] = None   # 四柱推命
+    kojindo: Optional[KojinDoResult] = None  # 古神道占い（最上位レイヤー）
     has_birth_time: bool = False            # 出生時刻の有無
     has_blood_type: bool = False            # 血液型の有無

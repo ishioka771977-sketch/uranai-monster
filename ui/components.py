@@ -760,6 +760,70 @@ def render_shichusuimei_course(bundle: DivinationBundle, data: dict = None):
     st.markdown('</div>', unsafe_allow_html=True)
 
 
+def render_kojindo_course(bundle: DivinationBundle, data: dict = None):
+    """古神道占い（最上位レイヤー・8流派目）の鑑定結果表示"""
+    data = data or {}
+    k = getattr(bundle, "kojindo", None)
+    if k is None:
+        st.warning(
+            "古神道占いのデータがありません。"
+            "鑑定スタートからやり直してください。"
+        )
+        return
+
+    headline = data.get("headline", k.god_headline)
+
+    # ヘッダー
+    st.markdown(f"""
+<div class="divination-card">
+<div class="card-header">⛩️ 古神道占い ── あなたの宿命の物語 ⛩️</div>
+
+<div style="text-align:center; margin:14px 0;">
+<span style="font-size:1.25em; color:#D4B96A; font-weight:bold; font-family:Noto Serif JP, serif;">「{headline}」</span>
+</div>
+""", unsafe_allow_html=True)
+
+    # 三層データ表示
+    st.markdown(f"""
+<div style="margin:12px 0; padding:14px; background:rgba(191,163,80,0.06); border:1px solid rgba(191,163,80,0.3); border-radius:8px;">
+<div style="color:#BFA350; font-size:0.85em; letter-spacing:0.1em; margin-bottom:8px;">— あなたの三層 —</div>
+<div style="color:#F0EBE0; font-size:0.95em; line-height:1.9;">
+<span style="color:#D4B96A;">守護神</span>: <b>{k.god_name}</b>（{k.god_reading}）— {k.god_story_type}<br>
+<span style="color:#D4B96A;">6龍タイプ</span>: <b>{k.rokuryu_name}</b>（{k.rokuryu_element}・{k.rokuryu_keyword}）<br>
+<span style="color:#D4B96A;">メタ軸</span>: {k.meta_axis}系<br>
+<span style="color:#D4B96A;">人生フェーズ</span>: 満{k.current_age}歳・「{k.phase_name}」 → 次は「{k.next_phase_name}」<br>
+<span style="color:#D4B96A;">推奨参拝</span>: {k.god_shrine}<span style="color:#8A8478; font-size:0.85em;">（押し付けません。足が向くなら）</span>
+</div>
+</div>
+""", unsafe_allow_html=True)
+
+    # AI鑑定文
+    reading = data.get("reading", "")
+    if reading:
+        st.markdown(
+            f'<div class="reading-text" style="margin:18px 0;">{reading}</div>',
+            unsafe_allow_html=True,
+        )
+
+    closing = data.get("closing", "")
+    if closing:
+        st.markdown(f"""
+<div style="text-align:center; margin:18px 0; padding:14px; background:linear-gradient(135deg, rgba(191,163,80,0.10) 0%, rgba(191,163,80,0.02) 100%); border:1px solid rgba(212,185,106,0.5); border-radius:10px;">
+<span style="color:#D4B96A; font-style:italic; font-family:Noto Serif JP, serif;">⛩️ {closing} ⛩️</span>
+</div>
+""", unsafe_allow_html=True)
+
+    # 注釈（占いモンスター独自構築であることの透明化）
+    st.markdown("""
+<div style="text-align:center; margin:10px 0; color:#5A5A5A; font-size:0.7em;">
+※ 古神道占いは7流派の鑑定結果を古事記の神々の物語として再構成する占いモンスター独自レイヤー。<br>
+※ 推奨参拝は参考情報。「行かなきゃいけない」ものではありません。
+</div>
+""", unsafe_allow_html=True)
+
+    st.markdown('</div>', unsafe_allow_html=True)
+
+
 def render_aisho_result(bundle1, bundle2, data: dict, relationship: str = "love"):
     """相性鑑定結果を表示（エネルギー比較・五本能比較付き）"""
     from core.bansho_energy import get_energy_percent, get_energy_band, ENERGY_BAND_DETAIL

@@ -15,6 +15,7 @@ from ui.components import (
     render_kyusei_course, render_numerology_course,
     render_tarot_course, render_ziwei_course, render_synthesis_tab,
     render_bansho_course, render_shichusuimei_course,
+    render_kojindo_course,
     render_tarot_card_back, render_tarot_card_face,
     render_tarot_card_simple,
     render_theme_result,
@@ -1738,6 +1739,7 @@ def render_loading_page():
     from core.tarot import draw_tarot
     from core.ziwei import calculate_ziwei
     from core.shichusuimei import calculate_shichusuimei
+    from core.kojindo import calculate_kojindo
     from core.models import DivinationBundle
     from ai.interpreter import generate_recommendation
 
@@ -1801,6 +1803,17 @@ def render_loading_page():
         tarot = draw_tarot(1, major_only=True)[0]
         st.write(f"✧ タロット ── 完了（{tarot.card_name}）")
 
+        st.write("✧ 古神道占い…守護神を呼び出し中…")
+        try:
+            kojindo = calculate_kojindo(sanmei, person)
+            st.write(
+                f"✧ 古神道占い ── 完了（{kojindo.rokuryu_name} × "
+                f"{kojindo.god_name} × {kojindo.meta_axis}系）"
+            )
+        except Exception as _e:
+            kojindo = None
+            st.write(f"✧ 古神道占い ── スキップ（{_e}）")
+
         bundle = DivinationBundle(
             person=person,
             sanmei=sanmei,
@@ -1810,6 +1823,7 @@ def render_loading_page():
             tarot=tarot,
             ziwei=ziwei,
             shichusuimei=shichusuimei,
+            kojindo=kojindo,
             has_birth_time=person.birth_time is not None,
             has_blood_type=person.blood_type is not None,
         )
@@ -1867,10 +1881,20 @@ def render_ura_menu_page():
         if st.button("⚡ 万象学", key="btn_bansho"):
             _start_course("万象学")
 
-    col7, _sp1, _sp2 = st.columns(3)
+    col7, col8, _sp1 = st.columns(3)
     with col7:
         if st.button("✦ 四柱推命", key="btn_shichusuimei"):
             _start_course("四柱推命")
+    with col8:
+        if st.button("⛩️ 古神道", key="btn_kojindo"):
+            _start_course("古神道")
+
+    # 古神道占いの説明（最上位レイヤー）
+    st.markdown("""
+<div style="text-align:center; margin:8px 0 12px; color:#8A8478; font-size:0.78em;">
+⛩️ 最上位レイヤー：7占術の宿命を、古事記の神々の物語として語り直す
+</div>
+""", unsafe_allow_html=True)
 
     if st.button("✧ フルコース ✧", key="btn_full", use_container_width=True):
         _start_course("フルコース")
@@ -2306,6 +2330,7 @@ def _render_single_course_result(bundle, course, results):
         "算命学": "sanmei", "星座": "western", "九星気学": "kyusei",
         "数秘術": "numerology", "タロット": "tarot", "紫微斗数": "ziwei",
         "万象学": "bansho", "四柱推命": "shichusuimei",
+        "古神道": "kojindo",
     }
     key = course_key_map.get(course, course)
     data = results.get(key, {})
@@ -2326,6 +2351,8 @@ def _render_single_course_result(bundle, course, results):
         render_bansho_course(bundle, data)
     elif course == "四柱推命":
         render_shichusuimei_course(bundle, data)
+    elif course == "古神道":
+        render_kojindo_course(bundle, data)
 
 
 def _render_full_course_result(bundle, results):
