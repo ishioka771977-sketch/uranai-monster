@@ -17,8 +17,6 @@
         "起源"
       ],
       "applicable_traits": [
-        "神産み期",
-        "不動",
         "組織型"
       ],
       "shrine_id": null
@@ -39,8 +37,7 @@
         "連鎖"
       ],
       "applicable_traits": [
-        "神産み期",
-        "エネルギー高(230-299)",
+        "高エネルギー",
         "継承の物語"
       ],
       "shrine_id": null
@@ -63,7 +60,7 @@
       "applicable_traits": [
         "破壊と再生",
         "反抗期",
-        "エネルギー超過(300+)"
+        "規格外エネルギー"
       ],
       "shrine_id": null
     },
@@ -83,7 +80,6 @@
         "三貴子"
       ],
       "applicable_traits": [
-        "神産み期",
         "火不足",
         "修行期"
       ],
@@ -105,9 +101,8 @@
         "復活"
       ],
       "applicable_traits": [
-        "天中殺中",
         "破壊と再生",
-        "表現本能高"
+        "表現型"
       ],
       "shrine_id": "ise_jingu"
     },
@@ -128,7 +123,7 @@
       ],
       "applicable_traits": [
         "反抗期",
-        "攻撃本能高",
+        "名誉型",
         "破壊と再生"
       ],
       "shrine_id": null
@@ -150,7 +145,6 @@
       ],
       "applicable_traits": [
         "国譲り期",
-        "攻撃本能高",
         "名誉型"
       ],
       "shrine_id": "izumo_taisha"
@@ -171,8 +165,8 @@
         "癒し"
       ],
       "applicable_traits": [
-        "守備本能高",
-        "学習本能高",
+        "組織型",
+        "放浪の物語",
         "収穫期"
       ],
       "shrine_id": "izumo_taisha"
@@ -215,8 +209,6 @@
         "喪失"
       ],
       "applicable_traits": [
-        "天中殺中",
-        "放浪型",
         "水過多"
       ],
       "shrine_id": null
@@ -238,7 +230,7 @@
       ],
       "applicable_traits": [
         "収穫期",
-        "魅力本能高",
+        "連合の物語",
         "水不足"
       ],
       "shrine_id": "sumiyoshi_taisha"
@@ -281,8 +273,8 @@
         "友情"
       ],
       "applicable_traits": [
-        "守備本能高",
-        "学習本能高",
+        "組織型",
+        "放浪の物語",
         "収穫期"
       ],
       "shrine_id": null
@@ -303,8 +295,7 @@
         "説得"
       ],
       "applicable_traits": [
-        "神上がり期",
-        "攻撃本能高",
+        "名誉型",
         "国造り期"
       ],
       "shrine_id": "kasuga_taisha"
@@ -370,7 +361,6 @@
       ],
       "applicable_traits": [
         "反抗期",
-        "攻撃本能高",
         "名誉型"
       ],
       "shrine_id": null
@@ -393,7 +383,7 @@
       "applicable_traits": [
         "国造り期",
         "火過多",
-        "攻撃本能高"
+        "名誉型"
       ],
       "shrine_id": "atsuta_jingu"
     },
@@ -414,8 +404,7 @@
       ],
       "applicable_traits": [
         "収穫期",
-        "継承の物語",
-        "不動"
+        "継承の物語"
       ],
       "shrine_id": null
     },
@@ -435,7 +424,6 @@
         "正統"
       ],
       "applicable_traits": [
-        "神産み期",
         "組織型",
         "名誉型"
       ],
@@ -459,7 +447,7 @@
       "applicable_traits": [
         "収穫期",
         "継承の物語",
-        "魅力本能高"
+        "連合の物語"
       ],
       "shrine_id": null
     },
@@ -480,7 +468,7 @@
       ],
       "applicable_traits": [
         "国譲り期",
-        "学習本能高",
+        "放浪の物語",
         "組織型"
       ],
       "shrine_id": "izumo_taisha"
@@ -502,7 +490,6 @@
       ],
       "applicable_traits": [
         "国造り期",
-        "攻撃本能高",
         "名誉型"
       ],
       "shrine_id": "kashihara_jingu"
@@ -524,7 +511,7 @@
       ],
       "applicable_traits": [
         "反抗期",
-        "表現本能高",
+        "表現型",
         "火過多"
       ],
       "shrine_id": null
@@ -545,9 +532,8 @@
         "終焉"
       ],
       "applicable_traits": [
-        "神上がり期",
         "破壊と再生",
-        "エネルギー高(230-299)"
+        "高エネルギー"
       ],
       "shrine_id": null
     },
@@ -587,7 +573,7 @@
         "協力"
       ],
       "applicable_traits": [
-        "表現本能高",
+        "表現型",
         "組織型",
         "火不足"
       ],
@@ -608,7 +594,7 @@
         "勇者"
       ],
       "applicable_traits": [
-        "攻撃本能高",
+        "名誉型",
         "破壊と再生",
         "火過多"
       ],
@@ -629,7 +615,7 @@
         "優しさ"
       ],
       "applicable_traits": [
-        "守備本能高",
+        "組織型",
         "継承の物語",
         "水不足"
       ],
@@ -650,7 +636,7 @@
         "怒り"
       ],
       "applicable_traits": [
-        "攻撃本能高",
+        "名誉型",
         "反抗期",
         "火過多"
       ],
@@ -692,7 +678,7 @@
         "再生"
       ],
       "applicable_traits": [
-        "表現本能高",
+        "表現型",
         "破壊と再生",
         "火不足"
       ],
@@ -734,8 +720,7 @@
         "武勇"
       ],
       "applicable_traits": [
-        "攻撃本能高",
-        "放浪型",
+        "名誉型",
         "火過多"
       ],
       "shrine_id": null
@@ -777,7 +762,7 @@
       ],
       "applicable_traits": [
         "国造り期",
-        "学習本能高",
+        "放浪の物語",
         "土過多"
       ],
       "shrine_id": null
@@ -797,7 +782,6 @@
         "武士"
       ],
       "applicable_traits": [
-        "攻撃本能高",
         "名誉型",
         "火過多"
       ],
@@ -819,8 +803,7 @@
       ],
       "applicable_traits": [
         "水過多",
-        "組織型",
-        "土不足"
+        "組織型"
       ],
       "shrine_id": null
     },
@@ -840,7 +823,6 @@
       ],
       "applicable_traits": [
         "反抗期",
-        "放浪型",
         "火過多"
       ],
       "shrine_id": null
@@ -860,8 +842,8 @@
         "神々"
       ],
       "applicable_traits": [
-        "表現本能高",
-        "守備本能高",
+        "表現型",
+        "組織型",
         "火不足"
       ],
       "shrine_id": null
@@ -882,7 +864,6 @@
       ],
       "applicable_traits": [
         "破壊と再生",
-        "放浪型",
         "水不足"
       ],
       "shrine_id": null
@@ -902,7 +883,7 @@
         "化身"
       ],
       "applicable_traits": [
-        "守備本能高",
+        "組織型",
         "水過多"
       ],
       "shrine_id": null
@@ -944,7 +925,7 @@
       ],
       "applicable_traits": [
         "破壊と再生",
-        "守備本能高",
+        "組織型",
         "火不足"
       ],
       "shrine_id": null
@@ -964,7 +945,7 @@
         "道しるべ"
       ],
       "applicable_traits": [
-        "学習本能高",
+        "放浪の物語",
         "名誉型",
         "土過多"
       ],
@@ -985,8 +966,6 @@
         "役割"
       ],
       "applicable_traits": [
-        "不動",
-        "守備本能低",
         "水過多"
       ],
       "shrine_id": null
@@ -1006,9 +985,8 @@
         "愛"
       ],
       "applicable_traits": [
-        "表現本能高",
-        "反抗期",
-        "木不足"
+        "表現型",
+        "反抗期"
       ],
       "shrine_id": null
     },
@@ -1027,8 +1005,7 @@
         "武勇"
       ],
       "applicable_traits": [
-        "攻撃本能高",
-        "放浪型",
+        "名誉型",
         "火過多"
       ],
       "shrine_id": null
@@ -1048,7 +1025,6 @@
         "祝福"
       ],
       "applicable_traits": [
-        "守備本能高",
         "組織型",
         "土過多"
       ],
@@ -1074,5 +1050,6 @@
       ],
       "shrine_id": null
     }
-  ]
+  ],
+  "_retag_note": "v1.5-final で applicable_traits を新タグ辞書に正規化（40件変更）"
 }

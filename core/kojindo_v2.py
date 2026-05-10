@@ -42,85 +42,90 @@ def extract_traits(bundle: DivinationBundle) -> list[str]:
     """7流派の bundle から特徴タグを抽出する（Python ルールベース）
 
     Q3回答に従い、AI 呼び出しなしで純 Python ロジック。
-    タグは tag_dictionary.json (v1.5 暫定版) と整合する形で出力する。
+    タグは tag_dictionary.json v1.5-final（26個）に厳密準拠する。
     """
     traits: set[str] = set()
     s = bundle.sanmei
 
-    # === 中央星タグ ===
-    if s.chuo_sei:
-        traits.add(f"中央星={s.chuo_sei}")
-
-    # === 五行偏りタグ（4σ的閾値: 40%以上=過多、10%未満=不足）===
+    # === 五行偏りタグ（quality・40%以上=過多、10%以下=不足）===
     g = s.gogyo_balance or {}
     for element in ("木", "火", "土", "金", "水"):
         v = g.get(element, 0)
         if v >= 40:
             traits.add(f"{element}過多")
-        elif v <= 10:
-            traits.add(f"{element}不足")
+    # 不足は重要な「火不足」「水不足」のみ採用（タグ辞書準拠）
+    if g.get("水", 0) <= 10:
+        traits.add("水不足")
+    if g.get("火", 0) <= 10:
+        traits.add("火不足")
 
-    # === 万象学エネルギータグ ===
+    # === 万象学エネルギータグ（quantity・4段階）===
     e = s.bansho_energy
     if e:
         en = e.total_energy
         if en >= 300:
-            traits.add("エネルギー超過(300+)")
+            traits.add("規格外エネルギー")
         elif en >= 230:
-            traits.add("エネルギー高(230-299)")
+            traits.add("高エネルギー")
         elif en >= 180:
-            traits.add("エネルギー中(180-229)")
-        elif en >= 160:
-            traits.add("エネルギー低(160-179)")
+            traits.add("中エネルギー")
         else:
-            traits.add("エネルギー集中特化(160未満)")
+            traits.add("省エネ型")
 
-        # 本能ランキングから最高/最低本能タグ
-        if e.honnou_ranking:
-            top_h = e.honnou_ranking[0][0]
-            bottom_h = e.honnou_ranking[-1][0]
-            traits.add(f"{top_h}高")
-            # 最低が0点なら「低」
-            if e.honnou_ranking[-1][1] <= 5:
-                traits.add(f"{bottom_h}低")
-
-    # === 性質タグ（中央星から推測）===
+    # === 構造タグ・性質タグ（中央星と本能から導出）===
     chuo = s.chuo_sei or ""
+    # 名誉型: 中心星=牽牛星 or 攻撃本能（陰金）最高
     if chuo == "牽牛星":
         traits.add("名誉型")
+    # 表現型: 中心星=鳳閣星/調舒星 or 表現本能最高
+    if chuo in ("鳳閣星", "調舒星"):
+        traits.add("表現型")
+    # 組織型: 守備系・安定系
+    if chuo in ("牽牛星", "鳳閣星", "司禄星", "玉堂星", "石門星"):
         traits.add("組織型")
-    if chuo in ("龍高星", "調舒星"):
-        traits.add("放浪型")
-    if chuo == "貫索星":
-        traits.add("不動")
-    if chuo in ("鳳閣星", "司禄星", "玉堂星"):
-        traits.add("組織型")  # 安定タイプ寄り
+    # 単騎の戦い: 攻撃陽金・不動
+    if chuo in ("車騎星", "貫索星"):
+        traits.add("単騎の戦い")
+    # 破壊と再生: 調舒星
     if chuo == "調舒星":
         traits.add("破壊と再生")
+    # 継承の物語: 司禄星・玉堂星
     if chuo in ("司禄星", "玉堂星"):
         traits.add("継承の物語")
+    # 連合の物語: 石門星・禄存星
+    if chuo in ("石門星", "禄存星"):
+        traits.add("連合の物語")
+    # 放浪の物語: 龍高星・調舒星
+    if chuo in ("龍高星", "調舒星"):
+        traits.add("放浪の物語")
 
-    # === 状態タグ（年齢×フェーズ）===
-    # v1 計算結果の phase_name を流用
+    # === 万象学本能から表現型・名誉型を補完 ===
+    if e and e.honnou_ranking:
+        top_h = e.honnou_ranking[0][0]
+        if "攻撃" in top_h:
+            traits.add("名誉型")
+        if "表現" in top_h:
+            traits.add("表現型")
+        if "守備" in top_h:
+            traits.add("組織型")
+
+    # === 状態・フェーズタグ（年齢×フェーズ）===
     v1 = calculate_kojindo(s, bundle.person)
     phase_to_state = {
-        "母の庇護": "神産み期",
         "反抗と試練": "反抗期",
         "修行期": "修行期",
         "国造り": "国造り期",
         "収穫と完成": "収穫期",
         "国譲り": "国譲り期",
-        "神上がり": "神上がり期",
     }
-    state_tag = phase_to_state.get(v1.phase_name)
-    if state_tag:
-        traits.add(state_tag)
-
-    # === 天中殺中フラグ ===
-    from datetime import date as _date
-    cur_year = _date.today().year
-    if s.tenchusatsu_years and cur_year in s.tenchusatsu_years:
-        traits.add("天中殺中")
+    # 48-56は「国譲り準備期」も併記（重要フェーズ）
+    if v1.phase_name == "収穫と完成":
+        traits.add("収穫期")
+        traits.add("国譲り準備期")
+    else:
+        state_tag = phase_to_state.get(v1.phase_name)
+        if state_tag:
+            traits.add(state_tag)
 
     return sorted(traits)
 
