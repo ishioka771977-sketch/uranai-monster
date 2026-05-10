@@ -787,16 +787,12 @@ def render_kojindo_course(bundle: DivinationBundle, data: dict = None):
 </div>
 """, unsafe_allow_html=True)
 
-    # 三層データ表示
+    # 補足データ表示（占術名を出さない・6龍とメタ軸は非表示）
     st.markdown(f"""
 <div style="margin:12px 0; padding:14px; background:rgba(191,163,80,0.06); border:1px solid rgba(191,163,80,0.3); border-radius:8px;">
-<div style="color:#BFA350; font-size:0.85em; letter-spacing:0.1em; margin-bottom:8px;">— あなたの三層 —</div>
+<div style="color:#BFA350; font-size:0.85em; letter-spacing:0.1em; margin-bottom:8px;">— 鑑定の補足 —</div>
 <div style="color:#F0EBE0; font-size:0.95em; line-height:1.9;">
-<span style="color:#D4B96A;">守護神</span>: <b>{k.god_name}</b>（{k.god_reading}）— {k.god_story_type}<br>
-<span style="color:#D4B96A;">6龍タイプ</span>: <b>{k.rokuryu_name}</b>（{k.rokuryu_element}・{k.rokuryu_keyword}）<br>
-<span style="color:#D4B96A;">メタ軸</span>: {k.meta_axis}系<br>
-<span style="color:#D4B96A;">人生フェーズ</span>: 満{k.current_age}歳・「{k.phase_name}」 → 次は「{k.next_phase_name}」<br>
-<span style="color:#D4B96A;">推奨参拝</span>: {k.god_shrine}<span style="color:#8A8478; font-size:0.85em;">（押し付けません。足が向くなら）</span>
+<span style="color:#D4B96A;">人生フェーズ</span>: 満{k.current_age}歳・「{k.phase_name}」 → 次は「{k.next_phase_name}」
 </div>
 </div>
 """, unsafe_allow_html=True)

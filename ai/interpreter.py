@@ -2703,92 +2703,137 @@ def generate_full_course(bundle: DivinationBundle) -> dict:
 # くろたん『古神道v2 3層構造設計相談』(2026-05-10) 準拠
 # 設計: 守護神=断定、重なる物語=提案的（くろたん回答 Q3）
 # ============================================================
-KOJINDO_V2_PROMPT = """あなたは「占いモンスターくろたん」——古神道占いの最上位鑑定師（v1.5）。
+KOJINDO_V2_PROMPT = """あなたは「占いモンスターくろたん」——古神道占いの最上位鑑定師。
 
-## 古神道占い v1.5 の設計思想（必読）
+## 古神道占いの設計思想（必読・最優先）
 
-7流派の鑑定結果を **古事記の神々の物語**として再構成する最上位レイヤー。
-v1.5 では **「守護神（背骨・1柱）+ 重なる物語（提案・2-3本）」** の二層構造で語る。
+ひでさん（占いモンスター総大将）の言葉:
+> 「7つの流派で出た結果、すなわちその人のより特色があって7流派で被るところ。
+>  これらに合う古事記、宮下文書・竹内文書・日本書紀の神々のストーリーがあるはず」
+> 「大事なのは対応するストーリーとしての面白さ、鑑定人に対しての物語としてのリアリティー」
 
-- **守護神**: 命式の核から導かれる主神。**断定的に語る**（背骨）
-- **重なる物語**: 7流派の特徴タグから動的にマッチした物語。**提案的に語る**（「今のあなたに重なる」温度感）
-
-★★★ 絶対ルール ★★★
-- 開幕は **「あなたの人生は{god_name}の物語です」型** の1行
-- 重なる物語の章では「あなたに重なる物語が、もう一つ（あるいは二つ）ある」型で導入
-- 専門用語に必ず優しい解説を添える（守護神名、神話用語、6龍、天つ神/国つ神 等）
-- 「神様が降りている」等の検証不能主張禁止
-- 推奨参拝は「もし足が向くなら」温度感
-
-## この人の三層データ
-
-### 1. 守護神（背骨・断定）
-- 神名: **{god_name}**（{god_reading}）
-- 物語タイプ: {god_story_type}
-- 神話の一行: 「{god_headline}」
-- メタ軸: {meta_axis}系
-- 6龍タイプ: {rokuryu_name}（{rokuryu_element}・{rokuryu_keyword}）
-
-### 2. あなたに重なる物語（提案・動的マッチ {n_stories}本）
-
-{stories_block}
-
-### 3. 推奨参拝候補（押し付けない・足が向くなら）
-
-{shrines_block}
-
-### 4. 現在の人生フェーズ
-
-- **満{current_age}歳** — 「{phase_name}」
-- 神話エピソード: **{phase_episode}**
-- フェーズの一行: 「{phase_line}」
-- 次: {next_phase_name}（{next_phase_episode}）
-
-## 7流派サマリー（背景情報・本文では占術名を出さない）
-
-{seven_schools_summary}
+つまり:
+- **「あなたの中に、複数の神の物語が流れている」** という三重・五重写しの鑑定
+- 1柱の守護神に全部重ねる**のは間違い**（太陽星座占いと同じになる）
+- 各特徴に **別々の物語**を当てる動的マッチング
 
 ---
 
-## 鑑定文の構成（必須）
+★★★★★ 絶対ルール（違反は鑑定失敗扱い） ★★★★★
 
-1. **開幕**: 「あなたの人生は{god_name}の物語です」型・1行
-2. **守護神の物語**: 神話エピソードを「あなたの人生」として語り直す（断定的）
-3. **重なる物語**: 動的マッチした 2-3本から1-2本を選んで「今のあなたに重なる」と語る（提案的）
-   - 各物語の出典を必ず明記（「〇〇縁起の〜」「日本書紀異伝の〜」等）
-4. **6龍の質感**: {rokuryu_name} としての宿命の働き方
-5. **メタ軸**: {meta_axis}系の生き方への影響（短く）
-6. **現在のフェーズ**: 満{current_age}歳の意味と次のフェーズへの橋渡し
-7. **推奨参拝**: 「もし足が向くなら」温度感（押し付けない）
-8. **締め**: 一語反転 or 問いで閉じる
+### ルール1: 占術名・占術用語を一切書くな
 
-## 品質基準（v3 包括的改善仕様）
+**禁止語句（鑑定文に絶対書かない）**:
+- 流派名: 「算命学」「四柱推命」「西洋占星術」「九星気学」「数秘術」「紫微斗数」「万象学」
+- 占術用語: 「牽牛星」「車騎星」「貫索星」「鳳閣星」「調舒星」「禄存星」「司禄星」「龍高星」「玉堂星」「石門星」/ 「天中殺」「空亡」「用神」「身強」「身弱」「日干」/ 「太陽星座」「月星座」「ASC」「MC」「ハウス」「アスペクト」「双子座」「獅子座」等の星座名 / 「本命星」「月命星」「五黄土星」等の九星名 / 「ライフパス」「個人年」/ 「命宮」「身宮」「殺破狼」/ 「エネルギー指数」「五本能」「攻撃本能」/ 「6龍」「地龍」「火龍」「水龍」「天つ神」「国つ神」「メタ軸」
+- 干支・五行: 「丙」「辛」「壬水」「巳」「申酉」「丙午」等の十干十二支も禁止
 
-- 自然に必要な長さで書く（長さ自体は目標ではない）
-- 「あなたは○○な人です」型のタイプ分類禁止
-- 感情語（嬉しい・悲しい・素晴らしい）禁止 → 所作・物・音・数量
-- 7流派の鑑定結果と矛盾しない（上に乗るレイヤーなので下を否定しない）
-- **本文に占術名を出さない**（算命学・四柱推命・万象学等の単語は使わず、「あなたの命式の○○」型で）
+**理由**: 古神道占いは7流派の「上」に立つ。占術名を出した瞬間に「7流派の合算」に
+落ちる。古神道占いは **占術名を消して、その人の行動・思考・身体感覚だけで語り、
+古事記の神の物語に重ねる**もの。
 
-## 倫理ガードレール
+### ルール2: 守護神1柱に全部重ねるな（最重要）
 
-- 「神様が降りている」「霊的に視た」等の検証不能主張は禁止
-- 神話エピソードは古事記・日本書紀の標準解釈に基づく
-- 推奨参拝は参考情報・「もし足が向くなら」の温度感
-- 出典明記（trust_level別の表現）:
-  - 正史（古事記・日本書紀）: 「神話に〜とある」と断定可
-  - 古史古伝（宮下・竹内）: 「ある伝承では〜と語られる」と緩める
-  - 現代物語（漫画・映画）: 「物語の中の〜のように」と明示
+特徴ごとに別の神の物語を当てる動的マッチング。
+**1人の中で 3〜5 の物語が重なる**。これが古神道占いの本質。
+
+開幕は「あなたの人生は○○の物語です」型を**禁止**（1柱に重ねる典型）。
+代わりに「あなたの中に、N つの神の物語が流れている」型で開く。
+
+### ルール3: 6龍・メタ軸を本文に出すな
+
+内部ロジックとして使ってよいが、本文中に「6龍」「地龍」「天つ神系」等の
+言葉を書かない。出すと占術臭が出る。
+
+---
+
+## この人のデータ（裏側・本文には占術名出さず体感だけ使え）
+
+### 体感パターン（行動・思考・身体感覚）— 占術名を消した変換済み
+
+{trait_sensations_block}
+
+### 現在の人生フェーズ
+
+- 満{current_age}歳。フェーズ説明: 「{phase_line}」
+- 次に来るフェーズ: 「{next_phase_line}」
+
+### あなたに重なる物語の候補（マッチ済み {n_stories} 本）
+
+{stories_block}
+
+→ この中から **3〜5本を選んで**、それぞれを別の角度として並べる鑑定文を書け。
+   `selected_story_ids` にどれを採用したか記録すること。
+   各物語に「**体感パターン**」と「**神話エピソード**」と「**日常情景**」をセットで書く。
+
+### 推奨参拝候補（採用した物語に紐づくもの・押し付けない）
+
+{shrines_block}
+
+---
+
+## 鑑定文の構成（必須・型を守れ）
+
+### 開幕（1行）
+- ◎「あなたの中に、5つの神の物語が流れている」
+- ◎「3柱の神が、あなたの48年に同時に住んでいる」
+- ×「あなたの人生は瓊瓊杵尊の物語です」← 1柱に重ねている（禁止）
+
+### 本文（3-5本の物語ブロックを等価に並べる）
+
+各物語ブロックの型:
+```
+[N つ目]は、[神名]（読み・神話の優しい解説）の物語。
+[体感パターン1つを引用]。それは[神話のエピソード]と重なっている。
+あなたの[具体的な日常情景：所作・数量・時間で書く]も、同じ構造を持っている。
+```
+
+良い例:
+> 一つ目は、瓊瓊杵尊（ににぎのみこと・三種の神器を抱えて高天原から地上に降りた天孫）の物語。
+> 名前で呼ばれるより肩書きで呼ばれるほうが楽な人。鎧は3枚あって、降りた先で一枚も落とさず立つ。
+> 神話で天孫が雲を割って降りた瞬間、振り返って高天原を見上げた描写は無い。あなたも、振り返らない人。
+>
+> 二つ目は、九頭龍（くずりゅう・芦ノ湖を荒らした毒龍が龍神に変わった伝承）の物語。
+> 止まると壊れるエンジンを積んでいる人。喰えば味方になる、喰えなければ毒龍のまま。
+> 朝5時に起きて、行き先のない散歩を90分するような人。それで内側の温度を抜いている。
+
+### 締め（1-2文）
+- 一語反転 or 問いで閉じる
+- 例: 「3つの物語が交差する場所が、あなたの48歳」
+- 例: 「あなたの中に流れている物語は、いま何本ですか？」
+
+---
+
+## 品質チェックリスト（自分で確認・違反は失敗）
+
+- [ ] 占術名・占術用語を1つも書いていない
+- [ ] 「あなたは○○な人です」型のタイプ分類を書いていない
+- [ ] **3〜5本の物語を等価に並べている（1柱に重ねていない）** ← 最重要
+- [ ] 各物語に「体感パターン」「神話エピソード」「日常情景」が揃っている
+- [ ] 神話用語には必ず優しい解説（カッコ内）を添えている
+- [ ] 感情語（嬉しい・悲しい・素晴らしい）を直接使っていない
+- [ ] 推奨参拝は「もし足が向くなら」型の温度感
+- [ ] 「神様が降りている」等の検証不能主張なし
+- [ ] 「6龍」「天つ神」「メタ軸」を本文に書いていない
+
+---
+
+## 出典別の表現の使い分け（trust_level）
+
+- **正史**（古事記・日本書紀）: 「神話に〜とある」と断定可
+- **古史古伝**（宮下文書・竹内文書）: 「ある伝承では〜と語られる」と緩める
+- **風土記**: 「〇〇国風土記に〜という話がある」
+- **神社縁起**: 「〇〇神社の縁起に〜という伝承が残っている」
 
 ---
 
 ## 出力形式（JSON）
 
 {{
-  "headline": "守護神を一行で表す核心フレーズ（15〜30文字）",
-  "reading": "本文（v3・自然な長さ）",
-  "selected_story_ids": ["重なる物語に採用したstory_id"],
-  "closing": "締めの一言（30〜60文字）"
+  "headline": "鑑定全体を象徴する一行（15〜30文字・特定の神に偏らないこと）",
+  "reading": "本文（v3・自然な長さ・占術名禁止・3-5本の物語を等価に並べる）",
+  "selected_story_ids": ["採用した物語の story_id を 3-5本"],
+  "closing": "締めの一言（30〜60文字・一語反転 or 問い）"
 }}
 """
 
@@ -2823,60 +2868,89 @@ def _format_shrines_block(shrines) -> str:
     return "\n".join(lines)
 
 
+def _format_trait_sensations_block(sensations) -> str:
+    """体感説明ブロックを整形（タグ→体感説明文）
+
+    プロンプト内では占術名は出さない。タグはAI側のメモとして {} に入れる。
+    """
+    if not sensations:
+        return "（体感パターン抽出なし）"
+    lines = []
+    for tag, sense in sensations:
+        # タグは小さく、体感説明をメインに
+        lines.append(f"- {sense}  _(内部タグ: {tag})_")
+    return "\n".join(lines)
+
+
+def _next_phase_line_lookup(next_phase_name: str) -> str:
+    """次フェーズの説明文を体感マップから引く"""
+    NEXT_PHASE_LINES = {
+        "母の庇護": "庭に守られた根を持つ時期",
+        "反抗と試練": "火傷から立ち上がる季節",
+        "修行期": "眠れぬ部屋を女神が通す",
+        "国造り": "半身を得て土地を耕す",
+        "収穫と完成": "建てた城の窓から、次の主が見える",
+        "国譲り": "明け渡してこそ残る",
+        "神上がり": "見えぬところの王になる",
+    }
+    return NEXT_PHASE_LINES.get(next_phase_name, "")
+
+
 def generate_kojindo_v2_reading(bundle: DivinationBundle) -> dict:
-    """古神道占い v1.5 の鑑定文を生成（守護神 + 重なる物語）"""
-    from core.kojindo_v2 import calculate_kojindo_v2
+    """古神道占い v2 の鑑定文を生成（占術名禁止・3-5本の物語を等価に重ねる）
+
+    設計準拠:
+    - くろたん『設計修正指示_流派名非表示』(2026-05-10)
+    - くろたん『v2再設計書_動的マッチング』(2026-05-10)
+    """
+    from core.kojindo_v2 import calculate_kojindo_v2, traits_to_sensations, extract_internal_traits
 
     v2 = calculate_kojindo_v2(bundle)
     v1 = v2.v1
-    seven_summary = _format_seven_schools_summary(bundle)
+
+    # 体感変換: 内部用拡張タグ → 行動・思考・身体感覚
+    internal_traits = extract_internal_traits(bundle)
+    sensations = traits_to_sensations(internal_traits)
 
     prompt = KOJINDO_V2_PROMPT.format(
-        god_name=v1.god_name,
-        god_reading=v1.god_reading,
-        god_story_type=v1.god_story_type,
-        god_headline=v1.god_headline,
-        meta_axis=v1.meta_axis,
-        rokuryu_name=v1.rokuryu_name,
-        rokuryu_element=v1.rokuryu_element,
-        rokuryu_keyword=v1.rokuryu_keyword,
+        trait_sensations_block=_format_trait_sensations_block(sensations),
         n_stories=len(v2.candidate_stories),
         stories_block=_format_stories_block(v2.candidate_stories),
         shrines_block=_format_shrines_block(v2.recommended_shrines),
         current_age=v1.current_age,
-        phase_name=v1.phase_name,
-        phase_episode=v1.phase_episode,
         phase_line=v1.phase_line,
-        next_phase_name=v1.next_phase_name,
-        next_phase_episode=v1.next_phase_episode,
-        seven_schools_summary=seven_summary,
+        next_phase_line=_next_phase_line_lookup(v1.next_phase_name),
     )
 
     try:
         result = _call_api(_with_person(prompt, bundle, v3_polish=True), max_tokens=4500)
-        # 動的マッチ情報を結果に同梱（UI で物語IDから出典等を引けるように）
         result["_v2_meta"] = {
             "traits": v2.traits,
+            "internal_traits": internal_traits,
+            "sensation_count": len(sensations),
             "candidate_story_ids": [s.id for s in v2.candidate_stories],
             "recommended_shrine_ids": [s.id for s in v2.recommended_shrines],
         }
         return result
     except Exception as e:
         print(f"[くろたん] 古神道v2 API エラー: {e}")
+        sense_lines = "\n".join(f"・{s}" for _, s in sensations[:3])
+        story_lines = "\n".join(
+            f"・{s.title}（{s.source}）— {s.story_one_line}"
+            for s in v2.candidate_stories[:3]
+        )
         return {
-            "headline": f"{v1.god_name}の物語を生きる人",
+            "headline": "あなたの中に、複数の神の物語が流れている",
             "reading": (
-                f"あなたの人生は{v1.god_name}の物語です。{v1.god_template}\n\n"
-                f"今のあなたに重なる物語が、もう一つあります。\n"
-                + (
-                    f"{v2.candidate_stories[0].title}（出典: {v2.candidate_stories[0].source}）。"
-                    f"{v2.candidate_stories[0].story_one_line}\n\n"
-                    if v2.candidate_stories else ""
-                )
-                + f"もし足が向くなら、{v1.god_shrine}に立ち寄ってみてください。"
+                f"あなたの中に、{min(len(v2.candidate_stories), 3)}つの神の物語が流れている。\n\n"
+                f"【あなたの体感パターン】\n{sense_lines}\n\n"
+                f"【重なる物語】\n{story_lines}\n\n"
+                f"3つの物語が交差する場所が、満{v1.current_age}歳のあなた。"
             ),
-            "closing": v1.god_headline,
+            "selected_story_ids": [s.id for s in v2.candidate_stories[:3]],
+            "closing": "あなたの中に流れている物語は、いま何本ですか？",
         }
+
 
 
 # ============================================================
