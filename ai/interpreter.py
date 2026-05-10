@@ -2489,7 +2489,7 @@ def generate_single_course(bundle: DivinationBundle, course: str) -> dict:
         "紫微斗数": generate_ziwei_reading,
         "万象学": generate_bansho_reading,
         "四柱推命": generate_shichusuimei_reading,
-        "古神道": generate_kojindo_reading,
+        "古神道": generate_kojindo_v2_reading,  # v1.5（守護神 + 重なる物語）
     }
     gen = generators.get(course)
     if gen:

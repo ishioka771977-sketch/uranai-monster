@@ -761,7 +761,10 @@ def render_shichusuimei_course(bundle: DivinationBundle, data: dict = None):
 
 
 def render_kojindo_course(bundle: DivinationBundle, data: dict = None):
-    """古神道占い（最上位レイヤー・8流派目）の鑑定結果表示"""
+    """古神道占い（最上位レイヤー・v1.5）の鑑定結果表示
+
+    v1.5: 守護神(背骨) + 重なる物語(動的マッチ) + 推奨参拝(神社DB)
+    """
     data = data or {}
     k = getattr(bundle, "kojindo", None)
     if k is None:
@@ -772,6 +775,7 @@ def render_kojindo_course(bundle: DivinationBundle, data: dict = None):
         return
 
     headline = data.get("headline", k.god_headline)
+    selected_ids = data.get("selected_story_ids", [])
 
     # ヘッダー
     st.markdown(f"""
@@ -796,6 +800,39 @@ def render_kojindo_course(bundle: DivinationBundle, data: dict = None):
 </div>
 </div>
 """, unsafe_allow_html=True)
+
+    # v1.5: 動的マッチした「重なる物語」の出典明記
+    if selected_ids:
+        try:
+            from core.kojindo_repo import get_story_repo, get_shrine_repo
+            srepo = get_story_repo()
+            shrines = get_shrine_repo()
+            story_lines = []
+            for sid in selected_ids[:5]:
+                st_obj = srepo.get(sid)
+                if st_obj:
+                    shrine_text = ""
+                    if st_obj.shrine_id:
+                        shr = shrines.get(st_obj.shrine_id)
+                        if shr:
+                            loc = shr.location or {}
+                            shrine_text = f" / 縁の神社: {shr.name}（{loc.get('pref','')}）"
+                    story_lines.append(
+                        f'<div style="margin:6px 0; padding:6px 10px; background:rgba(212,131,122,0.05); border-left:3px solid #D4837A; border-radius:4px;">'
+                        f'<span style="color:#D4837A; font-weight:bold;">📖 {st_obj.title}</span><br>'
+                        f'<span style="color:#8A8478; font-size:0.78em;">出典: {st_obj.source}（{st_obj.trust_level}）/ 主神: {st_obj.god}{shrine_text}</span>'
+                        f'</div>'
+                    )
+            if story_lines:
+                st.markdown(
+                    '<div style="margin:12px 0;">'
+                    '<div style="color:#D4837A; font-size:0.85em; letter-spacing:0.1em; margin-bottom:6px;">— 鑑定で採用された「重なる物語」 —</div>'
+                    + "".join(story_lines)
+                    + '</div>',
+                    unsafe_allow_html=True,
+                )
+        except Exception:
+            pass  # 表示失敗は致命的でないので無視
 
     # AI鑑定文
     reading = data.get("reading", "")

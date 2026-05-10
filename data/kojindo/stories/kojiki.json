@@ -1,0 +1,1078 @@
+{
+  "_version": "v1.5-research-2026-05-10",
+  "stories": [
+    {
+      "id": "kojiki_izanami_01",
+      "title": "伊邪那岐・伊邪那美の国生み",
+      "source": "古事記 上巻",
+      "source_type": "古事記",
+      "trust_level": "正史",
+      "god": "伊邪那岐",
+      "story_summary": "伊邪那岐と伊邪那美は天の浮橋から矛で海をかき回し、滴った塩で大八洲の国を生み出した。次に神々を生み出し、日本列島の基盤を形成した。この創造の過程で、火の神を生んだ際に伊邪那美は焼死し、二柱の神の協力が世界の始まりを象徴する。",
+      "story_one_line": "天の浮橋から矛を沈め、海を三度かき回し、滴る塩で八つの島を呼び起こす。",
+      "tags": [
+        "創造",
+        "国生み",
+        "神合作業",
+        "起源"
+      ],
+      "applicable_traits": [
+        "神産み期",
+        "不動",
+        "組織型"
+      ],
+      "shrine_id": null
+    },
+    {
+      "id": "kojiki_izanami_02",
+      "title": "神々の連続誕生",
+      "source": "古事記 上巻",
+      "source_type": "古事記",
+      "trust_level": "正史",
+      "god": "伊邪那美",
+      "story_summary": "伊邪那岐と伊邪那美は国生みの後、風の神、山の神、木の神など多くの神々を次々に生み出した。海の神や大地の神々も生まれ、天界と地上の基盤が整えられた。この神産みの連鎖は、豊かな自然界の多様性を生む源となった。",
+      "story_one_line": "七十余りの神を次々と産み落とし、風山木海の精霊を天に放つ。",
+      "tags": [
+        "神産み",
+        "多産",
+        "自然神",
+        "連鎖"
+      ],
+      "applicable_traits": [
+        "神産み期",
+        "エネルギー高(230-299)",
+        "継承の物語"
+      ],
+      "shrine_id": null
+    },
+    {
+      "id": "kojiki_izanagi_03",
+      "title": "黄泉の国への旅",
+      "source": "古事記 上巻",
+      "source_type": "古事記",
+      "trust_level": "正史",
+      "god": "伊邪那岐",
+      "story_summary": "伊邪那美が火の神誕生時に焼死し、黄泉の国へ行ったため、伊邪那岐は妻を追って黄泉へ降りる。黄泉の醜悪な神々に阻まれ、逃げ帰る過程で黄泉の穢れを振り払う。このエピソードは死と生の境界、喪失の悲しみを描く。",
+      "story_one_line": "黄泉の闇を駆け抜け、八雷神を呼び起こし、桃と葦で穢れを払い逃れる。",
+      "tags": [
+        "黄泉",
+        "追跡",
+        "喪失",
+        "逃亡"
+      ],
+      "applicable_traits": [
+        "破壊と再生",
+        "反抗期",
+        "エネルギー超過(300+)"
+      ],
+      "shrine_id": null
+    },
+    {
+      "id": "kojiki_izanagi_04",
+      "title": "禊の祓いと神生",
+      "source": "古事記 上巻",
+      "source_type": "古事記",
+      "trust_level": "正史",
+      "god": "伊邪那岐",
+      "story_summary": "黄泉から逃れた伊邪那岐は、川で身を清める禊を行い、左目から天照大神、右目から月読命、鼻から須佐之男命を生む。この祓いは穢れを浄化し、三貴子の誕生をもたらした。世界の秩序がここに確立される。",
+      "story_one_line": "筑紫の日向の橘の小門の阿波岐原で身を十回洗い、三貴子を目鼻から生む。",
+      "tags": [
+        "禊",
+        "浄化",
+        "神生",
+        "三貴子"
+      ],
+      "applicable_traits": [
+        "神産み期",
+        "火不足",
+        "修行期"
+      ],
+      "shrine_id": null
+    },
+    {
+      "id": "kojiki_amaterasu_05",
+      "title": "天照大神の天岩戸隠れ",
+      "source": "古事記 上巻",
+      "source_type": "古事記",
+      "trust_level": "正史",
+      "god": "天照大神",
+      "story_summary": "須佐之男の乱暴により、天照大神は天岩戸に隠れ、世界が闇に包まれる。神々は岩戸前で宴を催し、鶏の鳴きと鏡で誘い出し、光を回復させた。この出来事は調和の回復と太陽の復活を象徴する。",
+      "story_one_line": "天の岩戸に身を潜め、世界を八日八夜の闇に沈め、神々の歌舞で再び輝きを放つ。",
+      "tags": [
+        "天岩戸",
+        "隠れ",
+        "闇",
+        "復活"
+      ],
+      "applicable_traits": [
+        "天中殺中",
+        "破壊と再生",
+        "表現本能高"
+      ],
+      "shrine_id": "ise_jingu"
+    },
+    {
+      "id": "kojiki_susanoo_06",
+      "title": "須佐之男の誓約破り",
+      "source": "古事記 上巻",
+      "source_type": "古事記",
+      "trust_level": "正史",
+      "god": "須佐之男命",
+      "story_summary": "高天原で乱暴を働いた須佐之男は、天照大神との誓約で真偽を試すが、馬の皮を投げ込み田を荒らす。怒った天照が岩戸に隠れ、須佐之男は追放される。このエピソードは衝動と罰の因果を示す。",
+      "story_one_line": "皮を剥いだ天の斑駒を殿に投げ、八雲の立つ田を踏み荒らし、追放の道を辿る。",
+      "tags": [
+        "誓約",
+        "乱暴",
+        "追放",
+        "衝動"
+      ],
+      "applicable_traits": [
+        "反抗期",
+        "攻撃本能高",
+        "破壊と再生"
+      ],
+      "shrine_id": null
+    },
+    {
+      "id": "kojiki_susanoo_07",
+      "title": "八岐大蛇の討伐",
+      "source": "古事記 上巻",
+      "source_type": "古事記",
+      "trust_level": "正史",
+      "god": "須佐之男命",
+      "story_summary": "追放された須佐之男は出雲で泣き、足名椎へ導かれ、八岐大蛇を退治する。酒で酔わせ、八つの頭を斬り、尾から草薙の剣を得る。足名椎の娘を妻とし、平和をもたらす英雄譚。",
+      "story_one_line": "八つの頭と尾を持つ大蛇に八の酒樽を捧げ、十拳剣で首を八つ切り、宝剣を尾から引き抜く。",
+      "tags": [
+        "八岐大蛇",
+        "討伐",
+        "英雄",
+        "宝剣"
+      ],
+      "applicable_traits": [
+        "国譲り期",
+        "攻撃本能高",
+        "名誉型"
+      ],
+      "shrine_id": "izumo_taisha"
+    },
+    {
+      "id": "kojiki_okuninushi_08",
+      "title": "因幡の白兎救済",
+      "source": "古事記 上巻",
+      "source_type": "古事記",
+      "trust_level": "正史",
+      "god": "大国主命",
+      "story_summary": "ワニに皮を剥がれた兎を、大国主が葦でかぶせ、菖蒲の汁で洗い、蒲の穂で息を吹き返す。兎は感謝し、大国主の名声が高まる。この優しい行為は慈悲と癒しの象徴として語り継がれる。",
+      "story_one_line": "皮剥ぎの兎に葦の衣を纏わせ、菖蒲湯で癒し、蒲穂の息で命を蘇らせる。",
+      "tags": [
+        "白兎",
+        "救済",
+        "慈悲",
+        "癒し"
+      ],
+      "applicable_traits": [
+        "守備本能高",
+        "学習本能高",
+        "収穫期"
+      ],
+      "shrine_id": "izumo_taisha"
+    },
+    {
+      "id": "kojiki_ninigi_09",
+      "title": "天孫降臨の使命",
+      "source": "古事記 中巻",
+      "source_type": "古事記",
+      "trust_level": "正史",
+      "god": "邇邇芸命",
+      "story_summary": "天照大神の孫、邇邇芸命は三種の神器を授かり、天の浮橋から高千穂に降臨する。葦原中国を統治する使命を帯び、豊城入姫を妻に迎える。この降臨は天皇家の起源を象徴する。",
+      "story_one_line": "三種の神器を手に天の浮橋を渡り、高千穂の峰に降り立ち、葦原を統べる。",
+      "tags": [
+        "天孫降臨",
+        "神器",
+        "統治",
+        "起源"
+      ],
+      "applicable_traits": [
+        "国造り期",
+        "継承の物語",
+        "組織型"
+      ],
+      "shrine_id": "hiyoshi_taisha"
+    },
+    {
+      "id": "kojiki_hoori_10",
+      "title": "海幸彦の漁業対決",
+      "source": "古事記 中巻",
+      "source_type": "古事記",
+      "trust_level": "正史",
+      "god": "火遠理命",
+      "story_summary": "山幸彦は兄の海幸彦から釣り針を借り、潮の神ウミシムの助けで大魚を釣るが針を失う。兄の怒りを買い、旅に出る。この兄弟の対立は運命の転換と冒険の始まりを描く。",
+      "story_one_line": "兄の五百引の釣針を借り、海神の赤い玉で大アワビを釣り上げ、針を海に沈める。",
+      "tags": [
+        "海幸",
+        "釣り",
+        "兄弟",
+        "喪失"
+      ],
+      "applicable_traits": [
+        "天中殺中",
+        "放浪型",
+        "水過多"
+      ],
+      "shrine_id": null
+    },
+    {
+      "id": "kojiki_hoori_11",
+      "title": "山幸彦の海底宮殿",
+      "source": "古事記 中巻",
+      "source_type": "古事記",
+      "trust_level": "正史",
+      "god": "火遠理命",
+      "story_summary": "山幸彦は海神の娘豊玉姫と結婚し、海底宮殿で三柱の子を生む。針を返却し地上に戻るが、妻の変身に驚き別れる。この恋は人間界と神界の交わりを象徴する。",
+      "story_one_line": "海神の宮に三度招かれ、豊玉姫と結ばれ、潮満の時に龍の姿に驚き地上へ去る。",
+      "tags": [
+        "山幸",
+        "海底",
+        "結婚",
+        "別離"
+      ],
+      "applicable_traits": [
+        "収穫期",
+        "魅力本能高",
+        "水不足"
+      ],
+      "shrine_id": "sumiyoshi_taisha"
+    },
+    {
+      "id": "kojiki_okuninushi_12",
+      "title": "大国主の国譲り",
+      "source": "古事記 中巻",
+      "source_type": "古事記",
+      "trust_level": "正史",
+      "god": "大国主命",
+      "story_summary": "出雲を治めた大国主は、天神の使者武甕槌から国を譲るよう求められる。八重事代主の助言で承諾し、因幡の白兎の恩返しのように大社を建てる約束を得る。この譲渡は天皇中心の国造りを示す。",
+      "story_one_line": "武甕槌の使に三度問われ、国を譲り渡し、大社八座を約束に地上の守護を託す。",
+      "tags": [
+        "国譲り",
+        "譲渡",
+        "出雲",
+        "大社"
+      ],
+      "applicable_traits": [
+        "国譲り期",
+        "名誉型",
+        "組織型"
+      ],
+      "shrine_id": "izumo_taisha"
+    },
+    {
+      "id": "kojiki_sukuna_13",
+      "title": "少彦名命の病治し",
+      "source": "古事記 中巻",
+      "source_type": "古事記",
+      "trust_level": "正史",
+      "god": "少彦名命",
+      "story_summary": "大国主が兄神らの陰謀で傷つき、少彦名命が木の芽や石の膏で治療する。二神は出雲を共同統治し、後の国譲りに繋がる。この協力は医療と友情の物語。",
+      "story_one_line": "傷ついた大国主に木の芽を塗り、石の膏を施し、五十嵐の子守歌で癒す。",
+      "tags": [
+        "治療",
+        "協力",
+        "陰謀",
+        "友情"
+      ],
+      "applicable_traits": [
+        "守備本能高",
+        "学習本能高",
+        "収穫期"
+      ],
+      "shrine_id": null
+    },
+    {
+      "id": "kojiki_takemikazuchi_14",
+      "title": "武甕槌の天降臨",
+      "source": "古事記 中巻",
+      "source_type": "古事記",
+      "trust_level": "正史",
+      "god": "武甕槌命",
+      "story_summary": "天照の命で武甕槌は白鹿に乗って河内から天に上がり、国譲りの使者となる。神剣を携え、地上の神々を説得する。この降臨は天の威光の拡大を表す。",
+      "story_one_line": "白鹿に跨り天に昇り、神剣を携えて大国主に国譲りを三度迫る。",
+      "tags": [
+        "降臨",
+        "使者",
+        "白鹿",
+        "説得"
+      ],
+      "applicable_traits": [
+        "神上がり期",
+        "攻撃本能高",
+        "国造り期"
+      ],
+      "shrine_id": "kasuga_taisha"
+    },
+    {
+      "id": "kojiki_futsunushi_15",
+      "title": "経津主の国平定",
+      "source": "古事記 中巻",
+      "source_type": "古事記",
+      "trust_level": "正史",
+      "god": "経津主神",
+      "story_summary": "武甕槌の後、経津主神が十拳剣で地上を平定し、国譲りを確約させる。岩戸を開き、光を地上に広める。この活躍は武神の役割を強調する。",
+      "story_one_line": "十拳の剣を振り、岩戸を開き、地上の神々を従え国譲りの誓いを立てる。",
+      "tags": [
+        "平定",
+        "剣",
+        "岩戸",
+        "武神"
+      ],
+      "applicable_traits": [
+        "国譲り期",
+        "名誉型",
+        "火過多"
+      ],
+      "shrine_id": null
+    },
+    {
+      "id": "kojiki_jinmu_16",
+      "title": "神武の出生と使命",
+      "source": "古事記 下巻",
+      "source_type": "古事記",
+      "trust_level": "正史",
+      "god": "神武天皇",
+      "story_summary": "天孫邇邇芸の孫、神武は日向生まれ、天皇となる使命を帯び東征する。八紘一宇の理想を抱き、熊野から大和へ進む。この出生は皇統の始まり。",
+      "story_one_line": "天孫の血を継ぎ、日向の宮で生まれ、八百万の神を従え東の大地を目指す。",
+      "tags": [
+        "出生",
+        "使命",
+        "東征",
+        "皇統"
+      ],
+      "applicable_traits": [
+        "継承の物語",
+        "組織型",
+        "国造り期"
+      ],
+      "shrine_id": "kashihara_jingu"
+    },
+    {
+      "id": "kojiki_yamatotakeru_17",
+      "title": "倭建命の誕生",
+      "source": "古事記 下巻",
+      "source_type": "古事記",
+      "trust_level": "正史",
+      "god": "日本武尊",
+      "story_summary": "景行天皇の子、日本武尊は幼少より勇猛で、兄を殺す事件を起こす。父帝の命で異母姉の帯中日子命から女装を強いられ、謀反を抑える。この誕生は英雄の宿命を示す。",
+      "story_one_line": "皇子として生まれ、兄の鮫別を赤熊の皮で刺し、父の怒りを女装で宥める。",
+      "tags": [
+        "誕生",
+        "勇猛",
+        "女装",
+        "英雄"
+      ],
+      "applicable_traits": [
+        "反抗期",
+        "攻撃本能高",
+        "名誉型"
+      ],
+      "shrine_id": null
+    },
+    {
+      "id": "kojiki_yamatotakeru_18",
+      "title": "倭建の草薙剣授与",
+      "source": "古事記 下巻",
+      "source_type": "古事記",
+      "trust_level": "正史",
+      "god": "日本武尊",
+      "story_summary": "日本武尊は母の墓から草薙の剣を授かり、越の熊襲征伐に向かう。剣の力で火を操り、敵を破る。この剣は八岐大蛇由来の宝物。",
+      "story_one_line": "母の塚から草薙の剣を引き抜き、越の荒野で火を呼び、熊を八つ討つ。",
+      "tags": [
+        "草薙剣",
+        "授与",
+        "征伐",
+        "宝物"
+      ],
+      "applicable_traits": [
+        "国造り期",
+        "火過多",
+        "攻撃本能高"
+      ],
+      "shrine_id": "atsuta_jingu"
+    },
+    {
+      "id": "kojiki_susanoo_19",
+      "title": "須佐之男の根の国定住",
+      "source": "古事記 上巻",
+      "source_type": "古事記",
+      "trust_level": "正史",
+      "god": "須佐之男命",
+      "story_summary": "八岐大蛇退治後、須佐之男は新宮を築き、子孫を増やし根の国に定住する。歌を詠み、永遠の繁栄を誓う。この定住は乱暴から守護者への転換。",
+      "story_one_line": "八俣の血で新宮を清め、子ら七柱を生み、根の国に永住の歌を響かせる。",
+      "tags": [
+        "定住",
+        "新宮",
+        "繁栄",
+        "転換"
+      ],
+      "applicable_traits": [
+        "収穫期",
+        "継承の物語",
+        "不動"
+      ],
+      "shrine_id": null
+    },
+    {
+      "id": "kojiki_amaterasu_20",
+      "title": "天照の神器委譲",
+      "source": "古事記 中巻",
+      "source_type": "古事記",
+      "trust_level": "正史",
+      "god": "天照大神",
+      "story_summary": "天照大神は孫の邇邇芸に鏡、剣、玉の三種神器を委ね、天孫降臨を命じる。高天原の統治を地上に移すこの行為は、皇室の正統性を確立する。",
+      "story_one_line": "八握の鏡と十拳の剣、八尺の勾玉を孫に渡し、天の浮橋から地上の光を遣わす。",
+      "tags": [
+        "神器",
+        "委譲",
+        "降臨",
+        "正統"
+      ],
+      "applicable_traits": [
+        "神産み期",
+        "組織型",
+        "名誉型"
+      ],
+      "shrine_id": "ise_jingu"
+    },
+    {
+      "id": "kojiki_hoori_21",
+      "title": "山幸の地上帰還",
+      "source": "古事記 中巻",
+      "source_type": "古事記",
+      "trust_level": "正史",
+      "god": "火遠理命",
+      "story_summary": "海底から戻った山幸彦は兄と和解し、子を産んだ妻の魂を地上に迎える。鵜舟で子を運び、皇統を繋ぐ。この帰還は家族の再会と継承の喜び。",
+      "story_one_line": "鵜の舟に子を乗せ、兄の宮に戻り、潮の姫の魂を呼び寄せ和解の宴を催す。",
+      "tags": [
+        "帰還",
+        "和解",
+        "家族",
+        "継承"
+      ],
+      "applicable_traits": [
+        "収穫期",
+        "継承の物語",
+        "魅力本能高"
+      ],
+      "shrine_id": null
+    },
+    {
+      "id": "kojiki_okuninushi_22",
+      "title": "八重事代主の助言",
+      "source": "古事記 中巻",
+      "source_type": "古事記",
+      "trust_level": "正史",
+      "god": "大国主命",
+      "story_summary": "国譲りの際、大国主の子八重事代主は父に天の意を伝え、譲渡を勧める。蛇の神殿で守られ、父の決断を後押しする。この助言は忠義と犠牲の物語。",
+      "story_one_line": "子八重が父に天の使の言葉を伝え、蛇の巣で守られ、国譲りの道を選ばせる。",
+      "tags": [
+        "助言",
+        "忠義",
+        "蛇神",
+        "犠牲"
+      ],
+      "applicable_traits": [
+        "国譲り期",
+        "学習本能高",
+        "組織型"
+      ],
+      "shrine_id": "izumo_taisha"
+    },
+    {
+      "id": "kojiki_jinmu_23",
+      "title": "神武東征の戦い",
+      "source": "古事記 下巻",
+      "source_type": "古事記",
+      "trust_level": "正史",
+      "god": "神武天皇",
+      "story_summary": "神武は熊野で金鵄の導きを受け、長髄彦を破り大和を平定する。八紘の理想を実現し、天皇となる。この東征は征服と統一の叙事詩。",
+      "story_one_line": "金鵄の翼に導かれ、長髄の軍を破り、大和の橿原に八紘の宮を建てる。",
+      "tags": [
+        "東征",
+        "戦い",
+        "平定",
+        "統一"
+      ],
+      "applicable_traits": [
+        "国造り期",
+        "攻撃本能高",
+        "名誉型"
+      ],
+      "shrine_id": "kashihara_jingu"
+    },
+    {
+      "id": "kojiki_yamatotakeru_24",
+      "title": "倭建の東国征伐",
+      "source": "古事記 下巻",
+      "source_type": "古事記",
+      "trust_level": "正史",
+      "god": "日本武尊",
+      "story_summary": "女装の謀で土蜘蛛を討ち、東国を巡る日本武尊は、兄君の命で征伐する。草薙剣の力で火攻めを逆手に取り、勝利を重ねる。この征伐は勇猛の極み。",
+      "story_one_line": "女装で土蜘蛛を欺き、草薙の風で火を返し、東の蛮を五度平定する。",
+      "tags": [
+        "征伐",
+        "女装",
+        "火攻め",
+        "勇猛"
+      ],
+      "applicable_traits": [
+        "反抗期",
+        "表現本能高",
+        "火過多"
+      ],
+      "shrine_id": null
+    },
+    {
+      "id": "kojiki_yamatotakeru_25",
+      "title": "日本武尊の白鹿変",
+      "source": "古事記 下巻",
+      "source_type": "古事記",
+      "trust_level": "正史",
+      "god": "日本武尊",
+      "story_summary": "東征後、帰路で白鹿に魂を移され、伊吹山で神となり妻たちに歌を残す。勇猛な生涯の終わりは、英雄の昇天として語られる。",
+      "story_one_line": "白鹿に変じ、伊吹の山で歌い、妻八人の涙に包まれ天に昇る。",
+      "tags": [
+        "変身",
+        "昇天",
+        "白鹿",
+        "終焉"
+      ],
+      "applicable_traits": [
+        "神上がり期",
+        "破壊と再生",
+        "エネルギー高(230-299)"
+      ],
+      "shrine_id": null
+    },
+    {
+      "id": "kojiki_izanagi_01",
+      "title": "黄泉国からの帰還",
+      "source": "古事記 上巻",
+      "source_type": "古事記",
+      "trust_level": "正史",
+      "god": "伊邪那岐命",
+      "story_summary": "伊邪那岐命は黄泉国で伊邪那美命を追いかけるが、死の世界の穢れを目の当たりにした後、逃げ帰り、禊ぎを行うことで清浄を取り戻す。",
+      "story_one_line": "死の穢れを払い、清浄を取り戻すための禊ぎを。",
+      "tags": [
+        "黄泉国",
+        "禊ぎ",
+        "清浄"
+      ],
+      "applicable_traits": [
+        "破壊と再生",
+        "反抗期",
+        "水不足"
+      ],
+      "shrine_id": null
+    },
+    {
+      "id": "kojiki_amaterasu_01",
+      "title": "天岩戸の隠れ",
+      "source": "古事記 中巻",
+      "source_type": "古事記",
+      "trust_level": "正史",
+      "god": "天照大御神",
+      "story_summary": "弟の須佐之男命の乱暴に耐えかねた天照大御神は天岩戸に隠れる。彼女がいなくなると世界は闇に包まれ、他の神々が協力して彼女を外に誘い出す策を練る。",
+      "story_one_line": "闇を破るため、天岩戸を開け放つ光の舞。",
+      "tags": [
+        "天岩戸",
+        "光",
+        "協力"
+      ],
+      "applicable_traits": [
+        "表現本能高",
+        "組織型",
+        "火不足"
+      ],
+      "shrine_id": null
+    },
+    {
+      "id": "kojiki_susanoo_01",
+      "title": "八岐大蛇退治",
+      "source": "古事記 中巻",
+      "source_type": "古事記",
+      "trust_level": "正史",
+      "god": "須佐之男命",
+      "story_summary": "須佐之男命は出雲で八岐大蛇を退治し、その尾から草薙剣を見つける。この剣は後に重要な神器となる。",
+      "story_one_line": "八岐大蛇を斬り、草薙剣を手にする勇者。",
+      "tags": [
+        "八岐大蛇",
+        "草薙剣",
+        "勇者"
+      ],
+      "applicable_traits": [
+        "攻撃本能高",
+        "破壊と再生",
+        "火過多"
+      ],
+      "shrine_id": null
+    },
+    {
+      "id": "kojiki_okuninushi_01",
+      "title": "因幡の白兎",
+      "source": "古事記 中巻",
+      "source_type": "古事記",
+      "trust_level": "正史",
+      "god": "大国主命",
+      "story_summary": "大国主命は因幡の白兎を助け、その恩返しとして八上比売を得る。彼の優しさが報われる物語。",
+      "story_one_line": "白兎を救い、愛を得る慈悲の旅。",
+      "tags": [
+        "因幡",
+        "白兎",
+        "優しさ"
+      ],
+      "applicable_traits": [
+        "守備本能高",
+        "継承の物語",
+        "水不足"
+      ],
+      "shrine_id": null
+    },
+    {
+      "id": "kojiki_tsukuyomi_01",
+      "title": "月読神の別れ",
+      "source": "古事記 上巻",
+      "source_type": "古事記",
+      "trust_level": "正史",
+      "god": "月読命",
+      "story_summary": "月読命は天照大御神の命令を受け、稲穂の神である保食神を訪ねるが、その振る舞いに怒り彼を殺す。この行為により天照大御神との別れが生じる。",
+      "story_one_line": "月の神、食卓で怒りを燃やす一夜。",
+      "tags": [
+        "月",
+        "別れ",
+        "怒り"
+      ],
+      "applicable_traits": [
+        "攻撃本能高",
+        "反抗期",
+        "火過多"
+      ],
+      "shrine_id": null
+    },
+    {
+      "id": "kojiki_inari_01",
+      "title": "狐の使者",
+      "source": "古事記 不明",
+      "source_type": "古事記",
+      "trust_level": "伝承",
+      "god": "稲荷神",
+      "story_summary": "稲荷神は狐を使者として、人々に穀物の豊穣をもたらす。その姿は農業の守護神として広く信仰されるようになる。",
+      "story_one_line": "狐が運ぶ、稲穂の波打つ豊穣の風。",
+      "tags": [
+        "狐",
+        "豊穣",
+        "農業"
+      ],
+      "applicable_traits": [
+        "収穫期",
+        "名誉型",
+        "土過多"
+      ],
+      "shrine_id": null
+    },
+    {
+      "id": "kojiki_uzume_01",
+      "title": "天岩戸の舞",
+      "source": "古事記 中巻",
+      "source_type": "古事記",
+      "trust_level": "正史",
+      "god": "天鈿女命",
+      "story_summary": "天照大御神が天岩戸に隠れた際、天鈿女命は神々を楽しませるために踊りを披露。そのおかげで天照大御神が岩戸から出てくるきっかけを作る。",
+      "story_one_line": "岩戸を開ける舞、天鈿女命の喜びの踊り。",
+      "tags": [
+        "舞",
+        "喜び",
+        "再生"
+      ],
+      "applicable_traits": [
+        "表現本能高",
+        "破壊と再生",
+        "火不足"
+      ],
+      "shrine_id": null
+    },
+    {
+      "id": "kojiki_ninigi_01",
+      "title": "天孫降臨",
+      "source": "古事記 中巻",
+      "source_type": "古事記",
+      "trust_level": "正史",
+      "god": "瓊々杵命",
+      "story_summary": "瓊々杵命は天照大御神の命を受けて地上に降り、国を治めることになる。彼の降臨は人々に平和をもたらす始まりとなる。",
+      "story_one_line": "天から降りた神、地上に平和をもたらす。",
+      "tags": [
+        "天孫降臨",
+        "平和",
+        "治世"
+      ],
+      "applicable_traits": [
+        "国造り期",
+        "名誉型",
+        "土過多"
+      ],
+      "shrine_id": null
+    },
+    {
+      "id": "kojiki_yamatotakeru_01",
+      "title": "草薙剣と戦の旅",
+      "source": "古事記 下巻",
+      "source_type": "古事記",
+      "trust_level": "正史",
+      "god": "日本武尊",
+      "story_summary": "日本武尊は草薙剣を用いて数々の敵を倒す旅を続ける。彼の勇敢な行動は武勇の象徴となるが、最終的に戦いで命を落とす。",
+      "story_one_line": "草薙剣を振るい、戦の旅路を行く。",
+      "tags": [
+        "草薙剣",
+        "戦",
+        "武勇"
+      ],
+      "applicable_traits": [
+        "攻撃本能高",
+        "放浪型",
+        "火過多"
+      ],
+      "shrine_id": null
+    },
+    {
+      "id": "kojiki_ookuninushi_02",
+      "title": "国譲りの決意",
+      "source": "古事記 中巻",
+      "source_type": "古事記",
+      "trust_level": "正史",
+      "god": "大国主命",
+      "story_summary": "大国主命は天照大御神の使者に国譲りを迫られる。彼は悩んだ末、国を譲ることを決意し、代わりに出雲国に壮大な神殿を建てることを条件に受け入れる。",
+      "story_one_line": "神殿を築き、心に刻む国譲りの誓い。",
+      "tags": [
+        "国譲り",
+        "決意",
+        "神殿"
+      ],
+      "applicable_traits": [
+        "継承の物語",
+        "国譲り期",
+        "土過多"
+      ],
+      "shrine_id": null
+    },
+    {
+      "id": "kojiki_ama_no_takachiho_01",
+      "title": "高千穂の峰",
+      "source": "古事記 中巻",
+      "source_type": "古事記",
+      "trust_level": "正史",
+      "god": "天孫",
+      "story_summary": "天孫が地上に降り立った高千穂の峰は、天と地を繋ぐ神聖な場所とされ、その地を基に人々が国造りを始める。",
+      "story_one_line": "天と地を繋ぐ高千穂の峰、国造りの始まり。",
+      "tags": [
+        "高千穂",
+        "国造り",
+        "神聖"
+      ],
+      "applicable_traits": [
+        "国造り期",
+        "学習本能高",
+        "土過多"
+      ],
+      "shrine_id": null
+    },
+    {
+      "id": "kojiki_hachiman_01",
+      "title": "八幡神の守護",
+      "source": "古事記 不明",
+      "source_type": "古事記",
+      "trust_level": "伝承",
+      "god": "八幡神",
+      "story_summary": "八幡神は武運の神として崇拝され、戦において武士たちを守護する。その影響力は全国に広がり、信仰の中心となる。",
+      "story_one_line": "戦場を守る八幡神、武士に勇気を与える。",
+      "tags": [
+        "武運",
+        "守護",
+        "武士"
+      ],
+      "applicable_traits": [
+        "攻撃本能高",
+        "名誉型",
+        "火過多"
+      ],
+      "shrine_id": null
+    },
+    {
+      "id": "kojiki_ryujin_01",
+      "title": "龍宮の神",
+      "source": "古事記 不明",
+      "source_type": "古事記",
+      "trust_level": "伝承",
+      "god": "龍神",
+      "story_summary": "龍神は海の深淵に住む神で、海の恵みを司る。彼の怒りは嵐を呼び、恵みは豊漁をもたらす。",
+      "story_one_line": "海の深淵に潜む龍神、波間に恵みを運ぶ。",
+      "tags": [
+        "海",
+        "龍",
+        "豊漁"
+      ],
+      "applicable_traits": [
+        "水過多",
+        "組織型",
+        "土不足"
+      ],
+      "shrine_id": null
+    },
+    {
+      "id": "kojiki_susanoo_02",
+      "title": "須佐之男命の追放",
+      "source": "古事記 上巻",
+      "source_type": "古事記",
+      "trust_level": "正史",
+      "god": "須佐之男命",
+      "story_summary": "須佐之男命は天界での乱暴を咎められ、地上に追放される。その後、彼は地上で新たな冒険を始めることになる。",
+      "story_one_line": "天から追放され、地上に新たな冒険を。",
+      "tags": [
+        "追放",
+        "冒険",
+        "地上"
+      ],
+      "applicable_traits": [
+        "反抗期",
+        "放浪型",
+        "火過多"
+      ],
+      "shrine_id": null
+    },
+    {
+      "id": "kojiki_uzume_02",
+      "title": "笑いの神の舞",
+      "source": "古事記 中巻",
+      "source_type": "古事記",
+      "trust_level": "正史",
+      "god": "天鈿女命",
+      "story_summary": "天鈿女命は天岩戸の外で神々を笑わせるために舞を披露。この笑いが力となり、天照大御神を外に誘い出すことに成功する。",
+      "story_one_line": "笑いの舞、神々を笑顔にする奇跡の力。",
+      "tags": [
+        "舞",
+        "笑い",
+        "神々"
+      ],
+      "applicable_traits": [
+        "表現本能高",
+        "守備本能高",
+        "火不足"
+      ],
+      "shrine_id": null
+    },
+    {
+      "id": "kojiki_okuninushi_03",
+      "title": "八百比丘尼の伝説",
+      "source": "古事記 中巻",
+      "source_type": "古事記",
+      "trust_level": "伝承",
+      "god": "大国主命",
+      "story_summary": "大国主命は八百比丘尼に永遠の命を与えるが、彼女は長生きに悩み、自ら命を絶つ。この物語は長寿の悲劇を語る。",
+      "story_one_line": "永遠の命を得た尼、長寿の悲劇を生きる。",
+      "tags": [
+        "長寿",
+        "悲劇",
+        "伝説"
+      ],
+      "applicable_traits": [
+        "破壊と再生",
+        "放浪型",
+        "水不足"
+      ],
+      "shrine_id": null
+    },
+    {
+      "id": "kojiki_omono_nushi_01",
+      "title": "大物主神の化身",
+      "source": "古事記 不明",
+      "source_type": "古事記",
+      "trust_level": "伝承",
+      "god": "大物主神",
+      "story_summary": "大物主神は蛇の姿に変化し、姫を訪れる。この訪問が因縁となり、国を守護する神として祀られることとなる。",
+      "story_one_line": "蛇に変化し、姫を訪れる守護神の宿命。",
+      "tags": [
+        "変化",
+        "守護",
+        "化身"
+      ],
+      "applicable_traits": [
+        "守備本能高",
+        "水過多"
+      ],
+      "shrine_id": null
+    },
+    {
+      "id": "kojiki_susanoo_03",
+      "title": "須佐之男命の農業",
+      "source": "古事記 中巻",
+      "source_type": "古事記",
+      "trust_level": "正史",
+      "god": "須佐之男命",
+      "story_summary": "地上に落ちた須佐之男命は農業を始め、人々に穀物の育て方を伝授する。彼の教えは農業の発展に大きく貢献することになる。",
+      "story_one_line": "大地を耕し、人々に実りを教える神。",
+      "tags": [
+        "農業",
+        "穀物",
+        "教え"
+      ],
+      "applicable_traits": [
+        "収穫期",
+        "組織型",
+        "土過多"
+      ],
+      "shrine_id": null
+    },
+    {
+      "id": "kojiki_amaterasu_02",
+      "title": "日の神の再誕",
+      "source": "古事記 中巻",
+      "source_type": "古事記",
+      "trust_level": "正史",
+      "god": "天照大御神",
+      "story_summary": "天岩戸から出た天照大御神は再び世界を照らし、人々に光をもたらす。彼女の復活は新しい時代の幕開けとなる。",
+      "story_one_line": "復活し、再び世界を照らす日の神。",
+      "tags": [
+        "光",
+        "再生",
+        "復活"
+      ],
+      "applicable_traits": [
+        "破壊と再生",
+        "守備本能高",
+        "火不足"
+      ],
+      "shrine_id": null
+    },
+    {
+      "id": "kojiki_sarutahiko_01",
+      "title": "猿田彦の導き",
+      "source": "古事記 中巻",
+      "source_type": "古事記",
+      "trust_level": "正史",
+      "god": "猿田彦命",
+      "story_summary": "天孫降臨の際、猿田彦命はその道を先導する役割を果たし、地上への道しるべとなる。",
+      "story_one_line": "天から地へ、未来を照らす道しるべの神。",
+      "tags": [
+        "導き",
+        "未来",
+        "道しるべ"
+      ],
+      "applicable_traits": [
+        "学習本能高",
+        "名誉型",
+        "土過多"
+      ],
+      "shrine_id": null
+    },
+    {
+      "id": "kojiki_tsukuyomi_02",
+      "title": "月読命の孤独",
+      "source": "古事記 上巻",
+      "source_type": "古事記",
+      "trust_level": "正史",
+      "god": "月読命",
+      "story_summary": "保食神を殺した月読命は、天照大御神との関係を断ち、孤独の中で月の神としての役割を果たすことになる。",
+      "story_one_line": "孤独の中で、月の道を照らす神。",
+      "tags": [
+        "月",
+        "孤独",
+        "役割"
+      ],
+      "applicable_traits": [
+        "不動",
+        "守備本能低",
+        "水過多"
+      ],
+      "shrine_id": null
+    },
+    {
+      "id": "kojiki_konohana_01",
+      "title": "木花之佐久夜毘売の嫉妬",
+      "source": "古事記 中巻",
+      "source_type": "古事記",
+      "trust_level": "正史",
+      "god": "木花之佐久夜毘売",
+      "story_summary": "木花之佐久夜毘売は瓊々杵命の妻となるが、その姉、石長比売に嫉妬される。嫉妬心が姉妹の間に溝を生む。",
+      "story_one_line": "愛されるがゆえの嫉妬、姉妹の溝を生む。",
+      "tags": [
+        "嫉妬",
+        "姉妹",
+        "愛"
+      ],
+      "applicable_traits": [
+        "表現本能高",
+        "反抗期",
+        "木不足"
+      ],
+      "shrine_id": null
+    },
+    {
+      "id": "kojiki_yamatotakeru_02",
+      "title": "東国征伐",
+      "source": "古事記 下巻",
+      "source_type": "古事記",
+      "trust_level": "正史",
+      "god": "日本武尊",
+      "story_summary": "日本武尊は東国征伐の命を受け、数々の敵を討ち、征服を進める。彼の武勇は数多くの伝説として語り継がれる。",
+      "story_one_line": "東国に進撃する武勇、伝説を刻む。",
+      "tags": [
+        "征伐",
+        "伝説",
+        "武勇"
+      ],
+      "applicable_traits": [
+        "攻撃本能高",
+        "放浪型",
+        "火過多"
+      ],
+      "shrine_id": null
+    },
+    {
+      "id": "kojiki_ooyama_01",
+      "title": "大山祇神の祝福",
+      "source": "古事記 不明",
+      "source_type": "古事記",
+      "trust_level": "伝承",
+      "god": "大山祇神",
+      "story_summary": "大山祇神は山の神として、自然の恵みを人々に与える。その祝福は山岳信仰の礎となる。",
+      "story_one_line": "山の神、大地に恵みを分け与える。",
+      "tags": [
+        "山",
+        "自然",
+        "祝福"
+      ],
+      "applicable_traits": [
+        "守備本能高",
+        "組織型",
+        "土過多"
+      ],
+      "shrine_id": null
+    },
+    {
+      "id": "kojiki_kaya_01",
+      "title": "加夜神の創造",
+      "source": "古事記 不明",
+      "source_type": "古事記",
+      "trust_level": "伝承",
+      "god": "加夜神",
+      "story_summary": "加夜神は創造神として、様々なものを生み出し、世界の基盤を築く。その力は新しい秩序を創り出す。",
+      "story_one_line": "創造神、世界に新たな秩序を築く力。",
+      "tags": [
+        "創造",
+        "秩序",
+        "基盤"
+      ],
+      "applicable_traits": [
+        "国造り期",
+        "木過多"
+      ],
+      "shrine_id": null
+    }
+  ]
+}

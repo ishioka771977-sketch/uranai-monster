@@ -1,0 +1,1179 @@
+{
+  "_version": "v1.5-research-2026-05-10",
+  "shrines": [
+    {
+      "id": "naiku_ise",
+      "name": "皇大神宮（内宮）",
+      "parent_shrine": null,
+      "location": {
+        "pref": "三重県",
+        "city": "伊勢市",
+        "lat": 34.455,
+        "lng": 136.726
+      },
+      "main_deity": [
+        "天照大御神"
+      ],
+      "sub_deities": [
+        "天手力男神",
+        "万幡豊秋津師比売命"
+      ],
+      "benefits": [
+        "国家安泰",
+        "五穀豊穣",
+        "開運招福",
+        "諸願成就",
+        "厄除け"
+      ],
+      "atmosphere": "五十鈴川の清流が境内を包み、二千年の杉木立が静寂を守る。踏み込むたびに日本の始まりへと時間が遡るような畏敬がある。",
+      "access": "近鉄・伊勢市駅または宇治山田駅からバス約15分",
+      "episode_ids": [],
+      "five_element": "火"
+    },
+    {
+      "id": "kamigamo_jinja",
+      "name": "賀茂別雷神社",
+      "parent_shrine": null,
+      "location": {
+        "pref": "京都府",
+        "city": "京都市北区",
+        "lat": 35.059,
+        "lng": 135.752
+      },
+      "main_deity": [
+        "賀茂別雷大神"
+      ],
+      "sub_deities": [],
+      "benefits": [
+        "雷除け",
+        "厄除け",
+        "縁結び",
+        "五穀豊穣",
+        "交通安全"
+      ],
+      "atmosphere": "ならの小川が境内を流れ、葵祭の列が渡る砂山が朝靄に浮かぶ。京の古層をそのまま保存した別世界の静謐さ。",
+      "access": "京都市バス・上賀茂神社前停留所からすぐ",
+      "episode_ids": [],
+      "five_element": "木"
+    },
+    {
+      "id": "kirishima_jingu",
+      "name": "霧島神宮",
+      "parent_shrine": null,
+      "location": {
+        "pref": "鹿児島県",
+        "city": "霧島市",
+        "lat": 31.887,
+        "lng": 130.864
+      },
+      "main_deity": [
+        "瓊瓊杵尊"
+      ],
+      "sub_deities": [
+        "天忍穂耳尊",
+        "木花開耶姫命",
+        "彦火火出見尊",
+        "豊玉姫命",
+        "鵜鷀草葺不合尊",
+        "玉依姫命",
+        "神倭磐余彦尊"
+      ],
+      "benefits": [
+        "縁結び",
+        "開運招福",
+        "農業",
+        "子宝",
+        "国土平安"
+      ],
+      "atmosphere": "霧島連山の深い霧の中、朱塗りの社殿が天孫降臨の神話を今に伝え、火山の大地が神代の息吹を肌に伝える。",
+      "access": "JR日豊本線・霧島神宮駅からタクシー約10分",
+      "episode_ids": [],
+      "five_element": "火"
+    },
+    {
+      "id": "kamowakeikazuchi_shimogamo",
+      "name": "賀茂御祖神社",
+      "parent_shrine": null,
+      "location": {
+        "pref": "京都府",
+        "city": "京都市左京区",
+        "lat": 35.039,
+        "lng": 135.772
+      },
+      "main_deity": [
+        "玉依媛命",
+        "賀茂建角身命"
+      ],
+      "sub_deities": [],
+      "benefits": [
+        "縁結び",
+        "開運招福",
+        "安産",
+        "育児",
+        "学業成就"
+      ],
+      "atmosphere": "糺の森の原始的な木立が都市の時間を拒み、古代の河川沿いに鎮座する社は、京都でもっとも深い時間の層を持つ。",
+      "access": "京阪・出町柳駅から徒歩約10分",
+      "episode_ids": [],
+      "five_element": "木"
+    },
+    {
+      "id": "aso_jinja",
+      "name": "阿蘇神社",
+      "parent_shrine": null,
+      "location": {
+        "pref": "熊本県",
+        "city": "阿蘇市",
+        "lat": 32.954,
+        "lng": 130.999
+      },
+      "main_deity": [
+        "健磐龍命"
+      ],
+      "sub_deities": [
+        "阿蘇都媛命",
+        "速瓶玉命",
+        "国造速甕玉命",
+        "雨宮媛命",
+        "高橋神",
+        "新彦神",
+        "若比咩神",
+        "彦御子神",
+        "若彦神",
+        "新比咩神",
+        "金凝神",
+        "比咩御子神"
+      ],
+      "benefits": [
+        "農業",
+        "水利",
+        "縁結び",
+        "商売繁盛",
+        "家内安全"
+      ],
+      "atmosphere": "世界最大級のカルデラを御神域とする火の国の鎮座地。楼門の朱が阿蘇の青空に映え、大地の鼓動が足裏から伝わる。",
+      "access": "JR豊肥本線・宮地駅から徒歩約10分",
+      "episode_ids": [],
+      "five_element": "火"
+    },
+    {
+      "id": "mishima_taisha",
+      "name": "三嶋大社",
+      "parent_shrine": null,
+      "location": {
+        "pref": "静岡県",
+        "city": "三島市",
+        "lat": 35.115,
+        "lng": 138.919
+      },
+      "main_deity": [
+        "大山祇命",
+        "積羽八重事代主神"
+      ],
+      "sub_deities": [],
+      "benefits": [
+        "縁結び",
+        "商売繁盛",
+        "五穀豊穣",
+        "武運長久",
+        "福徳開運"
+      ],
+      "atmosphere": "伊豆国の総社として源頼朝も戦勝を祈った神域は、富士山の伏流水が境内に湧き出し、清澄な水の気に包まれる。",
+      "access": "JR東海道本線・三島駅から徒歩約15分",
+      "episode_ids": [],
+      "five_element": "水"
+    },
+    {
+      "id": "asama_jinja_honsha",
+      "name": "富士山本宮浅間大社",
+      "parent_shrine": null,
+      "location": {
+        "pref": "静岡県",
+        "city": "富士宮市",
+        "lat": 35.227,
+        "lng": 138.617
+      },
+      "main_deity": [
+        "木花之佐久夜毘売命"
+      ],
+      "sub_deities": [],
+      "benefits": [
+        "縁結び",
+        "子宝安産",
+        "火難除け",
+        "水徳涵養",
+        "諸願成就"
+      ],
+      "atmosphere": "富士の霊峰を御神体とし、湧玉池の透き通った水が境内に満ちる。全国一万三千余の浅間神社の頂点に立つ、炎と水が共存する聖域。",
+      "access": "JR身延線・富士宮駅から徒歩約15分",
+      "episode_ids": [],
+      "five_element": "火"
+    },
+    {
+      "id": "isonokami_jingu",
+      "name": "石上神宮",
+      "parent_shrine": null,
+      "location": {
+        "pref": "奈良県",
+        "city": "天理市",
+        "lat": 34.597,
+        "lng": 135.854
+      },
+      "main_deity": [
+        "布都御魂大神"
+      ],
+      "sub_deities": [
+        "布留御魂大神",
+        "布都斯魂大神"
+      ],
+      "benefits": [
+        "武運長久",
+        "必勝",
+        "厄除け",
+        "健康長寿",
+        "縁結び"
+      ],
+      "atmosphere": "杉と檜の鎮守の森が山麓を覆い、鶏が神の使いとして境内を歩き回る。神剣が封じられた日本最古の神宮に、古代の剣気が今も漂う。",
+      "access": "JR桜井線・天理駅から徒歩約30分またはタクシー",
+      "episode_ids": [],
+      "five_element": "金"
+    },
+    {
+      "id": "kehi_jingu",
+      "name": "気比神宮",
+      "parent_shrine": null,
+      "location": {
+        "pref": "福井県",
+        "city": "敦賀市",
+        "lat": 35.649,
+        "lng": 136.062
+      },
+      "main_deity": [
+        "伊奢沙別命"
+      ],
+      "sub_deities": [
+        "仲哀天皇",
+        "神功皇后",
+        "応神天皇",
+        "玉姫命",
+        "武内宿禰命",
+        "比咩大神"
+      ],
+      "benefits": [
+        "食物・農業",
+        "縁結び",
+        "安産",
+        "海上安全",
+        "開運招福"
+      ],
+      "atmosphere": "日本三大木造大鳥居の一つが敦賀の夕空を背に立ち、北陸総鎮守の威厳を示す。日本海の塩風がまじった境内の空気は、古代の港の記憶を運ぶ。",
+      "access": "JR北陸本線・敦賀駅から徒歩約15分",
+      "episode_ids": [],
+      "five_element": "水"
+    },
+    {
+      "id": "oyama_jinja_kanazawa",
+      "name": "尾山神社",
+      "parent_shrine": null,
+      "location": {
+        "pref": "石川県",
+        "city": "金沢市",
+        "lat": 36.562,
+        "lng": 136.656
+      },
+      "main_deity": [
+        "前田利家"
+      ],
+      "sub_deities": [],
+      "benefits": [
+        "商売繁盛",
+        "縁結び",
+        "武勇",
+        "学問",
+        "開運招福"
+      ],
+      "atmosphere": "和漢洋折衷の神門にステンドグラスが輝き、加賀百万石の風雅と革新が同居する。金沢の空に溶ける色ガラスの光が、城下町の歴史を染め上げる。",
+      "access": "JR金沢駅からバスまたは徒歩約20分",
+      "episode_ids": [],
+      "five_element": "金"
+    },
+    {
+      "id": "izanagi_jingu",
+      "name": "伊弉諾神宮",
+      "parent_shrine": null,
+      "location": {
+        "pref": "兵庫県",
+        "city": "淡路市",
+        "lat": 34.454,
+        "lng": 134.833
+      },
+      "main_deity": [
+        "伊弉諾尊"
+      ],
+      "sub_deities": [
+        "伊弉冉尊"
+      ],
+      "benefits": [
+        "縁結び",
+        "夫婦円満",
+        "縁切り",
+        "国産み",
+        "開運招福"
+      ],
+      "atmosphere": "国生み神話の聖地・淡路島の中心に鎮まる創造神の宮。樹齢千年を超える夫婦大楠が根を絡め合い、天地の始まりの愛を今に語る。",
+      "access": "神戸淡路鳴門自動車道・津名一宮ICから車約5分",
+      "episode_ids": [],
+      "five_element": "土"
+    },
+    {
+      "id": "kotohira_gu",
+      "name": "金刀比羅宮",
+      "parent_shrine": null,
+      "location": {
+        "pref": "香川県",
+        "city": "仲多度郡琴平町",
+        "lat": 34.186,
+        "lng": 133.818
+      },
+      "main_deity": [
+        "大物主神"
+      ],
+      "sub_deities": [
+        "崇徳天皇"
+      ],
+      "benefits": [
+        "航海安全",
+        "漁業",
+        "縁結び",
+        "五穀豊穣",
+        "商売繁盛"
+      ],
+      "atmosphere": "讃岐富士を望む象頭山の中腹、785段の石段を登り切った先に広がる讃岐平野の絶景は、古来「さぬきのこんぴらさん」への信仰を支えた。",
+      "access": "JR土讃線・琴平駅から徒歩約20分",
+      "episode_ids": [],
+      "five_element": "水"
+    },
+    {
+      "id": "hikosan_jingu",
+      "name": "英彦山神宮",
+      "parent_shrine": null,
+      "location": {
+        "pref": "福岡県",
+        "city": "田川郡添田町",
+        "lat": 33.471,
+        "lng": 130.939
+      },
+      "main_deity": [
+        "正勝吾勝勝速日天之忍穂耳命"
+      ],
+      "sub_deities": [
+        "伊邪那岐命",
+        "伊邪那美命"
+      ],
+      "benefits": [
+        "武勇",
+        "航海安全",
+        "農業",
+        "学問",
+        "修験道護持"
+      ],
+      "atmosphere": "筑豊の霊峰・英彦山の深い山中に霧が立ち込め、修験道の道場として鍛えられた山岳の神気が今も登拝者を試す。",
+      "access": "JR日田英彦山線・添田駅からバス、または彦山駅から登山",
+      "episode_ids": [],
+      "five_element": "木"
+    },
+    {
+      "id": "naminoue_jinja",
+      "name": "波上宮",
+      "parent_shrine": null,
+      "location": {
+        "pref": "沖縄県",
+        "city": "那覇市",
+        "lat": 26.226,
+        "lng": 127.681
+      },
+      "main_deity": [
+        "伊弉冉尊",
+        "速玉男尊",
+        "事解男尊"
+      ],
+      "sub_deities": [],
+      "benefits": [
+        "縁結び",
+        "航海安全",
+        "国家安寧",
+        "家内安全",
+        "厄除け"
+      ],
+      "atmosphere": "断崖の上に鎮座し、眼下に広がる東シナ海の蒼さとともに那覇の街を見守る南国の総鎮守。潮風が朱色の社殿を絶えず清め続ける。",
+      "access": "那覇市内・波の上ビーチ隣接、那覇バスターミナルからバス約10分",
+      "episode_ids": [],
+      "five_element": "水"
+    },
+    {
+      "id": "hakodate_hachimangu",
+      "name": "函館八幡宮",
+      "parent_shrine": null,
+      "location": {
+        "pref": "北海道",
+        "city": "函館市",
+        "lat": 41.771,
+        "lng": 140.727
+      },
+      "main_deity": [
+        "誉田別命"
+      ],
+      "sub_deities": [
+        "息長足姫命",
+        "比咩大神"
+      ],
+      "benefits": [
+        "武運長久",
+        "縁結び",
+        "商売繁盛",
+        "航海安全",
+        "家内安全"
+      ],
+      "atmosphere": "函館山の山麓に鎮まり、津軽海峡を見渡す北辺の地で開拓民の祈りを受け止めてきた。函館の夜景を遠く背景に、北の大地の守護神が静かに立つ。",
+      "access": "市電・谷地頭電停から徒歩約10分",
+      "episode_ids": [],
+      "five_element": "金"
+    },
+    {
+      "id": "ise_jingu_naiku",
+      "name": "皇大神宮（伊勢神宮内宮）",
+      "parent_shrine": null,
+      "location": {
+        "pref": "三重県",
+        "city": "伊勢市",
+        "lat": 34.453,
+        "lng": 136.726
+      },
+      "main_deity": [
+        "天照大御神"
+      ],
+      "sub_deities": [],
+      "benefits": [
+        "国家安泰",
+        "五穀豊穣",
+        "開運招福",
+        "心願成就"
+      ],
+      "atmosphere": "厳かな神域に一歩足を踏み入れれば、神々の息吹と清らかな気が満ち、心洗われるような静寂に包まれます。",
+      "access": "近鉄伊勢市駅・宇治山田駅からバスで約20分",
+      "episode_ids": [],
+      "five_element": "火"
+    },
+    {
+      "id": "kamo_wakeikazuchi_jinja",
+      "name": "賀茂別雷神社（上賀茂神社）",
+      "parent_shrine": null,
+      "location": {
+        "pref": "京都府",
+        "city": "京都市北区",
+        "lat": 35.05,
+        "lng": 135.75
+      },
+      "main_deity": [
+        "賀茂別雷大神"
+      ],
+      "sub_deities": [],
+      "benefits": [
+        "厄除け",
+        "雷除け",
+        "方除け",
+        "電気産業守護"
+      ],
+      "atmosphere": "清らかな小川が流れる広大な境内は、古代の息吹を今に伝えるかのような静けさと優美さに満ちています。",
+      "access": "京都市営地下鉄北大路駅から市バスで約15分",
+      "episode_ids": [],
+      "five_element": "水"
+    },
+    {
+      "id": "suwa_taisha",
+      "name": "諏訪大社",
+      "parent_shrine": null,
+      "location": {
+        "pref": "長野県",
+        "city": "諏訪市",
+        "lat": 35.986,
+        "lng": 138.109
+      },
+      "main_deity": [
+        "建御名方神",
+        "八坂刀売神"
+      ],
+      "sub_deities": [],
+      "benefits": [
+        "五穀豊穣",
+        "家内安全",
+        "武道成就",
+        "産業繁栄"
+      ],
+      "atmosphere": "四宮からなる壮大な神社は、諏訪湖畔の自然と一体となり、古来よりの信仰の深さを感じさせます。",
+      "access": "JR上諏訪駅からバスで約15分（上社本宮）",
+      "episode_ids": [],
+      "five_element": "水"
+    },
+    {
+      "id": "kamado_jinja",
+      "name": "竈門神社",
+      "parent_shrine": null,
+      "location": {
+        "pref": "福岡県",
+        "city": "太宰府市",
+        "lat": 33.504,
+        "lng": 130.569
+      },
+      "main_deity": [
+        "玉依姫命",
+        "応神天皇",
+        "神功皇后"
+      ],
+      "sub_deities": [],
+      "benefits": [
+        "縁結び",
+        "方除け",
+        "厄除け",
+        "開運"
+      ],
+      "atmosphere": "宝満山の麓に位置し、豊かな自然に囲まれた静寂な境内は、清らかな気が満ちる隠れた聖地です。",
+      "access": "西鉄太宰府駅からコミュニティバス「まほろば号」で約10分",
+      "episode_ids": [],
+      "five_element": "木"
+    },
+    {
+      "id": "shiogama_jinja",
+      "name": "鹽竈神社",
+      "parent_shrine": null,
+      "location": {
+        "pref": "宮城県",
+        "city": "塩竈市",
+        "lat": 38.384,
+        "lng": 141.026
+      },
+      "main_deity": [
+        "鹽土老翁神"
+      ],
+      "sub_deities": [
+        "武甕槌神",
+        "経津主神"
+      ],
+      "benefits": [
+        "海上安全",
+        "大漁満足",
+        "安産",
+        "厄除け"
+      ],
+      "atmosphere": "高台から松島湾を見下ろす絶景の地にあり、海の神の広大な恩恵を感じさせる清らかな空間です。",
+      "access": "JR本塩釜駅から徒歩約15分",
+      "episode_ids": [],
+      "five_element": "水"
+    },
+    {
+      "id": "nikko_futarasan_jinja",
+      "name": "日光二荒山神社",
+      "parent_shrine": null,
+      "location": {
+        "pref": "栃木県",
+        "city": "日光市",
+        "lat": 36.756,
+        "lng": 139.598
+      },
+      "main_deity": [
+        "二荒山大神（大己貴命",
+        "田心姫命",
+        "味耜高彦根命）"
+      ],
+      "sub_deities": [],
+      "benefits": [
+        "縁結び",
+        "家内安全",
+        "子孫繁栄",
+        "交通安全"
+      ],
+      "atmosphere": "世界遺産の深い森に抱かれ、神橋を渡れば清らかな水と荘厳な自然が調和した神秘的な聖域が広がります。",
+      "access": "JR日光駅・東武日光駅からバスで約10分",
+      "episode_ids": [],
+      "five_element": "木"
+    },
+    {
+      "id": "nangoo_taisha",
+      "name": "南宮大社",
+      "parent_shrine": null,
+      "location": {
+        "pref": "岐阜県",
+        "city": "不破郡垂井町",
+        "lat": 35.399,
+        "lng": 136.564
+      },
+      "main_deity": [
+        "金山彦命"
+      ],
+      "sub_deities": [],
+      "benefits": [
+        "鉱山守護",
+        "金属業繁栄",
+        "商売繁盛",
+        "開運招福"
+      ],
+      "atmosphere": "深く静かな森の中に佇む朱色の社殿は、金属の神の威厳と、古くからの信仰の重みを伝えます。",
+      "access": "JR垂井駅から徒歩約20分",
+      "episode_ids": [],
+      "five_element": "金"
+    },
+    {
+      "id": "kumano_hongu_taisha",
+      "name": "熊野本宮大社",
+      "parent_shrine": null,
+      "location": {
+        "pref": "和歌山県",
+        "city": "田辺市",
+        "lat": 33.84,
+        "lng": 135.772
+      },
+      "main_deity": [
+        "家都美御子大神（素盞嗚大神）"
+      ],
+      "sub_deities": [],
+      "benefits": [
+        "家内安全",
+        "交通安全",
+        "病気平癒",
+        "開運厄除"
+      ],
+      "atmosphere": "熊野古道の終着点に位置し、深い山々に抱かれた境内は、清らかな水の流れと共に神聖な空気が漂います。",
+      "access": "JR紀伊田辺駅からバスで約2時間",
+      "episode_ids": [],
+      "five_element": "木"
+    },
+    {
+      "id": "oomishimajinja",
+      "name": "大山祇神社",
+      "parent_shrine": null,
+      "location": {
+        "pref": "愛媛県",
+        "city": "今治市",
+        "lat": 34.249,
+        "lng": 132.992
+      },
+      "main_deity": [
+        "大山積神"
+      ],
+      "sub_deities": [],
+      "benefits": [
+        "海上安全",
+        "山林守護",
+        "武運長久",
+        "家内安全"
+      ],
+      "atmosphere": "樹齢数千年の大楠がそびえる境内は、太古の森の息吹を感じさせ、厳かで清々しい空気に満ちています。",
+      "access": "JR今治駅からバスで約1時間",
+      "episode_ids": [],
+      "five_element": "木"
+    },
+    {
+      "id": "ooya_hikawa_jinja",
+      "name": "大宮氷川神社",
+      "parent_shrine": null,
+      "location": {
+        "pref": "埼玉県",
+        "city": "さいたま市大宮区",
+        "lat": 35.91,
+        "lng": 139.618
+      },
+      "main_deity": [
+        "須佐之男命"
+      ],
+      "sub_deities": [
+        "大己貴命",
+        "奇稲田姫命"
+      ],
+      "benefits": [
+        "縁結び",
+        "家内安全",
+        "商売繁盛",
+        "病気平癒"
+      ],
+      "atmosphere": "大宮の古木が連なる参道、川の神が流す清らかな水音が心を洗う。",
+      "access": "JR各線 大宮駅から徒歩20分",
+      "episode_ids": [],
+      "five_element": "水"
+    },
+    {
+      "id": "ooma_hiko_jinja",
+      "name": "大麻比古神社",
+      "parent_shrine": null,
+      "location": {
+        "pref": "徳島県",
+        "city": "板野郡上板町",
+        "lat": 34.083,
+        "lng": 134.383
+      },
+      "main_deity": [
+        "大麻比古神"
+      ],
+      "sub_deities": [
+        "天太玉命"
+      ],
+      "benefits": [
+        "農業豊作",
+        "家内安全",
+        "健康長寿",
+        "心願成就"
+      ],
+      "atmosphere": "吉野川の恵みに育まれた田園、麻の神が紡ぐ豊かな大地の調べ。",
+      "access": "JR牟岐線 墨俣駅から徒歩20分",
+      "episode_ids": [],
+      "five_element": "土"
+    },
+    {
+      "id": "tarumae_jinja",
+      "name": "樽前神社",
+      "parent_shrine": null,
+      "location": {
+        "pref": "北海道",
+        "city": "千歳市",
+        "lat": 42.833,
+        "lng": 141.517
+      },
+      "main_deity": [
+        "大山祇神"
+      ],
+      "sub_deities": [
+        "火産霊神"
+      ],
+      "benefits": [
+        "火防",
+        "産業繁盛",
+        "健康長寿",
+        "開運"
+      ],
+      "atmosphere": "樽前山の噴煙に守られ、北の大地に宿る火の神の温もり。",
+      "access": "JR千歳線 新千歳空港駅からバス30分",
+      "episode_ids": [],
+      "five_element": "火"
+    },
+    {
+      "id": "tatsue_jinja",
+      "name": "龍江神社",
+      "parent_shrine": null,
+      "location": {
+        "pref": "青森県",
+        "city": "弘前市",
+        "lat": 40.6,
+        "lng": 140.467
+      },
+      "main_deity": [
+        "龍江大神"
+      ],
+      "sub_deities": [
+        "素戔嗚尊"
+      ],
+      "benefits": [
+        "雨乞い",
+        "農業豊作",
+        "家内安全",
+        "厄除け"
+      ],
+      "atmosphere": "津軽の雪原に佇む龍の社、冷たい風が運ぶ古い信仰の息吹。",
+      "access": "JR奥羽本線 弘前駅から車15分",
+      "episode_ids": [],
+      "five_element": "水"
+    },
+    {
+      "id": "otori_jinja",
+      "name": "大鳥神社",
+      "parent_shrine": null,
+      "location": {
+        "pref": "福島県",
+        "city": "大鳥郡陸前高田市",
+        "lat": 38.367,
+        "lng": 141.15
+      },
+      "main_deity": [
+        "天香香背男命"
+      ],
+      "sub_deities": [
+        "天鈿女命"
+      ],
+      "benefits": [
+        "家内安全",
+        "交通安全",
+        "学業成就",
+        "産業繁盛"
+      ],
+      "atmosphere": "三陸の海岸に響く波音、大鳥の神が空を駆ける力強さ。",
+      "access": "JR気仙沼線 陸前高田駅から徒歩20分",
+      "episode_ids": [],
+      "five_element": "金"
+    },
+    {
+      "id": "kibitsu_jinja",
+      "name": "吉備津神社",
+      "parent_shrine": null,
+      "location": {
+        "pref": "岡山県",
+        "city": "岡山市北区",
+        "lat": 34.662,
+        "lng": 133.917
+      },
+      "main_deity": [
+        "吉備津彦命"
+      ],
+      "sub_deities": [
+        "大吉備津彦命"
+      ],
+      "benefits": [
+        "勝負運",
+        "家内安全",
+        "健康長寿",
+        "厄除け"
+      ],
+      "atmosphere": "吉備の平原に広がる古瓦葺き、鬼退治の英雄が守る平和の地。",
+      "access": "JR山陽本線 岡山駅からバス20分",
+      "episode_ids": [],
+      "five_element": "金"
+    },
+    {
+      "id": "niyu_jinja",
+      "name": "丹生神社",
+      "parent_shrine": null,
+      "location": {
+        "pref": "福井県",
+        "city": "三方郡美浜町",
+        "lat": 35.5,
+        "lng": 135.967
+      },
+      "main_deity": [
+        "丹生明神"
+      ],
+      "sub_deities": [
+        "若狭彦命"
+      ],
+      "benefits": [
+        "農業豊作",
+        "海の安全",
+        "家内安全",
+        "心願成就"
+      ],
+      "atmosphere": "若狭湾の海風に洗われ、丹生の神が育む豊饒の海と山。",
+      "access": "JR小浜線 美浜駅から徒歩15分",
+      "episode_ids": [],
+      "five_element": "水"
+    },
+    {
+      "id": "samukawa_jinja",
+      "name": "寒川神社",
+      "parent_shrine": null,
+      "location": {
+        "pref": "神奈川県",
+        "city": "高座郡寒川町",
+        "lat": 35.452,
+        "lng": 139.367
+      },
+      "main_deity": [
+        "寒川比古命",
+        "寒川比女命"
+      ],
+      "sub_deities": [
+        "大己貴命"
+      ],
+      "benefits": [
+        "交通安全",
+        "家内安全",
+        "商売繁盛",
+        "厄除け"
+      ],
+      "atmosphere": "相模の里に広がる神木の森、寒川の神が流す清流の調べ。",
+      "access": "JR相模線 宮山駅から徒歩20分",
+      "episode_ids": [],
+      "five_element": "水"
+    },
+    {
+      "id": "kashima_jingu_saga",
+      "name": "佐賀縣一之宮 祐徳稲荷神社",
+      "parent_shrine": null,
+      "location": {
+        "pref": "佐賀県",
+        "city": "鹿島市",
+        "lat": 33.0,
+        "lng": 130.117
+      },
+      "main_deity": [
+        "宇迦之御魂大神"
+      ],
+      "sub_deities": [
+        "大宮能売大神"
+      ],
+      "benefits": [
+        "商売繁盛",
+        "五穀豊穣",
+        "家内安全",
+        "学業成就"
+      ],
+      "atmosphere": "肥前の田園に佇む朱塗りの楼門、稲荷の狐が囁く豊作の約束。",
+      "access": "JR長崎本線 肥前山口駅からバス10分",
+      "episode_ids": [],
+      "five_element": "土"
+    },
+    {
+      "id": "hachiman_gu_yamaguchi",
+      "name": "山口縣一之宮 石鎚神社",
+      "parent_shrine": null,
+      "location": {
+        "pref": "山口県",
+        "city": "萩市",
+        "lat": 34.4,
+        "lng": 131.383
+      },
+      "main_deity": [
+        "石鎚大神"
+      ],
+      "sub_deities": [
+        "大山祇神"
+      ],
+      "benefits": [
+        "山岳守護",
+        "健康長寿",
+        "心願成就",
+        "厄除け"
+      ],
+      "atmosphere": "萩の山間に響く風の調べ、石鎚の峰が宿す山の精霊。",
+      "access": "JR山陰本線 東萩駅から車20分",
+      "episode_ids": [],
+      "five_element": "土"
+    },
+    {
+      "id": "ise_naiku",
+      "name": "伊勢神宮内宮",
+      "parent_shrine": null,
+      "location": {
+        "pref": "三重県",
+        "city": "伊勢市",
+        "lat": 34.439,
+        "lng": 136.725
+      },
+      "main_deity": [
+        "天照大御神"
+      ],
+      "sub_deities": [],
+      "benefits": [
+        "国家安泰",
+        "開運招福",
+        "交通安全"
+      ],
+      "atmosphere": "荘厳で清らかな空気に包まれる聖地。",
+      "access": "近鉄宇治山田駅からバスで約15分",
+      "episode_ids": [],
+      "five_element": "火"
+    },
+    {
+      "id": "hakone_jinja",
+      "name": "箱根神社",
+      "parent_shrine": null,
+      "location": {
+        "pref": "神奈川県",
+        "city": "足柄下郡箱根町",
+        "lat": 35.215,
+        "lng": 139.025
+      },
+      "main_deity": [
+        "瓊瓊杵尊"
+      ],
+      "sub_deities": [
+        "木花開耶姫命",
+        "彦火火出見尊"
+      ],
+      "benefits": [
+        "交通安全",
+        "縁結び",
+        "厄除け"
+      ],
+      "atmosphere": "湖畔に佇む静かな神聖な佇まい。",
+      "access": "箱根湯本駅からバスで約40分",
+      "episode_ids": [],
+      "five_element": "水"
+    },
+    {
+      "id": "chichibu_jinja",
+      "name": "秩父神社",
+      "parent_shrine": null,
+      "location": {
+        "pref": "埼玉県",
+        "city": "秩父市",
+        "lat": 35.994,
+        "lng": 139.086
+      },
+      "main_deity": [
+        "八意思兼命"
+      ],
+      "sub_deities": [
+        "天之御中主神",
+        "親都比売神"
+      ],
+      "benefits": [
+        "厄除け",
+        "開運招福",
+        "学業成就"
+      ],
+      "atmosphere": "古の祭りと共に息づく歴史の拠点。",
+      "access": "秩父鉄道秩父駅から徒歩約3分",
+      "episode_ids": [],
+      "five_element": "土"
+    },
+    {
+      "id": "yutoku_inari",
+      "name": "祐徳稲荷神社",
+      "parent_shrine": null,
+      "location": {
+        "pref": "佐賀県",
+        "city": "鹿島市",
+        "lat": 33.054,
+        "lng": 130.099
+      },
+      "main_deity": [
+        "宇迦之御魂神"
+      ],
+      "sub_deities": [
+        "大宮能売神",
+        "佐田彦大神"
+      ],
+      "benefits": [
+        "商売繁盛",
+        "家内安全",
+        "開運招福"
+      ],
+      "atmosphere": "朱塗りの社殿が彩を添える華やかな神域。",
+      "access": "JR鹿島駅からバスで約10分",
+      "episode_ids": [],
+      "five_element": "火"
+    },
+    {
+      "id": "kumano_nachi",
+      "name": "熊野那智大社",
+      "parent_shrine": null,
+      "location": {
+        "pref": "和歌山県",
+        "city": "東牟婁郡那智勝浦町",
+        "lat": 33.688,
+        "lng": 135.907
+      },
+      "main_deity": [
+        "熊野夫須美大神"
+      ],
+      "sub_deities": [],
+      "benefits": [
+        "縁結び",
+        "交通安全",
+        "健康長寿"
+      ],
+      "atmosphere": "壮大な滝に抱かれた神秘の聖域。",
+      "access": "JR紀伊勝浦駅からバスで約30分",
+      "episode_ids": [],
+      "five_element": "水"
+    },
+    {
+      "id": "yasukuni_jinja",
+      "name": "靖国神社",
+      "parent_shrine": null,
+      "location": {
+        "pref": "東京都",
+        "city": "千代田区",
+        "lat": 35.694,
+        "lng": 139.743
+      },
+      "main_deity": [
+        "英霊"
+      ],
+      "sub_deities": [],
+      "benefits": [
+        "国家安泰",
+        "武運長久",
+        "鎮魂"
+      ],
+      "atmosphere": "歴史の重みを感じさせる厳粛な空間。",
+      "access": "JR市ヶ谷駅から徒歩約10分",
+      "episode_ids": [],
+      "five_element": "金"
+    },
+    {
+      "id": "futarasan_jinja",
+      "name": "二荒山神社",
+      "parent_shrine": null,
+      "location": {
+        "pref": "栃木県",
+        "city": "日光市",
+        "lat": 36.759,
+        "lng": 139.599
+      },
+      "main_deity": [
+        "大己貴命",
+        "田心姫命",
+        "味耜高彦根命"
+      ],
+      "sub_deities": [],
+      "benefits": [
+        "厄除け",
+        "縁結び",
+        "開運招福"
+      ],
+      "atmosphere": "清らかな自然に包まれた静けさの中の神域。",
+      "access": "東武日光駅からバスで約10分",
+      "episode_ids": [],
+      "five_element": "木"
+    },
+    {
+      "id": "tsurugaoka_hachimangu",
+      "name": "鶴岡八幡宮",
+      "parent_shrine": null,
+      "location": {
+        "pref": "神奈川県",
+        "city": "鎌倉市",
+        "lat": 35.319,
+        "lng": 139.55
+      },
+      "main_deity": [
+        "応神天皇"
+      ],
+      "sub_deities": [
+        "比売神",
+        "神功皇后"
+      ],
+      "benefits": [
+        "開運招福",
+        "交通安全",
+        "厄除け"
+      ],
+      "atmosphere": "歴史と自然が交錯する神々しい空間。",
+      "access": "JR鎌倉駅から徒歩約10分",
+      "episode_ids": [],
+      "five_element": "木"
+    },
+    {
+      "id": "taga_taisha",
+      "name": "多賀大社",
+      "parent_shrine": null,
+      "location": {
+        "pref": "滋賀県",
+        "city": "犬上郡多賀町",
+        "lat": 35.229,
+        "lng": 136.258
+      },
+      "main_deity": [
+        "伊邪那岐命",
+        "伊邪那美命"
+      ],
+      "sub_deities": [],
+      "benefits": [
+        "延命長寿",
+        "縁結び",
+        "厄除け"
+      ],
+      "atmosphere": "悠久の歴史に育まれた豊かな自然の聖域。",
+      "access": "JR彦根駅からバスで約15分",
+      "episode_ids": [],
+      "five_element": "金"
+    }
+  ]
+}
