@@ -99,6 +99,63 @@ def _build_share_digest(title: str, headline: str, closing: str) -> str:
     return "\n".join(lines)
 
 
+def _render_text_copy_button(text: str, key: str):
+    """単一テキスト用のクリップボードコピーボタン（チャット回答などに使用）。
+
+    `_render_share_buttons` のフル機能版とは別の、軽量・コンパクトなコピー専用ボタン。
+    各チャット回答の直後に置くことで「この回答だけコピーしたい」ニーズに対応する。
+    """
+    import json as _json_copy
+    text_json = _json_copy.dumps(text or "", ensure_ascii=False)
+    html_src = f"""
+<div style="text-align:right; margin:2px 0 4px;">
+  <button id="btn_copy_one_{key}" style="
+    display:inline-block; padding:4px 12px; border-radius:4px;
+    font-size:0.78em; cursor:pointer;
+    border: 1px solid #2A2A2A; color:#F0EBE0; background:#1A1A1A;
+  ">📋 コピー</button>
+  <span id="msg_one_{key}" style="color:#7CB87C; font-size:0.75em; margin-left:6px;"></span>
+</div>
+<script>
+(function() {{
+  var text = {text_json};
+  var btn = document.getElementById('btn_copy_one_{key}');
+  if (!btn) return;
+  btn.addEventListener('click', function() {{
+    if (navigator.clipboard && navigator.clipboard.writeText) {{
+      navigator.clipboard.writeText(text).then(function() {{
+        showMsg('✓ コピー完了');
+      }}).catch(function() {{
+        fallback();
+      }});
+    }} else {{
+      fallback();
+    }}
+  }});
+  function fallback() {{
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.left = '-9999px';
+    document.body.appendChild(ta);
+    ta.select();
+    try {{ document.execCommand('copy'); showMsg('✓ コピー完了'); }}
+    catch(e) {{ showMsg('⚠ コピー失敗'); }}
+    document.body.removeChild(ta);
+  }}
+  function showMsg(m) {{
+    var el = document.getElementById('msg_one_{key}');
+    if (el) {{
+      el.textContent = m;
+      setTimeout(function() {{ el.textContent = ''; }}, 2000);
+    }}
+  }}
+}})();
+</script>
+"""
+    _stc.html(html_src, height=40)
+
+
 def _render_share_buttons(share_text: str, key_suffix: str, pdf_html: str = "",
                           digest: str = ""):
     """共有ボタン群を描画: LINE / ネイティブ共有 / コピー / PDF"""
@@ -2726,12 +2783,13 @@ def render_aisho_input_page():
                 placeholder="例: 娘、秘書、下請け、弟子",
                 key="aisho_role_b_input",
             )
-        relationship_text = st.text_input(
+        relationship_text = st.text_area(
             "二人の関係（自由入力）",
             value=st.session_state.get("aisho_relationship_text", ""),
             placeholder="例: 父親と娘、元請けと下請け、ホステスと客、師匠と弟子……何でもOK",
             key="aisho_relationship_text_input",
             help="ここに書けば上のボタン選択より優先されます。プリセットに無い特殊な関係に最適。",
+            height=80,
         )
         st.session_state.aisho_role_a = role_a
         st.session_state.aisho_role_b = role_b
@@ -3051,12 +3109,13 @@ def render_tarot_input_page():
 </div>
 """, unsafe_allow_html=True)
 
-    question = st.text_input(
+    question = st.text_area(
         "あなたの質問",
         value="",
         placeholder="例: 転職すべきか迷っています",
         key="tarot_q_input",
-        label_visibility="collapsed"
+        label_visibility="collapsed",
+        height=80
     )
 
     st.markdown("""
@@ -3201,7 +3260,7 @@ def render_tarot_deepen_page():
                 st.rerun()
 
         # 自由入力
-        free = st.text_input("自分の言葉で答える", placeholder="自由に入力", key=f"deepen_free_{len(history)}", label_visibility="collapsed")
+        free = st.text_area("自分の言葉で答える", placeholder="自由に入力", key=f"deepen_free_{len(history)}", label_visibility="collapsed", height=80)
         if free:
             if st.button("💬 送信", key=f"btn_deepen_free_{len(history)}"):
                 history.append({
@@ -3676,7 +3735,7 @@ def render_tarot_result_page():
                 f'<div style="text-align:center; color:#BFA350; font-size:0.85em; margin-bottom:5px;">{pos_name}</div>',
                 unsafe_allow_html=True
             )
-            render_tarot_card_simple(cards[i])
+            render_tarot_card_simple(cards[i], dl_key=f"main_{i}")
 
     render_gold_divider()
 
@@ -3755,7 +3814,7 @@ def _render_tarot_chat(bundle, question, spread_info, cards, initial_result):
         st.session_state.tarot_chat_history = []
 
     # 過去のチャットを表示（カード付き）
-    for chat in st.session_state.tarot_chat_history:
+    for _idx_hist, chat in enumerate(st.session_state.tarot_chat_history):
         with st.chat_message("user", avatar="🙋"):
             st.write(chat["question"])
         with st.chat_message("assistant", avatar="🔮"):
@@ -3764,7 +3823,7 @@ def _render_tarot_chat(bundle, question, spread_info, cards, initial_result):
             if extra_card:
                 c1, c2 = st.columns([1, 3])
                 with c1:
-                    render_tarot_card_simple(extra_card)
+                    render_tarot_card_simple(extra_card, dl_key=f"chat_hist_{_idx_hist}")
                 with c2:
                     st.write(chat["answer"])
             else:
@@ -3773,9 +3832,9 @@ def _render_tarot_chat(bundle, question, spread_info, cards, initial_result):
     # 入力欄
     tc_col1, tc_col2 = st.columns([5, 1])
     with tc_col1:
-        follow_up = st.text_input(
+        follow_up = st.text_area(
             "質問", placeholder="例: 恋愛について もう1枚引いて",
-            key="tarot_chat_input", label_visibility="collapsed"
+            key="tarot_chat_input", label_visibility="collapsed", height=80
         )
     with tc_col2:
         send_clicked = st.button("📨", key="btn_tarot_chat_send")
@@ -3848,9 +3907,10 @@ def _render_tarot_chat(bundle, question, spread_info, cards, initial_result):
             # カードと回答を横並びで表示
             c1, c2 = st.columns([1, 3])
             with c1:
-                render_tarot_card_simple(extra_card)
+                render_tarot_card_simple(extra_card, dl_key=f"chat_new_{len(st.session_state.tarot_chat_history)}")
             with c2:
                 st.write(answer)
+                _render_text_copy_button(answer, key=f"tarot_chat_new_{len(st.session_state.tarot_chat_history)}")
 
         # 履歴に追加
         st.session_state.tarot_chat_history.append({
@@ -3887,9 +3947,9 @@ def _render_general_chat(bundle, course, results):
 
     gc_col1, gc_col2 = st.columns([5, 1])
     with gc_col1:
-        follow_up = st.text_input(
+        follow_up = st.text_area(
             "質問", placeholder="例: 過去一番運が悪かった時期は？",
-            key="general_chat_input", label_visibility="collapsed"
+            key="general_chat_input", label_visibility="collapsed", height=80
         )
     with gc_col2:
         send_clicked = st.button("📨", key="btn_general_send")
@@ -3938,6 +3998,7 @@ def _render_general_chat(bundle, course, results):
                 except Exception:
                     answer = "ごめんね、今ちょっと集中できなくて…もう一度聞いてもらえる？"
             st.write(answer)
+            _render_text_copy_button(answer, key=f"general_chat_new_{len(st.session_state.general_chat_history)}")
 
         st.session_state.general_chat_history.append({
             "question": follow_up,
@@ -3973,9 +4034,9 @@ def _render_aisho_chat(bundle1, bundle2, result):
 
     ac_col1, ac_col2 = st.columns([5, 1])
     with ac_col1:
-        follow_up = st.text_input(
+        follow_up = st.text_area(
             "質問", placeholder="例: ケンカしちゃうけどうまく折り合いつけたい",
-            key="aisho_chat_input", label_visibility="collapsed"
+            key="aisho_chat_input", label_visibility="collapsed", height=80
         )
     with ac_col2:
         send_clicked = st.button("📨", key="btn_aisho_send")
@@ -4023,6 +4084,7 @@ def _render_aisho_chat(bundle1, bundle2, result):
                 except Exception:
                     answer = "ごめんね、今ちょっと集中できなくて…もう一度聞いてもらえる？"
             st.write(answer)
+            _render_text_copy_button(answer, key=f"aisho_chat_new_{len(st.session_state.aisho_chat_history)}")
 
         st.session_state.aisho_chat_history.append({
             "question": follow_up,
@@ -4057,9 +4119,9 @@ def _render_ura_chat(bundle):
 
     uc_col1, uc_col2 = st.columns([5, 1])
     with uc_col1:
-        follow_up = st.text_input(
+        follow_up = st.text_area(
             "質問", placeholder="例: この人の弱点は？ / 口説き方は？",
-            key="ura_chat_input", label_visibility="collapsed"
+            key="ura_chat_input", label_visibility="collapsed", height=80
         )
     with uc_col2:
         send_clicked = st.button("📨", key="btn_ura_send")
@@ -4097,6 +4159,7 @@ def _render_ura_chat(bundle):
                 except Exception:
                     answer = "ごめんね、今ちょっと集中できなくて…もう一度聞いてもらえる？"
             st.write(answer)
+            _render_text_copy_button(answer, key=f"ura_chat_new_{len(st.session_state.ura_chat_history)}")
 
         st.session_state.ura_chat_history.append({
             "question": follow_up,
@@ -4138,9 +4201,9 @@ def _render_theme_chat(bundle, theme_key, theme_data):
 
     th_col1, th_col2 = st.columns([5, 1])
     with th_col1:
-        follow_up = st.text_input(
+        follow_up = st.text_area(
             "質問", placeholder=f"例: {theme_label}で気をつけることは？",
-            key=f"theme_chat_input_{theme_key}", label_visibility="collapsed"
+            key=f"theme_chat_input_{theme_key}", label_visibility="collapsed", height=80
         )
     with th_col2:
         send_clicked = st.button("📨", key=f"btn_theme_chat_send_{theme_key}")
@@ -4181,6 +4244,7 @@ def _render_theme_chat(bundle, theme_key, theme_data):
                 except Exception:
                     answer = "ごめんね、今ちょっと集中できなくて…もう一度聞いてもらえる？"
             st.write(answer)
+            _render_text_copy_button(answer, key=f"theme_chat_new_{theme_key}_{len(st.session_state[chat_key])}")
 
         st.session_state[chat_key].append({
             "question": follow_up,

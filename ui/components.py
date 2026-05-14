@@ -443,9 +443,17 @@ SUIT_SYMBOLS = {
     "wands": "🪄", "cups": "🏆", "swords": "⚔️", "pentacles": "💰",
 }
 
-def render_tarot_card_simple(card):
-    """タロットカード1枚の表面をシンプルに表示（対話型タロット用）"""
+def render_tarot_card_simple(card, dl_key: str = ""):
+    """タロットカード1枚の表面をシンプルに表示（対話型タロット用）
+
+    Args:
+        card: タロットカードオブジェクト
+        dl_key: ダウンロードボタンの key 接尾辞。指定された場合、画像下に
+                「📥 画像を保存」ボタンを表示する（カード画像が存在する場合のみ）。
+                空文字列なら従来通りボタンなし。
+    """
     import os
+    import io as _io
     from PIL import Image
 
     pos_text = "逆位置" if card.is_reversed else "正位置"
@@ -454,6 +462,7 @@ def render_tarot_card_simple(card):
     # カード画像を探す
     img_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), "data", "tarot_images")
     img_found = False
+    _saved_img = None  # ダウンロード用に保持
 
     # image_keyから画像を探す
     if card.image_key:
@@ -464,6 +473,27 @@ def render_tarot_card_simple(card):
                 img = img.rotate(180)
             st.image(img, width="stretch")
             img_found = True
+            _saved_img = img
+
+    # ダウンロードボタン（画像あり + dl_key 指定時のみ）
+    if img_found and dl_key and _saved_img is not None:
+        try:
+            buf = _io.BytesIO()
+            _saved_img.convert("RGB").save(buf, format="JPEG", quality=90)
+            buf.seek(0)
+            safe_name = (card.card_name or "card").replace(" ", "_").replace("/", "_")
+            pos_suffix = "_reversed" if card.is_reversed else ""
+            filename = f"tarot_{safe_name}{pos_suffix}.jpg"
+            st.download_button(
+                label="📥 画像を保存",
+                data=buf.getvalue(),
+                file_name=filename,
+                mime="image/jpeg",
+                key=f"dl_tarot_{dl_key}",
+                use_container_width=True,
+            )
+        except Exception:
+            pass
 
     # 画像がない場合（小アルカナ等）→ スートシンボルで表示
     if not img_found:
