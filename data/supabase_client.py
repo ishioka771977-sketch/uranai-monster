@@ -291,8 +291,19 @@ def record_divination(
     customer_name: str,
     course_name: str,
     divination_types: Optional[list[str]] = None,
+    result_json: Optional[dict] = None,
+    card_data_json: Optional[list[dict]] = None,
+    bundle_snapshot_json: Optional[dict] = None,
 ) -> Optional[dict]:
-    """鑑定を1件記録。customerの last_divined / divined_count はトリガーで自動更新。"""
+    """鑑定を1件記録。customerの last_divined / divined_count はトリガーで自動更新。
+
+    Phase 1（2026-05-15）追加: 鑑定結果の永続化引数:
+        result_json: AI生成鑑定結果（headline/reading/closing 等）の全文 dict
+        card_data_json: タロットカード等の引き結果（list of dict）
+        bundle_snapshot_json: 鑑定時点の DivinationBundle スナップショット
+        いずれも None なら payload に含めず、既存互換性を維持。
+        DB側のカラムは JSONB（migration_2026_05_15_result_persistence 適用済み前提）。
+    """
     client = get_supabase_client()
     uid = get_user_id()
     if client is None or uid is None:
@@ -304,6 +315,13 @@ def record_divination(
         "course_name": course_name,
         "divination_types": divination_types or [],
     }
+    # Phase 1: None でないもののみ含める（マイグレーション未適用の旧環境互換）
+    if result_json is not None:
+        payload["result_json"] = result_json
+    if card_data_json is not None:
+        payload["card_data_json"] = card_data_json
+    if bundle_snapshot_json is not None:
+        payload["bundle_snapshot_json"] = bundle_snapshot_json
     payload = {k: v for k, v in payload.items() if v is not None}
     try:
         res = client.table("divination_history").insert(payload).execute()
