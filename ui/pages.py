@@ -99,6 +99,23 @@ def _build_share_digest(title: str, headline: str, closing: str) -> str:
     return "\n".join(lines)
 
 
+def render_back_button(target_page: str = "top", label: str = "← 戻る", key: str = ""):
+    """共通戻るボタン（Phase 4、2026-05-15 くろたん指令）。
+
+    各ページの上部に配置することで、ブラウザの戻るボタンに依存せずに
+    アプリ内導線で画面遷移できるようにする。
+    Streamlit のブラウザ戻る = セッション消滅、を回避するのが目的。
+
+    Args:
+        target_page: 戻り先の page 識別子（デフォルト "top"）
+        label: ボタンラベル
+        key: Streamlit ウィジェットの一意キーサフィックス
+    """
+    if st.button(label, key=f"back_btn_{key}", use_container_width=False):
+        st.session_state.page = target_page
+        st.rerun()
+
+
 def _render_text_copy_button(text: str, key: str):
     """単一テキスト用のクリップボードコピーボタン（チャット回答などに使用）。
 
@@ -2220,6 +2237,7 @@ def render_generating_theme_page():
 # ============================================================
 def render_theme_result_page():
     """テーマ別鑑定の結果画面"""
+    render_back_button(target_page="top", key="theme_result")
     bundle = st.session_state.bundle
     theme_key = st.session_state.get("_current_theme", "love")
     theme_data = st.session_state.get("theme_results", {}).get(theme_key, {})
@@ -2306,6 +2324,7 @@ def render_theme_result_page():
 # ============================================================
 def render_result_page():
     """結果画面: 単一コースまたはフルコースのタブ表示"""
+    render_back_button(target_page="top", key="result")
     bundle = st.session_state.bundle
     course = st.session_state.selected_course
     results = st.session_state.course_results
@@ -3020,6 +3039,7 @@ def render_aisho_loading_page():
 # ============================================================
 def render_aisho_result_page():
     """相性鑑定 結果表示（関係性対応版）"""
+    render_back_button(target_page="top", key="aisho_result")
     from ui.components import render_aisho_result
     from core.aisho_scoring import RELATIONSHIP_CATEGORIES
 
@@ -3748,6 +3768,7 @@ def render_tarot_generating_page():
 
 def render_tarot_result_page():
     """対話型タロット: 鑑定結果表示"""
+    render_back_button(target_page="top", key="tarot_result")
     bundle = st.session_state.tarot_bundle
     question = st.session_state.tarot_question
     spread_info = st.session_state.tarot_spread
