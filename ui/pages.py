@@ -2032,12 +2032,47 @@ def _start_course(course: str):
     st.rerun()
 
 
-def _record_history(course_name: str, types: list | None = None):
+def _bundle_to_snapshot(bundle) -> Optional[dict]:
+    """DivinationBundle を JSON 化（dataclasses.asdict 経由、date/datetime は文字列化）
+
+    Phase 1（2026-05-15）: divination_history.bundle_snapshot_json への保存用。
+    失敗時は None を返し、保存は skip する（既存フローを壊さない）。
+    """
+    if bundle is None:
+        return None
+    try:
+        import dataclasses as _dc
+        import json as _json_snap
+        from datetime import date as _date, datetime as _datetime
+
+        def _default(o):
+            if isinstance(o, (_date, _datetime)):
+                return o.isoformat()
+            return str(o)
+
+        snap = _dc.asdict(bundle)
+        # JSON シリアライズ可能か確認（date 等を文字列化）
+        return _json_snap.loads(_json_snap.dumps(snap, default=_default, ensure_ascii=False))
+    except Exception as e:
+        print(f"[history] bundle snapshot error: {e}")
+        return None
+
+
+def _record_history(
+    course_name: str,
+    types: list | None = None,
+    result_json: Optional[dict] = None,
+    card_data_json: Optional[list[dict]] = None,
+):
     """鑑定履歴を divination_history に1件記録（Supabase利用時のみ）
 
     Args:
         course_name: "算命学" / "星座" / "フルコース" / "theme_love" など
         types: 使用した占術のリスト（省略可。フルコースは全占術、単独は当該のみ）
+        result_json: AI生成鑑定結果（headline/reading/closing 等）の全文 dict
+                     ※Phase 1（2026-05-15）追加。None なら DB に保存しない
+        card_data_json: タロットカード等の引き結果（list of dict）
+                        ※Phase 1（2026-05-15）追加。タロット系のみ使用
     """
     if not _supabase_on():
         return
@@ -2053,11 +2088,16 @@ def _record_history(course_name: str, types: list | None = None):
         bm = bd.month if bd else None
         bdd = bd.day if bd else None
         row = _sb.get_customer_by_name_and_birth(name, by, bm, bdd) or {}
+        # Phase 1: bundle スナップショットも保存（復元用）
+        bundle_snapshot = _bundle_to_snapshot(bundle)
         _sb.record_divination(
             customer_id=row.get("id"),
             customer_name=name,
             course_name=course_name,
             divination_types=types or [],
+            result_json=result_json,
+            card_data_json=card_data_json,
+            bundle_snapshot_json=bundle_snapshot,
         )
     except Exception as e:
         print(f"[history] record error: {e}")
@@ -2087,7 +2127,7 @@ def render_generating_page():
             result = generate_bansho_reading(bundle)
             status.update(label="✦ 万象学コース鑑定完了 ✦", state="complete")
         st.session_state.course_results["bansho"] = result
-        _record_history("万象学", ["万象学"])
+        _record_history("万象学", ["万象学"], result_json=result if isinstance(result, dict) else None)
     elif course == "フルコース":
         with st.status("✦ フルコース鑑定生成中…", expanded=True) as status:
             st.write("✧ 6占術を同時に鑑定中…")
@@ -2097,6 +2137,7 @@ def render_generating_page():
         _record_history(
             "フルコース",
             ["算命学", "星座", "九星気学", "数秘術", "紫微斗数", "四柱推命"],
+            result_json=results if isinstance(results, dict) else None,
         )
     elif course == "コンプリート鑑定":
         from ai.interpreter import generate_complete_reading
@@ -2108,6 +2149,7 @@ def render_generating_page():
         _record_history(
             "コンプリート鑑定",
             ["算命学", "四柱推命", "西洋占星術", "数秘術", "九星気学", "タロット", "紫微斗数", "万象学"],
+            result_json=complete if isinstance(complete, dict) else None,
         )
     elif course == "開運習慣":
         from ai.interpreter import generate_kaiun_habits
@@ -2116,7 +2158,7 @@ def render_generating_page():
             kaiun = generate_kaiun_habits(bundle)
             status.update(label="✦ 開運習慣 提案完了 ✦", state="complete")
         st.session_state.course_results["kaiun_habits"] = kaiun
-        _record_history("開運習慣", ["全占術横断"])
+        _record_history("開運習慣", ["全占術横断"], result_json=kaiun if isinstance(kaiun, dict) else None)
     else:
         with st.status(f"✦ {course}コース鑑定生成中…", expanded=True) as status:
             st.write(f"✧ {course}の鑑定文を生成中…")
@@ -2131,7 +2173,7 @@ def render_generating_page():
         }
         key = course_key_map.get(course, course)
         st.session_state.course_results[key] = result
-        _record_history(course, [course])
+        _record_history(course, [course], result_json=result if isinstance(result, dict) else None)
 
     st.session_state.page = "result"
     st.rerun()
@@ -2165,7 +2207,11 @@ def render_generating_theme_page():
     st.session_state.theme_results[theme_key] = result
     st.session_state.page = "theme_result"
     st.session_state._current_theme = theme_key
-    _record_history(f"テーマ別：{theme_name}", ["全占術横断"])
+    _record_history(
+        f"テーマ別：{theme_name}",
+        ["全占術横断"],
+        result_json=result if isinstance(result, dict) else None,
+    )
     st.rerun()
 
 
