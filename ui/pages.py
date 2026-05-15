@@ -3977,7 +3977,10 @@ def _render_tarot_chat(bundle, question, spread_info, cards, initial_result):
                 render_tarot_card_simple(extra_card, dl_key=f"chat_new_{len(st.session_state.tarot_chat_history)}")
             with c2:
                 st.write(answer)
-                _render_text_copy_button(answer, key=f"tarot_chat_new_{len(st.session_state.tarot_chat_history)}")
+                _render_text_copy_button(
+                    f"🙋 質問：\n{follow_up}\n\n🔮 回答：\n{answer}",
+                    key=f"tarot_chat_new_{len(st.session_state.tarot_chat_history)}",
+                )
 
         # 履歴に追加
         st.session_state.tarot_chat_history.append({
@@ -4065,7 +4068,10 @@ def _render_general_chat(bundle, course, results):
                 except Exception:
                     answer = "ごめんね、今ちょっと集中できなくて…もう一度聞いてもらえる？"
             st.write(answer)
-            _render_text_copy_button(answer, key=f"general_chat_new_{len(st.session_state.general_chat_history)}")
+            _render_text_copy_button(
+                f"🙋 質問：\n{follow_up}\n\n🔮 回答：\n{answer}",
+                key=f"general_chat_new_{len(st.session_state.general_chat_history)}",
+            )
 
         st.session_state.general_chat_history.append({
             "question": follow_up,
@@ -4151,7 +4157,10 @@ def _render_aisho_chat(bundle1, bundle2, result):
                 except Exception:
                     answer = "ごめんね、今ちょっと集中できなくて…もう一度聞いてもらえる？"
             st.write(answer)
-            _render_text_copy_button(answer, key=f"aisho_chat_new_{len(st.session_state.aisho_chat_history)}")
+            _render_text_copy_button(
+                f"🙋 質問：\n{follow_up}\n\n🔮 回答：\n{answer}",
+                key=f"aisho_chat_new_{len(st.session_state.aisho_chat_history)}",
+            )
 
         st.session_state.aisho_chat_history.append({
             "question": follow_up,
@@ -4226,7 +4235,10 @@ def _render_ura_chat(bundle):
                 except Exception:
                     answer = "ごめんね、今ちょっと集中できなくて…もう一度聞いてもらえる？"
             st.write(answer)
-            _render_text_copy_button(answer, key=f"ura_chat_new_{len(st.session_state.ura_chat_history)}")
+            _render_text_copy_button(
+                f"🙋 質問：\n{follow_up}\n\n🔮 回答：\n{answer}",
+                key=f"ura_chat_new_{len(st.session_state.ura_chat_history)}",
+            )
 
         st.session_state.ura_chat_history.append({
             "question": follow_up,
@@ -4311,7 +4323,10 @@ def _render_theme_chat(bundle, theme_key, theme_data):
                 except Exception:
                     answer = "ごめんね、今ちょっと集中できなくて…もう一度聞いてもらえる？"
             st.write(answer)
-            _render_text_copy_button(answer, key=f"theme_chat_new_{theme_key}_{len(st.session_state[chat_key])}")
+            _render_text_copy_button(
+                f"🙋 質問：\n{follow_up}\n\n🔮 回答：\n{answer}",
+                key=f"theme_chat_new_{theme_key}_{len(st.session_state[chat_key])}",
+            )
 
         st.session_state[chat_key].append({
             "question": follow_up,
