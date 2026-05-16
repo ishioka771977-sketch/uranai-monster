@@ -115,8 +115,18 @@ def render_ura_menu(bundle: DivinationBundle, recommendation: dict):
 # 共通鑑定結果表示（headline / reading / closing 構造）
 # ============================================================
 def _render_course_card(title: str, headline: str, reading: str, closing: str,
-                        data_tags: str = "", extra_html: str = ""):
-    """全コース共通のカード表示。新JSON構造（headline/reading/closing）対応。"""
+                        data_tags: str = "", extra_html: str = "",
+                        shareable_figures: "list[dict] | None" = None):
+    """全コース共通のカード表示。新JSON構造（headline/reading/closing）対応。
+
+    shareable_figures（2026-05-17 タスク3 案B-1）:
+        各図表を画像共有可能に描画するための list[dict]。
+        各 dict = {"html": 図表HTML, "title": "算命学_人体図", "key": ユニークキー,
+                   "height": int(任意・既定360)}
+        None または空なら従来通り（既存動作に一切影響なし）。
+        渡された場合、カード本体（鑑定文）の後に render_shareable_figure で
+        各図表を「📤 画像で送る」ボタン付き iframe として描画する。
+    """
     st.markdown(f"""
 <div class="divination-card">
   <div class="card-header">✦ {title} ✦</div>
@@ -138,6 +148,22 @@ def _render_course_card(title: str, headline: str, reading: str, closing: str,
   </div>
 </div>
 """, unsafe_allow_html=True)
+
+    # 図表の画像共有（タスク3 案B-1: 全courseを1箇所で一括対応）
+    if shareable_figures:
+        for _fig in shareable_figures:
+            try:
+                _html = _fig.get("html")
+                if not _html:
+                    continue
+                render_shareable_figure(
+                    _html,
+                    key=_fig.get("key", "fig"),
+                    caption=_fig.get("title", "図表"),
+                    height=_fig.get("height", 360),
+                )
+            except Exception:
+                pass  # 1図表の失敗で鑑定文表示を巻き込まない
 
 
 # ============================================================
@@ -195,13 +221,20 @@ def render_sanmei_course(bundle: DivinationBundle, data: dict):
     if s.kakkyoku:
         kakkyoku_html = f'<div style="text-align:center; margin:6px 0;"><span class="uranai-tag-gold">特殊格局: {s.kakkyoku}</span></div>'
 
+    # 図表は共有可能化（タスク3 案B-1）。格局タグのみ extra_html に残す
+    _figs = []
+    if jintaizu:
+        _figs.append({"html": jintaizu, "title": "算命学_人体図", "key": "sanmei_jintaizu", "height": 340})
+    if gogyo_html:
+        _figs.append({"html": gogyo_html, "title": "算命学_五行バランス", "key": "sanmei_gogyo", "height": 280})
     _render_course_card(
         title="算命学が読み解く、あなたの魂",
         headline=data.get("headline", ""),
         reading=data.get("reading", data.get("nichikan_reading", "")),
         closing=data.get("closing", data.get("one_line", "")),
         data_tags=tags,
-        extra_html=jintaizu + gogyo_html + kakkyoku_html,
+        extra_html=kakkyoku_html,
+        shareable_figures=_figs or None,
     )
 
 
