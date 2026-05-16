@@ -767,7 +767,8 @@ def render_ziwei_course(bundle, data: dict):
         pname = palace.palace_name if palace else ''
         da_xian_html += f'<span style="color:#8A8478; font-size:0.85em;">第{i+1}限 {s}〜{e}歳（{pname}）</span><br>'
     da_xian_html += '</div>'
-    st.markdown(da_xian_html, unsafe_allow_html=True)
+    # 大限表を画像共有可能な形で描画（2026-05-17 タスク3 横展開・案B）
+    render_shareable_figure(da_xian_html, key="ziwei_daxian", caption="紫微斗数_大限表", height=300)
 
     # AI鑑定文
     reading = data.get("reading", "")
