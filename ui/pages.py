@@ -3921,7 +3921,7 @@ def _render_tarot_chat(bundle, question, spread_info, cards, initial_result):
     with tc_col2:
         send_clicked = st.button("📨", key="btn_tarot_chat_send")
 
-    if (send_clicked or follow_up) and follow_up:
+    if send_clicked and follow_up:
         # 1枚カードを引く
         extra_card = draw_tarot(1)[0]
 
@@ -4039,7 +4039,7 @@ def _render_general_chat(bundle, course, results):
     with gc_col2:
         send_clicked = st.button("📨", key="btn_general_send")
 
-    if (send_clicked or follow_up) and follow_up:
+    if send_clicked and follow_up:
         data_summary = _format_all_data_summary(bundle)
 
         # 鑑定結果のテキストを集約
@@ -4129,7 +4129,7 @@ def _render_aisho_chat(bundle1, bundle2, result):
     with ac_col2:
         send_clicked = st.button("📨", key="btn_aisho_send")
 
-    if (send_clicked or follow_up) and follow_up:
+    if send_clicked and follow_up:
         data1 = _format_all_data_summary(bundle1)
         data2 = _format_all_data_summary(bundle2)
         reading = result.get("reading", "")[:1500]
@@ -4217,7 +4217,7 @@ def _render_ura_chat(bundle):
     with uc_col2:
         send_clicked = st.button("📨", key="btn_ura_send")
 
-    if (send_clicked or follow_up) and follow_up:
+    if send_clicked and follow_up:
         data_summary = _format_all_data_summary(bundle)
 
         prev_chat = "\n".join(
@@ -4302,7 +4302,7 @@ def _render_theme_chat(bundle, theme_key, theme_data):
     with th_col2:
         send_clicked = st.button("📨", key=f"btn_theme_chat_send_{theme_key}")
 
-    if (send_clicked or follow_up) and follow_up:
+    if send_clicked and follow_up:
         data_summary = _format_all_data_summary(bundle)
         reading = theme_data.get("reading", "")[:1500]
 
