@@ -1950,21 +1950,21 @@ def render_ura_menu_page():
 
     col1, col2, col3 = st.columns(3)
     with col1:
-        if st.button("✦ 算命学", key="btn_sanmei"):
+        if st.button("🐉 算命学", key="btn_sanmei"):
             _start_course("算命学")
     with col2:
-        if st.button("✦ 星座", key="btn_western"):
+        if st.button("🌙 占星術", key="btn_western"):
             _start_course("星座")
     with col3:
-        if st.button("✦ 九星気学", key="btn_kyusei"):
+        if st.button("🧭 九星気学", key="btn_kyusei"):
             _start_course("九星気学")
 
     col4, col5, col6 = st.columns(3)
     with col4:
-        if st.button("✦ 数秘術", key="btn_numerology"):
+        if st.button("🔢 数秘術", key="btn_numerology"):
             _start_course("数秘術")
     with col5:
-        if st.button("✦ 紫微斗数", key="btn_ziwei"):
+        if st.button("🌌 紫微斗数", key="btn_ziwei"):
             _start_course("紫微斗数")
     with col6:
         if st.button("⚡ 万象学", key="btn_bansho"):
@@ -1972,7 +1972,7 @@ def render_ura_menu_page():
 
     col7, col8, _sp1 = st.columns(3)
     with col7:
-        if st.button("✦ 四柱推命", key="btn_shichusuimei"):
+        if st.button("📜 四柱推命", key="btn_shichusuimei"):
             _start_course("四柱推命")
     with col8:
         if st.button("⛩️ 古神道", key="btn_kojindo"):
