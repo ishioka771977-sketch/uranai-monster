@@ -137,17 +137,26 @@ def extract_traits(bundle: DivinationBundle) -> list[str]:
     traits: set[str] = set()
     s = bundle.sanmei
 
-    # === 五行偏りタグ（quality・40%以上=過多、10%以下=不足）===
+    # === 五行偏りタグ（比率・40%以上=過多、10%以下=不足）===
+    # 2026-05-17 バグ修正: s.gogyo_balance は個数（命式の五行カウント、
+    # 合計6〜8程度）を返す。旧コードは「40%以上/10%以下」のパーセント前提で
+    # 生値比較していたため、過多は永久に発火せず（個数は最大8）、
+    # 不足は全員に発火していた（個数は常に10以下）。
+    # → ひでさん命式（火=4 = 三巳格＋火4つ）で「火不足」と真逆判定。
+    # 合計で正規化して比率(%)で判定する。個数辞書でもパーセント辞書でも
+    # 正しく動く（パーセント辞書なら合計≒100で比率は元値とほぼ等価）。
     g = s.gogyo_balance or {}
-    for element in ("木", "火", "土", "金", "水"):
-        v = g.get(element, 0)
-        if v >= 40:
-            traits.add(f"{element}過多")
-    # 不足は重要な「火不足」「水不足」のみ採用（タグ辞書準拠）
-    if g.get("水", 0) <= 10:
-        traits.add("水不足")
-    if g.get("火", 0) <= 10:
-        traits.add("火不足")
+    _total = sum(v for v in g.values() if isinstance(v, (int, float)))
+    if _total > 0:
+        for element in ("木", "火", "土", "金", "水"):
+            pct = g.get(element, 0) / _total * 100
+            if pct >= 40:
+                traits.add(f"{element}過多")
+        # 不足は重要な「火不足」「水不足」のみ採用（タグ辞書準拠）
+        if g.get("水", 0) / _total * 100 <= 10:
+            traits.add("水不足")
+        if g.get("火", 0) / _total * 100 <= 10:
+            traits.add("火不足")
 
     # === 万象学エネルギータグ（quantity・4段階）===
     e = s.bansho_energy
