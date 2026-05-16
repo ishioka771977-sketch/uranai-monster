@@ -112,6 +112,21 @@ def render_back_button(target_page: str = "top", label: str = "← 戻る", key:
         key: Streamlit ウィジェットの一意キーサフィックス
     """
     if st.button(label, key=f"back_btn_{key}", use_container_width=False):
+        # 「くろたんに聞く/相談する」の再発火防止（2026-05-15 ひでさん指示）。
+        # チャット入力の text_area 値が session_state に残ったまま戻ると、
+        # `if (send_clicked or follow_up) and follow_up:` が再度 True になり
+        # 戻った瞬間にチャットが再実行される。戻る時に入力トリガーをクリアする。
+        _exact_keys = {
+            "tarot_chat_input", "general_chat_input", "aisho_chat_input",
+            "ura_chat_input", "tarot_q_input",
+        }
+        _prefix_keys = ("theme_chat_input_", "deepen_free_")
+        for _k in list(st.session_state.keys()):
+            if _k in _exact_keys or any(_k.startswith(_p) for _p in _prefix_keys):
+                try:
+                    del st.session_state[_k]
+                except Exception:
+                    pass
         st.session_state.page = target_page
         st.rerun()
 
