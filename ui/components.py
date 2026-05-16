@@ -608,6 +608,61 @@ THEME_DISPLAY = {
 }
 
 
+def render_shareable_figure(figure_html: str, key: str, caption: str = "図表", height: int = 420):
+    """図表HTMLを iframe 内で描画し、html2canvas でキャプチャして
+    Web Share API / ダウンロードで共有できる共通ヘルパー（2026-05-17 タスク3）。
+
+    Streamlit が描画した DOM は iframe 跨ぎでキャプチャできないため、
+    図表HTML自体を components.html(iframe) 内に持ち、表示と共有を
+    同一 iframe で完結させることでこの制約を回避する。
+    figure_html はインライン style 前提（iframe 内は親CSSが効かない）。
+    フォールバック: Web Share 非対応/失敗 → ダウンロード。
+    """
+    import json as _json_fig
+    fig_json = _json_fig.dumps(figure_html)
+    tpl = """
+<div style="background:#0A0A0A; color:#F0EBE0; font-family:'Zen Kaku Gothic New',sans-serif; padding:4px;">
+  <div id="cap___KEY__"></div>
+  <div style="text-align:center; margin:8px 0;">
+    <button id="sh___KEY__" style="background:#BFA350;color:#0A0A0A;border:none;padding:8px 16px;border-radius:6px;font-weight:bold;cursor:pointer;width:92%;font-family:'Zen Kaku Gothic New',sans-serif;">📤 __CAPTION__ を画像で送る</button>
+    <div id="msg___KEY__" style="color:#7CB87C;font-size:0.72em;margin-top:4px;min-height:16px;"></div>
+  </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script>
+(function(){
+  var cap = document.getElementById('cap___KEY__');
+  cap.innerHTML = __FIGJSON__;
+  var btn = document.getElementById('sh___KEY__');
+  function msg(t){ var e=document.getElementById('msg___KEY__'); if(e){e.textContent=t;} }
+  function dl(blob,fn){ var a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=fn; a.click(); msg('✓ 端末に保存しました'); }
+  btn.addEventListener('click', function(){
+    if (typeof html2canvas === 'undefined'){ msg('⚠ 画像化ライブラリ未読込（通信環境を確認）'); return; }
+    msg('画像生成中…');
+    html2canvas(cap, {backgroundColor:'#0A0A0A', scale:2, useCORS:true}).then(function(canvas){
+      canvas.toBlob(function(blob){
+        if(!blob){ msg('⚠ 画像生成失敗'); return; }
+        var fn = '__CAPTION__.png';
+        try {
+          var file = new File([blob], fn, {type:'image/png'});
+          if (navigator.canShare && navigator.canShare({files:[file]})){
+            navigator.share({files:[file], title:'__CAPTION__'})
+              .then(function(){ msg('✓ 送信しました'); })
+              .catch(function(e){ if(e && e.name==='AbortError'){return;} dl(blob,fn); });
+          } else { dl(blob,fn); }
+        } catch(e) { dl(blob,fn); }
+      }, 'image/png');
+    }).catch(function(e){ msg('⚠ '+e); });
+  });
+})();
+</script>
+"""
+    out = (tpl.replace("__KEY__", str(key))
+              .replace("__CAPTION__", caption)
+              .replace("__FIGJSON__", fig_json))
+    _stc.html(out, height=height)
+
+
 def render_ziwei_course(bundle, data: dict):
     """紫微斗数コースの鑑定結果表示"""
     z = bundle.ziwei
@@ -702,7 +757,8 @@ def render_ziwei_course(bundle, data: dict):
         grid_html += '</tr>'
     grid_html += '</table>'
 
-    st.markdown(grid_html, unsafe_allow_html=True)
+    # 命盤を画像共有可能な形で描画（2026-05-17 タスク3）
+    render_shareable_figure(grid_html, key="ziwei_meiban", caption="紫微斗数_命盤", height=440)
 
     # 大限表示
     da_xian_html = '<div style="margin:10px 0;"><span style="color:#BFA350; font-weight:bold;">大限（10年運）</span> ' + z.da_xian_direction + '<br>'
