@@ -6,6 +6,7 @@
 import os
 from datetime import date
 import streamlit as st
+import streamlit.components.v1 as _stc
 from core.models import DivinationBundle
 
 TAROT_IMAGES_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), "data", "tarot_images")
@@ -475,25 +476,91 @@ def render_tarot_card_simple(card, dl_key: str = ""):
             img_found = True
             _saved_img = img
 
-    # ダウンロードボタン（画像あり + dl_key 指定時のみ）
+    # 画像の共有/保存ボタン（画像あり + dl_key 指定時のみ）
+    # 2026-05-15 くろたん指令①: Web Share API で LINE 等に直接送る。
+    # 未対応環境はダウンロードにフォールバック。確実な保存手段として
+    # st.download_button も常に併設（二重提供）。
     if img_found and dl_key and _saved_img is not None:
+        jpeg_bytes = None
+        filename = "tarot_card.jpg"
         try:
             buf = _io.BytesIO()
             _saved_img.convert("RGB").save(buf, format="JPEG", quality=90)
-            buf.seek(0)
+            jpeg_bytes = buf.getvalue()
             safe_name = (card.card_name or "card").replace(" ", "_").replace("/", "_")
             pos_suffix = "_reversed" if card.is_reversed else ""
             filename = f"tarot_{safe_name}{pos_suffix}.jpg"
-            st.download_button(
-                label="📥 画像を保存",
-                data=buf.getvalue(),
-                file_name=filename,
-                mime="image/jpeg",
-                key=f"dl_tarot_{dl_key}",
-                use_container_width=True,
-            )
         except Exception:
-            pass
+            jpeg_bytes = None
+
+        if jpeg_bytes:
+            # Web Share ボタン（navigator.share、モバイル最適）
+            try:
+                import base64 as _b64
+                _img_b64 = _b64.b64encode(jpeg_bytes).decode("ascii")
+                _share_html = """
+<div style="text-align:center; margin:4px 0;">
+  <button id="sh_KEY" style="
+    background:#BFA350; color:#0A0A0A; border:none; padding:8px 16px;
+    border-radius:6px; font-size:0.85em; font-weight:bold; cursor:pointer;
+    font-family:'Zen Kaku Gothic New',sans-serif; width:100%;
+  ">📤 画像を送る（LINE等）</button>
+  <div id="msg_KEY" style="color:#7CB87C; font-size:0.72em; margin-top:4px;"></div>
+</div>
+<script>
+(function() {
+  var btn = document.getElementById('sh_KEY');
+  if (!btn) return;
+  var b64 = "B64DATA";
+  var fn = "FILENAME";
+  function toBlob(b) {
+    var bin = atob(b), len = bin.length, arr = new Uint8Array(len);
+    for (var i=0;i<len;i++) arr[i] = bin.charCodeAt(i);
+    return new Blob([arr], {type:'image/jpeg'});
+  }
+  function msg(t){ var e=document.getElementById('msg_KEY'); if(e){e.textContent=t;} }
+  function dl(blob){ var a=document.createElement('a');
+    a.href=URL.createObjectURL(blob); a.download=fn; a.click(); }
+  btn.addEventListener('click', async function() {
+    var blob = toBlob(b64);
+    try {
+      var file = new File([blob], fn, {type:'image/jpeg'});
+      if (navigator.canShare && navigator.canShare({files:[file]})) {
+        await navigator.share({files:[file], title:'タロットカード'});
+        msg('✓ 送信しました');
+      } else {
+        dl(blob); msg('✓ 端末に保存しました（共有非対応のため）');
+      }
+    } catch(e) {
+      if (e && e.name === 'AbortError') { return; }
+      try { dl(blob); msg('✓ 保存に切り替えました'); }
+      catch(_) { msg('⚠ 保存できませんでした'); }
+    }
+  });
+})();
+</script>
+"""
+                _share_html = (
+                    _share_html.replace("KEY", str(dl_key))
+                    .replace("B64DATA", _img_b64)
+                    .replace("FILENAME", filename)
+                )
+                _stc.html(_share_html, height=72)
+            except Exception:
+                pass
+
+            # ダウンロードボタン（確実な保存手段、常に併設）
+            try:
+                st.download_button(
+                    label="📥 画像を保存",
+                    data=jpeg_bytes,
+                    file_name=filename,
+                    mime="image/jpeg",
+                    key=f"dl_tarot_{dl_key}",
+                    use_container_width=True,
+                )
+            except Exception:
+                pass
 
     # 画像がない場合（小アルカナ等）→ スートシンボルで表示
     if not img_found:
