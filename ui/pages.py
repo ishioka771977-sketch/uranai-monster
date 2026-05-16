@@ -428,6 +428,108 @@ def _build_pdf_html(title: str, subtitle: str, headline: str, reading: str, clos
 
 
 # ============================================================
+# 復元ビュー（Phase 2 MVP、2026-05-15 くろたん指令）
+# ============================================================
+def render_restored_result_page():
+    """セッション切れからの復元ビュー（読み取り専用）。
+
+    Phase 1 で divination_history.result_json に保存された過去の鑑定結果を
+    API 再呼び出しなしで再表示する。Streamlit のセッション切れで「結果が消えた」
+    状況からの1タップ復帰を実現する。
+    bundle の完全復元（再鑑定・深掘りチャットの続き）は Phase 2.5 で対応予定。
+    """
+    render_back_button(target_page="top", key="restored")
+    render_star_deco("📋")
+    st.markdown(
+        '<div class="uranai-title" style="font-size:1.4em;">過去の鑑定結果を見る</div>',
+        unsafe_allow_html=True,
+    )
+    st.markdown(
+        '<div style="text-align:center; color:#8A8478; font-size:0.85em; margin-bottom:15px;">'
+        'セッションが切れても、ここから過去の鑑定をそのまま読み返せます（再計算なし・一瞬で表示）'
+        '</div>',
+        unsafe_allow_html=True,
+    )
+    render_gold_divider()
+
+    if not _supabase_on():
+        st.warning("⚠ Supabase 未接続のため復元できません")
+        return
+
+    from data import supabase_client as _sb
+    history = _sb.list_history(limit=30)
+    restorable = [h for h in history if h.get("result_json")]
+    if not restorable:
+        st.info("📋 復元可能な鑑定がまだありません。\n\n（2026-05-15 以降に実施した鑑定が対象です）")
+        return
+
+    # 選択
+    def _label(h):
+        dt = (h.get("divined_at") or "")[:16].replace("T", " ")
+        return f"{dt} ｜ {h.get('customer_name','?')} ｜ {h.get('course_name','?')}"
+
+    idx = st.selectbox(
+        "復元する鑑定を選択",
+        range(len(restorable)),
+        format_func=lambda i: _label(restorable[i]),
+        key="restored_select",
+    )
+    sel = restorable[idx]
+    rj = sel.get("result_json") or {}
+
+    render_gold_divider()
+
+    # 表示（headline/reading/closing 形式 or それ以外は整形表示）
+    copy_parts = []
+    if isinstance(rj, dict) and ("headline" in rj or "reading" in rj or "closing" in rj):
+        headline = rj.get("headline", "")
+        reading = rj.get("reading", "")
+        closing = rj.get("closing", "")
+        if headline:
+            st.markdown(
+                f'<div style="text-align:center; font-size:1.2em; color:#BFA350; '
+                f'font-weight:bold; margin:15px 0;">「{headline}」</div>',
+                unsafe_allow_html=True,
+            )
+            copy_parts.append(headline)
+        if reading:
+            st.markdown(
+                f'<div style="line-height:2.0; font-size:0.95em; color:#F0EBE0; '
+                f'padding:10px 5px; white-space:pre-wrap;">{reading}</div>',
+                unsafe_allow_html=True,
+            )
+            copy_parts.append(reading)
+        if closing:
+            st.markdown(
+                f'<div style="text-align:center; color:#8A8478; font-style:italic; '
+                f'margin:20px 0; font-size:0.95em;">— {closing}</div>',
+                unsafe_allow_html=True,
+            )
+            copy_parts.append(closing)
+    else:
+        # フルコース等、占術別の dict の場合は各セクションを順に表示
+        if isinstance(rj, dict):
+            for _k, _v in rj.items():
+                if isinstance(_v, dict):
+                    st.markdown(f"### {_k}")
+                    for _kk in ("headline", "reading", "closing"):
+                        _vv = _v.get(_kk)
+                        if _vv:
+                            st.markdown(str(_vv))
+                            copy_parts.append(str(_vv))
+                else:
+                    st.markdown(f"**{_k}**: {_v}")
+                    copy_parts.append(f"{_k}: {_v}")
+        else:
+            st.write(rj)
+            copy_parts.append(str(rj))
+
+    render_gold_divider()
+    if copy_parts:
+        _render_text_copy_button("\n\n".join(copy_parts), key=f"restored_copy_{idx}")
+
+
+# ============================================================
 # TOP画面
 # ============================================================
 def render_top_page():
@@ -2005,6 +2107,16 @@ def render_ura_menu_page():
 """, unsafe_allow_html=True)
     if st.button("👑 コンプリート鑑定 👑", key="btn_complete", use_container_width=True):
         _start_course("コンプリート鑑定")
+
+    # 復元ビュー（Phase 2 MVP, 2026-05-15）: セッション切れからの1タップ復帰
+    st.markdown("""
+<div style="text-align:center; margin:14px 0 4px; color:#7CB87C; font-size:0.78em;">
+📋 鑑定中に画面が消えても、ここから一瞬で読み返せます
+</div>
+""", unsafe_allow_html=True)
+    if st.button("📋 前回の鑑定結果を見る", key="btn_restored", use_container_width=True):
+        st.session_state.page = "restored_result"
+        st.rerun()
 
     render_gold_divider()
 

@@ -125,6 +125,7 @@ from ui.pages import (
     render_palm_loading_page,
     render_palm_result_page,
     render_settings_page,
+    render_restored_result_page,
 )
 
 # CSSを注入
@@ -224,6 +225,8 @@ elif page == "palm_result":
     render_palm_result_page()
 elif page == "settings":
     render_settings_page()
+elif page == "restored_result":
+    render_restored_result_page()
 else:
     st.session_state.page = "top"
     st.rerun()
