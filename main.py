@@ -126,6 +126,9 @@ from ui.pages import (
     render_palm_result_page,
     render_settings_page,
     render_restored_result_page,
+    render_ochiru_doors_page,
+    render_ochiru_generating_page,
+    render_ochiru_result_page,
 )
 
 # CSSを注入
@@ -227,6 +230,12 @@ elif page == "settings":
     render_settings_page()
 elif page == "restored_result":
     render_restored_result_page()
+elif page == "ochiru_doors":
+    render_ochiru_doors_page()
+elif page == "ochiru_generating":
+    render_ochiru_generating_page()
+elif page == "ochiru_result":
+    render_ochiru_result_page()
 else:
     st.session_state.page = "top"
     st.rerun()
