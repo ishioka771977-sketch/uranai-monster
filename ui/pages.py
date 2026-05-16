@@ -1708,9 +1708,9 @@ def render_meibo_page():
                     })
                 st.dataframe(pd.DataFrame(table_data), use_container_width=True, hide_index=True)
 
-                # ── タグ / メール 一括編集 ──
+                # ── 顧客編集（全項目・2026-05-17 タスク2）──
                 st.markdown("---")
-                st.markdown('<div style="color:#BFA350;font-size:0.9em;font-weight:bold;margin-bottom:6px;">✏️ 顧客編集（タグ・メール等）</div>', unsafe_allow_html=True)
+                st.markdown('<div style="color:#BFA350;font-size:0.9em;font-weight:bold;margin-bottom:6px;">✏️ 顧客編集（全項目）</div>', unsafe_allow_html=True)
                 edit_target = st.selectbox(
                     "顧客を選択", ["（選択）"] + names_sorted, key="meibo_email_target",
                     format_func=lambda k: "（選択）" if k == "（選択）" else _people_key_to_display(k),
@@ -1718,33 +1718,96 @@ def render_meibo_page():
                 )
                 if edit_target and edit_target != "（選択）" and edit_target in people_db:
                     rec = people_db[edit_target]
+                    _orig_name = rec.get("name") or _people_key_to_name(edit_target)
+                    _cy = int(rec.get("year") or 1990)
+                    _cm = int(rec.get("month") or 1)
+                    _cd = int(rec.get("day") or 1)
                     c1, c2 = st.columns(2)
                     with c1:
-                        new_email = st.text_input("メールアドレス", value=rec.get("email") or "", key="meibo_email_input", placeholder="example@gmail.com")
+                        new_name = st.text_input("名前", value=_orig_name, key="meibo_name_input")
                         new_real = st.text_input("本名（表示名と別の場合）", value=rec.get("real_name") or "", key="meibo_real_input")
                         new_kana = st.text_input("ふりがな", value=rec.get("name_kana") or "", key="meibo_kana_input", placeholder="あいうえお順のソート用")
+                        new_email = st.text_input("メールアドレス", value=rec.get("email") or "", key="meibo_email_input", placeholder="example@gmail.com")
+                        _g_opts = ["男性", "女性", "その他"]
+                        _g_cur = rec.get("gender") or "男性"
+                        new_gender = st.selectbox("性別", _g_opts, index=_g_opts.index(_g_cur) if _g_cur in _g_opts else 0, key="meibo_gender_input")
                     with c2:
-                        current_tags = ", ".join(rec.get("tags") or [])
-                        new_tags_raw = st.text_input(
-                            "タグ（カンマ区切り）", value=current_tags, key="meibo_tags_input",
-                            placeholder="建設業, 石岡組, 現場代理人",
+                        gc1, gc2, gc3 = st.columns(3)
+                        with gc1:
+                            new_year = st.number_input("生年", min_value=1900, max_value=2100, value=_cy, step=1, key="meibo_year_input")
+                        with gc2:
+                            new_month = st.number_input("月", min_value=1, max_value=12, value=_cm, step=1, key="meibo_month_input")
+                        with gc3:
+                            new_day = st.number_input("日", min_value=1, max_value=31, value=_cd, step=1, key="meibo_day_input")
+                        new_time = st.text_input("出生時刻（任意）", value=rec.get("time") or "", key="meibo_time_input", placeholder="例: 14:30 / 1:34")
+                        new_place = st.text_input("出生地（任意）", value=rec.get("place") or "", key="meibo_place_input", placeholder="例: 函館市")
+                    current_tags = ", ".join(rec.get("tags") or [])
+                    new_tags_raw = st.text_input(
+                        "タグ（カンマ区切り）", value=current_tags, key="meibo_tags_input",
+                        placeholder="建設業, 石岡組, 現場代理人",
+                    )
+                    new_memo = st.text_area(
+                        "メモ", value=rec.get("memo") or "", key="meibo_memo_input",
+                        height=90, placeholder="自由記述",
+                    )
+
+                    # 生年月日・名前変更の検知 → 確認ダイアログ
+                    _birth_changed = (int(new_year) != _cy or int(new_month) != _cm or int(new_day) != _cd)
+                    _name_changed = (new_name.strip() != _orig_name)
+                    _need_confirm = _birth_changed or _name_changed
+                    _confirm_ok = True
+                    if _need_confirm:
+                        _confirm_ok = st.checkbox(
+                            "⚠ 生年月日または名前を変更すると過去の鑑定結果と整合しなくなります。変更しますか？",
+                            key="meibo_birth_confirm",
                         )
-                        new_memo = st.text_area(
-                            "メモ", value=rec.get("memo") or "", key="meibo_memo_input",
-                            height=90, placeholder="自由記述",
-                        )
+
                     if st.button("💾 保存", key="btn_meibo_edit_save"):
-                        merged_tags = [t.strip() for t in new_tags_raw.replace("、", ",").split(",") if t.strip()]
-                        rec["email"] = new_email.strip()
-                        rec["real_name"] = new_real.strip() or None
-                        rec["name_kana"] = new_kana.strip() or None
-                        rec["tags"] = merged_tags
-                        rec["memo"] = new_memo.strip() or None
-                        people_db[edit_target] = rec
-                        st.session_state._people_db = people_db
-                        _persist_people_db(people_db)
-                        st.success(f"「{_people_key_to_display(edit_target)}」の情報を保存しました")
-                        st.rerun()
+                        if _need_confirm and not _confirm_ok:
+                            st.warning("確認チェックを入れてください")
+                        else:
+                            merged_tags = [t.strip() for t in new_tags_raw.replace("、", ",").split(",") if t.strip()]
+                            cust_id = rec.get("id")
+                            # Supabase を id 指定で更新（正本。upsert だと生年月日変更で重複作成されるため）
+                            if cust_id and _supabase_on():
+                                ok = _sb.update_customer(cust_id, {
+                                    "name": new_name.strip(),
+                                    "real_name": new_real.strip() or None,
+                                    "name_kana": new_kana.strip() or None,
+                                    "gender": new_gender,
+                                    "birth_year": int(new_year),
+                                    "birth_month": int(new_month),
+                                    "birth_day": int(new_day),
+                                    "birth_time": new_time.strip() or None,
+                                    "birth_place": new_place.strip() or None,
+                                    "email": new_email.strip() or None,
+                                    "tags": merged_tags,
+                                    "memo": new_memo.strip() or None,
+                                })
+                                if not ok:
+                                    st.error("Supabase 更新に失敗しました。接続を確認してください（people_db は変更していません）")
+                                    st.stop()
+                            # people_db 側も同期（生年月日/名前変更でキーが変わるため再生成）
+                            rec["name"] = new_name.strip()
+                            rec["real_name"] = new_real.strip() or None
+                            rec["name_kana"] = new_kana.strip() or None
+                            rec["gender"] = new_gender
+                            rec["year"] = int(new_year)
+                            rec["month"] = int(new_month)
+                            rec["day"] = int(new_day)
+                            rec["time"] = new_time.strip() or ""
+                            rec["place"] = new_place.strip() or ""
+                            rec["email"] = new_email.strip()
+                            rec["tags"] = merged_tags
+                            rec["memo"] = new_memo.strip() or None
+                            new_key = _make_people_key(rec["name"], rec["year"], rec["month"], rec["day"])
+                            if new_key != edit_target:
+                                people_db.pop(edit_target, None)
+                            people_db[new_key] = rec
+                            st.session_state._people_db = people_db
+                            _persist_people_db(people_db)
+                            st.success(f"「{_people_key_to_display(new_key)}」の情報を保存しました")
+                            st.rerun()
 
                 # ── 個別削除 ──
                 st.markdown("---")

@@ -236,6 +236,45 @@ def delete_customer(customer_id: str) -> bool:
         return False
 
 
+def update_customer(customer_id: str, fields: dict) -> bool:
+    """顧客を id 指定で更新（生年月日・名前変更等の編集用）。
+
+    upsert_customer は (name, 生年月日) 複合キーで on_conflict するため、
+    名前や生年月日を変えると別レコードが新規作成されてしまう。
+    編集用途では id 指定の本関数を使う。
+
+    Args:
+        customer_id: customers.id
+        fields: customers テーブルのカラム名→値の dict
+    """
+    client = get_supabase_client()
+    uid = get_user_id()
+    if client is None or uid is None or not customer_id:
+        return False
+    # 更新可能カラムのみ許可（誤キー混入・user_id 改竄防止）
+    allowed = {
+        "name", "real_name", "name_kana", "gender",
+        "birth_year", "birth_month", "birth_day",
+        "birth_time", "birth_place", "blood_type",
+        "email", "tags", "memo",
+    }
+    payload = {k: v for k, v in fields.items() if k in allowed}
+    if not payload:
+        return False
+    try:
+        (
+            client.table("customers")
+            .update(payload)
+            .eq("user_id", uid)
+            .eq("id", customer_id)
+            .execute()
+        )
+        return True
+    except Exception as e:
+        print(f"[supabase] update_customer error: {e}")
+        return False
+
+
 def all_tags() -> list[str]:
     """全顧客のタグをユニーク化して返す（サジェスト用）"""
     client = get_supabase_client()
