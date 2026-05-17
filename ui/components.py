@@ -3,6 +3,7 @@
 裏メニュー・コース別鑑定表示・タロットカード
 くろたん完全改良版対応
 """
+from __future__ import annotations  # 注釈遅延評価（import時注釈評価バグの根本無効化）
 import os
 from datetime import date
 import streamlit as st
