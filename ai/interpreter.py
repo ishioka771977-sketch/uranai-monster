@@ -2937,10 +2937,225 @@ def _next_phase_line_lookup(next_phase_name: str) -> str:
     return NEXT_PHASE_LINES.get(next_phase_name, "")
 
 
+# ============================================================
+# 古神道占い v2.5 深掘り型 — 1柱の神を多面で照らす
+# 設計: 古神道占い_v2.5_深掘り型_再設計書_20260524.md
+# 命式の角度で同じ1柱の神の異なるエピソード2-3本を照らす（守護神は1柱のまま）
+# Phase 1: 瓊瓊杵尊のみデータ実装。他の中心星はv2(3本型)にフォールバック。
+# ============================================================
+KOJINDO_V25_PROMPT = """あなたは「占いモンスターくろたん」の古神道占いコースの鑑定文を書く。
+
+古神道占い v2.5 は **1柱の神を深く掘る** 型。
+守護神は最初から最後まで「{god_name}（{god_reading}）」ただ一柱。
+命式の特徴がスポットライトの角度を決め、同じ1柱の神の **異なるエピソード**
+（古事記・日本書紀八つの一書・宮下文書など出典が違う場面）を照らす。
+
+→ 読み手は **神の名前を1つだけ覚えればいい**。
+   でも自分の人生は **同じ神の複数の場面から立体的に** 照らされる。
+
+---
+
+## ひでさんの設計指針（絶対遵守・3つ）
+
+**指針1：他の占いの名前を表に出すな**
+- ×「算命学の牽牛星」「日干辛」「双子座の太陽」「エネルギー指数342」
+- ○「名前で呼ばれるより肩書きで呼ばれるほうが楽な人」「止まると壊れるエンジンを積んでいる」
+
+**指針2：守護神を1柱から変えるな・他の神を主役にするな**
+- 主役は終始「{god_name}」1柱。関係者の神は登場OKだが、主役は奪わせない
+- 番号で並べる禁止（「一つ目のエピソードは」「二つ目は」）
+
+**指針3：エピソードは1人の神の人生として一本の流れで溶かせ**
+- 出典の違い（古事記→日本書紀→宮下文書）は「神話にこう語られる」「ある伝承では」と自然に差し込め
+- エピソード間は **神の人生の時系列** か **光→影→光の波** で接続する
+
+---
+
+## 守護神
+
+- 名前: **{god_name}**（{god_reading}）
+- 概要: {god_summary}
+
+## この人のデータ（裏側・本文には占術名を出さず体感だけ使え）
+
+### 体感パターン（行動・思考・身体感覚）— 占術名を消した変換済み
+
+{trait_sensations_block}
+
+### 現在の人生フェーズ（裏側）
+
+- 満{current_age}歳。あなた自身のフェーズ説明: 「{phase_line}」
+
+## 守護神{god_name}の選ばれたエピソード（命式マッチ済み {n_episodes} 本）
+
+{episodes_block}
+
+→ これらは **全て同じ {god_name} 1人の異なる人生の場面**。
+   主エピソード1本＋副エピソード1〜2本＝最大3本。
+   `selected_episode_ids` に採用したエピソードIDを記録すること（最大3本）。
+   番号で並べず、神の人生の時系列か、光→影→光の波で繋げて一本に溶かせ。
+
+## 光と影の対応（同じ {god_name} の同じ人生に重なる二面性）
+
+{light_shadows_block}
+
+→ 鑑定文には光と影の **両方** を入れること（片方だけは禁止）。
+   光は称え、影は共犯者の目で隣に置く（説教するな）。
+
+## 関係者の神（選ばれたエピソードに登場する者のみ）
+
+{related_gods_block}
+
+→ 自然に紹介してよい（「この時、傍に立っていたのが◯◯」のように）。
+   ただし主役は奪わせない。関係者は影や脇役として扱え。
+
+## {god_name}の人生フェーズ（現年齢に対応する場面）
+
+{phase_block}
+
+→ 「神のこの場面が、満{current_age}歳のあなたに重なる」という温度で1〜2行語れ。
+   範囲外なら「神の物語の先（または前）にいる」と書いてよい。
+
+## 推奨参拝（選ばれたエピソードに直結する1社）
+
+{shrine_block}
+
+→ 鑑定文の最後に **エピソードと直結する理由付きで1社だけ** 推す。
+   「もし足が向くなら」型の温度感。押し付けない。
+
+---
+
+## 鑑定文の構造：3幕構成（必ず守れ）
+
+### ■ 第1幕：あなたという人間（全体の30%）
+- 7流派の結果を「行動・思考・身体感覚」として5〜7行で語れ
+- 占術名・専門用語は一切使うな
+- 読み手が「当たっている」と感じる密度を最優先
+- 所作・数量・時間で書く（例「鎧が3枚ある」「朝5時に目が開く日は行き先のない移動を90分」「水辺に行くと呼吸が楽になる」）
+- 第1幕の最後に、続きへ橋を架ける1行（例「——ここまで読んで『当たっている』と思ったなら、続きを読んでほしい。」）
+
+### ■ 第2幕：守護神 {god_name} の多面（全体の50%）
+- **全てのエピソードは同じ {god_name} 1人の話**
+- 主エピソード1本 ＋ 副エピソード1〜2本 ＝ 最大3本
+- 番号で並べるな（「一つ目は」「二つ目は」絶対禁止）。一本の流れで
+- 出典の違いを自然に組み込め（正史=「神話に〜とある」/古史古伝=「ある伝承では」/「富士の古文書には別の物語が残っている」）
+- 神名にはひらがな読みを初出時に添える（{god_name}は冒頭の1回のみで十分）
+- 各エピソードの core_phrase（核となる情景）を最低1つは本文に活かせ
+- **光と影の両方を必ず入れる**（片方だけは禁止）
+- 関係者の神は脇役として自然に登場させる（主役を奪わせない）
+
+### ■ 第3幕：今のあなたへ（全体の20%）
+- 「満{current_age}歳の今、{god_name}のどの場面に重なっているか」を1〜2行
+- 推薦神社を1つ。鑑定文のエピソードと直結する理由を添えろ（「もし足が向くなら」型）
+- 最後の1行で閉じろ（キャッチコピーのような密度。一語反転 or 余韻）
+
+---
+
+## 絶対禁止事項（違反は鑑定失敗扱い）
+
+- 占術用語: 流派名（算命学・四柱推命・西洋占星術・九星気学・数秘術・紫微斗数・万象学）/ 星名（牽牛星・車騎星・貫索星・鳳閣星・調舒星・禄存星・龍高星・玉堂星・石門星・司禄星）/「天中殺」「空亡」「用神」「身強」「身弱」「日干」/ 星座名（双子座・獅子座等）「太陽星座」「月星座」「ASC」「MC」「ハウス」「アスペクト」/ 九星名（本命星・五黄土星等）/「ライフパス」「個人年」/「命宮」「身宮」「殺破狼」「化忌」/「エネルギー指数」「五本能」/ 干支・五行（丙・辛・壬水・巳・申酉・丙午等）
+- **{god_name} 以外の神を主役にする**
+- エピソードの番号付き羅列（「一つ目のエピソードは」）
+- 4本以上のエピソードを並べる
+- 「6龍」「地龍」「火龍」「水龍」「天つ神」「国つ神」「メタ軸」の言及
+- 「あなたは○○タイプです」という分類的表現
+- 感情語（好き・嬉しい・悲しい・素晴らしい）を直接使う
+- 「神様が降りている」等の検証不能な断定
+
+---
+
+## 品質基準（このレベルを目指せ）
+
+- **CMプランナー型**: 30秒で人生を呼び出す密度。1行に意味を圧縮する
+- **藤原基央メソッド**: 感情語禁止。所作・物・音・数量で感情を代弁する
+- **占いモンスターの4原理**:
+  - スポットライト（予言ではなく、今ここに光を当てる）
+  - プレゼント（困難は器を作るための贈り物として語る）
+  - 今ここ（過去・未来ではなく常に「今のあなた」へ）
+  - ストーリー（物語は魂の扉を開ける鍵。情報ではなく体験を渡す）
+
+---
+
+## 出力形式（JSON）
+
+{{
+  "headline": "鑑定全体を象徴する一行（15〜30文字・特定の神の生涯を射抜く密度）",
+  "reading": "本文（3幕構成・占術名禁止・守護神は{god_name}1柱のみ・最大3本のエピソードを一本の流れに溶かす・番号付き羅列禁止・光と影の両方を入れる）",
+  "selected_episode_ids": ["採用したエピソードIDを最大3本"],
+  "closing": "締めの一言（30〜60文字・キャッチコピーの密度）"
+}}
+"""
+
+
+# ---- v2.5 深掘り型 用フォーマッタ ----
+def _format_episodes_block(episodes: list) -> str:
+    if not episodes:
+        return "（エピソードがありません）"
+    lines = []
+    for i, ep in enumerate(episodes, 1):
+        rg = "、".join(ep.get("related_gods") or [])
+        lines.append(
+            f"- [ID:{ep.get('id')}] **{ep.get('title')}**（出典: {ep.get('source')}・{ep.get('source_type')}）\n"
+            f"  神の場面の核: 「{ep.get('core_phrase')}」\n"
+            f"  要約: {ep.get('summary')}\n"
+            f"  光: {ep.get('light')}\n"
+            f"  影: {ep.get('shadow')}\n"
+            f"  神話上のフェーズ: {ep.get('life_phase_label')}\n"
+            f"  この場面に登場する関係神: {rg or '（なし）'}\n"
+            f"  鑑定文の入り口例: {ep.get('reading_example')}"
+        )
+    return "\n\n".join(lines)
+
+
+def _format_light_shadows_block(pairs: list) -> str:
+    if not pairs:
+        return "（光影対の抽出なし）"
+    return "\n".join(
+        f"- 光: {p.get('light')}　／　影: {p.get('shadow')}"
+        for p in pairs
+    )
+
+
+def _format_related_gods_block(gods: list) -> str:
+    if not gods:
+        return "（関係神は選ばれたエピソードにいません）"
+    lines = []
+    for g in gods:
+        rd = f"（{g.get('reading')}）" if g.get('reading') else ""
+        lines.append(
+            f"- **{g.get('name')}**{rd}: {g.get('role')} — {g.get('divination_use')}"
+        )
+    return "\n".join(lines)
+
+
+def _format_shrine_block(shrine) -> str:
+    if not shrine:
+        return "（推薦候補神社なし）"
+    loc = shrine.get("location") or {}
+    return (
+        f"- **{shrine.get('name')}**（{loc.get('pref','?')}・{loc.get('city','?')}）\n"
+        f"  概要: {shrine.get('summary')}\n"
+        f"  季節: {shrine.get('season_recommendation','')}\n"
+        f"  体験: {shrine.get('experience','')}"
+    )
+
+
+def _format_phase_block(phase) -> str:
+    if not phase:
+        return "（フェーズなし。神の物語の外側にいる）"
+    return (
+        f"- 第{phase.get('phase')}場面 「{phase.get('title')}」（神話上の対応年齢: {phase.get('age_label','')}）\n"
+        f"  内容: {phase.get('description','')}"
+    )
+
+
 def generate_kojindo_v2_reading(bundle: DivinationBundle) -> dict:
-    """古神道占い v2 の鑑定文を生成（占術名禁止・3-5本の物語を等価に重ねる）
+    """古神道占いの鑑定文を生成。
+    v2.5: 守護神がgods/{id}.jsonに登録済なら **深掘り型** で生成（1柱の異なるエピソード2-3本）。
+    未登録の中央星はv2(3本型)にフォールバック。
 
     設計準拠:
+    - くろたん『v2.5 深掘り型 再設計書』(2026-05-24) Phase 1 = 瓊瓊杵尊
     - くろたん『設計修正指示_流派名非表示』(2026-05-10)
     - くろたん『v2再設計書_動的マッチング』(2026-05-10)
     """
@@ -2953,6 +3168,56 @@ def generate_kojindo_v2_reading(bundle: DivinationBundle) -> dict:
     internal_traits = extract_internal_traits(bundle)
     sensations = traits_to_sensations(internal_traits)
 
+    # === v2.5 深掘り型: god_deep が populated されていれば優先 ===
+    if v2.god_deep is not None:
+        gd = v2.god_deep
+        prompt = KOJINDO_V25_PROMPT.format(
+            god_name=gd.god_name,
+            god_reading=gd.god_reading,
+            god_summary=gd.god_summary,
+            trait_sensations_block=_format_trait_sensations_block(sensations),
+            current_age=v1.current_age,
+            phase_line=v1.phase_line,
+            n_episodes=len(gd.selected_episodes),
+            episodes_block=_format_episodes_block(gd.selected_episodes),
+            light_shadows_block=_format_light_shadows_block(gd.light_shadows),
+            related_gods_block=_format_related_gods_block(gd.related_gods_in_episodes),
+            shrine_block=_format_shrine_block(gd.recommended_shrine),
+            phase_block=_format_phase_block(gd.life_phase_for_age),
+        )
+        try:
+            result = _call_api(_with_person(prompt, bundle, v3_polish=True), max_tokens=4500)
+            if isinstance(result, dict):
+                result["_v25_meta"] = {
+                    "mode": "deepdive",
+                    "god_id": gd.god_id,
+                    "god_name": gd.god_name,
+                    "selected_episode_ids": [ep.get("id") for ep in gd.selected_episodes],
+                    "related_god_names": [g.get("name") for g in gd.related_gods_in_episodes],
+                    "recommended_shrine": (gd.recommended_shrine or {}).get("name"),
+                    "match_tags_count": len(gd.match_tags),
+                }
+            return result
+        except Exception as e:
+            print(f"[くろたん] 古神道v2.5 深掘り API エラー: {e}")
+            ep_lines = "\n".join(
+                f"・{ep.get('title')}（{ep.get('source_type')}）— {ep.get('core_phrase')}"
+                for ep in gd.selected_episodes
+            )
+            return {
+                "headline": f"{gd.god_name}という一人の男に、あなたの人生が重なる",
+                "reading": (
+                    f"あなたの守護神は{gd.god_name}（{gd.god_reading}）。一人の男の人生の"
+                    f"異なる場面が、あなたの命式から照らし出されている。\n\n"
+                    f"【今この時のあなたに重なる{gd.god_name}の場面】\n{ep_lines}\n\n"
+                    f"満{v1.current_age}歳のあなたが、{gd.god_name}のどの場面の続きを生きているか——"
+                    f"その答えは、あなた自身の歩みの中にしかない。"
+                ),
+                "selected_episode_ids": [ep.get("id") for ep in gd.selected_episodes],
+                "closing": "一人の神の人生に、あなたの人生を重ねる。それが古神道の眼差し。",
+            }
+
+    # === v2.5未登録 → v2 (3本型) フォールバック ===
     prompt = KOJINDO_V2_PROMPT.format(
         trait_sensations_block=_format_trait_sensations_block(sensations),
         n_stories=len(v2.candidate_stories),
@@ -2966,6 +3231,7 @@ def generate_kojindo_v2_reading(bundle: DivinationBundle) -> dict:
     try:
         result = _call_api(_with_person(prompt, bundle, v3_polish=True), max_tokens=4500)
         result["_v2_meta"] = {
+            "mode": "v2_fallback_3stories",
             "traits": v2.traits,
             "internal_traits": internal_traits,
             "sensation_count": len(sensations),

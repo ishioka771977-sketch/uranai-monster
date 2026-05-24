@@ -20,7 +20,11 @@ from dataclasses import dataclass, field
 from typing import Optional
 
 from .models import DivinationBundle
-from .kojindo_repo import StoryRepo, ShrineRepo, Story, Shrine, get_story_repo, get_shrine_repo
+from .kojindo_repo import (
+    StoryRepo, ShrineRepo, Story, Shrine,
+    get_story_repo, get_shrine_repo,
+    load_god, GOD_NAME_TO_ID,
+)
 from .kojindo import calculate_kojindo, KojinDoResult  # v1 計算結果（背骨）
 
 
@@ -117,12 +121,31 @@ def extract_internal_traits(bundle: DivinationBundle) -> list[str]:
 # v2 拡張結果データ
 # ============================================================
 @dataclass
+class GodDeepDiveResult:
+    """v2.5 深掘り型: 1柱の神の中から命式タグで選んだエピソード群と付帯情報"""
+    god_id: str
+    god_name: str
+    god_reading: str
+    god_summary: str
+    selected_episodes: list[dict] = field(default_factory=list)   # 2-3本（user-facing fields のみ）
+    light_shadows: list[dict] = field(default_factory=list)       # 選ばれたエピソードに対応する光影対
+    related_gods_in_episodes: list[dict] = field(default_factory=list)  # 選ばれたエピソードに登場する関係神
+    recommended_shrine: Optional[dict] = None                     # 1社（選ばれたエピソードに最も紐づく）
+    life_phase_for_age: Optional[dict] = None                     # 現年齢に対応する神のフェーズ
+    match_tags: list[str] = field(default_factory=list)           # 内部マッチに使った深掘り用タグ（デバッグ）
+
+
+@dataclass
 class KojinDoV2Result:
-    """v2 = v1 結果 + 動的マッチング結果"""
+    """v2 = v1 結果 + 動的マッチング結果
+    v2.5 (2026-05-24): god_deep を追加。1柱の神のデータが gods/{id}.json に
+    あれば god_deep に深掘り結果を入れる（無ければ None で旧来の3本型）。
+    """
     v1: KojinDoResult                                    # v1 の守護神（背骨）
     traits: list[str] = field(default_factory=list)      # 抽出された特徴タグ
-    candidate_stories: list[Story] = field(default_factory=list)  # マッチ候補（10-15本）
-    recommended_shrines: list[Shrine] = field(default_factory=list)  # 推薦神社
+    candidate_stories: list[Story] = field(default_factory=list)  # マッチ候補（10-15本・3本型用）
+    recommended_shrines: list[Shrine] = field(default_factory=list)  # 推薦神社（3本型用）
+    god_deep: Optional[GodDeepDiveResult] = None         # v2.5 深掘り結果（守護神JSONがある時のみ）
 
 
 # ============================================================
@@ -263,17 +286,298 @@ def recommend_shrines(stories: list[Story], v1: KojinDoResult,
 
 
 # ============================================================
+# v2.5 深掘り型: 1柱の神のJSON データから命式に合うエピソードを選ぶ
+# 設計: 古神道占い_v2.5_深掘り型_再設計書_20260524.md
+# ============================================================
+
+# 中央星 (raw) と Deep Research の生語彙の両方を出して、両方向のマッチを
+# 取りやすくする。extract_traits の体感寄りタグ（名誉型・組織型・規格外
+# エネルギー 等）も合算する。
+def extract_god_match_tags(bundle: DivinationBundle) -> list[str]:
+    """v2.5 深掘り型のエピソード選定に使う、Deep Research語彙寄りのタグ群。
+    extract_traits の体感タグも内側に取り込む（両方の語彙でマッチさせる）。
+    """
+    tags: set[str] = set(extract_traits(bundle))  # 既存の体感タグも内包
+    s = bundle.sanmei
+
+    # === 中心星（raw）===
+    if s.chuo_sei:
+        tags.add(s.chuo_sei)
+    # 西/北/南/東の星も加える（Deep Researchで「印星過多」等は別軸だが
+    # 単星マッチ用に出しておく）
+    for star in (s.nishi_sei, s.kita_sei, s.minami_sei, s.higashi_sei):
+        if star:
+            tags.add(star)
+
+    # === 特殊格局 ===
+    if s.kakkyoku:
+        tags.add(s.kakkyoku)  # 例: "三巳格"
+
+    # === 五行 raw 名（既存の "{el}過多"/"水不足"/"火不足" に加え、
+    #     "用神{el}不足" の Deep Research 表記も付ける）===
+    g = s.gogyo_balance or {}
+    total = sum(v for v in g.values() if isinstance(v, (int, float)))
+    if total > 0:
+        for el in ("木", "火", "土", "金", "水"):
+            pct = g.get(el, 0) / total * 100
+            if pct <= 10 and el in ("水", "火"):
+                tags.add(f"用神{el}不足")
+
+    # === 数秘 ライフパス（使命・影 両方を出して、エピソード側のどちらでも拾える）===
+    lp = bundle.numerology.life_path
+    if isinstance(lp, int):
+        tags.add(f"LP{lp}使命")
+        tags.add(f"LP{lp}の影")
+        # マスター数 11/22/33 は還元数（2/4/6）でも一致させる
+        reduce_map = {11: 2, 22: 4, 33: 6}
+        if lp in reduce_map:
+            r = reduce_map[lp]
+            tags.add(f"LP{r}使命")
+            tags.add(f"LP{r}の影")
+
+    # === 紫微斗数: 化忌の宮・命宮の主星・四化付き星 ===
+    z = bundle.ziwei
+    if z is not None:
+        # 化忌の宮 → "化忌{palace_name}"
+        for pal in (z.palaces or []):
+            for h in (pal.sihua or []):
+                if "忌" in h and pal.palace_name:
+                    tags.add(f"化忌{pal.palace_name}")
+        # 命宮の主星 → 単星 ＋ 独坐タグ ＋ 即位/受領
+        for pal in (z.palaces or []):
+            if pal.palace_name == "命宮":
+                mains = pal.main_stars or []
+                for st_name in mains:
+                    tags.add(st_name)  # 例: "貪狼", "紫微", "七殺"
+                if len(mains) == 1:
+                    tags.add(f"{mains[0]}独坐")
+                if "紫微" in mains:
+                    tags.add("紫微即位")
+                if "天府" in mains:
+                    tags.add("天府受領")
+                break
+        # 四化: sihua_assignments {星: 化xx}
+        for star_name, hua in (z.sihua_assignments or {}).items():
+            tags.add(f"{star_name}{hua}")  # 例: "巨門化忌", "天梁化禄"
+
+    # === 西洋: 金星サイン・金星×木星合 ===
+    w = bundle.western
+    venus_sign = None
+    jupiter_sign = None
+    for p in (w.planets or []):
+        if p.name == "金星":
+            venus_sign = p.sign
+            if p.sign:
+                tags.add(f"金星{p.sign}")
+        elif p.name == "木星":
+            jupiter_sign = p.sign
+    for a in (w.aspects or []):
+        if a.aspect_type == "合" and {a.planet1, a.planet2} == {"金星", "木星"}:
+            tags.add("金星木星合")
+
+    # === 万象学: 印星過多（簡易・四柱推命の通変星から判定）===
+    sh = bundle.shichusuimei
+    if sh is not None:
+        in_count = 0
+        all_count = 0
+        for pillar in (sh.nen_pillar, sh.tsuki_pillar, sh.hi_pillar, sh.toki_pillar):
+            if pillar is None:
+                continue
+            for fld in ("tsuhensei", "zoukan_tsuhensei"):
+                v = getattr(pillar, fld, "") or ""
+                if v and v != "—":
+                    all_count += 1
+                    if v in ("印綬", "偏印"):
+                        in_count += 1
+        if all_count > 0 and in_count / all_count >= 0.30:
+            tags.add("印星過多")
+
+    return sorted(tags)
+
+
+def _calc_current_age(bundle: DivinationBundle) -> int:
+    from datetime import date as _d
+    bd = bundle.person.birth_date
+    today = _d.today()
+    age = today.year - bd.year - ((today.month, today.day) < (bd.month, bd.day))
+    return max(0, age)
+
+
+def select_episodes(god_data: dict, match_tags: list[str], limit: int = 3) -> list[dict]:
+    """1柱の神の episodes からタグ一致でスコアリングして上位を返す（生エピソード）"""
+    tagset = set(match_tags)
+    scored = []
+    for ep in god_data.get("episodes", []):
+        ep_tags = set(ep.get("matching_tags") or [])
+        score = len(ep_tags & tagset)
+        if score > 0:
+            scored.append((score, ep))
+    # スコア降順、タイで id 安定ソート
+    scored.sort(key=lambda x: (-x[0], x[1].get("id", "")))
+    return [ep for _, ep in scored[:limit]]
+
+
+def _episode_user_facing(ep: dict) -> dict:
+    """エピソードからプロンプト用フィールドだけを残す（matching_tags は内部のみ・占術用語漏洩防止）"""
+    return {
+        "id": ep.get("id"),
+        "title": ep.get("title"),
+        "source": ep.get("source"),
+        "source_type": ep.get("source_type"),
+        "summary": ep.get("summary"),
+        "core_phrase": ep.get("core_phrase"),
+        "light": ep.get("light"),
+        "shadow": ep.get("shadow"),
+        "life_phase_label": ep.get("life_phase_label"),
+        "related_gods": list(ep.get("related_gods") or []),
+        "related_shrines": list(ep.get("related_shrines") or []),
+        "reading_example": ep.get("reading_example"),
+    }
+
+
+def select_light_shadows(god_data: dict, selected_eps: list[dict],
+                         match_tags: list[str], limit: int = 3) -> list[dict]:
+    """選ばれたエピソードのタグ群と入力タグの共通集合で、光影対をスコアリング"""
+    ep_tag_pool: set[str] = set(match_tags)
+    for ep in selected_eps:
+        ep_tag_pool |= set(ep.get("matching_tags") or [])
+    scored = []
+    for pair in god_data.get("light_shadow_pairs", []):
+        ptags = set(pair.get("matching_tags") or [])
+        score = len(ptags & ep_tag_pool)
+        if score > 0:
+            scored.append((score, pair))
+    scored.sort(key=lambda x: -x[0])
+    out = []
+    for _, p in scored[:limit]:
+        out.append({"light": p.get("light"), "shadow": p.get("shadow")})
+    return out
+
+
+def select_related_gods_for_episodes(god_data: dict, selected_eps: list[dict]) -> list[dict]:
+    """選ばれたエピソードの related_gods に名前が現れる related_gods 定義だけ返す"""
+    names_in_eps: set[str] = set()
+    for ep in selected_eps:
+        for nm in (ep.get("related_gods") or []):
+            # "豊吾田津姫=木花咲耶姫" のような別名表記から本体名を取る
+            for token in str(nm).split("="):
+                names_in_eps.add(token.strip())
+    out = []
+    seen = set()
+    for rg in god_data.get("related_gods", []):
+        nm = rg.get("name")
+        if nm and nm in names_in_eps and nm not in seen:
+            out.append({
+                "name": nm,
+                "reading": rg.get("reading", ""),
+                "role": rg.get("role", ""),
+                "divination_use": rg.get("divination_use", ""),
+            })
+            seen.add(nm)
+    return out
+
+
+def recommend_shrine_for_episodes(god_data: dict, selected_eps: list[dict]) -> Optional[dict]:
+    """選ばれたエピソードに最も結びつく神社を1社推薦"""
+    ep_ids = {ep.get("id") for ep in selected_eps if ep.get("id")}
+    if not ep_ids:
+        # フォールバック: 最初の神社
+        shrines = god_data.get("shrines", [])
+        return shrines[0] if shrines else None
+    scored = []
+    for shr in god_data.get("shrines", []):
+        match_ids = set(shr.get("matching_episode_ids") or [])
+        score = len(match_ids & ep_ids)
+        if score > 0:
+            scored.append((score, shr))
+    if not scored:
+        shrines = god_data.get("shrines", [])
+        return shrines[0] if shrines else None
+    scored.sort(key=lambda x: -x[0])
+    shr = scored[0][1]
+    return {
+        "name": shr.get("name"),
+        "location": shr.get("location", {}),
+        "summary": shr.get("summary", ""),
+        "season_recommendation": shr.get("season_recommendation", ""),
+        "experience": shr.get("experience", ""),
+    }
+
+
+def pick_life_phase_for_age(god_data: dict, age: int) -> Optional[dict]:
+    """現年齢に対応する神の人生フェーズを1つ返す。
+    age が範囲内なら最初のヒット、範囲外なら最も近いフェーズを返す。
+    """
+    phases = god_data.get("life_phases") or []
+    if not phases:
+        return None
+    # 完全一致
+    for ph in phases:
+        a_from = int(ph.get("age_from", 0))
+        a_to = int(ph.get("age_to", 999))
+        if a_from <= age <= a_to:
+            return {"phase": ph.get("phase"), "title": ph.get("title"),
+                    "age_label": f"{a_from}〜{a_to}歳",
+                    "description": ph.get("description", "")}
+    # 範囲外: 最も近いフェーズ
+    nearest = min(phases, key=lambda ph: min(abs(age - int(ph.get("age_from", 0))),
+                                              abs(age - int(ph.get("age_to", 0)))))
+    a_from = int(nearest.get("age_from", 0))
+    a_to = int(nearest.get("age_to", 0))
+    return {"phase": nearest.get("phase"), "title": nearest.get("title"),
+            "age_label": f"{a_from}〜{a_to}歳",
+            "description": nearest.get("description", "")}
+
+
+def build_god_deep(bundle: DivinationBundle, v1: KojinDoResult) -> Optional[GodDeepDiveResult]:
+    """v2.5 深掘り型結果を構築。守護神が gods/{id}.json に未登録なら None。"""
+    god_id = GOD_NAME_TO_ID.get(v1.god_name or "")
+    if not god_id:
+        return None
+    god_data = load_god(god_id)
+    if not god_data:
+        return None
+    match_tags = extract_god_match_tags(bundle)
+    raw_eps = select_episodes(god_data, match_tags, limit=3)
+    if not raw_eps:
+        # スコア0でも最初の1本（主物語）は出す（最低限の鑑定文）
+        raw_eps = list(god_data.get("episodes", []))[:1]
+    selected_eps = [_episode_user_facing(ep) for ep in raw_eps]
+    pairs = select_light_shadows(god_data, raw_eps, match_tags, limit=3)
+    rel = select_related_gods_for_episodes(god_data, raw_eps)
+    shrine = recommend_shrine_for_episodes(god_data, raw_eps)
+    age = _calc_current_age(bundle)
+    phase = pick_life_phase_for_age(god_data, age)
+    return GodDeepDiveResult(
+        god_id=god_data.get("god_id", god_id),
+        god_name=god_data.get("god_name", v1.god_name),
+        god_reading=god_data.get("god_reading", v1.god_reading),
+        god_summary=god_data.get("god_summary", ""),
+        selected_episodes=selected_eps,
+        light_shadows=pairs,
+        related_gods_in_episodes=rel,
+        recommended_shrine=shrine,
+        life_phase_for_age=phase,
+        match_tags=match_tags,
+    )
+
+
+# ============================================================
 # 統合: calculate_kojindo_v2
 # ============================================================
 def calculate_kojindo_v2(bundle: DivinationBundle) -> KojinDoV2Result:
-    """v2 統合計算（v1 = 背骨 + 動的マッチ = 重なる物語）"""
+    """v2 統合計算（v1 = 背骨 + 動的マッチ）。
+    v2.5: 守護神JSONがあれば god_deep を併設（深掘り型へ）。
+    """
     v1 = calculate_kojindo(bundle.sanmei, bundle.person)
     traits = extract_traits(bundle)
     stories = filter_stories(traits, limit=12)
     shrines = recommend_shrines(stories, v1)
+    god_deep = build_god_deep(bundle, v1)
     return KojinDoV2Result(
         v1=v1,
         traits=traits,
         candidate_stories=stories,
         recommended_shrines=shrines,
+        god_deep=god_deep,
     )

@@ -93,6 +93,53 @@ _BASE_DIR = os.path.join(
 _STORIES_DIR = os.path.join(_BASE_DIR, "stories")
 _SHRINES_DIR = os.path.join(_BASE_DIR, "shrines")
 _TAGS_DIR = os.path.join(_BASE_DIR, "tags")
+_GODS_DIR = os.path.join(_BASE_DIR, "gods")
+
+
+# ============================================================
+# 守護神データ（v2.5 深掘り型）
+# 1柱の神の全データ（9エピソード＋光影対＋関係者＋神社＋フェーズ）を
+# data/kojindo/gods/{god_id}.json から読む。設計: 古神道v2.5 (2026-05-24)
+# ============================================================
+_god_cache: dict[str, dict] = {}
+
+
+def load_god(god_id: str) -> Optional[dict]:
+    """守護神JSONを読み込む（キャッシュあり）。未登録ならNone。
+
+    god_id: "ninigi" 等。data/kojindo/gods/{god_id}.json を読む。
+    Phase1では ninigi のみ。今後 okuninushi 等を順次追加。
+    """
+    if god_id in _god_cache:
+        return _god_cache[god_id]
+    path = os.path.join(_GODS_DIR, f"{god_id}.json")
+    if not os.path.isfile(path):
+        return None
+    try:
+        with open(path, encoding="utf-8") as f:
+            data = json.load(f)
+        _god_cache[god_id] = data
+        return data
+    except Exception as e:
+        print(f"[kojindo_repo] failed to load god {god_id}: {e}")
+        return None
+
+
+# 神名 → god_id マッピング（中央星から導出される god_name と JSON の god_id を結ぶ）
+# 今後 Deep Research完了次第、ここに追加していく。
+GOD_NAME_TO_ID = {
+    "瓊瓊杵尊": "ninigi",
+    # Phase 2以降:
+    # "大国主命": "okuninushi",
+    # "須佐之男命": "susanoo",
+    # "建御雷神": "takemikazuchi",
+    # "天宇受賣命": "uzume",
+    # "猿田彦神": "sarutahiko",
+    # "思金神": "omoikane",
+    # "建御名方神": "takeminakata",
+    # "玉依姫": "tamayori",
+    # "木花咲耶姫": "konohanasakuya",
+}
 
 
 def _load_json_files(directory: str) -> list[dict]:
