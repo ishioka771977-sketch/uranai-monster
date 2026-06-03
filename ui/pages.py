@@ -1941,6 +1941,17 @@ def render_input_page():
 
     render_gold_divider()
 
+    # 履歴に残さないチェック（タレント・関係の薄い人・一回限り用）
+    # チェック時: divination_history への保存スキップ ＋ お名前.json への顧客登録スキップ
+    # → クイック選択にも履歴ビューにも出ない。セッション中の鑑定・共有・PDFは通常通り動く
+    no_history_default = st.session_state.get("_saved_no_history", False)
+    st.checkbox(
+        "📋 履歴に残さない（タレント・関係の薄い人・一回だけ占う相手）",
+        value=no_history_default,
+        key=f"input_no_history_{kv}",
+        help="チェックすると、今回の鑑定は履歴(『前回の鑑定結果を見る』)にも顧客一覧(クイック選択)にも残りません。鑑定そのものは普通に動きます。",
+    )
+
     col1, col2, col3 = st.columns([1, 2, 1])
     with col2:
         if st.button("✧ 鑑定する ✧", key="btn_divine"):
@@ -1958,6 +1969,10 @@ def render_input_page():
             input_place = st.session_state.get(f"input_place_{kv}", "").strip()
             input_blood = st.session_state.get(f"input_blood_{kv}", "不明")
             input_email = st.session_state.get(f"input_email_{kv}", "").strip()
+            input_no_history = bool(st.session_state.get(f"input_no_history_{kv}", False))
+
+            # 「履歴に残さない」モード: 今セッションで履歴/顧客登録を全部スキップ
+            st.session_state.no_history = input_no_history
 
             # セッションステートに保存
             st.session_state.person = PersonInput(
@@ -1969,10 +1984,11 @@ def render_input_page():
                 blood_type=input_blood if input_blood != "不明" else None,
             )
 
-            # 名前をキーにデータを記憶
-            _save_person(
-                input_name, year, month, day, input_time, input_place, input_blood, input_gender, input_email
-            )
+            # 名前をキーにデータを記憶（履歴に残さないモードならスキップ）
+            if not input_no_history:
+                _save_person(
+                    input_name, year, month, day, input_time, input_place, input_blood, input_gender, input_email
+                )
 
             st.session_state.page = "loading"
             st.session_state.bundle = None
@@ -2108,6 +2124,17 @@ def render_ura_menu_page():
     recommendation = st.session_state.recommendation
 
     render_ura_menu(bundle, recommendation)
+
+    # 履歴オフモードのバッジ（入力画面で「履歴に残さない」をONにした時）
+    if st.session_state.get("no_history"):
+        st.markdown(
+            '<div style="text-align:center; margin:8px 0 0; padding:6px 10px;'
+            ' background:#2A1F1F; border:1px solid #8A5A5A; border-radius:6px;'
+            ' color:#E0A8A8; font-size:0.82em;">'
+            '📋 履歴オフモード：この鑑定は履歴にも顧客一覧にも残りません'
+            '</div>',
+            unsafe_allow_html=True,
+        )
 
     render_gold_divider()
 
@@ -2296,6 +2323,10 @@ def _record_history(
         card_data_json: タロットカード等の引き結果（list of dict）
                         ※Phase 1（2026-05-15）追加。タロット系のみ使用
     """
+    # 「履歴に残さない」モード（入力画面のチェック）: 保存を完全スキップ
+    # タレント・関係の薄い人・一回限り占いを履歴/顧客一覧に残さない
+    if st.session_state.get("no_history"):
+        return
     if not _supabase_on():
         return
     try:
