@@ -296,6 +296,33 @@ def render_western_course(bundle: DivinationBundle, data: dict):
     <div style="color:#8A8478; font-size:0.78em;">主要アスペクト: {" / ".join(aspect_items)}</div>
   </div>"""
 
+    # 画像共有用に「主要配置＋天体一覧＋アスペクト」を1枚にまとめる
+    # details で折り畳まれている天体一覧は、画像化用に展開済みの平坦HTMLを作り直す
+    planet_table_flat = ""
+    if w.planets:
+        rows = []
+        for p in w.planets:
+            deg_in_sign = p.degree % 30
+            deg_str = f"{int(deg_in_sign)}°{int((deg_in_sign % 1) * 60):02d}'"
+            retro = " <span style='color:#C47A6A;'>R</span>" if p.is_retrograde else ""
+            house = f"{p.house}H" if p.house else "-"
+            rows.append(f"<tr><td style='padding:2px 6px;color:#F0EBE0;'>{p.name}</td><td style='padding:2px 6px;color:#F0EBE0;'>{p.sign}{retro}</td><td style='padding:2px 6px;color:#F0EBE0;'>{deg_str}</td><td style='padding:2px 6px;color:#F0EBE0;'>{house}</td></tr>")
+        planet_table_flat = f"""
+  <div style="margin:8px 0;">
+    <div style="color:#BFA350; font-size:0.85em; font-weight:bold; margin-bottom:4px;">天体配置</div>
+    <table style="width:100%; font-size:0.82em; border-collapse:collapse;">
+      <tr style="color:#BFA350; border-bottom:1px solid #2A2A2A;">
+        <th style="text-align:left;padding:2px 6px;">天体</th><th style="text-align:left;padding:2px 6px;">星座</th><th style="text-align:left;padding:2px 6px;">度数</th><th style="text-align:left;padding:2px 6px;">ハウス</th>
+      </tr>
+      {"".join(rows)}
+    </table>
+  </div>"""
+
+    chart_html = asc_mc_tags + planet_table_flat + (aspect_html or "")
+    _figs = []
+    if chart_html.strip():
+        _figs.append({"html": chart_html, "title": "西洋占星術_配置", "key": "western_chart", "height": 380})
+
     _render_course_card(
         title="西洋占星術が描く、あなたの星図",
         headline=data.get("headline", ""),
@@ -303,6 +330,7 @@ def render_western_course(bundle: DivinationBundle, data: dict):
         closing=data.get("closing", data.get("one_line", "")),
         data_tags=asc_mc_tags,
         extra_html=planet_html + aspect_html,
+        shareable_figures=_figs or None,
     )
 
 
@@ -321,12 +349,28 @@ def render_kyusei_course(bundle: DivinationBundle, data: dict):
     <span class="uranai-tag">凶方位: {k.bad_direction}</span>
   </div>"""
 
+    # 画像共有用カード（本命星・月命星・吉凶方位・年テーマ）
+    kyusei_card = f"""
+  <div style="margin:6px 0; padding:10px; border:1px solid #2A2A2A; border-radius:6px;">
+    <div style="text-align:center; color:#BFA350; font-size:0.95em; font-weight:bold; margin-bottom:8px;">九星気学の配置</div>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; font-size:0.88em; color:#F0EBE0;">
+      <div>本命星: <span style="color:#D4B96A; font-weight:bold;">{k.honmei_sei}</span></div>
+      <div>月命星: <span style="color:#D4B96A; font-weight:bold;">{k.getsu_mei_sei}</span></div>
+      <div>2026年: <span style="color:#D4B96A;">{k.year_theme}</span></div>
+      <div>年盤位置: <span style="color:#D4B96A;">{k.year_position}</span></div>
+      <div>吉方位: <span style="color:#7CB87C;">{k.lucky_direction}</span></div>
+      <div>凶方位: <span style="color:#C47A6A;">{k.bad_direction}</span></div>
+    </div>
+  </div>"""
+    _figs = [{"html": kyusei_card, "title": "九星気学_配置", "key": "kyusei_card", "height": 200}]
+
     _render_course_card(
         title="九星気学が示す、あなたの運命",
         headline=data.get("headline", ""),
         reading=data.get("reading", data.get("honmei_reading", "")),
         closing=data.get("closing", data.get("one_line", "")),
         data_tags=tags,
+        shareable_figures=_figs,
     )
 
 
@@ -344,12 +388,37 @@ def render_numerology_course(bundle: DivinationBundle, data: dict):
     <span class="uranai-tag">2026年 個人年: {n.personal_year}「{n.personal_year_title}」</span>
   </div>"""
 
+    # 画像共有用カード（LP・誕生日数・個人年を大きな数字で）
+    num_card = f"""
+  <div style="margin:6px 0; padding:14px; border:1px solid #2A2A2A; border-radius:6px;">
+    <div style="text-align:center; color:#BFA350; font-size:0.95em; font-weight:bold; margin-bottom:10px;">数秘術ナンバーズ</div>
+    <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; text-align:center;">
+      <div>
+        <div style="font-size:2.2em; color:#D4B96A; font-weight:bold; line-height:1;">{n.life_path}</div>
+        <div style="color:#8A8478; font-size:0.72em; margin-top:4px;">ライフパス</div>
+        <div style="color:#F0EBE0; font-size:0.78em;">{n.life_path_title}</div>
+      </div>
+      <div>
+        <div style="font-size:2.2em; color:#D4B96A; font-weight:bold; line-height:1;">{n.birthday_number}</div>
+        <div style="color:#8A8478; font-size:0.72em; margin-top:4px;">誕生日数</div>
+        <div style="color:#F0EBE0; font-size:0.78em;">&nbsp;</div>
+      </div>
+      <div>
+        <div style="font-size:2.2em; color:#D4B96A; font-weight:bold; line-height:1;">{n.personal_year}</div>
+        <div style="color:#8A8478; font-size:0.72em; margin-top:4px;">2026年 個人年</div>
+        <div style="color:#F0EBE0; font-size:0.78em;">{n.personal_year_title}</div>
+      </div>
+    </div>
+  </div>"""
+    _figs = [{"html": num_card, "title": "数秘術_ナンバーズ", "key": "num_card", "height": 240}]
+
     _render_course_card(
         title="数秘術が解き明かす、あなたの数字",
         headline=data.get("headline", ""),
         reading=data.get("reading", data.get("life_path_reading", "")),
         closing=data.get("closing", data.get("one_line", "")),
         data_tags=tags,
+        shareable_figures=_figs,
     )
 
 
@@ -916,23 +985,35 @@ def render_shichusuimei_course(bundle: DivinationBundle, data: dict = None):
         + _row("時柱", sh.toki_pillar)
         + '</table>'
     )
-    st.markdown(table_html, unsafe_allow_html=True)
 
     # 日主・空亡サマリー
-    st.markdown(f"""
+    summary_html = f"""
 <div style="margin:10px 0; color:#F0EBE0;">
 <span style="color:#BFA350;">日主</span>: {sh.nichikan}（{sh.nichikan_gogyo}・{sh.nichikan_inyo}）
 <span style="color:#BFA350;">空亡</span>: {sh.kuubou_name}
 </div>
-""", unsafe_allow_html=True)
+"""
 
     # 神殺リスト
+    shinsatsu_html = ""
     if sh.shinsatsu:
         shinsatsu_badges = ''.join(
             f'<span style="display:inline-block; background:rgba(191,163,80,0.08); border:1px solid rgba(191,163,80,0.3); border-radius:12px; padding:2px 10px; margin:2px; font-size:0.78em; color:#D4B96A;">{s["name"]}<span style="color:#8A8478; font-size:0.85em;">（{s.get("position","")}）</span></span>'
             for s in sh.shinsatsu
         )
-        st.markdown(f'<div style="margin:10px 0;"><span style="color:#BFA350;">神殺</span>：{shinsatsu_badges}</div>', unsafe_allow_html=True)
+        shinsatsu_html = f'<div style="margin:10px 0;"><span style="color:#BFA350;">神殺</span>：{shinsatsu_badges}</div>'
+
+    # 五行バランス
+    g = sh.gogyo_balance or {}
+    gogyo_html = (
+        '<div style="margin:10px 0;"><span style="color:#BFA350;">五行バランス</span>：'
+        + '　'.join(f'<span style="color:#F0EBE0;">{k} {g.get(k,0)}%</span>' for k in ["木","火","土","金","水"])
+        + '</div>'
+    )
+
+    # 命式表（四柱 + 日主空亡 + 神殺 + 五行 を1枚にまとめて画像共有可）
+    meishiki_combined = table_html + summary_html + shinsatsu_html + gogyo_html
+    render_shareable_figure(meishiki_combined, key="shichu_meishiki", caption="四柱推命_命式", height=420)
 
     # 大運
     taiun_html = (
@@ -948,16 +1029,8 @@ def render_shichusuimei_course(bundle: DivinationBundle, data: dict = None):
             f'</span><br>'
         )
     taiun_html += '</div>'
-    st.markdown(taiun_html, unsafe_allow_html=True)
-
-    # 五行バランス
-    g = sh.gogyo_balance or {}
-    gogyo_html = (
-        '<div style="margin:10px 0;"><span style="color:#BFA350;">五行バランス</span>：'
-        + '　'.join(f'<span style="color:#F0EBE0;">{k} {g.get(k,0)}%</span>' for k in ["木","火","土","金","水"])
-        + '</div>'
-    )
-    st.markdown(gogyo_html, unsafe_allow_html=True)
+    # 大運表を画像共有可能な形で描画（紫微斗数の大限表と同パターン）
+    render_shareable_figure(taiun_html, key="shichu_taiun", caption="四柱推命_大運表", height=360)
 
     # AI鑑定文
     reading = data.get("reading", "")
@@ -1453,6 +1526,30 @@ def render_bansho_course(bundle: DivinationBundle, data: dict = None):
 </div>
 
 </div>""", unsafe_allow_html=True)
+
+    # 画像共有用サマリー（エネルギー指数＋スペクトル＋本能ランキング＋コンボ才能を1枚に）
+    # 本体カードはそのまま、画像化用に要点を絞った別カードを下に追加
+    bansho_summary = f"""
+<div style="background:#0F0F0F; padding:14px; border:1px solid #BFA350; border-radius:8px;">
+  <div style="text-align:center; margin-bottom:10px;">
+    <div style="font-size:2.6em; font-weight:bold; color:#D4B96A; line-height:1;">{e.total_energy}</div>
+    <div style="font-size:0.85em; color:#BFA350; margin-top:4px;">宿命エネルギー指数</div>
+    <div style="margin-top:6px;">
+      <span style="display:inline-block; padding:2px 12px; border-radius:12px; border:1px solid #BFA350; color:#D4B96A; font-size:0.85em;">{e.energy_type}</span>
+    </div>
+  </div>
+  <div style="margin:10px 16px;">
+    {spectrum_zones}
+    <div style="display:flex;justify-content:space-between;color:#5A5A5A;font-size:0.65em;margin-top:2px;">
+      <span>89</span><span>160</span><span>200</span><span>300</span><span>401</span>
+    </div>
+  </div>
+  <div style="color:#BFA350; font-size:0.85em; font-weight:bold; margin:8px 0 4px; text-align:center;">── 五本能ランキング ──</div>
+  {ranking_rows}
+  {combo_html}
+</div>
+"""
+    render_shareable_figure(bansho_summary, key="bansho_summary", caption="万象学_エネルギー", height=560)
 
 
 def render_theme_result(theme_key: str, data: dict):
