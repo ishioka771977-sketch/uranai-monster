@@ -644,49 +644,76 @@ THEME_DISPLAY = {
 
 def render_shareable_figure(figure_html: str, key: str, caption: str = "図表", height: int = 420):
     """図表HTMLを iframe 内で描画し、html2canvas でキャプチャして
-    Web Share API / ダウンロードで共有できる共通ヘルパー（2026-05-17 タスク3）。
+    Web Share API / ダウンロードで共有できる共通ヘルパー。
+
+    2026-05-17 初版: 「画像で送る」ボタン1個（共有→失敗時は保存fallback）。
+    2026-05-25 v2: タロット形式に統一（ひでさん指令）。
+      「📤 画像を送る（LINE等）」「📥 画像を保存」の **2ボタン縦並び** に揃える。
+      送る側は navigator.share → 失敗時は保存fallback、保存側は必ず保存。
+      これで「共有が動かない端末でも確実に保存できる」を保証する。
 
     Streamlit が描画した DOM は iframe 跨ぎでキャプチャできないため、
     図表HTML自体を components.html(iframe) 内に持ち、表示と共有を
     同一 iframe で完結させることでこの制約を回避する。
     figure_html はインライン style 前提（iframe 内は親CSSが効かない）。
-    フォールバック: Web Share 非対応/失敗 → ダウンロード。
+    iframe 高さはボタン分(約110px)を自動で足す。
     """
     import json as _json_fig
     fig_json = _json_fig.dumps(figure_html)
+    # ボタン領域分の高さを足す（タロット形式の2ボタン+余白）
+    height_with_buttons = int(height) + 110
     tpl = """
 <div style="background:#0A0A0A; color:#F0EBE0; font-family:'Zen Kaku Gothic New',sans-serif; padding:4px;">
   <div id="cap___KEY__"></div>
-  <div style="text-align:center; margin:8px 0;">
-    <button id="sh___KEY__" style="background:#BFA350;color:#0A0A0A;border:none;padding:8px 16px;border-radius:6px;font-weight:bold;cursor:pointer;width:92%;font-family:'Zen Kaku Gothic New',sans-serif;">📤 __CAPTION__ を画像で送る</button>
-    <div id="msg___KEY__" style="color:#7CB87C;font-size:0.72em;margin-top:4px;min-height:16px;"></div>
+  <div style="margin:8px 0 4px;">
+    <button id="sh___KEY__" style="background:#BFA350;color:#0A0A0A;border:none;padding:8px 16px;border-radius:6px;font-size:0.9em;font-weight:bold;cursor:pointer;width:100%;font-family:'Zen Kaku Gothic New',sans-serif;display:block;">📤 画像を送る（LINE等）</button>
   </div>
+  <div style="margin:4px 0;">
+    <button id="dl___KEY__" style="background:#1A1A1A;color:#F0EBE0;border:1px solid #2A2A2A;padding:8px 16px;border-radius:6px;font-size:0.9em;font-weight:bold;cursor:pointer;width:100%;font-family:'Zen Kaku Gothic New',sans-serif;display:block;">📥 画像を保存</button>
+  </div>
+  <div id="msg___KEY__" style="color:#7CB87C;font-size:0.72em;margin-top:4px;min-height:16px;text-align:center;"></div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script>
 (function(){
   var cap = document.getElementById('cap___KEY__');
   cap.innerHTML = __FIGJSON__;
-  var btn = document.getElementById('sh___KEY__');
+  var btnSh = document.getElementById('sh___KEY__');
+  var btnDl = document.getElementById('dl___KEY__');
+  var FN = '__CAPTION__.png';
   function msg(t){ var e=document.getElementById('msg___KEY__'); if(e){e.textContent=t;} }
-  function dl(blob,fn){ var a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=fn; a.click(); msg('✓ 端末に保存しました'); }
-  btn.addEventListener('click', function(){
+  function dl(blob){
+    var a=document.createElement('a');
+    a.href=URL.createObjectURL(blob); a.download=FN; a.click();
+    msg('✓ 端末に保存しました');
+  }
+  function capture(cb){
     if (typeof html2canvas === 'undefined'){ msg('⚠ 画像化ライブラリ未読込（通信環境を確認）'); return; }
     msg('画像生成中…');
     html2canvas(cap, {backgroundColor:'#0A0A0A', scale:2, useCORS:true}).then(function(canvas){
       canvas.toBlob(function(blob){
         if(!blob){ msg('⚠ 画像生成失敗'); return; }
-        var fn = '__CAPTION__.png';
-        try {
-          var file = new File([blob], fn, {type:'image/png'});
-          if (navigator.canShare && navigator.canShare({files:[file]})){
-            navigator.share({files:[file], title:'__CAPTION__'})
-              .then(function(){ msg('✓ 送信しました'); })
-              .catch(function(e){ if(e && e.name==='AbortError'){return;} dl(blob,fn); });
-          } else { dl(blob,fn); }
-        } catch(e) { dl(blob,fn); }
+        cb(blob);
       }, 'image/png');
     }).catch(function(e){ msg('⚠ '+e); });
+  }
+  btnSh.addEventListener('click', function(){
+    capture(function(blob){
+      try {
+        var file = new File([blob], FN, {type:'image/png'});
+        if (navigator.canShare && navigator.canShare({files:[file]})){
+          navigator.share({files:[file], title:'__CAPTION__'})
+            .then(function(){ msg('✓ 送信しました'); })
+            .catch(function(e){
+              if(e && e.name==='AbortError'){ msg(''); return; }
+              dl(blob);
+            });
+        } else { dl(blob); }
+      } catch(e) { dl(blob); }
+    });
+  });
+  btnDl.addEventListener('click', function(){
+    capture(function(blob){ dl(blob); });
   });
 })();
 </script>
@@ -694,7 +721,7 @@ def render_shareable_figure(figure_html: str, key: str, caption: str = "図表",
     out = (tpl.replace("__KEY__", str(key))
               .replace("__CAPTION__", caption)
               .replace("__FIGJSON__", fig_json))
-    _stc.html(out, height=height)
+    _stc.html(out, height=height_with_buttons)
 
 
 def render_ziwei_course(bundle, data: dict):
