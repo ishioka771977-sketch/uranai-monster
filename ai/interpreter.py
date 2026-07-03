@@ -92,7 +92,18 @@ def _active_provider() -> str:
 
 
 def _claude_model_name() -> str:
-    return os.environ.get("CLAUDE_MODEL", "claude-opus-4-7")
+    return os.environ.get("CLAUDE_MODEL", "claude-fable-5")
+
+
+def _log_claude_response_model(response) -> None:
+    """レスポンスの実使用モデルをログ出力（Opus 4.8等への振り替え検知用）"""
+    requested = _claude_model_name()
+    served = getattr(response, "model", "")
+    stop_reason = getattr(response, "stop_reason", "")
+    if served and served != requested:
+        print(f"[interpreter] claude model FALLBACK: requested={requested} served={served} stop_reason={stop_reason}")
+    else:
+        print(f"[interpreter] claude model={served} stop_reason={stop_reason}")
 
 # ============================================================
 # 現在日時の取得（鑑定文の年号誤認防止）
@@ -1839,6 +1850,7 @@ def _call_api(prompt: str, max_tokens: int = 2500) -> dict:
                     system=system_with_time,
                     messages=[{"role": "user", "content": prompt}],
                 )
+                _log_claude_response_model(response)
                 text = "".join(getattr(b, "text", "") for b in response.content)
                 return _parse_json_response(text)
             except Exception as e:
@@ -1874,6 +1886,7 @@ def _call_api_text(system: str, prompt: str, max_tokens: int = 1000) -> str:
                     system=system_with_time,
                     messages=[{"role": "user", "content": prompt}],
                 )
+                _log_claude_response_model(response)
                 return "".join(getattr(b, "text", "") for b in response.content)
             except Exception as e:
                 print(f"[interpreter] claude failed, fallback to gemini: {e}")
