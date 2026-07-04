@@ -100,10 +100,12 @@ def _log_claude_response_model(response) -> None:
     requested = _claude_model_name()
     served = getattr(response, "model", "")
     stop_reason = getattr(response, "stop_reason", "")
+    # flush=True: Streamlit Cloud等の非TTY環境ではstdoutがブロックバッファされ、
+    # flushしないとManage appログに出るのが大幅に遅延するため
     if served and served != requested:
-        print(f"[interpreter] claude model FALLBACK: requested={requested} served={served} stop_reason={stop_reason}")
+        print(f"[interpreter] claude model FALLBACK: requested={requested} served={served} stop_reason={stop_reason}", flush=True)
     else:
-        print(f"[interpreter] claude model={served} stop_reason={stop_reason}")
+        print(f"[interpreter] claude model={served} stop_reason={stop_reason}", flush=True)
 
 # ============================================================
 # 現在日時の取得（鑑定文の年号誤認防止）
