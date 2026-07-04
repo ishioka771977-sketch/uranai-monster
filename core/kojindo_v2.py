@@ -232,7 +232,7 @@ def extract_traits(bundle: DivinationBundle) -> list[str]:
             traits.add("組織型")
 
     # === 状態・フェーズタグ（年齢×フェーズ）===
-    v1 = calculate_kojindo(s, bundle.person)
+    v1 = calculate_kojindo(s, bundle.person, bundle.shichusuimei)
     phase_to_state = {
         "反抗と試練": "反抗期",
         "修行期": "修行期",
@@ -531,7 +531,8 @@ def pick_life_phase_for_age(god_data: dict, age: int) -> Optional[dict]:
 
 def build_god_deep(bundle: DivinationBundle, v1: KojinDoResult) -> Optional[GodDeepDiveResult]:
     """v2.5 深掘り型結果を構築。守護神が gods/{id}.json に未登録なら None。"""
-    god_id = GOD_NAME_TO_ID.get(v1.god_name or "")
+    # v3: 判定結果が直接 god_id を持つ（GOD_NAME_TO_ID は後方互換フォールバック）
+    god_id = v1.god_id or GOD_NAME_TO_ID.get(v1.god_name or "")
     if not god_id:
         return None
     god_data = load_god(god_id)
@@ -569,7 +570,7 @@ def calculate_kojindo_v2(bundle: DivinationBundle) -> KojinDoV2Result:
     """v2 統合計算（v1 = 背骨 + 動的マッチ）。
     v2.5: 守護神JSONがあれば god_deep を併設（深掘り型へ）。
     """
-    v1 = calculate_kojindo(bundle.sanmei, bundle.person)
+    v1 = calculate_kojindo(bundle.sanmei, bundle.person, bundle.shichusuimei)
     traits = extract_traits(bundle)
     stories = filter_stories(traits, limit=12)
     shrines = recommend_shrines(stories, v1)

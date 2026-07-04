@@ -125,20 +125,28 @@ def load_god(god_id: str) -> Optional[dict]:
         return None
 
 
-# 神名 → god_id マッピング（中央星から導出される god_name と JSON の god_id を結ぶ）
-# 今後 Deep Research完了次第、ここに追加していく。
+# 神名 → god_id マッピング（god_name と JSON の god_id を結ぶ）
+# v3（2026-07-04 指令書）: 十干10柱に世代交代。god_id は core/kojindo.py の
+# GOD_ID_BY_JIKKAN 凍結表が正（表記ゆれ禁止・くろたん承認 2026-07-04）。
+# 深掘りJSONは現状 ninigi.json のみ実在。他の9柱は系統A/B完了後に順次追加。
 GOD_NAME_TO_ID = {
+    "大山津見神": "oyamatsumi",
+    "木花咲耶姫": "konohanasakuya",
+    "天照大神": "amaterasu",
+    "月読命": "tsukuyomi",
+    "伊邪那岐命": "izanagi",
+    "大国主命": "okuninushi",
+    "須佐之男命": "susanoo",
     "瓊瓊杵尊": "ninigi",
-    # Phase 2以降:
-    # "大国主命": "okuninushi",
-    # "須佐之男命": "susanoo",
+    "綿津見神": "watatsumi",
+    "瀬織津姫": "seoritsuhime",
+    # v1退役組（アーカイブ・眷属レイヤー等での再登板に備え予約）:
     # "建御雷神": "takemikazuchi",
     # "天宇受賣命": "uzume",
     # "猿田彦神": "sarutahiko",
     # "思金神": "omoikane",
     # "建御名方神": "takeminakata",
     # "玉依姫": "tamayori",
-    # "木花咲耶姫": "konohanasakuya",
 }
 
 

@@ -34,10 +34,16 @@ ROKURYU_TABLE = {
 
 
 # ============================================================
-# 守護神判定テーブル（中心星 → 古事記の神）
+# 【v1アーカイブ】守護神判定テーブル（中心星 → 古事記の神）
 # 占いモンスター独自構築（北極流の口伝に閉じる領域を独自タクソノミーで再構築）
+#
+# v3（2026-07-04 くろたん指令書）で判定軸が日干（JIKKAN_GUARDIAN_TABLE）に
+# 世代交代した。本テーブルは判定には使用しない。
+# ★削除禁止（くろたんレビュー 2026-07-04）: 建御名方・天宇受賣・建御雷・
+#   猿田彦・思金・玉依姫の神話素材は、将来の眷属レイヤー・相性コンテンツで
+#   再登板の可能性があるためアーカイブとして保持する。
 # ============================================================
-GUARDIAN_GOD_TABLE = {
+GUARDIAN_GOD_TABLE_V1_ARCHIVE = {
     "貫索星": {
         "god": "建御名方神",
         "reading": "たけみなかたのかみ",
@@ -132,6 +138,151 @@ GUARDIAN_GOD_TABLE = {
 
 
 # ============================================================
+# 【v3】god_id 凍結表（くろたん承認 2026-07-04・表記ゆれ禁止）
+# ここが全テーブル・全JSONファイル名・全神社マスタの正とする。
+# 変更にはくろたん承認が必要。
+# ============================================================
+#   甲 = oyamatsumi      （大山津見神）
+#   乙 = konohanasakuya  （木花咲耶姫）
+#   丙 = amaterasu       （天照大神）
+#   丁 = tsukuyomi       （月読命）    ※ tsukiyomi 表記は使用しない
+#   戊 = izanagi         （伊邪那岐命）
+#   己 = okuninushi      （大国主命）
+#   庚 = susanoo         （須佐之男命）※ susanowo 表記は使用しない
+#   辛 = ninigi          （瓊瓊杵尊）  ※既存 gods/ninigi.json と同一
+#   壬 = watatsumi       （綿津見神）
+#   癸 = seoritsuhime    （瀬織津姫）
+GOD_ID_BY_JIKKAN = {
+    "甲": "oyamatsumi",
+    "乙": "konohanasakuya",
+    "丙": "amaterasu",
+    "丁": "tsukuyomi",
+    "戊": "izanagi",
+    "己": "okuninushi",
+    "庚": "susanoo",
+    "辛": "ninigi",
+    "壬": "watatsumi",
+    "癸": "seoritsuhime",
+}
+
+# ============================================================
+# 【v3】守護神判定テーブル（日干 → 古事記の神）
+# 対応表: 古神道v3指令書 0章（2026-07-04 確定・変更禁止）
+# 総本社: 骨格版（2026-07-03）準拠。丁・庚・壬は系統A裏取り待ちのため併記
+#
+# story_type / headline / template について:
+# - 己・庚・辛・乙 の4柱は v1 の文言を流用（神は続投のため）
+# - 甲・丙・丁・戊・壬・癸 の6柱は骨格版の「神格の要点」「意識の種」を
+#   母体にした草案（くろたん添削・確定待ち。P0関所で提出）
+# ============================================================
+JIKKAN_GUARDIAN_TABLE = {
+    "甲": {
+        "god_id": "oyamatsumi",
+        "god": "大山津見神",
+        "reading": "おおやまつみのかみ",
+        "type": "国つ神",
+        "shrine": "大山祇神社",
+        "story_type": "動かぬ大樹",
+        "headline": "山々の総元締。娘を送り出し、武人の剣を受け取る",
+        "template": "大樹のように、動かず・急がず・根を張る。根を張った場所が、あなたの国になる",
+    },
+    "乙": {
+        "god_id": "konohanasakuya",
+        "god": "木花咲耶姫",
+        "reading": "このはなさくやひめ",
+        "type": "国つ神",
+        "shrine": "富士山本宮浅間大社",
+        "story_type": "華やかな儚さ",
+        "headline": "火の中で産み落とす。疑われた夜に証明した命が三つ",
+        "template": "咲いた花は短い。だからその一日が、見た者の一生に残る",
+    },
+    "丙": {
+        "god_id": "amaterasu",
+        "god": "天照大神",
+        "reading": "あまてらすおおみかみ",
+        "type": "天つ神",
+        "shrine": "伊勢神宮（内宮）",
+        "story_type": "照らす中心",
+        "headline": "岩戸が開いた朝、世界に光が戻った",
+        "template": "願う前に、照らされていることに気づく。あなたが現れるだけで、部屋に朝が来る",
+    },
+    "丁": {
+        "god_id": "tsukuyomi",
+        "god": "月読命",
+        "reading": "つくよみのみこと",
+        "type": "天つ神",
+        "shrine": "月讀宮・月読神社",  # 系統A裏取り待ち（主従関係）
+        "story_type": "沈黙の灯",
+        "headline": "三貴子でありながら、神話に語られぬ夜の王",
+        "template": "語らぬものの声を聴く。夜にしか見えない光が、あなたの領分",
+    },
+    "戊": {
+        "god_id": "izanagi",
+        "god": "伊邪那岐命",
+        "reading": "いざなぎのみこと",
+        "type": "天つ神",
+        "shrine": "伊弉諾神宮",
+        "story_type": "創造の起点",
+        "headline": "国を生み、神を生み、禊で自らを生み直した",
+        "template": "創る前に、区切る。終わらせる力が、そのままあなたの始める力",
+    },
+    "己": {
+        "god_id": "okuninushi",
+        "god": "大国主命",
+        "reading": "おおくにぬしのみこと",
+        "type": "国つ神",
+        "shrine": "出雲大社",
+        "story_type": "連合の柱",
+        "headline": "傷ついた兎に布を巻く手、十七人の弟を率いる肩",
+        "template": "守るのは国ではなく、輪。あなたの真ん中に、人が集まる",
+    },
+    "庚": {
+        "god_id": "susanoo",
+        "god": "須佐之男命",
+        "reading": "すさのおのみこと",
+        "type": "天つ神→国つ神",
+        "shrine": "八坂神社・氷川神社・須佐神社",  # 系統A裏取り待ち（本社性比較）
+        "story_type": "葛藤の詩人",
+        "headline": "机を叩いた拳、湖一つ分の涙、書き直した詩が三十一文字",
+        "template": "壊した分だけ、誰も書けなかった一行が、あなたの指から出る",
+    },
+    "辛": {
+        "god_id": "ninigi",
+        "god": "瓊瓊杵尊",
+        "reading": "ににぎのみこと",
+        "type": "天つ神",
+        "shrine": "霧島神宮",
+        "story_type": "天孫の長征",
+        "headline": "三つの神器を抱えて雲を降りた者",
+        "template": "背に日を負わぬ進路を選ぶ。名は遅れて届く。だが必ず届く",
+    },
+    "壬": {
+        "god_id": "watatsumi",
+        "god": "綿津見神",
+        "reading": "わたつみのかみ",
+        "type": "国つ神",
+        "shrine": "志賀海神社",  # 系統A裏取り待ち（住吉三神との異同）
+        "story_type": "潮を読む器",
+        "headline": "海原の主。満ち潮も引き潮も、すべて手の内",
+        "template": "流れに逆らわず、潮目を読む。受け入れた分だけ、あなたは深くなる",
+    },
+    "癸": {
+        # 出典（草案時点・くろたん指示）: 大祓詞（延喜式巻八・祝詞）に登場する
+        # 祓戸四神の一柱。佐久奈度神社（滋賀県大津市）は大祓詞ゆかりの社として
+        # 由緒に瀬織津姫を記載。記紀非登場のため一次情報のみで構成すること。
+        "god_id": "seoritsuhime",
+        "god": "瀬織津姫",
+        "reading": "せおりつひめ",
+        "type": "祓戸神",
+        "shrine": "佐久奈度神社",  # 系統A裏取り待ち（最重要・主祭神社の確定）
+        "story_type": "祓の水",
+        "headline": "罪も穢れも、川から海へ流し去る女神",
+        "template": "流してから、入れる。手放した夜の分だけ、あなたは澄んでいく",
+    },
+}
+
+
+# ============================================================
 # 人生フェーズテーブル（年齢 × 神話エピソード）
 # E リサーチ集計の高一致結果を反映
 # ============================================================
@@ -205,12 +356,32 @@ def _tenchusatsu_to_rokuryu_key(tenchusatsu_name: str) -> str:
 # ============================================================
 # メイン関数: calculate_kojindo
 # ============================================================
-def calculate_kojindo(sanmei: SanmeiResult, person: PersonInput) -> KojinDoResult:
-    """既存の算命学計算結果から古神道占いの三層を導出
+def _resolve_day_master(sanmei: SanmeiResult, shichusuimei=None) -> str:
+    """守護神判定に使う日干を解決する（古神道v3指令書 P0）。
+
+    第一参照: 四柱推命の日主（指令書指定）。
+    フォールバック: 算命学の日干（両者は定義上同値=同じ日柱天干）。
+    不一致は計算バグの兆候なので検知ログを出す。
+    """
+    shichu_dm = getattr(shichusuimei, "nichikan", "") or ""
+    sanmei_dm = sanmei.nichikan or ""
+    if shichu_dm and sanmei_dm and shichu_dm != sanmei_dm:
+        print(f"[kojindo] WARNING: 日主不一致 shichusuimei={shichu_dm} sanmei={sanmei_dm}"
+              f"（四柱推命側を採用）", flush=True)
+    return shichu_dm or sanmei_dm
+
+
+def calculate_kojindo(sanmei: SanmeiResult, person: PersonInput,
+                      shichusuimei=None) -> KojinDoResult:
+    """既存の計算結果から古神道占いの三層を導出
+
+    v3（2026-07-04 指令書）: 守護神は日干（十干）から一意に決定する。
+    中央星は守護神決定に使わない（性格・宿命の物語素材として鑑定文側に残る）。
 
     Args:
-        sanmei: SanmeiResult（中央星 + 天中殺）
+        sanmei: SanmeiResult（日干フォールバック + 天中殺）
         person: PersonInput（生年月日 = 年齢計算用）
+        shichusuimei: ShichusuimeiResult（日主の第一参照。None可）
     """
     # === 6龍タイプ ===
     rokuryu_key = _tenchusatsu_to_rokuryu_key(sanmei.tenchusatsu)
@@ -218,9 +389,11 @@ def calculate_kojindo(sanmei: SanmeiResult, person: PersonInput) -> KojinDoResul
         "name": "地龍", "element": "地", "keyword": "堅実な基盤"
     })
 
-    # === 守護神 ===
-    chuo_sei = sanmei.chuo_sei or "牽牛星"
-    god = GUARDIAN_GOD_TABLE.get(chuo_sei, GUARDIAN_GOD_TABLE["牽牛星"])
+    # === 守護神（v3: 日干 → 十干守護神テーブル）===
+    day_master = _resolve_day_master(sanmei, shichusuimei)
+    god = JIKKAN_GUARDIAN_TABLE.get(day_master)
+    if god is None:
+        raise ValueError(f"[kojindo] 日干が解決できません: {day_master!r}（判定不能）")
 
     # === メタ軸 ===
     meta_axis = _resolve_meta_axis(god["type"])
@@ -253,4 +426,6 @@ def calculate_kojindo(sanmei: SanmeiResult, person: PersonInput) -> KojinDoResul
         next_phase_name=next_phase["phase"],
         next_phase_episode=next_phase["episode"],
         type_id=type_id,
+        god_id=god["god_id"],
+        day_master=day_master,
     )
