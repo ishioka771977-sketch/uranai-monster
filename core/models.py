@@ -267,7 +267,7 @@ class KojinDoResult:
     rokuryu_element: str            # "地" 等
     rokuryu_keyword: str            # "堅実な基盤" 等
     rokuryu_tenchusatsu: str        # "申酉" 等（元の天中殺グループ）
-    # 守護神（中心星から導出）
+    # 守護神（v3: 日干から導出。〜v2は中央星から導出していた）
     god_name: str                   # "瓊瓊杵尊" 等
     god_reading: str                # "ににぎのみこと" 等
     god_type: str                   # "天つ神" / "国つ神" / "天つ神→国つ神"
@@ -286,6 +286,9 @@ class KojinDoResult:
     next_phase_episode: str         # 次のフェーズの神話
     # 144タイプID（"地龍_瓊瓊杵尊_天つ神"）
     type_id: str
+    # v3 追加フィールド（古神道v3指令書 2026-07-04 / P0）
+    god_id: str = ""                # "ninigi" 等（data/kojindo/gods/{god_id}.json のキー）
+    day_master: str = ""            # 判定に使った日干（"辛" 等）
 
 
 @dataclass

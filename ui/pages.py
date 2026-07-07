@@ -2081,7 +2081,7 @@ def render_loading_page():
 
         st.write("✧ 古神道占い…守護神を呼び出し中…")
         try:
-            kojindo = calculate_kojindo(sanmei, person)
+            kojindo = calculate_kojindo(sanmei, person, shichusuimei)
             # 六龍タイプ・メタ軸は内部データとしてのみ保持し、表示しない
             # （2026-05-17 くろたん指令: 占術臭を消す）
             st.write("✧ 古神道占い ── 完了")
