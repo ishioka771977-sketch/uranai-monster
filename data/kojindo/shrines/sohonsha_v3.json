@@ -1,0 +1,239 @@
+{
+  "_comment": "古神道v3 十干守護神×総本社マスタ（P1・2026-07-05）。系統A裏取りレポート（docs/古神道v3_系統A裏取りレポート_20260705.md）準拠。self_designationは公式の名乗りに忠実（勝手に総本社を付与しない・くろたん確定原則）。lineage_countは全て公称値。lat/lngは概算でP2パイロット時に精査。",
+  "_version": "v3.0",
+  "_schema_note": "既存スキーマ + v3追加: god_id / jikkan / lineage / is_primary / self_designation / worship_override / lineage_count{value,source_type} / sources[{url,quote,retrieved_at,source_type}]",
+  "shrines": [
+    {
+      "id": "oyamazumi_jinja",
+      "name": "大山祇神社",
+      "god_id": "oyamatsumi",
+      "jikkan": "甲",
+      "is_primary": true,
+      "self_designation": "日本総鎮守",
+      "lineage": "三島・山祇系",
+      "lineage_count": null,
+      "location": {"pref": "愛媛県", "city": "今治市大三島町", "lat": 34.249, "lng": 133.005},
+      "main_deity": ["大山積大神"],
+      "worship_override": [],
+      "notes": "公式は『総本社』の語を用いず『日本総鎮守』。系列社数の公称値なし（UIは定性表現）。大楠伝承は未裏取り（P2で個別確認）。",
+      "sources": [
+        {"url": "https://oomishimagu.jp/about/", "quote": "古来日本総鎮守として尊称され…全国津々浦々にその御分社が奉斎されています", "retrieved_at": "2026-07-05", "source_type": "神社公式"}
+      ]
+    },
+    {
+      "id": "fujisan_hongu_sengen_taisha",
+      "name": "富士山本宮浅間大社",
+      "god_id": "konohanasakuya",
+      "jikkan": "乙",
+      "is_primary": true,
+      "self_designation": "総本宮",
+      "lineage": "浅間系",
+      "lineage_count": {"value": 1300, "label": "全国約1,300社（公称）", "source_type": "公称"},
+      "location": {"pref": "静岡県", "city": "富士宮市", "lat": 35.227, "lng": 138.609},
+      "main_deity": ["木花之佐久夜毘売命"],
+      "sub_deities": ["瓊々杵尊", "大山祇神"],
+      "worship_override": [],
+      "notes": "湧玉池は特別天然記念物。『富士山登山者はこの霊水に禊ぎをして登山する古くからの習わし』＝登拝前の禊の池であり日常参拝の作法規定ではない。",
+      "sources": [
+        {"url": "http://www.fuji-hongu.or.jp/sengen/history/index.html", "quote": "1300余の浅間神社の総本宮と称されるようになりました", "retrieved_at": "2026-07-05", "source_type": "神社公式"},
+        {"url": "https://www.city.fujinomiya.lg.jp/1015150000/p001616.html", "quote": "全国に約千三百社ある浅間神社の総本宮", "retrieved_at": "2026-07-05", "source_type": "自治体公式"}
+      ]
+    },
+    {
+      "id": "ise_jingu_naiku",
+      "name": "伊勢神宮（内宮・皇大神宮）",
+      "god_id": "amaterasu",
+      "jikkan": "丙",
+      "is_primary": true,
+      "self_designation": "正宮（神宮125社の中心）",
+      "lineage": "神明系",
+      "lineage_count": null,
+      "location": {"pref": "三重県", "city": "伊勢市", "lat": 34.455, "lng": 136.725},
+      "main_deity": ["天照大御神"],
+      "worship_override": ["お伊勢参りは外宮からがならわし（公式）", "二拝二拍手一拝", "外宮左側通行・内宮右側通行", "正宮では感謝を伝えるのが古くからの風習。個人の祈願は神楽殿でのご祈祷へ（『願い事禁止』とは表現しない）"],
+      "notes": "神明系の全国社数は公的一次情報なし（UIは定性表現）。私幣禁断は神宮全体の歴史的制度で参拝自体は禁止されなかった。",
+      "sources": [
+        {"url": "https://www.isejingu.or.jp/visit/course/", "quote": "お伊勢参りは外宮からがならわしです", "retrieved_at": "2026-07-05", "source_type": "神社公式"},
+        {"url": "https://www.isejingu.or.jp/about/history/index.html", "quote": "私幣禁断とは天皇以外のお供えを禁止したこと…この制度によって参拝までも禁止されたわけではなく", "retrieved_at": "2026-07-05", "source_type": "神社公式"}
+      ]
+    },
+    {
+      "id": "tsukiyomi_no_miya",
+      "name": "月讀宮",
+      "god_id": "tsukuyomi",
+      "jikkan": "丁",
+      "is_primary": true,
+      "self_designation": "皇大神宮別宮（正宮に次ぐお宮）",
+      "lineage": "月読系",
+      "lineage_count": null,
+      "location": {"pref": "三重県", "city": "伊勢市中村町", "lat": 34.47, "lng": 136.718},
+      "main_deity": ["月讀尊"],
+      "sub_deities": ["月讀尊荒御魂", "伊弉諾尊", "伊弉冉尊"],
+      "worship_override": [],
+      "notes": "くろたん確定（2026-07-05）: is_primary=月讀宮。『皇太神宮儀式帳』(804)に「月読宮一院、正殿四区」。丙（伊勢）と同じ神域体系に並ぶ『太陽と月の兄弟神』構図が陽火・陰火の対に照応。",
+      "sources": [
+        {"url": "https://www.isejingu.or.jp/about/outerbetsugu/", "quote": "正宮に次ぐお宮を別宮といいます。内宮・外宮に合計14所ある別宮", "retrieved_at": "2026-07-05", "source_type": "神社公式"},
+        {"url": "https://www.isejingu.or.jp/download/pdf/pamphlet_tsukiyomi_naiku.pdf", "quote": "皇大神宮別宮 月讀宮以下四別宮…別宮とは、正宮（本宮）に対する別宮（別け宮）であり、正宮につぐ重要なお宮です", "retrieved_at": "2026-07-05", "source_type": "神社公式"}
+      ]
+    },
+    {
+      "id": "tsukiyomi_jinja_kyoto",
+      "name": "月読神社",
+      "god_id": "tsukuyomi",
+      "jikkan": "丁",
+      "is_primary": false,
+      "self_designation": "松尾大社摂社・式内名神大社",
+      "lineage": "月読系",
+      "lineage_count": null,
+      "location": {"pref": "京都府", "city": "京都市西京区", "lat": 34.999, "lng": 135.685},
+      "main_deity": ["月読尊"],
+      "worship_override": [],
+      "notes": "関西圏レコメンドの受け皿（くろたん確定）。顕宗天皇3年(487)創建伝承・正一位勲一等・名神大社という独立の高格式を持つ。",
+      "sources": [
+        {"url": "https://www.matsunoo.or.jp/guide07/", "quote": "延喜式では名神大社に列しています。全国屈指の名社ですが、当松尾大社の勢力圏内にあるため、古くからこの松尾大社の摂社とされてきました", "retrieved_at": "2026-07-05", "source_type": "神社公式"}
+      ]
+    },
+    {
+      "id": "izanagi_jingu",
+      "name": "伊弉諾神宮",
+      "god_id": "izanagi",
+      "jikkan": "戊",
+      "is_primary": true,
+      "self_designation": "淡路国一宮・神宮号（昭和29年）",
+      "lineage": "伊弉諾・多賀系",
+      "lineage_count": {"value": 239, "label": "多賀大社の分祀社は全国239社（多賀大社公称・関連系列として）", "source_type": "公称"},
+      "location": {"pref": "兵庫県", "city": "淡路市多賀", "lat": 34.46, "lng": 134.852},
+      "main_deity": ["伊弉諾尊", "伊弉冉尊"],
+      "worship_override": [],
+      "notes": "幽宮伝承の地。式内名神大社『淡路伊佐奈伎神社』。兵庫県神社庁は古事記『淡海の多賀』＝『淡道』誤写説（学術指摘）を記載。多賀大社（滋賀・239社の分祀元）は同神を祀る主要関連社。",
+      "sources": [
+        {"url": "https://www.hyogo-jinjacho.com/data/6328110.html", "quote": "延喜式神名帳には「淡路国津名郡 淡路伊佐奈伎神社」と記載され、名神大社に列している。平安時代末期より淡路国一宮とされる", "retrieved_at": "2026-07-05", "source_type": "県神社庁"},
+        {"url": "https://www.tagataisya.or.jp/sp/about/", "quote": "多賀大社の分祀社は全国239社を数えます。", "retrieved_at": "2026-07-05", "source_type": "神社公式（多賀大社）"}
+      ]
+    },
+    {
+      "id": "izumo_oyashiro",
+      "name": "出雲大社",
+      "god_id": "okuninushi",
+      "jikkan": "己",
+      "is_primary": true,
+      "self_designation": "（大社。系列総本社の名乗りは公式サイト上未確認）",
+      "lineage": "出雲系",
+      "lineage_count": null,
+      "location": {"pref": "島根県", "city": "出雲市大社町", "lat": 35.402, "lng": 132.685},
+      "main_deity": ["大国主大神"],
+      "worship_override": ["二拝四拍手一拝（公式FAQ・例祭の8拍手=無限の讃美の半分）", "参拝はまず祓社で身心を祓い清める（公式摂末社ページ）", "本殿周辺は八足門から瑞垣を左回り（公式FAQ）"],
+      "notes": "祓社の祭神は祓戸四柱の神（瀬織津比咩神筆頭）＝癸とのクロスリンク素材（くろたん採用・2026-07-05）。",
+      "sources": [
+        {"url": "https://izumooyashiro.or.jp/archives/faq/7898", "quote": "出雲大社の正式な参拝作法は『２礼４拍手１礼』となります", "retrieved_at": "2026-07-05", "source_type": "神社公式"},
+        {"url": "https://izumooyashiro.or.jp/precinct/keidai-index/setumatu", "quote": "出雲大社に参拝する人々は、まずここで身心を祓い清めていただきます。（祓社・祓戸四柱の神）", "retrieved_at": "2026-07-05", "source_type": "神社公式"}
+      ]
+    },
+    {
+      "id": "yasaka_jinja",
+      "name": "八坂神社",
+      "god_id": "susanoo",
+      "jikkan": "庚",
+      "is_primary": true,
+      "self_designation": "総本社（祇園信仰）",
+      "lineage": "祇園・八坂系",
+      "lineage_count": {"value": 2300, "label": "全国約2,300社（公称）", "source_type": "公称"},
+      "location": {"pref": "京都府", "city": "京都市東山区", "lat": 35.003, "lng": 135.778},
+      "main_deity": ["素戔嗚尊"],
+      "worship_override": [],
+      "notes": "is_primary=trueは公式トップの総本社明記が根拠（P1関所でくろたん最終確定）。氷川系・津島天王系は別レコード/別系列として扱う。",
+      "sources": [
+        {"url": "https://www.yasaka-jinja.or.jp/", "quote": "全国約二、三〇〇社鎮座する八坂神社、祇園信仰神社の総本社です。", "retrieved_at": "2026-07-05", "source_type": "神社公式"}
+      ]
+    },
+    {
+      "id": "hikawa_jinja_omiya",
+      "name": "武蔵一宮 氷川神社",
+      "god_id": "susanoo",
+      "jikkan": "庚",
+      "is_primary": false,
+      "self_designation": "武蔵一宮・氷川神社の分祀元（総本社の名乗りなし）",
+      "lineage": "氷川系",
+      "lineage_count": {"value": 280, "label": "約280社（公称・荒川流域中心）", "source_type": "公称"},
+      "location": {"pref": "埼玉県", "city": "さいたま市大宮区", "lat": 35.916, "lng": 139.629},
+      "main_deity": ["須佐之男命", "稲田姫命", "大己貴命"],
+      "worship_override": [],
+      "notes": "関東圏レコメンドの受け皿。主祭神三座（筆頭: 須佐之男命）。",
+      "sources": [
+        {"url": "https://musashiichinomiya-hikawa.or.jp/about/", "quote": "氷川神社という名前の神社は、当社から分祀された神社で…約280社", "retrieved_at": "2026-07-05", "source_type": "神社公式"}
+      ]
+    },
+    {
+      "id": "susa_jinja",
+      "name": "須佐神社",
+      "god_id": "susanoo",
+      "jikkan": "庚",
+      "is_primary": false,
+      "self_designation": "御本社（出雲国風土記由緒）",
+      "lineage": "須佐系",
+      "lineage_count": null,
+      "location": {"pref": "島根県", "city": "出雲市佐田町", "lat": 35.219, "lng": 132.702},
+      "main_deity": ["須佐能袁命", "稲田比売命", "足摩槌命", "手摩槌命"],
+      "worship_override": [],
+      "notes": "公式表現は『御本社』。ネットで流通する『御魂を祀る唯一の社』の“唯一”の文言は公式未確認のため使用しない。",
+      "sources": [
+        {"url": "https://www.susa-jinja.jp/", "quote": "（出雲国風土記を根拠に、須佐之男命が自らの名を土地につけ御魂を鎮めた霊蹟・御本社と位置づけ）", "retrieved_at": "2026-07-05", "source_type": "神社公式（要再取得: 検証投票が上限で中断したため引用はP2パイロット時に逐語再確認）"}
+      ]
+    },
+    {
+      "id": "kirishima_jingu",
+      "name": "霧島神宮",
+      "god_id": "ninigi",
+      "jikkan": "辛",
+      "is_primary": true,
+      "self_designation": "（日本の肇国の祖神を祀る）",
+      "lineage": "霧島系",
+      "lineage_count": null,
+      "location": {"pref": "鹿児島県", "city": "霧島市", "lat": 31.859, "lng": 130.872},
+      "main_deity": ["天饒石国饒石天津日高彦火瓊瓊杵尊"],
+      "worship_override": [],
+      "notes": "【禁則】天の逆鉾は『霧島東神社の社宝』（環境省明記）——霧島神宮の描写で逆鉾を使用しない（くろたん確定）。高千穂峰登拝は環境省の登山コースとして整備（高千穂河原→霧島神宮古宮址→山頂）。新田神社（薩摩川内・薩摩国一の宮・可愛山陵=宮内庁管理の瓊瓊杵尊陵）を関連社として収載候補。",
+      "sources": [
+        {"url": "https://kirishimajingu.or.jp/history/", "quote": "日本の肇国の祖神（三種の神器と稲穂を捧持して高千穂峰に天降り）", "retrieved_at": "2026-07-05", "source_type": "神社公式"},
+        {"url": "https://www.env.go.jp/nature/nationalparks/list/kirishima-kinkowan/course/02/", "quote": "頂上にある「天の逆鉾」は、神が降臨の際に突き立てたとされるもので、霧島東神社の社宝として祀られています", "retrieved_at": "2026-07-05", "source_type": "政府機関（環境省）"}
+      ]
+    },
+    {
+      "id": "shikaumi_jinja",
+      "name": "志賀海神社",
+      "god_id": "watatsumi",
+      "jikkan": "壬",
+      "is_primary": true,
+      "self_designation": "海神の総本社（自称）・龍の都",
+      "lineage": "綿津見系",
+      "lineage_count": null,
+      "location": {"pref": "福岡県", "city": "福岡市東区志賀島", "lat": 33.663, "lng": 130.315},
+      "main_deity": ["底津綿津見神", "仲津綿津見神", "上津綿津見神"],
+      "worship_override": ["参拝前に御潮井（清め砂）を左・右・左と軽くふって身を清めてから手水（公式手順）"],
+      "notes": "住吉三神（住吉大社=全国2,300社の総本社を公式明記）は同じ禊で生まれた別神格群であり別系列で確定（くろたん承認）——綿津見系マスタには収載しない。",
+      "sources": [
+        {"url": "http://www.shikaumi-jinja.jp/", "quote": "海神の総本社…御潮井を左、右、左と軽くふり清めていただきます", "retrieved_at": "2026-07-05", "source_type": "神社公式（HTTPのみ・リンク切れ注意）"},
+        {"url": "https://www.sumiyoshitaisha.net/about/outline.html", "quote": "全国に2300社ある住吉神社の総本社で（住吉系を別系列とする根拠）", "retrieved_at": "2026-07-05", "source_type": "神社公式（住吉大社）"}
+      ]
+    },
+    {
+      "id": "sakunado_jinja",
+      "name": "佐久奈度神社",
+      "god_id": "seoritsuhime",
+      "jikkan": "癸",
+      "is_primary": true,
+      "self_designation": "（総本社表記は不可。推奨表現: 祓戸大神を祀る代表社・大祓ゆかりの第一の社）",
+      "lineage": "祓戸系（系列としての実体は未確認・単独扱い）",
+      "lineage_count": null,
+      "location": {"pref": "滋賀県", "city": "大津市大石中", "lat": 34.906, "lng": 135.939},
+      "main_deity": ["瀬織津姫命", "速秋津姫命", "気吹戸主命", "速佐須良姫命"],
+      "worship_override": [],
+      "notes": "祭神表現は『祓戸四神を主祭神格で奉斎（瀬織津姫筆頭）』が正確（公式に『主祭神』の語なし）。天智天皇8年(669)祓創始由緒・式内名神大社・平安期の七瀬祓所。3層裏取り（公式+県神社庁DB+市歴史博物館）。俗説排除リスト適用対象の筆頭柱。",
+      "sources": [
+        {"url": "http://sakunado.jp/yuisyo.html", "quote": "御祭神 瀬織津姫命 速秋津姫命 気吹戸主命 速佐須良姫命…天智天皇御宇８年 勅願により中臣朝臣金連が当地において、祓を創し祓戸大神四柱を奉祀した", "retrieved_at": "2026-07-05", "source_type": "神社公式（HTTPのみ・Shift_JIS）"},
+        {"url": "https://www.shiga-jinjacho.jp/ycBBS/Board.cgi/02_jinja_db/db/ycDB_02jinja-pc-detail.html?mode:view=1&view:oid=88", "quote": "祓戸神三神(現在四柱)を奉祀した（〔配祀神〕大山咋神と明確区別）", "retrieved_at": "2026-07-05", "source_type": "県神社庁DB（CGI形式URL・リンク切れ注意）"},
+        {"url": "https://www.rekihaku.otsu.shiga.jp/db/jiten/data/150.html", "quote": "平安時代、天皇のけがれを除く七瀬祓所（ななせはらいしょ）の一つであった", "retrieved_at": "2026-07-05", "source_type": "博物館（大津市歴史博物館）"}
+      ]
+    }
+  ]
+}
