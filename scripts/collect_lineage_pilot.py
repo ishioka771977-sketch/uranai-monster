@@ -46,11 +46,14 @@ TEST_PREFS = ["北海道", "静岡県", "山梨県", "京都府", "沖縄県"]
 # Tier1: 自動合格ドメインパターン(計画書準拠)
 TIER1_PATTERNS = [
     r"jinjahoncho\.or\.jp$",
-    r"jinj[ay]a?cho.*\.or\.jp$",          # 都道府県神社庁
+    r"jinj[ay]a?ch?o",                    # 都道府県神社庁(hokkaidojinjacho.jp等 .or.jp以外も実在・疎通テスト実測)
     r"\.lg\.jp$", r"^pref\..*\.jp$", r"^(www\.)?city\..*\.jp$",
     r"^town\..*\.jp$", r"^vill\..*\.jp$",
     r"\.go\.jp$", r"\.ac\.jp$",
 ]
+
+# 祭神検証: 主祭神欄にこのいずれかが含まれないレコードは棄却(疎通テストで祭神未確認レコード混入を実測)
+DEITY_PATTERNS = ["木花", "咲耶", "サクヤ", "さくや", "浅間大神"]
 # Tier3: 自動棄却(明示ブロック。これ以外の未知ドメインは Tier2=神社公式候補として保留)
 TIER3_PATTERNS = [
     r"ameblo\.jp", r"note\.com", r"hatenablog", r"fc2", r"livedoor",
@@ -124,40 +127,84 @@ def classify(url: str) -> str:
     return "tier2_shrine_official_pending"
 
 
-def run(prefs: list[str]) -> None:
-    client = anthropic.Anthropic()
-    data = json.loads(RAW_PATH.read_text()) if RAW_PATH.exists() else {"prefs": {}}
-    for i, pref in enumerate(prefs, 1):
-        if pref in data["prefs"]:
-            print(f"[{i}/{len(prefs)}] {pref}: 済(スキップ)")
-            continue
-        t0 = time.time()
+def _collect_one(client: anthropic.Anthropic, pref: str) -> dict:
+    """1都道府県分を収集して結果dictを返す(例外は呼び出し側で処理)"""
+    resp = None
+    for attempt in range(3):  # 529 overloaded / 一時エラーのリトライ(疎通テスト実測)
         try:
-            resp = client.messages.create(
+            with client.messages.stream(
                 model=MODEL,
                 max_tokens=4000,
                 system=SYSTEM,
                 tools=[{"type": "web_search_20260209", "name": "web_search", "max_uses": 5}],
                 output_config={"format": SCHEMA},
                 messages=[{"role": "user", "content": _user_prompt(pref)}],
-            )
-            text = next((b.text for b in resp.content if b.type == "text"), "")
-            payload = json.loads(text)
-            for s in payload.get("shrines", []):
-                s["tier"] = classify(s.get("source_url", ""))
-                s["retrieved_at"] = date.today().isoformat()
-            data["prefs"][pref] = {
-                "shrines": payload.get("shrines", []),
-                "search_note": payload.get("search_note", ""),
-                "usage": {"in": resp.usage.input_tokens, "out": resp.usage.output_tokens},
-                "stop_reason": resp.stop_reason,
-            }
-            n = len(payload.get("shrines", []))
-            print(f"[{i}/{len(prefs)}] {pref}: {n}社 ({time.time()-t0:.0f}s)")
+            ) as stream:
+                resp = stream.get_final_message()
+            break
+        except anthropic.APIStatusError as e:
+            if e.status_code in (429, 529) and attempt < 2:
+                print(f"  {pref}: {e.status_code} retry in 60s ({attempt+1}/3)")
+                time.sleep(60)
+                continue
+            raise
+    assert resp is not None
+    text = next((b.text for b in resp.content if b.type == "text"), "")
+    payload = json.loads(text)
+    for s in payload.get("shrines", []):
+        if not any(p in (s.get("main_deity") or "") for p in DEITY_PATTERNS):
+            s["tier"] = "rejected_deity_unverified"
+        else:
+            s["tier"] = classify(s.get("source_url", ""))
+        s["retrieved_at"] = date.today().isoformat()
+    note = payload.get("search_note", "")
+    # 劣化検知: 検索ツール上限で調べきれなかった0件は「結果」ではなく「エラー」として
+    # 再キュー対象にする(2026-07-08パイロット実測: 劣化0件と正直な0件の混同を防ぐ)
+    if not payload.get("shrines") and re.search(
+        r"(上限|limit exceeded|max_uses|レート制限|利用回数|placeholder|検索を一切実行できま)", note
+    ):
+        raise RuntimeError(f"degraded: tool limit ({note[:60]})")
+    return {
+        "shrines": payload.get("shrines", []),
+        "search_note": note,
+        "usage": {"in": resp.usage.input_tokens, "out": resp.usage.output_tokens},
+        "stop_reason": resp.stop_reason,
+    }
+
+
+def run(prefs: list[str], workers: int = 1) -> None:
+    # workers=1+間隔20s: web_searchサーバーツールのレート上限対策(3並列で上限踏みを実測)
+    # web検索ラウンドが多い県は1クエリ2〜12分かかる(実測)ため、
+    # ストリーミング+3並列で実行。増分保存はロックで直列化
+    import threading
+    from concurrent.futures import ThreadPoolExecutor, as_completed
+
+    client = anthropic.Anthropic(timeout=600.0, max_retries=1)
+    data = json.loads(RAW_PATH.read_text()) if RAW_PATH.exists() else {"prefs": {}}
+    todo = [p for p in prefs if not (p in data["prefs"] and "error" not in data["prefs"][p])]
+    print(f"対象: {len(todo)}県(済{len(prefs) - len(todo)}県スキップ) / {workers}並列")
+    lock = threading.Lock()
+    done_count = 0
+
+    def work(pref: str):
+        nonlocal done_count
+        t0 = time.time()
+        try:
+            time.sleep(20)  # 検索レートのペーシング
+            rec = _collect_one(client, pref)
+            n = len(rec["shrines"])
+            msg = f"{pref}: {n}社 ({time.time()-t0:.0f}s)"
         except Exception as e:
-            data["prefs"][pref] = {"error": f"{type(e).__name__}: {e}"}
-            print(f"[{i}/{len(prefs)}] {pref}: ERROR {e}")
-        RAW_PATH.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
+            rec = {"error": f"{type(e).__name__}: {e}"}
+            msg = f"{pref}: ERROR {e}"
+        with lock:
+            done_count += 1
+            data["prefs"][pref] = rec
+            RAW_PATH.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
+            print(f"[{done_count}/{len(todo)}] {msg}", flush=True)
+
+    with ThreadPoolExecutor(max_workers=workers) as ex:
+        list(as_completed([ex.submit(work, p) for p in todo]))
     print(f"raw -> {RAW_PATH}")
 
 
