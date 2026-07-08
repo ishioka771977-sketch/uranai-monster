@@ -13,6 +13,7 @@
 from __future__ import annotations
 
 import json
+import os
 import re
 import sys
 import time
@@ -136,7 +137,7 @@ def _collect_one(client: anthropic.Anthropic, pref: str) -> dict:
                 model=MODEL,
                 max_tokens=4000,
                 system=SYSTEM,
-                tools=[{"type": "web_search_20260209", "name": "web_search", "max_uses": 5}],
+                tools=[{"type": "web_search_20260209", "name": "web_search", "max_uses": 4}],
                 output_config={"format": SCHEMA},
                 messages=[{"role": "user", "content": _user_prompt(pref)}],
             ) as stream:
@@ -172,40 +173,60 @@ def _collect_one(client: anthropic.Anthropic, pref: str) -> dict:
     }
 
 
-def run(prefs: list[str], workers: int = 1) -> None:
-    # workers=1+間隔20s: web_searchサーバーツールのレート上限対策(3並列で上限踏みを実測)
-    # web検索ラウンドが多い県は1クエリ2〜12分かかる(実測)ため、
-    # ストリーミング+3並列で実行。増分保存はロックで直列化
-    import threading
-    from concurrent.futures import ThreadPoolExecutor, as_completed
+LOCK_PATH = _root / "data" / "kojindo" / "_pilot.lock"
 
-    client = anthropic.Anthropic(timeout=600.0, max_retries=1)
-    data = json.loads(RAW_PATH.read_text()) if RAW_PATH.exists() else {"prefs": {}}
-    todo = [p for p in prefs if not (p in data["prefs"] and "error" not in data["prefs"][p])]
-    print(f"対象: {len(todo)}県(済{len(prefs) - len(todo)}県スキップ) / {workers}並列")
-    lock = threading.Lock()
-    done_count = 0
 
-    def work(pref: str):
-        nonlocal done_count
-        t0 = time.time()
-        try:
-            time.sleep(20)  # 検索レートのペーシング
-            rec = _collect_one(client, pref)
-            n = len(rec["shrines"])
-            msg = f"{pref}: {n}社 ({time.time()-t0:.0f}s)"
-        except Exception as e:
-            rec = {"error": f"{type(e).__name__}: {e}"}
-            msg = f"{pref}: ERROR {e}"
-        with lock:
-            done_count += 1
-            data["prefs"][pref] = rec
-            RAW_PATH.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
-            print(f"[{done_count}/{len(todo)}] {msg}", flush=True)
+def run(prefs: list[str]) -> None:
+    """逐次実行(1本のみ)+劣化時クールダウン方式。
+    - PIDロック: 二重起動でweb_searchクォータを焼いた事故(2026-07-08)の再発防止
+    - 60秒ペーシング+max_uses4: 検索レート上限対策
+    - degraded(ツール上限)発生時: その県を保留し15分クールダウン→最大3巡
+    """
+    if LOCK_PATH.exists():
+        pid = LOCK_PATH.read_text().strip()
+        if pid and Path(f"/proc/{pid}").exists() or _pid_alive(pid):
+            print(f"既に実行中(pid={pid})。二重起動はクォータを焼くため中止。")
+            return
+    LOCK_PATH.write_text(str(os.getpid()))
+    try:
+        client = anthropic.Anthropic(timeout=600.0, max_retries=1)
+        data = json.loads(RAW_PATH.read_text()) if RAW_PATH.exists() else {"prefs": {}}
 
-    with ThreadPoolExecutor(max_workers=workers) as ex:
-        list(as_completed([ex.submit(work, p) for p in todo]))
-    print(f"raw -> {RAW_PATH}")
+        for round_no in range(1, 4):
+            todo = [p for p in prefs if not (p in data["prefs"] and "error" not in data["prefs"][p])]
+            if not todo:
+                break
+            print(f"== round {round_no}: 残り{len(todo)}県 ==", flush=True)
+            degraded_hits = 0
+            for i, pref in enumerate(todo, 1):
+                time.sleep(60)  # 検索レートのペーシング
+                t0 = time.time()
+                try:
+                    rec = _collect_one(client, pref)
+                    msg = f"{pref}: {len(rec['shrines'])}社 ({time.time()-t0:.0f}s)"
+                except Exception as e:
+                    rec = {"error": f"{type(e).__name__}: {e}"}
+                    msg = f"{pref}: ERROR {str(e)[:60]}"
+                    if "degraded" in str(e):
+                        degraded_hits += 1
+                data["prefs"][pref] = rec
+                RAW_PATH.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
+                print(f"[{i}/{len(todo)}] {msg}", flush=True)
+                if degraded_hits >= 3:
+                    print("劣化3連発→クォータ枯渇と判断し15分クールダウン", flush=True)
+                    time.sleep(900)
+                    degraded_hits = 0
+        print(f"raw -> {RAW_PATH}")
+    finally:
+        LOCK_PATH.unlink(missing_ok=True)
+
+
+def _pid_alive(pid: str) -> bool:
+    try:
+        os.kill(int(pid), 0)
+        return True
+    except Exception:
+        return False
 
 
 def report() -> None:
