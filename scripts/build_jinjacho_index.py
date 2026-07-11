@@ -91,6 +91,19 @@ PATTERNS = [
     "https://www.{r}-jinjacho.com",
     "http://{r}-jinjacho.or.jp",
     "http://www.{r}-jinjacho.or.jp",
+    # 第2陣(2026-07-11): -jinja / jinjya / net 等の綴り変形
+    "https://{r}-jinja.or.jp",
+    "https://www.{r}-jinja.or.jp",
+    "https://{r}-jinja.jp",
+    "https://{r}jinja.or.jp",
+    "https://jinja-{r}.or.jp",
+    "https://{r}-jinjyacho.or.jp",
+    "https://www.{r}-jinjyacho.or.jp",
+    "https://{r}jinjacho.or.jp",
+    "https://www.{r}jinjacho.or.jp",
+    "https://{r}-jinjacho.net",
+    "http://{r}-jinja.or.jp",
+    "http://www.{r}-jinja.or.jp",
 ]
 
 
