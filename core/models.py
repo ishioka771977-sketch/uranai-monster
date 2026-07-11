@@ -16,6 +16,7 @@ class PersonInput:
     blood_type: Optional[str] = None        # "A" / "B" / "O" / "AB"、任意
     name: Optional[str] = None              # 表示用、任意
     gender: Optional[str] = None            # "男性" / "女性" / "その他"、任意
+    current_pref: Optional[str] = None      # 現住所の都道府県（古神道v3の神社レコメンド用、任意）
 
 
 @dataclass
@@ -289,6 +290,7 @@ class KojinDoResult:
     # v3 追加フィールド（古神道v3指令書 2026-07-04 / P0）
     god_id: str = ""                # "ninigi" 等（data/kojindo/gods/{god_id}.json のキー）
     day_master: str = ""            # 判定に使った日干（"辛" 等）
+    getsu_shi: str = ""             # 月支（"巳" 等。意識の種120本の柱×支ルックアップ用 / P4）
 
 
 @dataclass

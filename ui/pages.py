@@ -1864,6 +1864,8 @@ def render_input_page():
     saved_place = st.session_state.get("_saved_place", "")
     saved_blood = st.session_state.get("_saved_blood", "不明")
     saved_email = st.session_state.get("_saved_email", "")
+    saved_pref = st.session_state.get("_saved_pref", "未設定")
+    from core.kojindo import PREFS_47
 
     years = list(range(1930, date.today().year))
     blood_options = ["不明", "A", "B", "O", "AB"]
@@ -1924,6 +1926,14 @@ def render_input_page():
             placeholder="都市名",
             key=f"input_place_{kv}"
         )
+        pref_options = ["未設定"] + PREFS_47
+        pref_idx = pref_options.index(saved_pref) if saved_pref in pref_options else 0
+        st.selectbox(
+            "お住まいの都道府県（守護神の神社をご案内するのに使います）",
+            options=pref_options,
+            index=pref_idx,
+            key=f"input_pref_{kv}"
+        )
         blood_idx = blood_options.index(saved_blood) if saved_blood in blood_options else 0
         st.radio(
             "血液型",
@@ -1969,6 +1979,8 @@ def render_input_page():
             input_place = st.session_state.get(f"input_place_{kv}", "").strip()
             input_blood = st.session_state.get(f"input_blood_{kv}", "不明")
             input_email = st.session_state.get(f"input_email_{kv}", "").strip()
+            input_pref = st.session_state.get(f"input_pref_{kv}", "未設定")
+            st.session_state._saved_pref = input_pref
             input_no_history = bool(st.session_state.get(f"input_no_history_{kv}", False))
 
             # 「履歴に残さない」モード: 今セッションで履歴/顧客登録を全部スキップ
@@ -1982,6 +1994,7 @@ def render_input_page():
                 birth_time=input_time if input_time else None,
                 birth_place=input_place if input_place else None,
                 blood_type=input_blood if input_blood != "不明" else None,
+                current_pref=input_pref if input_pref != "未設定" else None,
             )
 
             # 名前をキーにデータを記憶（履歴に残さないモードならスキップ）

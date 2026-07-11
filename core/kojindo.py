@@ -12,11 +12,16 @@ core/kojindo.py
 方針: まず動かす。使いながら育てる。完成しない。
 """
 from __future__ import annotations
+import json
 from datetime import date
+from functools import lru_cache
+from pathlib import Path
 from typing import Optional
 
 from .models import KojinDoResult, SanmeiResult, PersonInput
 from .sanmei import _calc_tenchusatsu
+
+_DATA_DIR = Path(__file__).resolve().parent.parent / "data" / "kojindo"
 
 
 # ============================================================
@@ -400,6 +405,9 @@ def calculate_kojindo(sanmei: SanmeiResult, person: PersonInput,
     # === メタ軸 ===
     meta_axis = _resolve_meta_axis(god["type"])
 
+    # === 月支（意識の種120本の柱×支ルックアップ用 / P4）===
+    getsu_shi = sanmei.tsuki_kanshi[1] if len(sanmei.tsuki_kanshi) >= 2 else ""
+
     # === 人生フェーズ ===
     age = _calc_age(person.birth_date)
     phase = _resolve_phase(age)
@@ -430,4 +438,71 @@ def calculate_kojindo(sanmei: SanmeiResult, person: PersonInput,
         type_id=type_id,
         god_id=god["god_id"],
         day_master=day_master,
+        getsu_shi=getsu_shi,
     )
+
+
+# ============================================================
+# P4: 神社レコメンド（二段構え）+ 意識の種（古神道v3指令書）
+# ============================================================
+
+SHI_ROMAJI = {
+    "子": "ne", "丑": "ushi", "寅": "tora", "卯": "u", "辰": "tatsu", "巳": "mi",
+    "午": "uma", "未": "hitsuji", "申": "saru", "酉": "tori", "戌": "inu", "亥": "i",
+}
+
+PREFS_47 = [
+    "北海道", "青森県", "岩手県", "宮城県", "秋田県", "山形県", "福島県",
+    "茨城県", "栃木県", "群馬県", "埼玉県", "千葉県", "東京都", "神奈川県",
+    "新潟県", "富山県", "石川県", "福井県", "山梨県", "長野県", "岐阜県",
+    "静岡県", "愛知県", "三重県", "滋賀県", "京都府", "大阪府", "兵庫県",
+    "奈良県", "和歌山県", "鳥取県", "島根県", "岡山県", "広島県", "山口県",
+    "徳島県", "香川県", "愛媛県", "高知県", "福岡県", "佐賀県", "長崎県",
+    "熊本県", "大分県", "宮崎県", "鹿児島県", "沖縄県",
+]
+
+
+@lru_cache(maxsize=1)
+def _load_sohonsha() -> list:
+    p = _DATA_DIR / "shrines" / "sohonsha_v3.json"
+    if not p.exists():
+        return []
+    d = json.loads(p.read_text(encoding="utf-8"))
+    return d if isinstance(d, list) else d.get("shrines", [])
+
+
+@lru_cache(maxsize=1)
+def _load_lineage() -> list:
+    """県内系列社（P2収集の確定分。未収集の神・県は空 = 総本社のみ表示）"""
+    p = _DATA_DIR / "shrines" / "lineage_v3.json"
+    return json.loads(p.read_text(encoding="utf-8")) if p.exists() else []
+
+
+@lru_cache(maxsize=1)
+def _load_seeds() -> dict:
+    p = _DATA_DIR / "seeds_v3.json"
+    return json.loads(p.read_text(encoding="utf-8")).get("seeds", {}) if p.exists() else {}
+
+
+def get_shrine_recommendation(god_id: str, pref: Optional[str] = None) -> dict:
+    """守護神の推奨参拝を二段構えで返す。
+
+    Returns:
+        {"sohonsha": [総本社レコード...], "local": [県内系列社...], "pref": pref}
+        local は pref 未指定・データ未収集なら空リスト。
+    """
+    sohonsha = [r for r in _load_sohonsha() if r.get("god_id") == god_id]
+    sohonsha.sort(key=lambda r: not r.get("is_primary", False))
+    local = []
+    if pref:
+        local = [r for r in _load_lineage()
+                 if r.get("god_id") == god_id and r.get("pref") == pref]
+    return {"sohonsha": sohonsha, "local": local, "pref": pref}
+
+
+def get_seed(god_id: str, getsu_shi: str) -> Optional[dict]:
+    """意識の種（柱×支=120本）を返す。該当なしは None（表示スキップ）"""
+    romaji = SHI_ROMAJI.get(getsu_shi)
+    if not romaji:
+        return None
+    return _load_seeds().get(f"{god_id}_{romaji}")

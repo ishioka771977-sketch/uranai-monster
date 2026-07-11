@@ -1,0 +1,329 @@
+{
+  "北海道": {
+    "url": "https://hokkaidojinjacho.jp",
+    "title": "北海道神社庁のホームページ",
+    "verified_at": "2026-07-11",
+    "tier": "tier1_auto",
+    "method": "known"
+  },
+  "青森県": {
+    "url": "http://aomori-jinjacho.or.jp",
+    "title": "青森県神社庁",
+    "verified_at": "2026-07-11",
+    "tier": "tier1_auto",
+    "method": "pattern"
+  },
+  "岩手県": {
+    "url": "https://www.jinjacho.jp/",
+    "title": "",
+    "verified_at": "2026-07-11",
+    "tier": "tier1_auto",
+    "method": "search+verify"
+  },
+  "宮城県": {
+    "url": "https://miyagi-jinjacho.or.jp",
+    "title": "宮城県神社庁",
+    "verified_at": "2026-07-11",
+    "tier": "tier1_auto",
+    "method": "pattern"
+  },
+  "秋田県": {
+    "url": "https://akita-jinjacho.sakura.ne.jp",
+    "title": "秋田県神社庁",
+    "verified_at": "2026-07-11",
+    "tier": "tier1_auto",
+    "method": "known"
+  },
+  "山形県": {
+    "url": "https://yamagata-jinjyacho.or.jp/",
+    "title": "山形県神社庁",
+    "verified_at": "2026-07-11",
+    "tier": "tier1_auto",
+    "method": "search+くろたん目視確定(綴りjinjya・一字照合済)",
+    "fetch_status": 0
+  },
+  "福島県": {
+    "url": "https://fukushima-jinjacho.or.jp",
+    "title": "福島県神社庁",
+    "verified_at": "2026-07-11",
+    "tier": "tier1_auto",
+    "method": "pattern"
+  },
+  "茨城県": {
+    "url": "https://www.ibarakiken-jinjacho.or.jp/",
+    "title": "茨城県神社庁",
+    "verified_at": "2026-07-11",
+    "tier": "tier1_auto",
+    "method": "search+verify"
+  },
+  "栃木県": {
+    "url": "http://tochigi-jinjacho.or.jp",
+    "title": "栃木県神社庁",
+    "verified_at": "2026-07-11",
+    "tier": "tier1_auto",
+    "method": "pattern"
+  },
+  "群馬県": {
+    "url": "https://gunma-jinjacho.jp",
+    "title": "群馬県神社庁",
+    "verified_at": "2026-07-11",
+    "tier": "tier1_auto",
+    "method": "pattern"
+  },
+  "埼玉県": {
+    "url": "https://saitama-jinjacho.or.jp",
+    "title": "埼玉県の神社",
+    "verified_at": "2026-07-11",
+    "tier": "tier1_auto",
+    "method": "pattern"
+  },
+  "千葉県": {
+    "url": "https://www.jinjacho.or.jp/",
+    "title": "ホーム | 千葉県神社庁",
+    "verified_at": "2026-07-11",
+    "tier": "tier1_auto",
+    "method": "search+verify"
+  },
+  "東京都": {
+    "url": "http://www.tokyo-jinjacho.or.jp",
+    "title": "東京都神社庁",
+    "verified_at": "2026-07-11",
+    "tier": "tier1_auto",
+    "method": "known"
+  },
+  "神奈川県": {
+    "url": "https://kanagawa-jinja.or.jp",
+    "title": "神奈川県神社庁 - 神奈川県神社庁のホームページ",
+    "verified_at": "2026-07-11",
+    "tier": "tier1_auto",
+    "method": "pattern"
+  },
+  "新潟県": {
+    "url": "https://niigata-jinjacho.jp",
+    "title": "新潟県神社庁",
+    "verified_at": "2026-07-11",
+    "tier": "tier1_auto",
+    "method": "known"
+  },
+  "富山県": {
+    "url": "https://toyama-jinjacho.sakura.ne.jp/",
+    "title": "富山県神社庁",
+    "verified_at": "2026-07-11",
+    "tier": "tier1_auto",
+    "method": "search+verify"
+  },
+  "石川県": {
+    "url": "https://ishikawa-jinjacho.or.jp",
+    "title": "石川県神社庁",
+    "verified_at": "2026-07-11",
+    "tier": "tier1_auto",
+    "method": "pattern"
+  },
+  "福井県": {
+    "url": "https://www.jinja-fukui.jp/",
+    "title": "福井県神社庁｜TOP",
+    "verified_at": "2026-07-11",
+    "tier": "tier1_auto",
+    "method": "search+verify"
+  },
+  "山梨県": {
+    "url": "https://yamanashi-jinjacho.or.jp",
+    "title": "山梨県神社庁 | 山梨県神社庁は県内の神社を包括する組織です",
+    "verified_at": "2026-07-11",
+    "tier": "tier1_auto",
+    "method": "pattern",
+    "search_url": "https://www.yamanashi-jinjacho.or.jp/intro/search/result?jinjaName=浅間",
+    "search_url_note": "検索フォーム実測(jinjaName param)・浅間38件ヒット確認 2026-07-11"
+  },
+  "長野県": {
+    "url": "https://nagano-jinjacho.jp",
+    "title": "HOME of 長野県神社庁",
+    "verified_at": "2026-07-11",
+    "tier": "tier1_auto",
+    "method": "pattern"
+  },
+  "岐阜県": {
+    "url": "https://gifu-jinjacho.jp",
+    "title": "岐阜県神社庁公式ホームページ",
+    "verified_at": "2026-07-11",
+    "tier": "tier1_auto",
+    "method": "pattern"
+  },
+  "静岡県": {
+    "url": "http://www.shizuoka-jinjacho.or.jp",
+    "title": "ホーム - 静岡県神社庁",
+    "verified_at": "2026-07-11",
+    "tier": "tier1_auto",
+    "method": "known"
+  },
+  "愛知県": {
+    "url": "https://aichi-jinjacho.or.jp",
+    "title": "愛知県神社庁",
+    "verified_at": "2026-07-11",
+    "tier": "tier1_auto",
+    "method": "pattern"
+  },
+  "三重県": {
+    "url": "https://www.mie-jinjachou.page/",
+    "title": "三重県神社庁：公式サイト",
+    "verified_at": "2026-07-11",
+    "tier": "tier1_auto",
+    "method": "search+verify"
+  },
+  "滋賀県": {
+    "url": "https://www.shiga-jinjacho.jp",
+    "title": "滋賀県神社庁",
+    "verified_at": "2026-07-11",
+    "tier": "tier1_auto",
+    "method": "known"
+  },
+  "京都府": {
+    "url": "http://kyoto-jinjacho.or.jp",
+    "title": "京都府神社庁",
+    "verified_at": "2026-07-11",
+    "tier": "tier1_auto",
+    "method": "pattern"
+  },
+  "大阪府": {
+    "url": "https://osaka-jinjacho.jp",
+    "title": "大阪府神社庁のホームページ",
+    "verified_at": "2026-07-11",
+    "tier": "tier1_auto",
+    "method": "pattern"
+  },
+  "兵庫県": {
+    "url": "https://www.hyogo-jinjacho.com",
+    "title": "兵庫県神社庁",
+    "verified_at": "2026-07-11",
+    "tier": "tier1_auto",
+    "method": "known"
+  },
+  "奈良県": {
+    "url": "https://www.naraken-jinjacho.jp/",
+    "title": "奈良県神社庁",
+    "verified_at": "2026-07-11",
+    "tier": "tier1_auto",
+    "method": "search+verify"
+  },
+  "和歌山県": {
+    "url": "https://wakayama-jinjacho.or.jp",
+    "title": "和歌山県神社庁オフィシャルサイト",
+    "verified_at": "2026-07-11",
+    "tier": "tier1_auto",
+    "method": "pattern"
+  },
+  "鳥取県": {
+    "url": "https://tottori-jinjacho.jp",
+    "title": "鳥取縣神社廳（公式ホームページ）",
+    "verified_at": "2026-07-11",
+    "tier": "tier1_auto",
+    "method": "pattern"
+  },
+  "島根県": {
+    "url": "https://shimane-jinjacho.or.jp",
+    "title": "島根県神社庁",
+    "verified_at": "2026-07-11",
+    "tier": "tier1_auto",
+    "method": "pattern"
+  },
+  "岡山県": {
+    "url": "https://okayama-jinjacho.or.jp",
+    "title": "岡山県神社庁",
+    "verified_at": "2026-07-11",
+    "tier": "tier1_auto",
+    "method": "pattern"
+  },
+  "広島県": {
+    "url": "https://hiroshima-jinjacho.jp",
+    "title": "広島県神社庁",
+    "verified_at": "2026-07-11",
+    "tier": "tier1_auto",
+    "method": "pattern"
+  },
+  "山口県": {
+    "url": "https://yamaguchi-jinjacho.or.jp",
+    "title": "山口県神社庁 &#8211; 山口県神社庁は県内750社の神社を総括する組織です",
+    "verified_at": "2026-07-11",
+    "tier": "tier1_auto",
+    "method": "pattern"
+  },
+  "徳島県": {
+    "url": "http://awa-jinjacho.jp/",
+    "title": "徳島県神社庁",
+    "verified_at": "2026-07-11",
+    "tier": "tier1_auto",
+    "method": "search+くろたん目視確定(旧国名awa・http運用・県観光公式の外部リンクで裏付き)",
+    "fetch_status": 0
+  },
+  "香川県": {
+    "url": "https://kagawakenjinjacho.or.jp/",
+    "title": "香川県神社庁",
+    "verified_at": "2026-07-11",
+    "tier": "tier1_auto",
+    "method": "search+verify"
+  },
+  "愛媛県": {
+    "url": "http://ehime-jinjacho.jp/",
+    "title": "愛媛県神社庁",
+    "verified_at": "2026-07-11",
+    "tier": "tier1_auto",
+    "method": "search+verify"
+  },
+  "高知県": {
+    "url": "https://www.kochi-jinjyacho.com/",
+    "title": "高知県神社庁 | 高知県の神社 | 高知県",
+    "verified_at": "2026-07-11",
+    "tier": "tier1_auto",
+    "method": "search+verify"
+  },
+  "福岡県": {
+    "url": "https://fukuoka-jinjacho.or.jp",
+    "title": "福岡県神社庁",
+    "verified_at": "2026-07-11",
+    "tier": "tier1_auto",
+    "method": "pattern"
+  },
+  "佐賀県": {
+    "url": "https://saga-jinjacho.jp",
+    "title": "ホーム - 佐賀県神社庁",
+    "verified_at": "2026-07-11",
+    "tier": "tier1_auto",
+    "method": "pattern"
+  },
+  "長崎県": {
+    "url": "https://nagasaki-jinjacho.or.jp",
+    "title": "",
+    "verified_at": "2026-07-11",
+    "tier": "tier1_auto",
+    "method": "pattern"
+  },
+  "熊本県": {
+    "url": "https://kumamotokenjinjacho.jp/",
+    "title": "熊本県神社庁｜氏神様の検索対応｜熊本市中央区",
+    "verified_at": "2026-07-11",
+    "tier": "tier1_auto",
+    "method": "search+verify"
+  },
+  "大分県": {
+    "url": null,
+    "note": "公式サイトなし(神社本庁一覧に掲載・電話のみ)。収集は神社公式・自治体ソースで代替。【くろたん条件】レコードのsource_typeに『県神社庁DB不存在につき代替』を注記"
+  },
+  "宮崎県": {
+    "url": null,
+    "note": "公式サイトなし(『宮巡』は神職運営の紹介サイトで庁公式ではない)。収集は神社公式・自治体ソースで代替。【くろたん条件】レコードのsource_typeに『県神社庁DB不存在につき代替』を注記"
+  },
+  "鹿児島県": {
+    "url": "https://www.kagojinjacho.or.jp/",
+    "title": "鹿児島県神社庁 | 鹿児島の神社に関することやお祭りに関することなどお気軽にお問い合わせ下さい",
+    "verified_at": "2026-07-11",
+    "tier": "tier1_auto",
+    "method": "search+verify"
+  },
+  "沖縄県": {
+    "url": "http://jinjacho.naminouegu.jp/",
+    "title": "沖縄県神社庁",
+    "verified_at": "2026-07-11",
+    "tier": "tier1_auto",
+    "method": "search+verify"
+  }
+}
