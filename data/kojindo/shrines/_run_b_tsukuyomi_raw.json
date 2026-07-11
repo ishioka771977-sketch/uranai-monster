@@ -1,0 +1,937 @@
+{
+  "prefs": {
+    "北海道": {
+      "shrines": [],
+      "search_note": "トップページには検索フォームなし(ログインフォームのみ)。支部別一覧ページへのリンクを発見。まず「北海道の神社」一覧ページ(/jinja)を確認し、あ行索引や月読系神社の手がかりを探す。 / 検索フォームはログイン用のため使用不可。地域別一覧から探索を開始する。まず札幌支部を確認。 / 札幌支部一覧には月読系神社が見当たらない。道南支部(函館周辺)に月読神社の可能性があるため探索を続ける。 / 道南支部一覧ページ1件目には月読系神社の記載なし。次ページを確認する。 / このページには月読・月讀・月夜見・月山系の神社は見当たらなかった。検索フォームはログイン用のみでGET検索は利用不可。残り探索回数が1のため、これ以上のページ送りは断念し終了する。",
+      "hops": 5,
+      "visited": [
+        "https://hokkaidojinjacho.jp",
+        "https://hokkaidojinjacho.jp/jinja",
+        "https://hokkaidojinjacho.jp/jinja-area/sapporo/",
+        "https://hokkaidojinjacho.jp/jinja-area/dounan/",
+        "https://hokkaidojinjacho.jp/jinja-area/dounan/page/2/"
+      ],
+      "html_cache": [
+        "https___hokkaidojinjacho_jp.html",
+        "https___hokkaidojinjacho_jp_jinja.html",
+        "https___hokkaidojinjacho_jp_jinja_area_sapporo_.html",
+        "https___hokkaidojinjacho_jp_jinja_area_dounan_.html",
+        "https___hokkaidojinjacho_jp_jinja_area_dounan_page_2_.html"
+      ]
+    },
+    "青森県": {
+      "shrines": [
+        {
+          "name": "月夜見神社",
+          "city": "つがる市",
+          "address": "つがる市木造町蓮川字清川63",
+          "main_deity": "月夜見尊 豊受姫命",
+          "source_quote": "御祭神 月夜見尊 豊受姫命",
+          "source_url": "http://aomori-jinjacho.or.jp/jinja/Nishitu/sub_1b_025.html",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-12",
+          "html_cache": "http___aomori_jinjacho_or_jp_jinja_Nishitu_sub_1b_025_html.html"
+        }
+      ],
+      "search_note": "県内の神社紹介ページへ遷移し、一覧・検索から月読系神社を探索する / 地域別一覧ページへ遷移し、月読系神社を探索する。まず青森市,東津軽郡のページを確認。 / このページ(青森市,東津軽郡)には月読・月讀・月夜見・月山系の神社名が見当たらない。次の地域ページ(つがる市,西津軽郡)を確認する。 / 月夜見神社が2社(つがる市木造蓮川清川、西津軽郡深浦町大字艫作字清滝)見つかったが祭神確認のため詳細ページへ移動する / 探索回数残り1のため、月夜見神社を発見した時点で終了。",
+      "hops": 5,
+      "visited": [
+        "http://aomori-jinjacho.or.jp",
+        "http://aomori-jinjacho.or.jp/sub_1.html",
+        "http://aomori-jinjacho.or.jp/jinja/sub_1a.html",
+        "http://aomori-jinjacho.or.jp/jinja/sub_1b.html",
+        "http://aomori-jinjacho.or.jp/jinja/Nishitu/sub_1b_025.html"
+      ],
+      "html_cache": [
+        "http___aomori_jinjacho_or_jp.html",
+        "http___aomori_jinjacho_or_jp_sub_1_html.html",
+        "http___aomori_jinjacho_or_jp_jinja_sub_1a_html.html",
+        "http___aomori_jinjacho_or_jp_jinja_sub_1b_html.html",
+        "http___aomori_jinjacho_or_jp_jinja_Nishitu_sub_1b_025_html.html"
+      ]
+    },
+    "岩手県": {
+      "shrines": [],
+      "search_note": "神社検索・一覧ページが見つからないため、県内神社等のHPリンク集ページを確認する。トップページには神社一覧・検索フォームがなかった。 / 岩手県神社庁サイトには神社検索機能や神社一覧・索引ページが見当たらず、県内神社等HPリンク集には3社のみ掲載されているが、いずれも月読・月讀・月夜見・月山系の神社ではない。トップページにも他の探索可能な一覧ページが確認できないため、これ以上の探索は不可能と判断し終了する。",
+      "hops": 2,
+      "visited": [
+        "https://www.jinjacho.jp/",
+        "https://www.jinjacho.jp/pages/62/"
+      ],
+      "html_cache": [
+        "https___www_jinjacho_jp_.html",
+        "https___www_jinjacho_jp_pages_62_.html"
+      ]
+    },
+    "宮城県": {
+      "shrines": [
+        {
+          "name": "月夜見神社",
+          "city": "石巻市",
+          "address": "宮城県石巻市桃生町太田字鹿之5-3",
+          "main_deity": "月読命",
+          "source_quote": "月夜見神社 （つきよみじんじゃ） 鎮座地: 宮城県石巻市桃生町太田字鹿之5-3 主祭神: 月読命",
+          "source_url": "https://miyagi-jinjacho.or.jp/jinja-search/detail.php?code=310030768&chinzachi=&jinja_name=月夜見&jinja_kana=&page=0&per_page=15",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-12",
+          "html_cache": "https___miyagi_jinjacho_or_jp_jinja_search_detail_php_code_310030768_chinzachi__.html"
+        }
+      ],
+      "search_note": "検索フォームに「月読」を入力して検索を試みる / 「月読」での検索は0件だったため、「月夜見」で再検索する。 / 月夜見神社(石巻市桃生町太田字鹿之5-3)の詳細ページへ移動し祭神を確認する。 / 月夜見神社を発見・確認済み。残り探索回数が少ないため終了。",
+      "hops": 4,
+      "visited": [
+        "https://miyagi-jinjacho.or.jp",
+        "https://miyagi-jinjacho.or.jp/jinja-search/list.php?SEARCH=1&jinja_name=%E6%9C%88%E8%AA%AD&jinja_cnt=&jinja_kana=&jinja_sort_key=&jinja_sortdesc=&page_jinja=1&per_page_def=50&PC=1",
+        "https://miyagi-jinjacho.or.jp/jinja-search/list.php?SEARCH=1&jinja_name=%E6%9C%88%E5%A4%9C%E8%A6%8B&jinja_cnt=&jinja_kana=&jinja_sort_key=&jinja_sortdesc=&page_jinja=1&per_page_def=50&PC=1",
+        "https://miyagi-jinjacho.or.jp/jinja-search/detail.php?code=310030768&chinzachi=&jinja_name=月夜見&jinja_kana=&page=0&per_page=15"
+      ],
+      "html_cache": [
+        "https___miyagi_jinjacho_or_jp.html",
+        "https___miyagi_jinjacho_or_jp_jinja_search_list_php_SEARCH_1_jinja_name__E6_9C_8.html",
+        "https___miyagi_jinjacho_or_jp_jinja_search_list_php_SEARCH_1_jinja_name__E6_9C_8.html",
+        "https___miyagi_jinjacho_or_jp_jinja_search_detail_php_code_310030768_chinzachi__.html"
+      ]
+    },
+    "秋田県": {
+      "shrines": [
+        {
+          "name": "月讀神社",
+          "city": "にかほ市",
+          "address": "〒018-0411 にかほ市院内字杉山57-4",
+          "main_deity": "天照大御神（あまてらすおおみかみ）月読大神（つきよみのおおみかみ）",
+          "source_quote": "御祭神 天照大御神（あまてらすおおみかみ） 月読大神（つきよみのおおみかみ）",
+          "source_url": "https://akita-jinjacho.sakura.ne.jp/shrine_search/%e6%9c%88%e8%ae%80%e7%a5%9e%e7%a4%be/",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-12",
+          "html_cache": "https___akita_jinjacho_sakura_ne_jp_shrine_search__e6_9c_88_e8_ae_80_e7_a5_9e_e7.html"
+        }
+      ],
+      "search_note": "県内神社のご案内ページへ遷移し、検索または一覧から月読系神社を探索する / 月読・月讀・月夜見・月山系の神社は「つ」行索引で探索する。「や」行（山）も候補だが、まず「つ」を確認する。 / つ行索引ページで月山神社(2件)と月讀神社(1件)を発見。祭神確認のため月讀神社の詳細ページへfollowする。 / 秋田県神社庁の検索ページにて月讀神社を発見。祭神は月読大神を確認済み。探索回数の制約により他の月読系神社の追加探索は行わず終了。",
+      "hops": 4,
+      "visited": [
+        "https://akita-jinjacho.sakura.ne.jp",
+        "https://akita-jinjacho.sakura.ne.jp/shrine_search/",
+        "https://akita-jinjacho.sakura.ne.jp/cat_shrine/%e3%81%a4/",
+        "https://akita-jinjacho.sakura.ne.jp/shrine_search/%e6%9c%88%e8%ae%80%e7%a5%9e%e7%a4%be/"
+      ],
+      "html_cache": [
+        "https___akita_jinjacho_sakura_ne_jp.html",
+        "https___akita_jinjacho_sakura_ne_jp_shrine_search_.html",
+        "https___akita_jinjacho_sakura_ne_jp_cat_shrine__e3_81_a4_.html",
+        "https___akita_jinjacho_sakura_ne_jp_shrine_search__e6_9c_88_e8_ae_80_e7_a5_9e_e7.html"
+      ]
+    },
+    "山形県": {
+      "shrines": [
+        {
+          "name": "月山神社",
+          "city": "山形市",
+          "address": "山形市内表18",
+          "main_deity": "月讀命（ツキヨミノミコト）",
+          "source_quote": "鎮座地 山形市内表18 御祭神 月讀命（ツキヨミノミコト）",
+          "source_url": "https://yamagata-jinjyacho.or.jp/shrine_detail/01042",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-12",
+          "html_cache": "https___yamagata_jinjyacho_or_jp_shrine_detail_01042.html"
+        }
+      ],
+      "search_note": "検索フォームのGETパラメータを使い「月読」で検索を試みる。まだ神社は未発見。 / 「月読」での検索結果は0件だったため、別表記「月山」で再検索する。 / 月山神社(山形市)の詳細ページで祭神を確認するためfollowする。他にも複数の月山神社候補があるが、まず1件確認して祭神表記のパターンを把握する。 / 月山神社（山形市内表18）を確認。祭神は月讀命。既に「月読」「月山」キーワードで検索済みで対象は本社を確認。",
+      "hops": 4,
+      "visited": [
+        "https://yamagata-jinjyacho.or.jp/",
+        "https://yamagata-jinjyacho.or.jp/shrine_search?keyword=月読",
+        "https://yamagata-jinjyacho.or.jp/shrine_search?keyword=月山",
+        "https://yamagata-jinjyacho.or.jp/shrine_detail/01042"
+      ],
+      "html_cache": [
+        "https___yamagata_jinjyacho_or_jp_.html",
+        "https___yamagata_jinjyacho_or_jp_shrine_search_keyword___.html",
+        "https___yamagata_jinjyacho_or_jp_shrine_search_keyword___.html",
+        "https___yamagata_jinjyacho_or_jp_shrine_detail_01042.html"
+      ]
+    },
+    "福島県": {
+      "shrines": [],
+      "search_note": "検索フォームはPOSTだが、GETパラメータでの組み立てを試みる。q=月読で検索。 / 「月読」での検索結果はダミーテンプレート(○○神社)のみでJS未実行のため実データが取得できなかった。別キーワード「月山」で再試行する。 / 月山・月讀での検索は結果なし(ダミーデータのみ表示)。月夜見での検索を試みる。 / 検索キーワード「月読」「月山」「月夜見」全て試したが、いずれも実際の検索結果はダミーデータのみでヒットなし。福島県神社庁サイト内で月読系神社を確認できなかった。探索回数の制約もあり終了。",
+      "hops": 4,
+      "visited": [
+        "https://fukushima-jinjacho.or.jp",
+        "https://fukushima-jinjacho.or.jp/search/?q=%e6%9c%88%e8%aa%ad",
+        "https://fukushima-jinjacho.or.jp/search/?q=%e6%9c%88%e5%b1%b1",
+        "https://fukushima-jinjacho.or.jp/search/?q=%e6%9c%88%e5%a4%9c%e8%a6%8b"
+      ],
+      "html_cache": [
+        "https___fukushima_jinjacho_or_jp.html",
+        "https___fukushima_jinjacho_or_jp_search__q__e6_9c_88_e8_aa_ad.html",
+        "https___fukushima_jinjacho_or_jp_search__q__e6_9c_88_e5_b1_b1.html",
+        "https___fukushima_jinjacho_or_jp_search__q__e6_9c_88_e5_a4_9c_e8_a6_8b.html"
+      ]
+    },
+    "茨城県": {
+      "shrines": [],
+      "search_note": "神社一覧らしきページへ遷移して探索を続ける / 県内神社紹介ページから地域別一覧(県北)へ移動。月読系神社を探索継続。 / 県北地域ページには月読・月讀・月夜見・月山系の神社名は見当たらなかった。県内神社紹介トップに戻り、他の地域(県央・県南・鹿行など)の一覧ページを確認する必要がある。",
+      "hops": 3,
+      "visited": [
+        "https://www.ibarakiken-jinjacho.or.jp/",
+        "https://www.ibarakiken-jinjacho.or.jp/ibaraki/index.html",
+        "https://www.ibarakiken-jinjacho.or.jp/ibaraki/kenhoku/index.html"
+      ],
+      "html_cache": [
+        "https___www_ibarakiken_jinjacho_or_jp_.html",
+        "https___www_ibarakiken_jinjacho_or_jp_ibaraki_index_html.html",
+        "https___www_ibarakiken_jinjacho_or_jp_ibaraki_kenhoku_index_html.html"
+      ]
+    },
+    "栃木県": {
+      "shrines": [],
+      "search_note": "県内神社ご紹介ページ(p=194)へ遷移し、一覧・検索から月読系神社を探索する。 / 現在のページは式年遷宮に関する内容で月読系神社の情報なし。県内神社ご紹介ページへ遷移して神社一覧・検索を探す。 / 現在のページはお参り作法のページで神社情報なし。「県内神社ご紹介」リンク(p=14)へ遷移し神社一覧・検索を探す。 / 神社庁概要ページには対象情報なし。県内神社ご紹介の別ページ(p=59)を探索する。 / 栃木県神社庁サイト内で月読・月讀・月夜見・月山を祀る神社の情報を確認できなかった。トップページ、市町村一覧ページ等を探索したが、検索フォームや該当する神社の詳細情報は見つからなかった。探索回数の制限により全市町村ページの確認は完了できなかった。",
+      "hops": 5,
+      "visited": [
+        "http://tochigi-jinjacho.or.jp",
+        "http://www.tochigi-jinjacho.or.jp/?p=194",
+        "http://www.tochigi-jinjacho.or.jp/?p=32",
+        "http://www.tochigi-jinjacho.or.jp/?p=14",
+        "http://www.tochigi-jinjacho.or.jp/?p=59"
+      ],
+      "html_cache": [
+        "http___tochigi_jinjacho_or_jp.html",
+        "http___www_tochigi_jinjacho_or_jp__p_194.html",
+        "http___www_tochigi_jinjacho_or_jp__p_32.html",
+        "http___www_tochigi_jinjacho_or_jp__p_14.html",
+        "http___www_tochigi_jinjacho_or_jp__p_59.html"
+      ]
+    },
+    "群馬県": {
+      "shrines": [],
+      "search_note": "県内神社紹介ページへ遷移し、月読系神社の索引・検索を探す / 群馬県神社庁の県内神社紹介ページ(全支部の神社一覧)を確認したが、月読・月讀・月夜見・月山系の神社(該当祭神を祀る神社)は見つからなかった。「月夜野神社」(みなかみ町月夜野1259番地)という名称の神社は存在するが、これは地名(月夜野)に由来する社名であり、祭神情報も本文に記載がなく、月読命/月讀尊/月夜見尊を祀るとは確認できないため対象外とした。このページは県内全神社の一覧(索引)であり、これ以上辿るべき検索ページや索引リンクは見当たらなかった。",
+      "hops": 2,
+      "visited": [
+        "https://gunma-jinjacho.jp",
+        "https://gunma-jinjacho.jp/jinja/"
+      ],
+      "html_cache": [
+        "https___gunma_jinjacho_jp.html",
+        "https___gunma_jinjacho_jp_jinja_.html"
+      ]
+    },
+    "埼玉県": {
+      "shrines": [],
+      "search_note": "検索フォームにキーワード「月読」を入れて検索を試みる / 検索結果に「月読神社」の詳細ページが見つかったため、祭神確認のため訪問する。 / 月読神社(さいたま市岩槻区)の詳細ページを確認したが、祭神の記載がなくmain_deityを確認できなかったため出力対象外。別表記「月夜見」で再検索して他の候補を探す。 / 「月夜見」で検索結果0件。残り探索回数を使って「月山」で検索を試みる。 / 埼玉県神社庁サイトで「月読」「月夜見」「月山」で検索したが、月読系祭神(月読命/月讀尊/月夜見尊)を祀る神社は見つからなかった。「月山」の検索結果は簗瀬神社(祭神:日本武尊)と地名「大月山」に関する記事のみで、対象外。探索回数の制限に達したため終了。",
+      "hops": 5,
+      "visited": [
+        "https://saitama-jinjacho.or.jp",
+        "https://www.saitama-jinjacho.or.jp/?s=月読",
+        "https://www.saitama-jinjacho.or.jp/shrine/10047/",
+        "https://www.saitama-jinjacho.or.jp/?s=%E6%9C%88%E5%A4%9C%E8%A6%8B",
+        "https://www.saitama-jinjacho.or.jp/?s=%E6%9C%88%E5%B1%B1"
+      ],
+      "html_cache": [
+        "https___saitama_jinjacho_or_jp.html",
+        "https___www_saitama_jinjacho_or_jp__s___.html",
+        "https___www_saitama_jinjacho_or_jp_shrine_10047_.html",
+        "https___www_saitama_jinjacho_or_jp__s__E6_9C_88_E5_A4_9C_E8_A6_8B.html",
+        "https___www_saitama_jinjacho_or_jp__s__E6_9C_88_E5_B1_B1.html"
+      ]
+    },
+    "千葉県": {
+      "shrines": [],
+      "search_note": "取得失敗 http://chiba.jinjacho.or.jp/ (0: URLError: <urlopen error timed out>)",
+      "hops": 4,
+      "visited": [
+        "https://www.jinjacho.or.jp/",
+        "https://www.jinjacho.or.jp/search?q=月読",
+        "http://www.jinja.ne.jp/exploration/index.html",
+        "http://chiba.jinjacho.or.jp/"
+      ]
+    },
+    "東京都": {
+      "shrines": [],
+      "search_note": "キーワード検索ページへ遷移し、月読・月讀・月夜見等で検索を試みる / 検索フォーム(GET, フィールド名s)を使って「月読」で検索を試みる / 「月読」では検索結果0件だったため、別表記「月夜見」で再検索を試みる。 / 「月読」「月夜見」は検索結果なし。残り探索回数が少ないため「月山」で最後の検索を試みる。 / 月読・月讀・月夜見・月山のいずれのキーワードでも検索結果が見つからず、探索回数の上限に達したため終了。",
+      "hops": 5,
+      "visited": [
+        "http://www.tokyo-jinjacho.or.jp",
+        "http://www.tokyo-jinjacho.or.jp/jinja/keyword/",
+        "http://www.tokyo-jinjacho.or.jp?s=月読",
+        "http://www.tokyo-jinjacho.or.jp?s=月夜見",
+        "http://www.tokyo-jinjacho.or.jp?s=月山"
+      ],
+      "html_cache": [
+        "http___www_tokyo_jinjacho_or_jp.html",
+        "http___www_tokyo_jinjacho_or_jp_jinja_keyword_.html",
+        "http___www_tokyo_jinjacho_or_jp_s___.html",
+        "http___www_tokyo_jinjacho_or_jp_s____.html",
+        "http___www_tokyo_jinjacho_or_jp_s___.html"
+      ]
+    },
+    "神奈川県": {
+      "shrines": [],
+      "search_note": "検索フォームのGETパラメータを推測してフリーワード検索を試みる。s_keyword_3に「月読」を指定。 / 前回の検索(月読)ではホームページと同じ内容が返り、検索結果一覧が確認できなかった。表記を「月讀」に変えて再検索を試みる。 / 月読・月讀での検索は結果0件だったため、月夜見で再検索を試みる。 / 月読・月讀・月夜見の3キーワードで検索を試行したが、いずれも該当する神社が見つからなかった(検索結果ページはトップページと同一内容が返され、対象神社は確認できず)。残り探索回数も少ないため、これ以上の追跡は行わず0件で終了する。",
+      "hops": 4,
+      "visited": [
+        "https://kanagawa-jinja.or.jp",
+        "https://www.kanagawa-jinja.or.jp/?s_keyword_3=月読&searchbutton=検索",
+        "https://www.kanagawa-jinja.or.jp/?s_keyword_3=月讀&searchbutton=検索",
+        "https://www.kanagawa-jinja.or.jp/?s_keyword_3=月夜見&searchbutton=検索"
+      ],
+      "html_cache": [
+        "https___kanagawa_jinja_or_jp.html",
+        "https___www_kanagawa_jinja_or_jp__s_keyword_3____searchbutton___.html",
+        "https___www_kanagawa_jinja_or_jp__s_keyword_3____searchbutton___.html",
+        "https___www_kanagawa_jinja_or_jp__s_keyword_3_____searchbutton___.html"
+      ]
+    },
+    "新潟県": {
+      "shrines": [],
+      "search_note": "検索フォームを利用して「月読」キーワードで検索を試みる / 「月読」で検索したが該当なし。別キーワード「月山」で再検索を試みる。 / 「月山」検索で月山神社(阿賀町日出谷・阿賀町豊川)の2件を発見したが、検索結果ページに祭神情報がなく、詳細ページへのリンクも抽出できなかったため祭神未確認。ルールに従い出力は保留。念のため「月夜見」でも検索を試みる。 / 新潟県神社庁の検索で「月読」「月山」「月夜見」の各キーワードを試したが、いずれも該当する神社が見つからなかった。探索回数の上限に達したため終了する。",
+      "hops": 4,
+      "visited": [
+        "https://niigata-jinjacho.jp",
+        "https://niigata-jinjacho.jp/shrine_niigata/search.php?area=&keyword=月読",
+        "https://niigata-jinjacho.jp/shrine_niigata/search.php?area=&keyword=月山",
+        "https://niigata-jinjacho.jp/shrine_niigata/search.php?area=&keyword=月夜見"
+      ],
+      "html_cache": [
+        "https___niigata_jinjacho_jp.html",
+        "https___niigata_jinjacho_jp_shrine_niigata_search_php_area__keyword___.html",
+        "https___niigata_jinjacho_jp_shrine_niigata_search_php_area__keyword___.html",
+        "https___niigata_jinjacho_jp_shrine_niigata_search_php_area__keyword____.html"
+      ]
+    },
+    "富山県": {
+      "shrines": [],
+      "search_note": "氏神神社検索ページ(https://toyama-jinjacho.sakura.ne.jp/%e5%af%8c%e5%b1%b1%e7%9c%8c%e6%b0%8f%e7%a5%9e%e7%a5%9e%e7%a4%be%e6%a4%9c%e7%b4%a2)も候補だが、まずサイト内検索フォームで「月読」を試す。 / 検索結果に月読系神社は見つからず。氏神神社検索ページへ遷移して探索を続ける。 / 氏神神社検索ページには検索フォームのみで実データが無かった。既に月読で検索済みのため月山キーワードで再検索を試みる。 / 月読・月山での検索は0件だった。月夜見で再検索を試みる。 / 「月読」「月山」「月夜見」の検索を実施したが、いずれも0件で該当神社は確認できなかった。残り探索回数も限られているため終了する。",
+      "hops": 5,
+      "visited": [
+        "https://toyama-jinjacho.sakura.ne.jp/",
+        "https://toyama-jinjacho.sakura.ne.jp/?s=月読",
+        "https://toyama-jinjacho.sakura.ne.jp/%E5%AF%8C%E5%B1%B1%E7%9C%8C%E6%B0%8F%E7%A5%9E%E7%A5%9E%E7%A4%BE%E6%A4%9C%E7%B4%A2",
+        "https://toyama-jinjacho.sakura.ne.jp/?s=月山",
+        "https://toyama-jinjacho.sakura.ne.jp/?s=月夜見"
+      ],
+      "html_cache": [
+        "https___toyama_jinjacho_sakura_ne_jp_.html",
+        "https___toyama_jinjacho_sakura_ne_jp__s___.html",
+        "https___toyama_jinjacho_sakura_ne_jp__E5_AF_8C_E5_B1_B1_E7_9C_8C_E6_B0_8F_E7_A5_.html",
+        "https___toyama_jinjacho_sakura_ne_jp__s___.html",
+        "https___toyama_jinjacho_sakura_ne_jp__s____.html"
+      ]
+    },
+    "石川県": {
+      "shrines": [
+        {
+          "name": "月読神社",
+          "city": "小松市",
+          "address": "小松市桂町ニ80",
+          "main_deity": "月夜見命",
+          "source_quote": "月読神社 （ つきよみじんじゃ ） [氏子区域] 小松市 桂町 [鎮座地] 小松市桂町ニ80 [御祭神] 月夜見命",
+          "source_url": "https://www.ishikawa-jinjacho.or.jp/?s=%E6%9C%88%E8%AA%AD",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-12",
+          "html_cache": "https___www_ishikawa_jinjacho_or_jp__s__E6_9C_88_E8_AA_AD.html"
+        },
+        {
+          "name": "柴山神社",
+          "city": "七尾市",
+          "address": "七尾市能登島閨町63-27",
+          "main_deity": "月読命 堅槌命",
+          "source_quote": "柴山神社 （ しばやまじんじゃ ） [氏子区域] 七尾市 能登島閨町 [鎮座地] 七尾市能登島閨町63-27 [御祭神] 月読命 堅槌命",
+          "source_url": "https://www.ishikawa-jinjacho.or.jp/?s=%E6%9C%88%E8%AA%AD",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-12",
+          "html_cache": "https___www_ishikawa_jinjacho_or_jp__s__E6_9C_88_E8_AA_AD.html"
+        },
+        {
+          "name": "月夜見神社",
+          "city": "七尾市",
+          "address": "七尾市下町ヒ1",
+          "main_deity": "月読命",
+          "source_quote": "月夜見神社 （ つきよみじんじゃ ） [氏子区域] 七尾市 下町 [鎮座地] 七尾市下町ヒ1 [御祭神] 月読命",
+          "source_url": "https://www.ishikawa-jinjacho.or.jp/?s=%E6%9C%88%E8%AA%AD",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-12",
+          "html_cache": "https___www_ishikawa_jinjacho_or_jp__s__E6_9C_88_E8_AA_AD.html"
+        }
+      ],
+      "search_note": "検索フォーム(GET, s パラメータ)を使い「月読」で検索を試みる。 / 検索結果ページで3件確認できたため終了。",
+      "hops": 2,
+      "visited": [
+        "https://ishikawa-jinjacho.or.jp",
+        "https://www.ishikawa-jinjacho.or.jp/?s=%E6%9C%88%E8%AA%AD"
+      ],
+      "html_cache": [
+        "https___ishikawa_jinjacho_or_jp.html",
+        "https___www_ishikawa_jinjacho_or_jp__s__E6_9C_88_E8_AA_AD.html"
+      ]
+    },
+    "福井県": {
+      "shrines": [],
+      "search_note": "取得失敗 https://www.jinja-fukui.jp/member/index.php (0: HTTPError: HTTP Error 401: Unauthorized)",
+      "hops": 3,
+      "visited": [
+        "https://www.jinja-fukui.jp/",
+        "https://www.jinja-fukui.jp/search/index.php",
+        "https://www.jinja-fukui.jp/member/index.php"
+      ]
+    },
+    "山梨県": {
+      "shrines": [],
+      "search_note": "「月読」で検索したが該当なし。別表記「月山」で再検索を試みる。 / 「月山」検索は0件だった。「月夜見」表記で再検索を試みる。 / 山梨県神社庁の検索で「月読」「月山」「月夜見」のキーワードを試したが、いずれも「神社は見つかりませんでした」との結果で対象神社は確認できなかった。",
+      "hops": 3,
+      "visited": [
+        "https://www.yamanashi-jinjacho.or.jp/intro/search/result?jinjaName=月読",
+        "https://www.yamanashi-jinjacho.or.jp/intro/search/result?jinjaName=月山",
+        "https://www.yamanashi-jinjacho.or.jp/intro/search/result?jinjaName=月夜見"
+      ],
+      "html_cache": [
+        "https___www_yamanashi_jinjacho_or_jp_intro_search_result_jinjaName___.html",
+        "https___www_yamanashi_jinjacho_or_jp_intro_search_result_jinjaName___.html",
+        "https___www_yamanashi_jinjacho_or_jp_intro_search_result_jinjaName____.html"
+      ]
+    },
+    "長野県": {
+      "shrines": [],
+      "search_note": "取得失敗 https://www.nagano-jinjacho.jp/page/jinjasyoukai.html (0: HTTPError: HTTP Error 404: Not Found)",
+      "hops": 4,
+      "visited": [
+        "https://nagano-jinjacho.jp",
+        "https://nagano-jinjacho.jp/j-syoukai.html",
+        "https://www.nagano-jinjacho.jp/shibu/kiso.htm",
+        "https://www.nagano-jinjacho.jp/page/jinjasyoukai.html"
+      ]
+    },
+    "岐阜県": {
+      "shrines": [],
+      "search_note": "検索フォームがGETで利用可能なため、キーワード「月読」で検索を試みる。 / 「月読」での検索結果は三輪神社のみで、本文に月読関連の祭神記載が確認できないため対象外。次に「月夜見」で検索を試みる。 / 「月読」「月夜見」検索では対象神社が見つからなかった(月夜見検索結果は朝日大神宮のみで祭神無関係)。残り探索回数を使い「月山」で検索を試みる。 / 「月読」「月讀」「月夜見」「月山」の4種のキーワードで岐阜県神社庁の検索を実行したが、いずれも該当する月読系神社(月読神社・月讀神社・月夜見神社・月山神社)は見つからなかった。「月山」での検索結果15件は加茂神社・多岐神社・秋葉神社など無関係な神社のみで、社名・祭神ともに対象外だった。",
+      "hops": 4,
+      "visited": [
+        "https://gifu-jinjacho.jp",
+        "https://gifu-jinjacho.jp/search.php?keyword=%E6%9C%88%E8%AA%AD",
+        "https://gifu-jinjacho.jp/search.php?keyword=%E6%9C%88%E5%A4%9C%E8%A6%8B",
+        "https://gifu-jinjacho.jp/search.php?keyword=%E6%9C%88%E5%B1%B1"
+      ],
+      "html_cache": [
+        "https___gifu_jinjacho_jp.html",
+        "https___gifu_jinjacho_jp_search_php_keyword__E6_9C_88_E8_AA_AD.html",
+        "https___gifu_jinjacho_jp_search_php_keyword__E6_9C_88_E5_A4_9C_E8_A6_8B.html",
+        "https___gifu_jinjacho_jp_search_php_keyword__E6_9C_88_E5_B1_B1.html"
+      ]
+    },
+    "静岡県": {
+      "shrines": [],
+      "search_note": "検索フォームを利用して「月読」キーワードで検索を実行する / 「月読」での検索結果は光月神社・水神社・六所神社(複数)のみで、社名が月読神社・月讀神社・月夜見神社・月山神社のいずれにも一致しないため対象外。次に「月夜見」で再検索を試みる。 / 月夜見神社　八幡神社(藤枝市高洲9-1)の詳細ページで祭神を確認するためfollowする。 / 月夜見神社 八幡神社の詳細ページには祭神情報が記載されていないため出力不可。月山キーワードで再検索を試みる。 / 「月山」での検索結果は0件(神社名・よみがな・鎮座地の欄は空欄)。残り探索回数が1のため、これ以上の索引探索は行わずここで終了する。",
+      "hops": 5,
+      "visited": [
+        "http://www.shizuoka-jinjacho.or.jp",
+        "http://www.shizuoka-jinjacho.or.jp/shokai/search.php?mode=search&search=%E6%9C%88%E8%AA%AD",
+        "http://www.shizuoka-jinjacho.or.jp/shokai/search.php?mode=search&search=%E6%9C%88%E5%A4%9C%E8%A6%8B",
+        "http://www.shizuoka-jinjacho.or.jp/shokai/jinja.php?id=4407081",
+        "http://www.shizuoka-jinjacho.or.jp/shokai/search.php?mode=search&search=%E6%9C%88%E5%B1%B1"
+      ],
+      "html_cache": [
+        "http___www_shizuoka_jinjacho_or_jp.html",
+        "http___www_shizuoka_jinjacho_or_jp_shokai_search_php_mode_search_search__E6_9C_8.html",
+        "http___www_shizuoka_jinjacho_or_jp_shokai_search_php_mode_search_search__E6_9C_8.html",
+        "http___www_shizuoka_jinjacho_or_jp_shokai_jinja_php_id_4407081.html",
+        "http___www_shizuoka_jinjacho_or_jp_shokai_search_php_mode_search_search__E6_9C_8.html"
+      ]
+    },
+    "愛知県": {
+      "shrines": [],
+      "search_note": "検索フォームのaddrフィールドに「月読」を指定して検索を試みる。まだ祭神情報は未確認。 / 「月読」で検索したが結果0件だったため、別表記「月夜見」で再検索する。 / 「月読」「月夜見」で検索したが結果が0件だったため、「月山」で再検索を試みる。 / 月読・月讀(讀読み違い)・月夜見・月山での検索を試したが本文に該当神社の一覧が確認できなかった。残り回数を使い『月讀』(旧字体)で再検索を試みる。 / 愛知県神社庁で「月読」「月讀」「月夜見」「月山」の4パターンで検索を行ったが、いずれも検索結果に該当神社が表示されず(トップページと同様の内容が返された)。残り探索回数の制約もあり、これ以上の探索は困難と判断し0件で終了。",
+      "hops": 5,
+      "visited": [
+        "https://aichi-jinjacho.or.jp",
+        "https://aichi-jinjacho.or.jp/?addr=%E6%9C%88%E8%AA%AD&orders=&result_page=1",
+        "https://aichi-jinjacho.or.jp/?addr=%E6%9C%88%E5%A4%9C%E8%A6%8B&orders=&result_page=1",
+        "https://aichi-jinjacho.or.jp/?addr=%E6%9C%88%E5%B1%B1&orders=&result_page=1",
+        "https://aichi-jinjacho.or.jp/?addr=%E6%9C%88%E8%AC%9B&orders=&result_page=1"
+      ],
+      "html_cache": [
+        "https___aichi_jinjacho_or_jp.html",
+        "https___aichi_jinjacho_or_jp__addr__E6_9C_88_E8_AA_AD_orders__result_page_1.html",
+        "https___aichi_jinjacho_or_jp__addr__E6_9C_88_E5_A4_9C_E8_A6_8B_orders__result_pa.html",
+        "https___aichi_jinjacho_or_jp__addr__E6_9C_88_E5_B1_B1_orders__result_page_1.html",
+        "https___aichi_jinjacho_or_jp__addr__E6_9C_88_E8_AC_9B_orders__result_page_1.html"
+      ]
+    },
+    "三重県": {
+      "shrines": [],
+      "search_note": "トップページには対象神社の情報なし。神社一覧ページへ移動して探索を続ける。 / 三重県の神社一覧ページには市町別リンクのみで祭神情報が無いため、三重県神社庁教化委員会の神社情報データベース(http://kyoka.mie-jinjacho.or.jp/shrine/)へ遷移して月読系神社を検索する。 / 月読系神社の記載は本ページには確認できず。伊勢市に月夜見宮(伊勢神宮別宮)が存在することが知られているため、伊勢支部のカテゴリページを探索する。 / 伊勢支部ページ1件目には月読系の社名が見当たらず。次ページ(page/2)に月讀宮等の情報がある可能性があるため探索を続ける。 / 伊勢支部の一覧(page/2)には月読・月讀・月夜見・月山系の神社名は見当たらなかった。ページ内リンクを確認したが該当なし。残り探索回数も限られているため終了とする。",
+      "hops": 5,
+      "visited": [
+        "https://www.mie-jinjachou.page/",
+        "https://www.mie-jinjachou.page/三重県の神社一覧",
+        "http://kyoka.mie-jinjacho.or.jp/shrine/",
+        "https://kyoka.mie-jinjacho.or.jp/shrine/cat/08_ise/",
+        "https://kyoka.mie-jinjacho.or.jp/shrine/cat/08_ise/page/2/"
+      ],
+      "html_cache": [
+        "https___www_mie_jinjachou_page_.html",
+        "https___www_mie_jinjachou_page_________.html",
+        "http___kyoka_mie_jinjacho_or_jp_shrine_.html",
+        "https___kyoka_mie_jinjacho_or_jp_shrine_cat_08_ise_.html",
+        "https___kyoka_mie_jinjacho_or_jp_shrine_cat_08_ise_page_2_.html"
+      ]
+    },
+    "滋賀県": {
+      "shrines": [],
+      "search_note": "検索フォームはPOSTのみで組み立て不可のため、神社検索・一覧ページへの入口として案内されている「滋賀県の神社」ページを確認する。 / 検索ページの本文・リンクが空で情報が取得できなかったため、これ以上の探索ができません。月読系神社の情報は確認できませんでした。",
+      "hops": 2,
+      "visited": [
+        "https://www.shiga-jinjacho.jp",
+        "https://www.shiga-jinjacho.jp/search.html"
+      ],
+      "html_cache": [
+        "https___www_shiga_jinjacho_jp.html",
+        "https___www_shiga_jinjacho_jp_search_html.html"
+      ]
+    },
+    "京都府": {
+      "shrines": [],
+      "search_note": "神社紹介ページへ遷移して一覧・検索を確認する / 神社紹介ページ(shrine.html)へ移動し、神社一覧・検索を探す。京都には松尾大社摂社の月読神社が有名なので確認予定。 / 京都府には松尾大社摂社として有名な月読神社(西京区)がある可能性が高いため、西京区の神社一覧ページを確認する。 / 西京区(07.html)のページには月読・月讀・月夜見・月山系の神社は確認できなかった。松尾大社の摂社として知られる月読神社もこの一覧には掲載されていない。他区の一覧(右京区)を確認するためfollowする。 / 京都市右京区(01.html)のページ内には月読・月讀・月夜見・月山系の神社名は確認できなかった。既に右京区・西京区(07.html)を確認済みで、京都府内の主要な月読神社(松尾大社摂社など)の記載は本ページ一覧には見当たらず、祭神情報も確認できないため対象神社を発見できなかった。残り探索回数が尽きたため終了する。",
+      "hops": 5,
+      "visited": [
+        "http://kyoto-jinjacho.or.jp",
+        "http://kyoto-jinjacho.or.jp/jinja.html",
+        "http://kyoto-jinjacho.or.jp/shrine.html",
+        "http://kyoto-jinjacho.or.jp/shrine/07.html",
+        "http://kyoto-jinjacho.or.jp/shrine/01.html"
+      ],
+      "html_cache": [
+        "http___kyoto_jinjacho_or_jp.html",
+        "http___kyoto_jinjacho_or_jp_jinja_html.html",
+        "http___kyoto_jinjacho_or_jp_shrine_html.html",
+        "http___kyoto_jinjacho_or_jp_shrine_07_html.html",
+        "http___kyoto_jinjacho_or_jp_shrine_01_html.html"
+      ]
+    },
+    "大阪府": {
+      "shrines": [],
+      "search_note": "府内神社の紹介ページへ遷移し、一覧・索引を探す。 / 検索フォームが無く索引ページのみ。大阪市の区一覧ページ(osaka.html)を経由して各区の神社一覧・詳細を確認する。 / osaka.htmlは大阪市内の区一覧のみで祭神情報なし。月読神社の手がかりを求め住吉区ページを確認する。 / このページの神社名(住吉大社、生根神社、止止呂支比賣命神社、神須牟地神社、保利神社、大依羅神社)には月読・月讀・月夜見・月山系の名称は含まれない。祭神未確認だが社名から対象外と判断し、より広い一覧ページへ戻って他区の神社一覧を探索する。",
+      "hops": 4,
+      "visited": [
+        "https://osaka-jinjacho.jp",
+        "https://www.osaka-jinjacho.jp/funai_jinja/index.html",
+        "https://www.osaka-jinjacho.jp/funai_jinja/osaka.html",
+        "https://www.osaka-jinjacho.jp/funai_jinja/dai9shibu/sumiyoshi-ku/sumiyoshi.html"
+      ],
+      "html_cache": [
+        "https___osaka_jinjacho_jp.html",
+        "https___www_osaka_jinjacho_jp_funai_jinja_index_html.html",
+        "https___www_osaka_jinjacho_jp_funai_jinja_osaka_html.html",
+        "https___www_osaka_jinjacho_jp_funai_jinja_dai9shibu_sumiyoshi_ku_sumiyoshi_html.html"
+      ]
+    },
+    "兵庫県": {
+      "shrines": [],
+      "search_note": "検索ページへ移動して「月読」等のキーワードで検索を試みる / 検索フォームは住所ベースの近隣検索のみで神社名・祭神での検索ができない(fields=address,ie_taisaku,lat,lng)。GETパラメータでの神社名検索は組み立て不可。索引や一覧ページを探すためトップページへ遷移する。 / 検索ページへ移動し「月読」で検索を試みる / 検索フォームは住所検索専用(address, lat/lng)で、キーワード検索は機能していない。神社名や祭神での検索・索引ページが存在せず、月読系神社を発見できなかった。残り探索回数も少ないため終了する。",
+      "hops": 4,
+      "visited": [
+        "https://www.hyogo-jinjacho.com",
+        "https://www.hyogo-jinjacho.com/search.html",
+        "https://www.hyogo-jinjacho.com/index.html",
+        "https://www.hyogo-jinjacho.com/search.html?keyword=月読"
+      ],
+      "html_cache": [
+        "https___www_hyogo_jinjacho_com.html",
+        "https___www_hyogo_jinjacho_com_search_html.html",
+        "https___www_hyogo_jinjacho_com_index_html.html",
+        "https___www_hyogo_jinjacho_com_search_html_keyword___.html"
+      ]
+    },
+    "奈良県": {
+      "shrines": [],
+      "search_note": "取得失敗 http://www.narashinsei.com/search/月読/ (0: HTTPError: HTTP Error 404: Not Found)",
+      "hops": 6,
+      "visited": [
+        "https://www.naraken-jinjacho.jp/",
+        "https://www.naraken-jinjacho.jp/jinja.html",
+        "https://www.naraken-jinjacho.jp/jinja02.html",
+        "https://www.naraken-jinjacho.jp/jinja03.html",
+        "https://www.naraken-jinjacho.jp/jinja04.html",
+        "http://www.narashinsei.com/search/月読/"
+      ]
+    },
+    "和歌山県": {
+      "shrines": [],
+      "search_note": "神社名検索フォームに「月」で検索したいが、SJISエンコードが必要。JinjyaMeiフィールドで「月」を検索するURLを試みる。まず月読/月山等のキーワードで神社名検索を行う。 / 検索ページでDB接続エラー(mysql_connect access denied)が発生し、データを取得できなかった。他に索引・検索の手段が見当たらないため終了する。",
+      "hops": 2,
+      "visited": [
+        "https://wakayama-jinjacho.or.jp",
+        "https://wakayama-jinjacho.or.jp/jdb/sys/user/SelectListWjtTbl.php?JinjyaMei=%c5%c2"
+      ],
+      "html_cache": [
+        "https___wakayama_jinjacho_or_jp.html",
+        "https___wakayama_jinjacho_or_jp_jdb_sys_user_SelectListWjtTbl_php_JinjyaMei__c5_.html"
+      ]
+    },
+    "鳥取県": {
+      "shrines": [
+        {
+          "name": "赤倉神社",
+          "city": "八頭町",
+          "address": "八頭町大江９１１",
+          "main_deity": "天照大御神 月夜見尊 保食神 大山祇神 罔象女神 素盞嗚尊",
+          "source_quote": "祭神天照大御神 月夜見 尊 保食神 大山祇神 罔象女神 素盞嗚尊",
+          "source_url": "https://tottori-jinjacho.jp/publics/search/?search_word=月夜見",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-12",
+          "html_cache": "https___tottori_jinjacho_jp_publics_search__search_word____.html"
+        },
+        {
+          "name": "大江神社",
+          "city": "八頭町",
+          "address": "",
+          "main_deity": "己貴命 天穂日命 三穂津姫命 少彦名命 稲背脛命 素盞嗚命 奇稲田姫命 武甕槌命 経津主命伊弉諾命 月夜見命 大年命 香用姫神 大香山戸臣神 若経津主命 天津彦火々瓊々杵尊 木花開耶姫命彦火火出見命 豊玉姫",
+          "source_quote": "己貴命 天穂日命 三穂津姫命 少彦名命 稲背脛命 素盞嗚命 奇稲田姫命 武甕槌命 経津主命伊弉諾命 月夜見 命 大年命 香用姫神 大香山戸臣神 若経津主命 天津彦火々瓊々杵尊 木花開耶姫命彦火火出見命 豊玉姫",
+          "source_url": "https://tottori-jinjacho.jp/publics/search/?search_word=月夜見",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-12",
+          "html_cache": "https___tottori_jinjacho_jp_publics_search__search_word____.html"
+        },
+        {
+          "name": "隼神社",
+          "city": "鳥取市",
+          "address": "",
+          "main_deity": "月讀神",
+          "source_quote": "祭神須佐之雄神 櫛稲田姫神 羽明玉神 伊弉諾神 伊弉冉神 天照大御神 月讀 神 大己貴神 天穂日神 三穂津姫神 市杵島姫神 味耜高彦根神 下照媛神都 味齒事代主神 高照光媛大神",
+          "source_url": "https://tottori-jinjacho.jp/publics/search/?search_word=月讀",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-12",
+          "html_cache": "https___tottori_jinjacho_jp_publics_search__search_word___.html"
+        },
+        {
+          "name": "倉見神社",
+          "city": "鳥取市",
+          "address": "鳥取市桂見729",
+          "main_deity": "月讀尊",
+          "source_quote": "住所鳥取市桂見729祭神 月讀 尊",
+          "source_url": "https://tottori-jinjacho.jp/publics/search/?search_word=月讀",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-12",
+          "html_cache": "https___tottori_jinjacho_jp_publics_search__search_word___.html"
+        },
+        {
+          "name": "桂尾神社",
+          "city": "鳥取市",
+          "address": "鳥取市桂見444",
+          "main_deity": "月讀尊",
+          "source_quote": "住所鳥取市桂見444祭神 月讀 尊",
+          "source_url": "https://tottori-jinjacho.jp/publics/search/?search_word=月讀",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-12",
+          "html_cache": "https___tottori_jinjacho_jp_publics_search__search_word___.html"
+        },
+        {
+          "name": "雨瀧神社",
+          "city": "鳥取市",
+          "address": "鳥取市国府町雨瀧1037",
+          "main_deity": "月讀尊",
+          "source_quote": "住所鳥取市国府町雨瀧1037祭神 月讀 尊",
+          "source_url": "https://tottori-jinjacho.jp/publics/search/?search_word=月讀",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-12",
+          "html_cache": "https___tottori_jinjacho_jp_publics_search__search_word___.html"
+        },
+        {
+          "name": "北村神社",
+          "city": "鳥取市",
+          "address": "鳥取市河原町北村157",
+          "main_deity": "月讀命",
+          "source_quote": "住所鳥取市河原町北村157祭神天照大御神 月讀 命 保食神 瀬折津姫神",
+          "source_url": "https://tottori-jinjacho.jp/publics/search/?search_word=月讀",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-12",
+          "html_cache": "https___tottori_jinjacho_jp_publics_search__search_word___.html"
+        }
+      ],
+      "search_note": "検索フォームを使用して「月読」で検索を試みる / 「月読」検索は0件だったため「月山」で再検索を試みる。 / 「月山」検索結果は山蔭神社(月山蔭神社)・護邑神社のみで、いずれも月読命/月山神社系の祭神ではなく地名や改称の言及のみ。月読・月山検索は既に実施済みのため、未試行の「月夜見」で検索を試みる。 / 月夜見での検索で赤倉神社・大江神社を確認。既に月読・月山・月夜見のキーワードは試したため、残り探索回数で月讀(旧字体)を試す。 / 検索結果ページの祭神情報から確認済み。5社すべて月讀（月讀神/尊/命）を祭神として持つことをスニペットで確認できたため、詳細ページへの追加訪問は行わず終了。",
+      "hops": 5,
+      "visited": [
+        "https://tottori-jinjacho.jp",
+        "https://tottori-jinjacho.jp/publics/search/?search_word=月読",
+        "https://tottori-jinjacho.jp/publics/search/?search_word=月山",
+        "https://tottori-jinjacho.jp/publics/search/?search_word=月夜見",
+        "https://tottori-jinjacho.jp/publics/search/?search_word=月讀"
+      ],
+      "html_cache": [
+        "https___tottori_jinjacho_jp.html",
+        "https___tottori_jinjacho_jp_publics_search__search_word___.html",
+        "https___tottori_jinjacho_jp_publics_search__search_word___.html",
+        "https___tottori_jinjacho_jp_publics_search__search_word____.html",
+        "https___tottori_jinjacho_jp_publics_search__search_word___.html"
+      ]
+    },
+    "島根県": {
+      "shrines": [
+        {
+          "name": "日御碕神社",
+          "city": "出雲市",
+          "address": "出雲市野郷町1885番地",
+          "main_deity": "天照大神・月夜見尊・須佐之男命",
+          "source_quote": "日御碕神社 天照大神・月夜見尊・須佐之男命 出雲市野郷町1885番地 五穀豊穣 厄難消除",
+          "source_url": "https://www.shimane-jinjacho.or.jp/izumo/index.html",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-12",
+          "html_cache": "https___www_shimane_jinjacho_or_jp_izumo_index_html.html"
+        }
+      ],
+      "search_note": "神社検索ページへ遷移し、月読・月讀・月夜見・月山などのキーワードで検索を試みる。 / 検索フォームはGoogle CSEでcx不明のため使用不可。市町村一覧から出雲市ページへ遷移して確認する。 / 出雲市の神社一覧ページ内で「月夜見尊」を祀る日御碕神社(野郷町)を確認。同名の日御碕神社(大社町日御碕455番地)は祭神が天照大御神・神素戔嗚尊のみで月読系の神は確認できず対象外とした。県内他地域(松江市など)にも同様の月夜見尊祭祀の可能性はあるが、探索回数の制約により本県は1社確保で終了。",
+      "hops": 3,
+      "visited": [
+        "https://shimane-jinjacho.or.jp",
+        "https://www.shimane-jinjacho.or.jp/search/index.html",
+        "https://www.shimane-jinjacho.or.jp/izumo/index.html"
+      ],
+      "html_cache": [
+        "https___shimane_jinjacho_or_jp.html",
+        "https___www_shimane_jinjacho_or_jp_search_index_html.html",
+        "https___www_shimane_jinjacho_or_jp_izumo_index_html.html"
+      ]
+    },
+    "岡山県": {
+      "shrines": [],
+      "search_note": "検索フォームや全件一覧表示へのリンクを発見。まず全件一覧表示ページを確認する。 / 全件一覧は1609件・81ページあり非効率。検索機能の有無を確認するため神社検索トップページへ遷移する。 / 検索フォームのGETパラメータ名が不明なため、フリーワード検索を'word'パラメータで試行。ヒットしなければ他のパラメータ名(keyword, freeword等)や一覧ページからの探索が必要。 / 「月読」での検索結果は1609件(全件)が返っており、wordパラメータによる絞り込みが機能していない可能性が高い。別キーワード「月山」で再試行する。 / 検索結果は全件一覧(1609件)が表示されており、word=月山パラメータが機能していない模様。ページ本文には月読・月讀・月夜見・月山に関連する神社名が見当たらず、残り探索回数も1回のため終了する。",
+      "hops": 5,
+      "visited": [
+        "https://okayama-jinjacho.or.jp",
+        "https://okayama-jinjacho.or.jp/search/list/",
+        "https://okayama-jinjacho.or.jp/search/",
+        "https://okayama-jinjacho.or.jp/search/list/?word=月読",
+        "https://okayama-jinjacho.or.jp/search/list/?word=月山"
+      ],
+      "html_cache": [
+        "https___okayama_jinjacho_or_jp.html",
+        "https___okayama_jinjacho_or_jp_search_list_.html",
+        "https___okayama_jinjacho_or_jp_search_.html",
+        "https___okayama_jinjacho_or_jp_search_list__word___.html",
+        "https___okayama_jinjacho_or_jp_search_list__word___.html"
+      ]
+    },
+    "広島県": {
+      "shrines": [],
+      "search_note": "神社一覧ページへ遷移して月読系神社を探索する。 / 検索フォームはPOSTのみで組み立て不可のため利用できない。search_areaパラメータで市町別一覧を辿る方針とする。まず廿日市市等(area=2)を確認。 / search_area=2(福山市)の一覧を確認したが、月読・月讀・月夜見・月山系の神社名は見つからなかった。検索フォームはPOSTのみのためGET組み立て不可。他エリア(search_area=3)を探索する。 / search_area=3(神石高原町)のページには月読・月讀・月夜見・月山を祀る神社は確認できなかった。検索フォームはPOSTのみで直接URL組み立てが不可のため使用不可。残り探索回数が少ないため、未訪問のsearch_area=1(広島市中心部の可能性)を試みる。 / 検索フォームがPOSTのみでGETパラメータでの組み立てができず、地域別一覧(search_area=1)では該当神社が見つからなかった。残り探索回数の制約もあり、他の地域を全て回りきれないため終了する。",
+      "hops": 5,
+      "visited": [
+        "https://hiroshima-jinjacho.jp",
+        "https://www.hiroshima-jinjacho.jp/hirosima_jinja/",
+        "https://www.hiroshima-jinjacho.jp/hirosima_jinja/?search_area=2",
+        "https://www.hiroshima-jinjacho.jp/hirosima_jinja/?search_area=3",
+        "https://www.hiroshima-jinjacho.jp/hirosima_jinja/?search_area=1"
+      ],
+      "html_cache": [
+        "https___hiroshima_jinjacho_jp.html",
+        "https___www_hiroshima_jinjacho_jp_hirosima_jinja_.html",
+        "https___www_hiroshima_jinjacho_jp_hirosima_jinja__search_area_2.html",
+        "https___www_hiroshima_jinjacho_jp_hirosima_jinja__search_area_3.html",
+        "https___www_hiroshima_jinjacho_jp_hirosima_jinja__search_area_1.html"
+      ]
+    },
+    "山口県": {
+      "shrines": [],
+      "search_note": "山口県神社庁トップには検索フォームがなく市町別一覧のみ。月読神社の可能性が高い下関市の一覧ページへ遷移する。 / 下関市の神社一覧には月読・月讀・月夜見・月山系の神社名は見当たらなかった。トップページから他市町(山口市・宇部市・萩市など)の一覧ページへ探索を継続する。 / 下関市ページは訪問済みだが月読系神社の情報は未確認。サイトマップページに全神社一覧または索引があるか確認するため遷移する。 / サイトマップページには月読・月讀・月夜見・月山を祀る神社の記載は無かった。祭神情報は各市町村ページの詳細に依存するため、まず山口市の神社一覧ページを確認する。 / 山口市の神社一覧ページを確認したが、月読・月讀・月夜見・月山系の神社は見当たらなかった。探索回数の制限により他の市の一覧を追加確認できず終了。",
+      "hops": 5,
+      "visited": [
+        "https://yamaguchi-jinjacho.or.jp",
+        "https://www.yamaguchi-jinjacho.or.jp/shimonoseki/",
+        "https://www.yamaguchi-jinjacho.or.jp/",
+        "https://www.yamaguchi-jinjacho.or.jp/sitemap/",
+        "https://www.yamaguchi-jinjacho.or.jp/yamaguchi/"
+      ],
+      "html_cache": [
+        "https___yamaguchi_jinjacho_or_jp.html",
+        "https___www_yamaguchi_jinjacho_or_jp_shimonoseki_.html",
+        "https___www_yamaguchi_jinjacho_or_jp_.html",
+        "https___www_yamaguchi_jinjacho_or_jp_sitemap_.html",
+        "https___www_yamaguchi_jinjacho_or_jp_yamaguchi_.html"
+      ]
+    },
+    "徳島県": {
+      "shrines": [],
+      "search_note": "取得失敗 http://awa-jinjacho.jp/ (0: URLError: <urlopen error [Errno 8] nodename nor servname pro)",
+      "hops": 1,
+      "visited": [
+        "http://awa-jinjacho.jp/"
+      ]
+    },
+    "香川県": {
+      "shrines": [],
+      "search_note": "検索フォームを使い「月読」で検索を試みる。GETパラメータ形式 ?s=キーワード を利用。 / 「月読」検索は0件だったため「月山」で再検索を試みる。 / 「月読」「月山」で検索したがいずれも0件だった。「月夜見」で再検索する。 / 月読・月讀・月山・月夜見の全キーワードで検索したが該当する神社は見つからなかった。残り探索回数も少ないため終了。",
+      "hops": 4,
+      "visited": [
+        "https://kagawakenjinjacho.or.jp/",
+        "https://kagawakenjinjacho.or.jp/?s=月読",
+        "https://kagawakenjinjacho.or.jp/?s=月山",
+        "https://kagawakenjinjacho.or.jp/?s=月夜見"
+      ],
+      "html_cache": [
+        "https___kagawakenjinjacho_or_jp_.html",
+        "https___kagawakenjinjacho_or_jp__s___.html",
+        "https___kagawakenjinjacho_or_jp__s___.html",
+        "https___kagawakenjinjacho_or_jp__s____.html"
+      ]
+    },
+    "愛媛県": {
+      "shrines": [
+        {
+          "name": "五明神社",
+          "city": "松山市",
+          "address": "松山市神次郎町甲342",
+          "main_deity": "月読命（つきよみのみこと）",
+          "source_quote": "神社主祭神 月読命（つきよみのみこと）",
+          "source_url": "http://ehime-jinjacho.jp/jinja/?p=5163",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-12",
+          "html_cache": "http___ehime_jinjacho_jp_jinja__p_5163.html"
+        }
+      ],
+      "search_note": "検索フォームのGETパラメータ形式(?s=)を推測してキーワード「月読」で検索を試みる。まだ神社は未発見。 / 検索結果に五明神社・阿沼美神社・正八幡神社が表示された。祭神確認のため詳細ページへ遷移する。 / 検索結果ページ(?s=月読)から五明神社の詳細ページを確認し、月読命を主祭神とする神社を1社確保できた。残り探索回数が少ないため終了する。",
+      "hops": 3,
+      "visited": [
+        "http://ehime-jinjacho.jp/",
+        "http://ehime-jinjacho.jp/jinja/?s=月読",
+        "http://ehime-jinjacho.jp/jinja/?p=5163"
+      ],
+      "html_cache": [
+        "http___ehime_jinjacho_jp_.html",
+        "http___ehime_jinjacho_jp_jinja__s___.html",
+        "http___ehime_jinjacho_jp_jinja__p_5163.html"
+      ]
+    },
+    "高知県": {
+      "shrines": [],
+      "search_note": "取得失敗 https://www.kochi-jinjyacho.com/高知県神社  一覧 (0: HTTPError: HTTP Error 404: Not Found)",
+      "hops": 3,
+      "visited": [
+        "https://www.kochi-jinjyacho.com/",
+        "https://www.kochi-jinjyacho.com/高知県神社一覧",
+        "https://www.kochi-jinjyacho.com/高知県神社  一覧"
+      ]
+    },
+    "福岡県": {
+      "shrines": [],
+      "search_note": "神社検索ページのエリア一覧(4エリア)を発見。福岡エリアから探索開始する。 / 福岡エリアの神社一覧を確認したが、月読・月讀・月夜見・月山を祀る神社は見当たらなかった。他エリア(福岡市内/糸島/北九州等)のページは別サイトへのリンクであり、当神社庁サイト内には対象ページが見つからない。探索回数の制約もあり終了。",
+      "hops": 2,
+      "visited": [
+        "https://fukuoka-jinjacho.or.jp",
+        "https://fukuoka-jinjacho.or.jp/area/fukuoka/"
+      ],
+      "html_cache": [
+        "https___fukuoka_jinjacho_or_jp.html",
+        "https___fukuoka_jinjacho_or_jp_area_fukuoka_.html"
+      ]
+    },
+    "佐賀県": {
+      "shrines": [],
+      "search_note": "神社一覧/マップページへ遷移し、月読系神社を探索する / 一覧ページには月読・月讀・月夜見・月山系の社名が見当たらなかった。検索フォーム(GET, s パラメータ)を使い「月読」で検索を試みる。 / 「月読」検索は0件だったため「月夜見」で再検索する。 / 「月読」「月夜見」の検索結果は0件だった。残り探索回数を使い「月山」で検索を試みる。一覧には月読系らしき社名は見当たらない。 / 佐賀県神社庁サイトで「月読」「月讀」「月夜見」「月山」の全キーワードで検索したが、いずれも「ご指定の検索条件に合う投稿がありませんでした」との結果で該当神社は見つからなかった。探索回数上限に達したため終了。",
+      "hops": 5,
+      "visited": [
+        "https://saga-jinjacho.jp",
+        "https://saga-jinjacho.jp/jinja-map/",
+        "https://saga-jinjacho.jp/?s=月読",
+        "https://saga-jinjacho.jp/?s=月夜見",
+        "https://saga-jinjacho.jp/?s=月山"
+      ],
+      "html_cache": [
+        "https___saga_jinjacho_jp.html",
+        "https___saga_jinjacho_jp_jinja_map_.html",
+        "https___saga_jinjacho_jp__s___.html",
+        "https___saga_jinjacho_jp__s____.html",
+        "https___saga_jinjacho_jp__s___.html"
+      ]
+    },
+    "長崎県": {
+      "shrines": [],
+      "search_note": "神社検索ページへ遷移。月読・月讀・月夜見等のキーワードで検索を試みる。 / search.htmlは検索フォームらしきページだが、GETパラメータ形式が本文からは判別できず、市町村別一覧(都道府県内の神社)へのリンクも本文抽出では取得できなかった。とりあえず一般的なqパラメータで検索を試みる。該当神社は未発見。 / 「月読」での検索結果には該当神社の情報が見当たらなかった(市区町村一覧のみ表示)。別表記「月夜見」で再検索を試みる。 / 検索結果に該当なし(月読・月讀・月夜見のいずれも0件)。市町村別一覧ページへの遷移が必要だが、探索回数が残り少ないため終了。長崎県内の月読系神社は確認できず。",
+      "hops": 4,
+      "visited": [
+        "https://nagasaki-jinjacho.or.jp",
+        "https://nagasaki-jinjacho.or.jp/search.html",
+        "https://nagasaki-jinjacho.or.jp/search.html?q=%E6%9C%88%E8%AA%AD",
+        "https://nagasaki-jinjacho.or.jp/search.html?q=%E6%9C%88%E5%A4%9C%E8%A6%8B"
+      ],
+      "html_cache": [
+        "https___nagasaki_jinjacho_or_jp.html",
+        "https___nagasaki_jinjacho_or_jp_search_html.html",
+        "https___nagasaki_jinjacho_or_jp_search_html_q__E6_9C_88_E8_AA_AD.html",
+        "https___nagasaki_jinjacho_or_jp_search_html_q__E6_9C_88_E5_A4_9C_E8_A6_8B.html"
+      ]
+    },
+    "熊本県": {
+      "shrines": [],
+      "search_note": "検索フォームは住所（市区町村・町村）から氏神様を探す形式で、フリーテキスト検索ではない。まずpatron-godページを確認する。 / 氏神様一覧ページは市区郡・町村の選択のみで神社名検索フォームがなく、全44ページを逐次探索するのは非効率。WordPress標準検索(?s=)を試す。 / 熊本県神社庁サイトには神社検索機能が住所ベース(市区町村・町村選択)のみで、神社名や祭神による検索ができない。「月読」で検索しても該当する神社情報は見つからず、氏神様を探すページも住所選択式（人吉・球磨地方のみ試験運用）で祭神情報を含む神社一覧や詳細ページへのリンクは存在しない。これ以上の探索手段がないため終了する。",
+      "hops": 3,
+      "visited": [
+        "https://kumamotokenjinjacho.jp/",
+        "https://kumamotokenjinjacho.jp/patron-god/",
+        "https://kumamotokenjinjacho.jp/?s=%E6%9C%88%E8%AA%AD"
+      ],
+      "html_cache": [
+        "https___kumamotokenjinjacho_jp_.html",
+        "https___kumamotokenjinjacho_jp_patron_god_.html",
+        "https___kumamotokenjinjacho_jp__s__E6_9C_88_E8_AA_AD.html"
+      ]
+    },
+    "大分県": {
+      "shrines": [],
+      "search_note": "公式サイトなし(神社本庁一覧に掲載・電話のみ)。収集は神社公式・自治体ソースで代替。【くろたん条件】レコードのsource_typeに『県神社庁DB不存在につき代替』を注記",
+      "source_type_note": "県神社庁DB不存在につき代替(本走行で神社公式・自治体ソース収集)"
+    },
+    "宮崎県": {
+      "shrines": [],
+      "search_note": "公式サイトなし(『宮巡』は神職運営の紹介サイトで庁公式ではない)。収集は神社公式・自治体ソースで代替。【くろたん条件】レコードのsource_typeに『県神社庁DB不存在につき代替』を注記",
+      "source_type_note": "県神社庁DB不存在につき代替(本走行で神社公式・自治体ソース収集)"
+    },
+    "鹿児島県": {
+      "shrines": [
+        {
+          "name": "月読神社",
+          "city": "鹿屋市",
+          "address": "鹿児島県鹿屋市串良町有里3134",
+          "main_deity": "月読命",
+          "source_quote": "寛文１２年（１６７２）島津出雲守久胤が奉行となり新宝殿の造営が行われ、祭神も「月読命」が祭祀され神社名も「玉兎宮一之宮大明神」と呼称されるようになる。",
+          "source_url": "https://www.kagojinjacho.or.jp/?s=月読&post_type=&cat=&addresearch=",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-12",
+          "html_cache": "https___www_kagojinjacho_or_jp__s____post_type__cat__addresearch_.html"
+        },
+        {
+          "name": "月讀神社",
+          "city": "鹿児島市",
+          "address": "〒891-1419 鹿児島市桜島横山町1722-8",
+          "main_deity": "月読命",
+          "source_quote": "御祭神 月読命（ツキヨミノミコト） 邇邇芸命（ニニギノミコト） 彦火火出見命（ヒコホホデミノミコト） 鵜草葺不合命（ウガヤフキアエズノミコト） 豊玉彦命（トヨタマヒコノミコト） 木花咲耶姫命（コノハナサクヤヒメノミコト）",
+          "source_url": "https://www.kagojinjacho.or.jp/shrine-search/area-kagoshima/%e9%b9%bf%e5%85%90%e5%b3%b6%e5%b8%82/930/",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-12",
+          "html_cache": "https___www_kagojinjacho_or_jp_shrine_search_area_kagoshima__e9_b9_bf_e5_85_90_e.html"
+        }
+      ],
+      "search_note": "検索フォームのフィールド(s)を使い「月読」で検索してみる。まず1件目のキーワードで探索。 / 検索結果1ページ目で『月読神社』(鹿屋市串良町有里)を確認。祭神は月読命と明記。天御中主神社は月読命を含む十座祭神だが主祭神は天御中主命のため対象外。検索結果2ページ目に他の月読系神社があるか確認のため次ページへ遷移。 / 月讀神社(鹿児島市桜島横山町1722-8)の詳細ページへ遷移して祭神を確認する。他に地方神社・原五社神社も検索結果に出たが社名から月読系ではなく祭神未確認のため保留。 / 検索結果から月讀神社（鹿児島市桜島）を発見。祭神に月読命を確認。既に2ページ探索済みで残り探索回数が少ないため終了とする。",
+      "hops": 4,
+      "visited": [
+        "https://www.kagojinjacho.or.jp/",
+        "https://www.kagojinjacho.or.jp/?s=月読&post_type=&cat=&addresearch=",
+        "https://www.kagojinjacho.or.jp/page/2/?s=月読&post_type=&cat=&addresearch=",
+        "https://www.kagojinjacho.or.jp/shrine-search/area-kagoshima/%e9%b9%bf%e5%85%90%e5%b3%b6%e5%b8%82/930/"
+      ],
+      "html_cache": [
+        "https___www_kagojinjacho_or_jp_.html",
+        "https___www_kagojinjacho_or_jp__s____post_type__cat__addresearch_.html",
+        "https___www_kagojinjacho_or_jp_page_2__s____post_type__cat__addresearch_.html",
+        "https___www_kagojinjacho_or_jp_shrine_search_area_kagoshima__e9_b9_bf_e5_85_90_e.html"
+      ]
+    },
+    "沖縄県": {
+      "shrines": [],
+      "search_note": "沖縄県神社庁の神社一覧(全10社:波上宮、普天満宮、識名宮、八幡宮、末吉宮、天久宮、宮古神社、浮島神社、世持神社、沖縄神社)を確認したが、月読・月讀・月夜見・月山という名称の神社は存在しない。沖縄県神社庁包括下の神社は10社のみと明記されているため、これ以上の探索対象は無い。",
+      "hops": 1,
+      "visited": [
+        "http://jinjacho.naminouegu.jp/"
+      ],
+      "html_cache": [
+        "http___jinjacho_naminouegu_jp_.html"
+      ]
+    }
+  }
+}

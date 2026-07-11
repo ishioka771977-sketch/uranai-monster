@@ -1,0 +1,928 @@
+{
+  "prefs": {
+    "岡山県": {
+      "shrines": [],
+      "search_note": "検索ページのGETパラメータを推測してキーワード「霧島」で検索を試みる。祭神確認できる神社が見つかればfollowで詳細ページを辿る。 / keywordパラメータでの検索結果が本文に表示されず、フォームのみが返された。フリーワード検索のパラメータ名が不明なため、全件一覧表示ページに遷移して霧島・瓊瓊杵尊系の神社を探索する。 / 全件一覧は1609件・81ページと膨大なため非効率。検索キーワード「霧島」は既に試行済み(結果不明瞭)。祭神名「瓊瓊杵」で再検索を試みる。 / 検索キーワード「霧島」「瓊瓊杵」共に検索結果ページに該当する神社情報が本文中に見当たらず、検索フォームの説明文のみが表示された。GETパラメータでの検索結果が実際にはJSでの動的読み込みのため、静的HTML内に対象神社の記載を確認できなかった。探索回数の制約もあり、これ以上の追跡は困難と判断し0件で終了する。",
+      "hops": 4,
+      "visited": [
+        "https://okayama-jinjacho.or.jp",
+        "https://okayama-jinjacho.or.jp/search/?keyword=霧島",
+        "https://okayama-jinjacho.or.jp/search/list/",
+        "https://okayama-jinjacho.or.jp/search/?keyword=瓊瓊杵"
+      ],
+      "html_cache": [
+        "https___okayama_jinjacho_or_jp.html",
+        "https___okayama_jinjacho_or_jp_search__keyword___.html",
+        "https___okayama_jinjacho_or_jp_search_list_.html",
+        "https___okayama_jinjacho_or_jp_search__keyword____.html"
+      ]
+    },
+    "広島県": {
+      "shrines": [],
+      "search_note": "神社一覧ページへ遷移して霧島・瓊瓊杵系の神社を探索する。 / 検索フォームはPOSTのみで組み立て不可のため利用できない。霧島・瓊瓊杵・邇邇芸のキーワードは本文中に見当たらない。地域別一覧(search_area)を巡回して該当神社を探索する。まずsearch_area=2を確認する。 / search_area=2(福山市)の一覧には霧島・新田・瓊瓊杵尊系と思われる神社名が見当たらず、また祭神情報も一覧ページには記載されていない。検索フォームはPOSTのみだが、GET形式での動作を試すためsearch_txt=霧島で検索を試みる。 / 検索フォームはPOSTのみでGETパラメータ(search_txt=霧島)は機能せず、表示されたのは広島市東区の神社一覧(デフォルト表示)だった。霧島神社・瓊瓊杵尊関連の神社は本文中に見当たらず、祭神情報も確認できないため該当なし。地図検索は32エリアに分割されており残り探索回数が少ないため、これ以上の探索は非効率と判断し終了する。",
+      "hops": 4,
+      "visited": [
+        "https://hiroshima-jinjacho.jp",
+        "https://www.hiroshima-jinjacho.jp/hirosima_jinja/",
+        "https://www.hiroshima-jinjacho.jp/hirosima_jinja/?search_area=2",
+        "https://www.hiroshima-jinjacho.jp/hirosima_jinja/?search_txt=霧島"
+      ],
+      "html_cache": [
+        "https___hiroshima_jinjacho_jp.html",
+        "https___www_hiroshima_jinjacho_jp_hirosima_jinja_.html",
+        "https___www_hiroshima_jinjacho_jp_hirosima_jinja__search_area_2.html",
+        "https___www_hiroshima_jinjacho_jp_hirosima_jinja__search_txt___.html"
+      ]
+    },
+    "山口県": {
+      "shrines": [],
+      "search_note": "市町別一覧のトップページ。霧島神社等の候補を探すため、まず山口市の一覧ページへ遷移する。 / 現在のページは山口市の神社一覧(93社)だが、社名一覧のみで祭神情報がなく、霧島・新田・瓊瓊杵尊系と思われる社名も見当たらない。県トップページに戻り、他市町村の神社一覧や検索機能を探索する。 / トップページには検索フォームがなく市町別一覧のみ。防府市ページへ遷移し、瓊瓊杵尊/霧島系の神社の有無を確認する。 / 防府市の神社一覧には瓊瓊杵尊・霧島系を祀る神社が確認できなかった(玉祖神社は玉祖命を祀るため対象外)。残り探索回数が少ないため、WordPressベースと思われるサイト内検索(?s=クエリ)で「霧島」を検索することを試みる。 / 検索結果は空(ページ削除メッセージのみ)。残り探索回数が1で、これ以上の索引探索は不可のため終了。山口県神社庁サイトでは「霧島」検索で該当社を確認できなかった。",
+      "hops": 5,
+      "visited": [
+        "https://yamaguchi-jinjacho.or.jp",
+        "https://www.yamaguchi-jinjacho.or.jp/yamaguchi/",
+        "https://www.yamaguchi-jinjacho.or.jp/",
+        "https://www.yamaguchi-jinjacho.or.jp/hofu/",
+        "https://www.yamaguchi-jinjacho.or.jp/?s=霧島"
+      ],
+      "html_cache": [
+        "https___yamaguchi_jinjacho_or_jp.html",
+        "https___www_yamaguchi_jinjacho_or_jp_yamaguchi_.html",
+        "https___www_yamaguchi_jinjacho_or_jp_.html",
+        "https___www_yamaguchi_jinjacho_or_jp_hofu_.html",
+        "https___www_yamaguchi_jinjacho_or_jp__s___.html"
+      ]
+    },
+    "徳島県": {
+      "shrines": [],
+      "search_note": "取得失敗 http://awa-jinjacho.jp/ (0: URLError: <urlopen error [Errno 8] nodename nor servname pro)",
+      "hops": 1,
+      "visited": [
+        "http://awa-jinjacho.jp/"
+      ]
+    },
+    "香川県": {
+      "shrines": [],
+      "search_note": "検索フォームを使い『霧島』で検索を試みる。GETパラメータ s を使用。 / 「霧島」検索は0件だったため、「瓊瓊杵」で再検索を試みる。 / 「霧島」「瓊瓊杵」の検索結果は0件だったため、別表記「邇邇芸」で再検索する。 / 「霧島」「瓊瓊杵」「邇邇芸」の3キーワードで検索したが香川県神社庁サイト内で該当する神社は見つからなかった(検索結果0件)。探索回数の制約もあり終了。",
+      "hops": 4,
+      "visited": [
+        "https://kagawakenjinjacho.or.jp/",
+        "https://kagawakenjinjacho.or.jp/?s=霧島",
+        "https://kagawakenjinjacho.or.jp/?s=瓊瓊杵",
+        "https://kagawakenjinjacho.or.jp/?s=邇邇芸"
+      ],
+      "html_cache": [
+        "https___kagawakenjinjacho_or_jp_.html",
+        "https___kagawakenjinjacho_or_jp__s___.html",
+        "https___kagawakenjinjacho_or_jp__s____.html",
+        "https___kagawakenjinjacho_or_jp__s____.html"
+      ]
+    },
+    "愛媛県": {
+      "shrines": [
+        {
+          "name": "賀茂神社",
+          "city": "今治市",
+          "address": "今治市大西町山之内甲306-1",
+          "main_deity": "天御中主神（あめのみなかぬしのかみ） 天津彦炎瓊瓊杵尊（あまつひこほのににぎのみこと） 別雷神（わけいかづちのかみ）",
+          "source_quote": "神社主祭神 天御中主神（あめのみなかぬしのかみ） 天津彦炎瓊瓊杵尊（あまつひこほのににぎのみこと） 別雷神（わけいかづちのかみ）",
+          "source_url": "http://ehime-jinjacho.jp/jinja/?p=650",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-11",
+          "html_cache": "http___ehime_jinjacho_jp_jinja__p_650.html"
+        }
+      ],
+      "search_note": "検索キーワード「霧島」でサイト内検索を試みる / 「霧島」で検索したが該当なし。別キーワード「瓊瓊杵」で再検索する。 / 検索結果に賀茂神社が1件表示された。祭神確認のため詳細ページへ遷移する。 / 賀茂神社(今治市)で天津彦炎瓊瓊杵尊を確認。さらに邇邇芸表記で検索を試みる。 / 検索キーワード「霧島」「瓊瓊杵」「邇邇芸」で検索したが該当する神社は見つからなかった。探索回数の残りがないため終了。",
+      "hops": 5,
+      "visited": [
+        "http://ehime-jinjacho.jp/",
+        "http://ehime-jinjacho.jp/jinja/?s=霧島",
+        "http://ehime-jinjacho.jp/jinja/?s=瓊瓊杵",
+        "http://ehime-jinjacho.jp/jinja/?p=650",
+        "http://ehime-jinjacho.jp/jinja/?s=邇邇芸"
+      ],
+      "html_cache": [
+        "http___ehime_jinjacho_jp_.html",
+        "http___ehime_jinjacho_jp_jinja__s___.html",
+        "http___ehime_jinjacho_jp_jinja__s____.html",
+        "http___ehime_jinjacho_jp_jinja__p_650.html",
+        "http___ehime_jinjacho_jp_jinja__s____.html"
+      ]
+    },
+    "高知県": {
+      "shrines": [],
+      "search_note": "検索フォームでキーワード「霧島」を検索する / 「霧島」検索結果には関連社名(杉島神社等)が表示されたが祭神が本文で確認できないため未採用。別キーワード「瓊瓊杵」で再検索を試みる。 / 検索結果0件のため神社一覧ページへ遷移。 / 高知県神社一覧ページには霧島・瓊瓊杵尊関連の社名や祭神情報が確認できなかった。既に「霧島」「瓊瓊杵」で検索済みのため、別表記「邇邇芸」でも検索を試みる。 / 検索結果は一覧ページへのリンクのみで、祭神情報が本文で確認できる詳細ページが見つからなかった。残り探索回数が0のため終了。",
+      "hops": 5,
+      "visited": [
+        "https://www.kochi-jinjyacho.com/",
+        "https://www.kochi-jinjyacho.com/search?q=霧島",
+        "https://www.kochi-jinjyacho.com/search?q=瓊瓊杵",
+        "https://www.kochi-jinjyacho.com/高知県神社一覧",
+        "https://www.kochi-jinjyacho.com/search?q=邇邇芸"
+      ],
+      "html_cache": [
+        "https___www_kochi_jinjyacho_com_.html",
+        "https___www_kochi_jinjyacho_com_search_q___.html",
+        "https___www_kochi_jinjyacho_com_search_q____.html",
+        "https___www_kochi_jinjyacho_com________.html",
+        "https___www_kochi_jinjyacho_com_search_q____.html"
+      ]
+    },
+    "福岡県": {
+      "shrines": [],
+      "search_note": "検索フォームが見つからないため、エリア別神社一覧(福岡エリア)へ遷移して霧島系神社を探索する。 / 福岡エリアの神社一覧ページを確認したが、瓊瓊杵尊・邇邇芸命・霧島神社系の社名や祭神記載は本文中に見当たらなかった。ページ内には他エリア(北九州・筑豊・筑後等)への内部リンクが存在せず、検索フォームのGETパラメータも確認できないため、これ以上の内部探索経路が見つからず終了する。",
+      "hops": 2,
+      "visited": [
+        "https://fukuoka-jinjacho.or.jp",
+        "https://fukuoka-jinjacho.or.jp/area/fukuoka/"
+      ],
+      "html_cache": [
+        "https___fukuoka_jinjacho_or_jp.html",
+        "https___fukuoka_jinjacho_or_jp_area_fukuoka_.html"
+      ]
+    },
+    "佐賀県": {
+      "shrines": [],
+      "search_note": "神社マップ/一覧ページへ遷移して霧島・瓊瓊杵尊系神社を探索する / 一覧ページには祭神情報が無いため、検索フォームで「霧島」キーワードを試す。候補となる社名は見当たらないが、検索経由で該当社が見つかる可能性を確認する。 / 「霧島」検索は0件だったため、別キーワード「瓊瓊杵」で再検索する。 / 瓊瓊杵・霧島での検索は該当なし。邇邇芸表記で再検索を試みる。 / 検索キーワード「霧島」「瓊瓊杵」「邇邇芸」のいずれも佐賀県神社庁サイト内検索で該当する投稿が見つからなかった(「ご指定の検索条件に合う投稿がありませんでした」)。残り探索回数も1のため終了。神社一覧にも該当しそうな社名は見当たらない。",
+      "hops": 5,
+      "visited": [
+        "https://saga-jinjacho.jp",
+        "https://saga-jinjacho.jp/jinja-map/",
+        "https://saga-jinjacho.jp/?s=霧島",
+        "https://saga-jinjacho.jp/?s=瓊瓊杵",
+        "https://saga-jinjacho.jp/?s=邇邇芸"
+      ],
+      "html_cache": [
+        "https___saga_jinjacho_jp.html",
+        "https___saga_jinjacho_jp_jinja_map_.html",
+        "https___saga_jinjacho_jp__s___.html",
+        "https___saga_jinjacho_jp__s____.html",
+        "https___saga_jinjacho_jp__s____.html"
+      ]
+    },
+    "長崎県": {
+      "shrines": [],
+      "search_note": "神社検索ページへ遷移して霧島・瓊瓊杵などのキーワードで検索を試みる / 検索フォーム(search.html)には市町村別の神社一覧見出しのみが表示されているが、各市町村名にリンク(href)が付与されておらず、抽出可能なページ内リンクにも該当する神社詳細ページや検索結果ページが含まれていなかった。link.html等の関連ページも他団体リンク集であり、瓊瓊杵尊/邇邇芸命を祀る霧島系神社の情報は確認できなかったため、これ以上の追跡ができず0件で終了する。",
+      "hops": 2,
+      "visited": [
+        "https://nagasaki-jinjacho.or.jp",
+        "https://nagasaki-jinjacho.or.jp/search.html"
+      ],
+      "html_cache": [
+        "https___nagasaki_jinjacho_or_jp.html",
+        "https___nagasaki_jinjacho_or_jp_search_html.html"
+      ]
+    },
+    "熊本県": {
+      "shrines": [],
+      "search_note": "氏神様を探すページ(住所検索)へ遷移。検索フォームはcity/town選択式のためキーワード検索は使えない。まずは一覧構造を確認する。 / 氏神様一覧ページには神社名のキーワード検索フォームがなく、city/townの地域選択のみ。全44ページを総当たりするのは非効率なため、WordPress標準の検索エンドポイント(?s=)で「霧島」を検索してみる。 / 熊本県神社庁サイトは住所(市区町村・町名)による氏神検索のみで、キーワード検索(?s=霧島)の結果ページにも神社一覧や祭神情報は表示されなかった。あ行等の索引ページも存在せず、霧島神社・瓊瓊杵尊関連の神社情報をページ本文から確認できなかったため0件で終了する。",
+      "hops": 3,
+      "visited": [
+        "https://kumamotokenjinjacho.jp/",
+        "https://kumamotokenjinjacho.jp/patron-god/",
+        "https://kumamotokenjinjacho.jp/?s=%E9%9C%8A%E5%B3%B6"
+      ],
+      "html_cache": [
+        "https___kumamotokenjinjacho_jp_.html",
+        "https___kumamotokenjinjacho_jp_patron_god_.html",
+        "https___kumamotokenjinjacho_jp__s__E9_9C_8A_E5_B3_B6.html"
+      ]
+    },
+    "大分県": {
+      "shrines": [],
+      "search_note": "公式サイトなし(神社本庁一覧に掲載・電話のみ)。収集は神社公式・自治体ソースで代替。【くろたん条件】レコードのsource_typeに『県神社庁DB不存在につき代替』を注記",
+      "source_type_note": "県神社庁DB不存在につき代替(本走行で神社公式・自治体ソース収集)"
+    },
+    "宮崎県": {
+      "shrines": [],
+      "search_note": "公式サイトなし(『宮巡』は神職運営の紹介サイトで庁公式ではない)。収集は神社公式・自治体ソースで代替。【くろたん条件】レコードのsource_typeに『県神社庁DB不存在につき代替』を注記",
+      "source_type_note": "県神社庁DB不存在につき代替(本走行で神社公式・自治体ソース収集)"
+    },
+    "鹿児島県": {
+      "shrines": [
+        {
+          "name": "霧島神宮",
+          "city": "霧島市",
+          "address": "〒899-4201 鹿児島県霧島市霧島田口2608-5",
+          "main_deity": "天饒石国饒石天津日高彦火瓊瓊杵尊（アメニギシクニニギシアマツヒダカヒコホノニニギノミコト）",
+          "source_quote": "御祭神 天饒石国饒石天津日高彦火瓊瓊杵尊 （アメニギシクニニギシアマツヒダカヒコホノニニギノミコト）",
+          "source_url": "https://www.kagojinjacho.or.jp/tanbou/219/",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-11",
+          "html_cache": "https___www_kagojinjacho_or_jp_tanbou_219_.html"
+        }
+      ],
+      "search_note": "検索フォームでキーワード「霧島」を試す / 検索結果一覧には霧島神宮・各地の霧島神社が列挙されているが、祭神情報が本文にないため、まず霧島神宮の詳細ページ(tanbou/219)へ遷移して祭神を確認する。 / 霧島神宮の詳細ページにて瓊瓊杵尊(天饒石国饒石天津日高彦火瓊瓊杵尊)を主祭神とすることを確認。他の霧島系神社は探索回数の制約により追加確認できず。",
+      "hops": 3,
+      "visited": [
+        "https://www.kagojinjacho.or.jp/",
+        "https://www.kagojinjacho.or.jp/?s=霧島",
+        "https://www.kagojinjacho.or.jp/tanbou/219/"
+      ],
+      "html_cache": [
+        "https___www_kagojinjacho_or_jp_.html",
+        "https___www_kagojinjacho_or_jp__s___.html",
+        "https___www_kagojinjacho_or_jp_tanbou_219_.html"
+      ]
+    },
+    "沖縄県": {
+      "shrines": [],
+      "search_note": "沖縄県神社庁包括下の神社は10社(波上宮・普天満宮・識名宮・八幡宮・末吉宮・天久宮・宮古神社・浮島神社・世持神社・沖縄神社)。各社の祭神情報(神社庁サイトおよびリンク先公式サイト)を確認したが、霧島系(瓊瓊杵尊/邇邇芸命/天津日高彦火瓊瓊杵尊)を祀る神社は見当たらず、対象条件に合致する神社は確認できなかった。",
+      "hops": 1,
+      "visited": [
+        "http://jinjacho.naminouegu.jp/"
+      ],
+      "html_cache": [
+        "http___jinjacho_naminouegu_jp_.html"
+      ]
+    },
+    "北海道": {
+      "shrines": [],
+      "search_note": "検索フォームはログイン用のみで神社検索には使えない。まず北海道の神社情報トップページ(/jinja)を確認し、そこから支部一覧や検索・索引を辿る必要がある。 / 検索フォームはログイン用でPOSTのため使用不可。地域別支部一覧しかないため、霧島神社(新田神社)がある可能性の高い胆振支部(旧地名で霧島様式の神社が点在する地域)から探索を開始する。 / 胆振支部一覧1ページ目に霧島・瓊瓊杵尊関連の社名は見当たらず。祭神情報も一覧には無いため、次ページ(2/2)を確認する。 / 胆振支部一覧(2ページ目)には霧島・瓊瓊杵尊系の神社名は見当たらず、祭神記載もなし。次に日高支部一覧を確認する。 / 日高支部の神社一覧には義経神社・稲荷神社・八幡神社等が掲載されているが、瓊瓊杵尊・邇邇芸命等を祀る霧島系神社(新田神社等)の記載は本文・一覧に見当たらない。祭神情報は各詳細ページにあるが検索フォームはログイン用のみでGET検索不可、探索回数上限のため終了。",
+      "hops": 5,
+      "visited": [
+        "https://hokkaidojinjacho.jp",
+        "https://hokkaidojinjacho.jp/jinja",
+        "https://hokkaidojinjacho.jp/jinja-area/iburi/",
+        "https://hokkaidojinjacho.jp/jinja-area/iburi/page/2/",
+        "https://hokkaidojinjacho.jp/jinja-area/hidaka/"
+      ],
+      "html_cache": [
+        "https___hokkaidojinjacho_jp.html",
+        "https___hokkaidojinjacho_jp_jinja.html",
+        "https___hokkaidojinjacho_jp_jinja_area_iburi_.html",
+        "https___hokkaidojinjacho_jp_jinja_area_iburi_page_2_.html",
+        "https___hokkaidojinjacho_jp_jinja_area_hidaka_.html"
+      ]
+    },
+    "青森県": {
+      "shrines": [],
+      "search_note": "県内の神社紹介ページへ遷移し、一覧や索引を確認する。 / 地域別一覧ページへのリンクのみ。まず青森市,東津軽郡の一覧を確認する。 / 現在のページ(青森市・東津軽郡)には霧島・新田・瓊瓊杵尊系と思われる社名が見当たらなかったため、対象神社は0件。次の地域一覧ページ(つがる市・西津軽郡)へ探索を続行する。 / つがる市・西津軽郡の一覧には霧島神社・新田神社等の該当社名が見当たらなかった。次の地域一覧(弘前市,中津軽郡)を確認する。 / sub_1c.html(弘前市,中津軽郡)の神社一覧には霧島・瓊瓊杵尊・邇邇芸命系と思われる社名(霧島神社・新田神社等)は見当たらなかった。残り探索回数が少ないため未訪問の一覧ページ(黒石市,平川市,南津軽郡)へ移動する。 / このページ(黒石市・平川市・南津軽郡)の神社一覧には霧島・瓊瓊杵尊・邇邇芸命を祀る神社の社名や祭神記載が見当たらない。残り探索回数が0のため、これ以上のfollowができず終了する。",
+      "hops": 6,
+      "visited": [
+        "http://aomori-jinjacho.or.jp",
+        "http://aomori-jinjacho.or.jp/sub_1.html",
+        "http://aomori-jinjacho.or.jp/jinja/sub_1a.html",
+        "http://aomori-jinjacho.or.jp/jinja/sub_1b.html",
+        "http://aomori-jinjacho.or.jp/jinja/sub_1c.html",
+        "http://aomori-jinjacho.or.jp/jinja/sub_1d.html"
+      ],
+      "html_cache": [
+        "http___aomori_jinjacho_or_jp.html",
+        "http___aomori_jinjacho_or_jp_sub_1_html.html",
+        "http___aomori_jinjacho_or_jp_jinja_sub_1a_html.html",
+        "http___aomori_jinjacho_or_jp_jinja_sub_1b_html.html",
+        "http___aomori_jinjacho_or_jp_jinja_sub_1c_html.html",
+        "http___aomori_jinjacho_or_jp_jinja_sub_1d_html.html"
+      ]
+    },
+    "岩手県": {
+      "shrines": [],
+      "search_note": "トップページに祭神情報や検索フォームなし。pages/5/(トップ直下リンク、神社検索の可能性)を確認する。 / お問い合わせページのため祭神情報なし。神社一覧・検索機能も見当たらないため「県内神社等のHPリンク集」ページへ遷移して神社情報を探索する。 / 岩手県神社庁サイトには神社検索・一覧機能や霧島神社・瓊瓊杵尊関連の情報が見つからなかった。県内神社等のHPリンク集ページには志和稲荷神社、大宮神社、御嶽山御嶽神明社の3社のみ外部リンクとして掲載されているが、いずれも霧島系・瓊瓊杵尊祭神とは無関係。他に神社一覧や検索ページへのリンクも存在しないため、これ以上の探索は困難と判断し終了する。",
+      "hops": 3,
+      "visited": [
+        "https://www.jinjacho.jp/",
+        "https://www.jinjacho.jp/pages/5/",
+        "https://www.jinjacho.jp/pages/62/"
+      ],
+      "html_cache": [
+        "https___www_jinjacho_jp_.html",
+        "https___www_jinjacho_jp_pages_5_.html",
+        "https___www_jinjacho_jp_pages_62_.html"
+      ]
+    },
+    "宮城県": {
+      "shrines": [],
+      "search_note": "検索フォームで「霧島」を検索。GETパラメータを組み立ててfollowする。結果を確認して祭神情報を精査する必要がある。 / 「霧島」での検索は0件だったため、祭神名「瓊瓊杵」で再検索を試みる。 / 「霧島」「瓊瓊杵」での検索は結果0件だったため、別表記「邇邇芸」で再検索する。 / 霧島・瓊瓊杵・邇邇芸のキーワード検索はいずれも0件だった。新田神社(瓊瓊杵尊を祀ることが多い)の名称検索を試みる。 / 新田八幡神社の詳細ページで祭神を確認する必要がある。霧島・瓊瓊杵・邇邇芸での検索では該当社が見つからなかったため、新田で検索し1件発見。祭神確認のため詳細ページへ遷移(残り探索回数1回)。 / この新田八幡神社の主祭神は応神天皇・神功皇后・玉依姫であり、瓊瓊杵尊/邇邇芸命系の祭神ではない。既に「霧島」「瓊瓊杵」「邇邇芸」「新田」で検索を行ったが、該当する祭神の神社は確認できなかった。探索回数上限に達したため終了する。",
+      "hops": 6,
+      "visited": [
+        "https://miyagi-jinjacho.or.jp",
+        "https://miyagi-jinjacho.or.jp/jinja-search/list.php?PC=&SEARCH=1&jinja_cnt=&jinja_kana=&jinja_name=霧島&jinja_sort_key=&jinja_sortdesc=&page_jinja=1&per_page_def=20&sortmode=",
+        "https://miyagi-jinjacho.or.jp/jinja-search/list.php?PC=&SEARCH=1&jinja_cnt=&jinja_kana=&jinja_name=瓊瓊杵&jinja_sort_key=&jinja_sortdesc=&page_jinja=1&per_page_def=20&sortmode=",
+        "https://miyagi-jinjacho.or.jp/jinja-search/list.php?PC=&SEARCH=1&jinja_cnt=&jinja_kana=&jinja_name=邇邇芸&jinja_sort_key=&jinja_sortdesc=&page_jinja=1&per_page_def=20&sortmode=",
+        "https://miyagi-jinjacho.or.jp/jinja-search/list.php?PC=&SEARCH=1&jinja_cnt=&jinja_kana=&jinja_name=新田&jinja_sort_key=&jinja_sortdesc=&page_jinja=1&per_page_def=20&sortmode=",
+        "https://miyagi-jinjacho.or.jp/jinja-search/detail.php?code=310020367&chinzachi=&jinja_name=新田&jinja_kana=&page=0&per_page=15"
+      ],
+      "html_cache": [
+        "https___miyagi_jinjacho_or_jp.html",
+        "https___miyagi_jinjacho_or_jp_jinja_search_list_php_PC__SEARCH_1_jinja_cnt__jinj.html",
+        "https___miyagi_jinjacho_or_jp_jinja_search_list_php_PC__SEARCH_1_jinja_cnt__jinj.html",
+        "https___miyagi_jinjacho_or_jp_jinja_search_list_php_PC__SEARCH_1_jinja_cnt__jinj.html",
+        "https___miyagi_jinjacho_or_jp_jinja_search_list_php_PC__SEARCH_1_jinja_cnt__jinj.html",
+        "https___miyagi_jinjacho_or_jp_jinja_search_detail_php_code_310020367_chinzachi__.html"
+      ]
+    },
+    "秋田県": {
+      "shrines": [],
+      "search_note": "県内神社のご案内(検索ページ)へ移動して霧島・瓊瓊杵尊系神社を探索する / 検索フォームが見当たらないため、五十音索引「き」(霧島神社を探すため)へ遷移する。 / 「き」行の一覧には霧島神社・瓊瓊杵尊関連の神社は見当たらなかった(霧山天神宮は天神系のため対象外)。WordPress標準検索パラメータ(?s=)で「霧島」を検索してみる。 / 「霧島」検索結果は0件だったため、別キーワード「邇邇杵」で再検索を試みる。 / 検索結果0件(霧島・瓊々杵で検索したが該当ページなし)。残り探索回数も1のため終了。",
+      "hops": 5,
+      "visited": [
+        "https://akita-jinjacho.sakura.ne.jp",
+        "https://akita-jinjacho.sakura.ne.jp/shrine_search/",
+        "https://akita-jinjacho.sakura.ne.jp/cat_shrine/%e3%81%8d/",
+        "https://akita-jinjacho.sakura.ne.jp/?s=%e9%9c%a7%e5%b3%b6",
+        "https://akita-jinjacho.sakura.ne.jp/?s=%e9%82%87%e3%80%85%e6%9d%b5"
+      ],
+      "html_cache": [
+        "https___akita_jinjacho_sakura_ne_jp.html",
+        "https___akita_jinjacho_sakura_ne_jp_shrine_search_.html",
+        "https___akita_jinjacho_sakura_ne_jp_cat_shrine__e3_81_8d_.html",
+        "https___akita_jinjacho_sakura_ne_jp__s__e9_9c_a7_e5_b3_b6.html",
+        "https___akita_jinjacho_sakura_ne_jp__s__e9_82_87_e3_80_85_e6_9d_b5.html"
+      ]
+    },
+    "山形県": {
+      "shrines": [],
+      "search_note": "検索フォームがGETで確認できたため、keyword=霧島で検索を実行する。 / 「霧島」での検索は該当なし。祭神名「邇邇芸」で再検索を試みる。 / 「邇邇芸」検索は0件だったため、別表記「瓊瓊杵」で再検索を試みる。 / 山形県神社庁の検索で「霧島」「邇邇芸」「瓊瓊杵」のいずれのキーワードでも該当する神社が見つからなかった。残り探索回数も少ないため終了。",
+      "hops": 4,
+      "visited": [
+        "https://yamagata-jinjyacho.or.jp/",
+        "https://yamagata-jinjyacho.or.jp/shrine_search?keyword=霧島",
+        "https://yamagata-jinjyacho.or.jp/shrine_search?keyword=邇邇芸",
+        "https://yamagata-jinjyacho.or.jp/shrine_search?keyword=瓊瓊杵"
+      ],
+      "html_cache": [
+        "https___yamagata_jinjyacho_or_jp_.html",
+        "https___yamagata_jinjyacho_or_jp_shrine_search_keyword___.html",
+        "https___yamagata_jinjyacho_or_jp_shrine_search_keyword____.html",
+        "https___yamagata_jinjyacho_or_jp_shrine_search_keyword____.html"
+      ]
+    },
+    "福島県": {
+      "shrines": [],
+      "search_note": "検索フォームはPOSTだが、GETパラメータでの検索を試みる。まず「霧島」で検索。 / 検索結果はダミーテンプレートのみでJS/AJAXにより実データが表示されない可能性がある。別キーワードで再試行する。 / 検索キーワード「霧島」「瓊瓊杵」共にダミーテンプレートのみが返され、実際の検索結果(神社データ)が取得できなかった。検索フォームはJavaScript処理でGETパラメータでは実際のデータが返らない可能性が高く、これ以上の探索回数も限られているため0件で終了。",
+      "hops": 3,
+      "visited": [
+        "https://fukushima-jinjacho.or.jp",
+        "https://fukushima-jinjacho.or.jp/search/?q=霧島",
+        "https://fukushima-jinjacho.or.jp/search/?q=瓊瓊杵"
+      ],
+      "html_cache": [
+        "https___fukushima_jinjacho_or_jp.html",
+        "https___fukushima_jinjacho_or_jp_search__q___.html",
+        "https___fukushima_jinjacho_or_jp_search__q____.html"
+      ]
+    },
+    "茨城県": {
+      "shrines": [],
+      "search_note": "神社一覧・検索へのリンクが見当たらないため、県内神社ページ(ibaraki/index.html)に遷移して探索を継続する。 / 県内神社紹介トップから地域別一覧(県北)へ遷移。祭神情報は未確認のため今後詳細ページを辿る必要あり。 / 県北地域の一覧には霧島・瓊瓊杵尊系の神社名が見当たらなかった。茨城県内の他地域(県央・県南・県西・鹿行等)を確認するため地域一覧ページに戻る。",
+      "hops": 3,
+      "visited": [
+        "https://www.ibarakiken-jinjacho.or.jp/",
+        "https://www.ibarakiken-jinjacho.or.jp/ibaraki/index.html",
+        "https://www.ibarakiken-jinjacho.or.jp/ibaraki/kenhoku/index.html"
+      ],
+      "html_cache": [
+        "https___www_ibarakiken_jinjacho_or_jp_.html",
+        "https___www_ibarakiken_jinjacho_or_jp_ibaraki_index_html.html",
+        "https___www_ibarakiken_jinjacho_or_jp_ibaraki_kenhoku_index_html.html"
+      ]
+    },
+    "栃木県": {
+      "shrines": [],
+      "search_note": "県内神社ご紹介ページ(?p=168)へ遷移し、一覧・検索から霧島・瓊瓊杵系神社を探索する。 / 栃木県神社庁の五十音索引（あ〜わ全社）を確認したが、「霧島神社」「新田神社」など瓊瓊杵尊・邇邇芸命を祀ることが名称から推測される霧島系神社は一覧中に見当たらなかった。個別ページを開いて祭神を確認する前段階として、社名レベルでの該当が無いため、これ以上の探索を行わず0件と判断する。",
+      "hops": 2,
+      "visited": [
+        "http://tochigi-jinjacho.or.jp",
+        "http://www.tochigi-jinjacho.or.jp/?p=168"
+      ],
+      "html_cache": [
+        "http___tochigi_jinjacho_or_jp.html",
+        "http___www_tochigi_jinjacho_or_jp__p_168.html"
+      ]
+    },
+    "群馬県": {
+      "shrines": [],
+      "search_note": "県内神社紹介ページへ遷移し、一覧または検索機能を確認する。 / 現在のページは県内神社の一覧(社名・所在地・電話番号のみ)で、祭神情報が全く記載されていないため、霧島系(瓊瓊杵尊/邇邇芸命)の神社を確認できなかった。一覧中に『新田神社』(太田市金山町40番44号)があるが、これは通常新田義貞を祀る神社であり、祭神記載もないため対象として採用できない。検索機能の有無を確認するため、WordPress標準の検索パラメータ形式(?s=)で「霧島」を試みる。 / 検索クエリ「霧島」の結果はトップページと同内容で対象情報なし。県内神社紹介ページから索引を辿って霧島・瓊瓊杵系神社を探索する。",
+      "hops": 3,
+      "visited": [
+        "https://gunma-jinjacho.jp",
+        "https://gunma-jinjacho.jp/jinja/",
+        "https://gunma-jinjacho.jp/?s=霧島"
+      ],
+      "html_cache": [
+        "https___gunma_jinjacho_jp.html",
+        "https___gunma_jinjacho_jp_jinja_.html",
+        "https___gunma_jinjacho_jp__s___.html"
+      ]
+    },
+    "埼玉県": {
+      "shrines": [],
+      "search_note": "検索フォームを使い「霧島」で検索する / 「霧島」検索は結果なし。別キーワード「瓊瓊杵」で再検索を試みる。 / 「瓊瓊杵」検索では氷川神社(祭神:須佐之男命等、対象外)のみで霧島系神社は見つからなかった。別表記「邇邇芸」で再検索する。 / 埼玉県神社庁サイトで「霧島」「瓊瓊杵」「邇邇芸」の検索を全て試行したが、いずれも該当する記事は見つからなかった(検索結果0件)。訪問回数の上限に達したため探索を終了する。",
+      "hops": 4,
+      "visited": [
+        "https://saitama-jinjacho.or.jp",
+        "https://www.saitama-jinjacho.or.jp/?s=霧島",
+        "https://www.saitama-jinjacho.or.jp/?s=瓊瓊杵",
+        "https://www.saitama-jinjacho.or.jp/?s=邇邇芸"
+      ],
+      "html_cache": [
+        "https___saitama_jinjacho_or_jp.html",
+        "https___www_saitama_jinjacho_or_jp__s___.html",
+        "https___www_saitama_jinjacho_or_jp__s____.html",
+        "https___www_saitama_jinjacho_or_jp__s____.html"
+      ]
+    },
+    "千葉県": {
+      "shrines": [],
+      "search_note": "取得失敗 http://chiba.jinjacho.or.jp/ (0: URLError: <urlopen error timed out>)",
+      "hops": 6,
+      "visited": [
+        "https://www.jinjacho.or.jp/",
+        "https://www.jinjacho.or.jp/search?q=霧島",
+        "https://www.jinjacho.or.jp/search?q=瓊瓊杵",
+        "https://www.jinjacho.or.jp/search?q=邇邇芸",
+        "http://www.jinja.ne.jp/exploration/index.html",
+        "http://chiba.jinjacho.or.jp/"
+      ]
+    },
+    "東京都": {
+      "shrines": [],
+      "search_note": "キーワード検索ページへ移動し、霧島・瓊瓊杵・邇邇芸等で検索を試みる。 / 検索フォームがGETで's'パラメータを持つため、キーワード「霧島」で検索を試みる。 / 「霧島」での検索は該当なし。「瓊瓊杵」で再検索する。 / 「霧島」「瓊瓊杵」の検索で該当ページが見つからず、残り探索回数も少ないため終了。東京都神社庁のサイト内検索では対象の神社(瓊瓊杵尊を祀る霧島系神社)は確認できなかった。",
+      "hops": 4,
+      "visited": [
+        "http://www.tokyo-jinjacho.or.jp",
+        "http://www.tokyo-jinjacho.or.jp/jinja/keyword/",
+        "http://www.tokyo-jinjacho.or.jp/?s=霧島",
+        "http://www.tokyo-jinjacho.or.jp/?s=瓊瓊杵"
+      ],
+      "html_cache": [
+        "http___www_tokyo_jinjacho_or_jp.html",
+        "http___www_tokyo_jinjacho_or_jp_jinja_keyword_.html",
+        "http___www_tokyo_jinjacho_or_jp__s___.html",
+        "http___www_tokyo_jinjacho_or_jp__s____.html"
+      ]
+    },
+    "神奈川県": {
+      "shrines": [],
+      "search_note": "トップページのみで祭神情報は未確認。検索フォーム(GET)にキーワード'霧島'を入れて検索結果ページを辿る。 / 「霧島」での検索結果には該当神社が見つからなかった。ページには検索フォームのみ表示され結果一覧が確認できなかったため、別キーワード「瓊瓊杵」で再検索する。 / 「霧島」「瓊瓊杵」での検索では該当結果が確認できず、検索結果ページもトップページと同一内容が返っている。「邇邇芸」キーワードで再検索を試みる。 / 神奈川県神社庁で「霧島」「瓊瓊杵」「邇邇芸」の各キーワードで検索したが、検索結果として該当する神社が見つからなかった(トップページにリダイレクトされ、検索結果一覧が表示されない)。残り探索回数も少ないため、これ以上の追跡は困難と判断し0件で終了する。",
+      "hops": 4,
+      "visited": [
+        "https://kanagawa-jinja.or.jp",
+        "https://www.kanagawa-jinja.or.jp/?s_keyword_3=霧島&searchbutton=検索",
+        "https://www.kanagawa-jinja.or.jp/?s_keyword_3=瓊瓊杵&searchbutton=検索",
+        "https://www.kanagawa-jinja.or.jp/?s_keyword_3=邇邇芸&searchbutton=検索"
+      ],
+      "html_cache": [
+        "https___kanagawa_jinja_or_jp.html",
+        "https___www_kanagawa_jinja_or_jp__s_keyword_3____searchbutton___.html",
+        "https___www_kanagawa_jinja_or_jp__s_keyword_3_____searchbutton___.html",
+        "https___www_kanagawa_jinja_or_jp__s_keyword_3_____searchbutton___.html"
+      ]
+    },
+    "新潟県": {
+      "shrines": [],
+      "search_note": "検索フォームを使用してキーワード「霧島」で検索を実行する。 / 「霧島」での検索は0件だったため、「瓊瓊杵」で再検索を試みる。 / 「霧島」「瓊瓊杵」検索は共に0件だったため、別表記「邇邇芸」で再検索する。 / 新潟県神社庁サイトで「霧島」「瓊瓊杵」「邇邇芸」のキーワードで検索したが、いずれも該当する神社は見つからなかった。残り探索回数も限られているため終了する。",
+      "hops": 4,
+      "visited": [
+        "https://niigata-jinjacho.jp",
+        "https://niigata-jinjacho.jp/shrine_niigata/search.php?area=&keyword=霧島",
+        "https://niigata-jinjacho.jp/shrine_niigata/search.php?area=&keyword=瓊瓊杵",
+        "https://niigata-jinjacho.jp/shrine_niigata/search.php?area=&keyword=邇邇芸"
+      ],
+      "html_cache": [
+        "https___niigata_jinjacho_jp.html",
+        "https___niigata_jinjacho_jp_shrine_niigata_search_php_area__keyword___.html",
+        "https___niigata_jinjacho_jp_shrine_niigata_search_php_area__keyword____.html",
+        "https___niigata_jinjacho_jp_shrine_niigata_search_php_area__keyword____.html"
+      ]
+    },
+    "富山県": {
+      "shrines": [],
+      "search_note": "検索フォーム(GET, s パラメータ)を利用して「霧島」で検索を試みる。 / 「霧島」検索は0件だったため、祭神名「瓊瓊杵」で再検索を試みる。 / 「霧島」「瓊瓊杵」検索は0件だったため、氏神神社検索ページへ遷移して一覧・索引から霧島系神社を探索する。 / 氏神神社検索ページはコンテンツが埋め込み(non object)で本文からは検索フォーム以外の情報が得られなかった。トップページでの検索(?s=霧島, ?s=瓊瓊杵)も既に試行済みで対象神社は見つからなかった。残り探索回数も少なく、これ以上の有効な索引ページも見当たらないため終了する。",
+      "hops": 4,
+      "visited": [
+        "https://toyama-jinjacho.sakura.ne.jp/",
+        "https://toyama-jinjacho.sakura.ne.jp/?s=霧島",
+        "https://toyama-jinjacho.sakura.ne.jp/?s=瓊瓊杵",
+        "https://toyama-jinjacho.sakura.ne.jp/%E5%AF%8C%E5%B1%B1%E7%9C%8C%E6%B0%8F%E7%A5%9E%E7%A5%9E%E7%A4%BE%E6%A4%9C%E7%B4%A2"
+      ],
+      "html_cache": [
+        "https___toyama_jinjacho_sakura_ne_jp_.html",
+        "https___toyama_jinjacho_sakura_ne_jp__s___.html",
+        "https___toyama_jinjacho_sakura_ne_jp__s____.html",
+        "https___toyama_jinjacho_sakura_ne_jp__E5_AF_8C_E5_B1_B1_E7_9C_8C_E6_B0_8F_E7_A5_.html"
+      ]
+    },
+    "石川県": {
+      "shrines": [
+        {
+          "name": "金劔宮",
+          "city": "白山市",
+          "address": "白山市鶴来日詰町巳118-5",
+          "main_deity": "護国の英霊 天津彦火瓊瓊杵尊 菅原道真 大山咋命 少彦名命",
+          "source_quote": "[御祭神] 護国の英霊 天津彦火瓊瓊杵尊 菅原道真 大山咋命 少彦名命",
+          "source_url": "https://www.ishikawa-jinjacho.or.jp/?s=瓊瓊杵",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-11",
+          "html_cache": "https___www_ishikawa_jinjacho_or_jp__s____.html"
+        },
+        {
+          "name": "曽良神社",
+          "city": "穴水町",
+          "address": "鳳珠郡穴水町曽良リ30",
+          "main_deity": "瓊瓊杵尊 建角身命 玉依姫命 菊理媛命",
+          "source_quote": "[御祭神] 瓊瓊杵尊 建角身命 玉依姫命 菊理媛命",
+          "source_url": "https://www.ishikawa-jinjacho.or.jp/?s=瓊瓊杵",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-11",
+          "html_cache": "https___www_ishikawa_jinjacho_or_jp__s____.html"
+        },
+        {
+          "name": "宇留地神社",
+          "city": "穴水町",
+          "address": "鳳珠郡穴水町宇留地マ119",
+          "main_deity": "瓊瓊杵尊 加具土神",
+          "source_quote": "[御祭神] 瓊瓊杵尊 加具土神",
+          "source_url": "https://www.ishikawa-jinjacho.or.jp/?s=瓊瓊杵",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-11",
+          "html_cache": "https___www_ishikawa_jinjacho_or_jp__s____.html"
+        },
+        {
+          "name": "二本松神社",
+          "city": "珠洲市",
+          "address": "珠洲市三崎町二本松い部6－2",
+          "main_deity": "天津彦彦火瓊瓊杵尊",
+          "source_quote": "[御祭神] 天津彦彦火瓊瓊杵尊",
+          "source_url": "https://www.ishikawa-jinjacho.or.jp/?s=瓊瓊杵",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-11",
+          "html_cache": "https___www_ishikawa_jinjacho_or_jp__s____.html"
+        },
+        {
+          "name": "須須神社",
+          "city": "珠洲市",
+          "address": "珠洲市三崎町寺家4－2",
+          "main_deity": "天津日高彦穂瓊瓊杵尊 美穂須須美命 木花咲耶姫命 外三柱",
+          "source_quote": "[御祭神] 天津日高彦穂瓊瓊杵尊 美穂須須美命 木花咲耶姫命 外三柱",
+          "source_url": "https://www.ishikawa-jinjacho.or.jp/?s=瓊瓊杵",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-11",
+          "html_cache": "https___www_ishikawa_jinjacho_or_jp__s____.html"
+        },
+        {
+          "name": "饒石黒髪神社",
+          "city": "輪島市",
+          "address": "輪島市門前町上代丙185",
+          "main_deity": "天津彦彦火瓊瓊杵尊",
+          "source_quote": "[御祭神] 天津彦彦火瓊瓊杵尊",
+          "source_url": "https://www.ishikawa-jinjacho.or.jp/?s=瓊瓊杵",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-11",
+          "html_cache": "https___www_ishikawa_jinjacho_or_jp__s____.html"
+        },
+        {
+          "name": "冨士神社",
+          "city": "津幡町",
+          "address": "河北郡津幡町領家ハ224番地",
+          "main_deity": "天津彦火瓊瓊杵尊 木花開耶姫命 少彦名神",
+          "source_quote": "[御祭神] 天津彦火瓊瓊杵尊 木花開耶姫命 少彦名神",
+          "source_url": "https://www.ishikawa-jinjacho.or.jp/?s=瓊瓊杵",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-11",
+          "html_cache": "https___www_ishikawa_jinjacho_or_jp__s____.html"
+        }
+      ],
+      "search_note": "検索フォーム(GET, s パラメータ)を使い「霧島」で検索を試みる。まだ対象神社は未発見。 / 「霧島」検索は0件だったため、別キーワード「瓊瓊杵」で再検索を試みる。 / 検索結果8件中7社が瓊瓊杵尊系祭神を確認できたため十分な件数を確保。探索を終了する。",
+      "hops": 3,
+      "visited": [
+        "https://ishikawa-jinjacho.or.jp",
+        "https://www.ishikawa-jinjacho.or.jp/?s=霧島",
+        "https://www.ishikawa-jinjacho.or.jp/?s=瓊瓊杵"
+      ],
+      "html_cache": [
+        "https___ishikawa_jinjacho_or_jp.html",
+        "https___www_ishikawa_jinjacho_or_jp__s___.html",
+        "https___www_ishikawa_jinjacho_or_jp__s____.html"
+      ]
+    },
+    "福井県": {
+      "shrines": [],
+      "search_note": "取得失敗 https://www.jinja-fukui.jp/member/index.php (0: HTTPError: HTTP Error 401: Unauthorized)",
+      "hops": 3,
+      "visited": [
+        "https://www.jinja-fukui.jp/",
+        "https://www.jinja-fukui.jp/search/index.php",
+        "https://www.jinja-fukui.jp/member/index.php"
+      ]
+    },
+    "山梨県": {
+      "shrines": [],
+      "search_note": "「霧島」での検索は結果0件だったため、祭神名「瓊瓊杵」で再検索を試みる。 / 「霧島」「瓊瓊杵」では0件だったため、別表記「邇邇芸」で再検索を試みる。 / 「霧島」「瓊瓊杵」「邇邇芸」のいずれのキーワードでも山梨県神社庁の検索結果は「神社は見つかりませんでした」であった。念のため新田神社の社名で再検索を試みる。 / 神社名検索(jinjaName)では『霧島』『瓊瓊杵』『邇邇芸』『新田』のいずれも該当なし。フォームにある『キーワード』欄(鎮座地・御祭神・由緒沿革・祭事を対象)のパラメータ名を推測し keyword=霧島 で再検索を試みる。 / 検索結果ページには全1257件の一覧が表示されており、keyword=霧島での絞り込みが機能していない(全件表示になっている)。既にjinjaName/keywordパラメータで霧島・瓊瓊杵・邇邇芸・新田を試行済みで対象神社を確認できず、残り探索回数も1のため終了する。",
+      "hops": 5,
+      "visited": [
+        "https://www.yamanashi-jinjacho.or.jp/intro/search/result?jinjaName=霧島",
+        "https://www.yamanashi-jinjacho.or.jp/intro/search/result?jinjaName=瓊瓊杵",
+        "https://www.yamanashi-jinjacho.or.jp/intro/search/result?jinjaName=邇邇芸",
+        "https://www.yamanashi-jinjacho.or.jp/intro/search/result?jinjaName=新田",
+        "https://www.yamanashi-jinjacho.or.jp/intro/search/result?keyword=霧島"
+      ],
+      "html_cache": [
+        "https___www_yamanashi_jinjacho_or_jp_intro_search_result_jinjaName___.html",
+        "https___www_yamanashi_jinjacho_or_jp_intro_search_result_jinjaName____.html",
+        "https___www_yamanashi_jinjacho_or_jp_intro_search_result_jinjaName____.html",
+        "https___www_yamanashi_jinjacho_or_jp_intro_search_result_jinjaName___.html",
+        "https___www_yamanashi_jinjacho_or_jp_intro_search_result_keyword___.html"
+      ]
+    },
+    "長野県": {
+      "shrines": [],
+      "search_note": "取得失敗 https://www.nagano-jinjacho.jp/page/jinjasyoukai.html (0: HTTPError: HTTP Error 404: Not Found)",
+      "hops": 4,
+      "visited": [
+        "https://nagano-jinjacho.jp",
+        "https://nagano-jinjacho.jp/j-syoukai.html",
+        "https://www.nagano-jinjacho.jp/shibu/nagano.htm",
+        "https://www.nagano-jinjacho.jp/page/jinjasyoukai.html"
+      ]
+    },
+    "岐阜県": {
+      "shrines": [
+        {
+          "name": "高彦神社",
+          "city": "羽島市",
+          "address": "岐阜県羽島市正木町新井241番地の1",
+          "main_deity": "高皇産霊神、神産神霊神、天津彦火々瓊々杵神",
+          "source_quote": "高皇産霊神、神産神霊神、天津彦火々瓊々杵神を奉斎し、高彦神社と称辞奉る",
+          "source_url": "https://gifu-jinjacho.jp/search.php?keyword=瓊瓊杵&encodehint=",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-11",
+          "html_cache": "https___gifu_jinjacho_jp_search_php_keyword_____encodehint_.html"
+        },
+        {
+          "name": "瓊々杵神社",
+          "city": "大垣市",
+          "address": "〒503-0982 岐阜県大垣市久徳町40番地の1",
+          "main_deity": "瓊瓊杵尊（ににぎのみこと）",
+          "source_quote": "主祭神　　　　瓊瓊杵尊（ににぎのみこと）",
+          "source_url": "https://gifu-jinjacho.jp/syosai.php?shrno=2058&shrname=%E2%96%A0%E7%93%8A%E3%80%85%E6%9D%B5%E7%A5%9E%E7%A4%BE%E2%96%A0",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-11",
+          "html_cache": "https___gifu_jinjacho_jp_syosai_php_shrno_2058_shrname__E2_96_A0_E7_93_8A_E3_80_.html"
+        }
+      ],
+      "search_note": "祭神一覧ページ(godlist.php)から瓊瓊杵尊等を祀る神社を探索する。検索フォームはencodehint等の不明パラメータがあるため一覧経由を優先。 / 祭神一覧の検索フォーム(GET)を使い「瓊瓊杵」で検索を試みる。該当なければ「霧島」「邇邇芸」でも試す。 / 検索結果一覧に高彦神社(羽島市)の祭神記述で天津彦火々瓊々杵神が確認できたため採用。瓊々杵神社(大垣市)は一覧本文に祭神記載が無く「創建年月及縁由不詳」のみのため、詳細ページを確認するためfollowする。 / 岐阜県神社庁サイトで「瓊瓊杵」検索から瓊々杵神社(大垣市)を発見し祭神確認済み。探索回数上限のため終了。",
+      "hops": 4,
+      "visited": [
+        "https://gifu-jinjacho.jp",
+        "https://gifu-jinjacho.jp/godlist.php",
+        "https://gifu-jinjacho.jp/search.php?keyword=瓊瓊杵&encodehint=",
+        "https://gifu-jinjacho.jp/syosai.php?shrno=2058&shrname=%E2%96%A0%E7%93%8A%E3%80%85%E6%9D%B5%E7%A5%9E%E7%A4%BE%E2%96%A0"
+      ],
+      "html_cache": [
+        "https___gifu_jinjacho_jp.html",
+        "https___gifu_jinjacho_jp_godlist_php.html",
+        "https___gifu_jinjacho_jp_search_php_keyword_____encodehint_.html",
+        "https___gifu_jinjacho_jp_syosai_php_shrno_2058_shrname__E2_96_A0_E7_93_8A_E3_80_.html"
+      ]
+    },
+    "静岡県": {
+      "shrines": [],
+      "search_note": "検索フォームを使って「霧島」で検索を試みる / search=霧島での検索結果が全神社一覧(あ行)と同一内容になっており、検索パラメータが機能していない可能性がある。霧島・瓊瓊杵尊を祀る神社は本文中に確認できなかった。別キーワード「瓊瓊杵」で再検索を試みる。 / 「霧島」「瓊瓊杵」で検索を試みたが、検索キーワードが機能せず全件一覧(あ行)が表示されるのみであった。一覧中に霧島神社・新田神社等の該当社名は見当たらず、祭神欄で瓊瓊杵尊/邇邇芸命を確認できる神社も見つからなかった。残り探索回数を考慮し、これ以上の索引探索は非効率と判断し0件で終了する。",
+      "hops": 3,
+      "visited": [
+        "http://www.shizuoka-jinjacho.or.jp",
+        "http://www.shizuoka-jinjacho.or.jp/shokai/search.php?mode=&search=霧島",
+        "http://www.shizuoka-jinjacho.or.jp/shokai/search.php?mode=&search=瓊瓊杵"
+      ],
+      "html_cache": [
+        "http___www_shizuoka_jinjacho_or_jp.html",
+        "http___www_shizuoka_jinjacho_or_jp_shokai_search_php_mode__search___.html",
+        "http___www_shizuoka_jinjacho_or_jp_shokai_search_php_mode__search____.html"
+      ]
+    },
+    "愛知県": {
+      "shrines": [],
+      "search_note": "検索フォームのフィールド(orders)を使い「霧島」で検索してみる。GETパラメータ名addr/orders/result_pageを推測して組み立てた。 / 「霧島」検索では結果が得られずトップページ相当の内容が返された。祭神名「瓊瓊杵」で再検索を試みる。 / 「霧島」「瓊羒杵」での検索では該当ページが得られず、トップページ相当の内容しか返らなかった。祭神表記の別パターン「邇邇芸」で再検索を試みる。 / 検索結果ページに神社一覧が表示されず、トップページのような内容しか取得できなかった。「霧島」「瓊瓊杵」「邇邇芸」の3キーワードで検索を試みたが対象神社は見つからなかった。残り探索回数も少ないため終了する。",
+      "hops": 4,
+      "visited": [
+        "https://aichi-jinjacho.or.jp",
+        "https://aichi-jinjacho.or.jp?addr=&orders=霧島&result_page=1",
+        "https://aichi-jinjacho.or.jp?addr=&orders=瓊瓊杵&result_page=1",
+        "https://aichi-jinjacho.or.jp?addr=&orders=邇邇芸&result_page=1"
+      ],
+      "html_cache": [
+        "https___aichi_jinjacho_or_jp.html",
+        "https___aichi_jinjacho_or_jp_addr__orders____result_page_1.html",
+        "https___aichi_jinjacho_or_jp_addr__orders_____result_page_1.html",
+        "https___aichi_jinjacho_or_jp_addr__orders_____result_page_1.html"
+      ]
+    },
+    "三重県": {
+      "shrines": [],
+      "search_note": "トップページには神社詳細情報なし。神社一覧ページへ遷移して霧島系神社を探索する。 / 市町別一覧のみで祭神情報なし。三重県神社庁教化委員会の神社情報データベース(kyoka.mie-jinjacho.or.jp/shrine/)へ遷移して検索機能の有無を確認する。 / 現在のページには対象神社の記載なし。WordPressサイトのため検索パラメータ?s=を推測して「霧島」で検索を試みる。 / 「霧島」での検索結果には梶賀神社・木本神社・長島神社などの行事記事のみが表示され、瓊瓊杵尊を祀る霧島系神社は確認できなかった。次に「瓊瓊杵」で検索を試みる。 / 検索結果ページには瓊瓊杵尊等を祀る霧島系神社の情報が確認できず、祭神が明記された詳細ページも見つからなかった。残り探索回数が1のため終了。",
+      "hops": 5,
+      "visited": [
+        "https://www.mie-jinjachou.page/",
+        "https://www.mie-jinjachou.page/三重県の神社一覧",
+        "http://kyoka.mie-jinjacho.or.jp/shrine/",
+        "https://kyoka.mie-jinjacho.or.jp/?s=霧島",
+        "https://kyoka.mie-jinjacho.or.jp/?s=瓊瓊杵"
+      ],
+      "html_cache": [
+        "https___www_mie_jinjachou_page_.html",
+        "https___www_mie_jinjachou_page_________.html",
+        "http___kyoka_mie_jinjacho_or_jp_shrine_.html",
+        "https___kyoka_mie_jinjacho_or_jp__s___.html",
+        "https___kyoka_mie_jinjacho_or_jp__s____.html"
+      ]
+    },
+    "滋賀県": {
+      "shrines": [],
+      "search_note": "検索フォームはPOSTのみのため、まず神社検索ページ自体にアクセスして索引やGET検索の可否を確認する。 / 検索フォームはmethod=POSTのため直接GET組み立てが困難。50音順や地域一覧へのリンクがあるか確認するため『滋賀県の神社』一覧ページ(search.html)へ遷移する。 / 検索フォームがエラーのため、検索パラメータ形式(view:term)を推測してキーワード「霧島」で再試行する。 / 「霧島」での検索は結果0件(一覧表示なし)。祭神名での検索を試みるため「瓊瓊杵」で再検索。 / 「霧島」「瓊瓊杵」での検索結果ページに該当する神社の情報が本文に見つからなかった(結果0件または祭神情報が確認できない)。残り探索回数も少ないため終了。",
+      "hops": 5,
+      "visited": [
+        "https://www.shiga-jinjacho.jp",
+        "https://www.shiga-jinjacho.jp/ycBBS/Board.cgi/02_jinja_db/db/ycDB_02jinja-pc-search.html?view:term=10",
+        "https://www.shiga-jinjacho.jp/ycBBS/Board.cgi/02_jinja_db/db/search.html",
+        "https://www.shiga-jinjacho.jp/ycBBS/Board.cgi/02_jinja_db/db/ycDB_02jinja-pc-search.html?view:term=霧島",
+        "https://www.shiga-jinjacho.jp/ycBBS/Board.cgi/02_jinja_db/db/ycDB_02jinja-pc-search.html?view:term=瓊瓊杵"
+      ],
+      "html_cache": [
+        "https___www_shiga_jinjacho_jp.html",
+        "https___www_shiga_jinjacho_jp_ycBBS_Board_cgi_02_jinja_db_db_ycDB_02jinja_pc_sea.html",
+        "https___www_shiga_jinjacho_jp_ycBBS_Board_cgi_02_jinja_db_db_search_html.html",
+        "https___www_shiga_jinjacho_jp_ycBBS_Board_cgi_02_jinja_db_db_ycDB_02jinja_pc_sea.html",
+        "https___www_shiga_jinjacho_jp_ycBBS_Board_cgi_02_jinja_db_db_ycDB_02jinja_pc_sea.html"
+      ]
+    },
+    "京都府": {
+      "shrines": [],
+      "search_note": "神社紹介ページへ遷移し、一覧または検索経由で霧島・瓊瓊杵系神社を探索する / 神社紹介ページへ移動して神社一覧・検索を探す / 山科区に日向大神宮(瓊瓊杵尊を祀るとされる)があるため、山科区の一覧ページを確認する。 / 山科区一覧には霧島神社・瓊瓊杵尊系の記載なし。日向大神宮など瓊瓊杵尊系神社が多い左京区一覧を確認する。 / このページ(左京区の神社一覧)には霧島・瓊瓊杵尊系の神社名や祭神情報が見当たらない。祭神情報は個別詳細ページでしか確認できず、社名一覧からも該当候補(霧島神社・新田神社等)が見つからないため、残り探索回数の制約上これ以上の追跡は困難と判断し終了する。",
+      "hops": 5,
+      "visited": [
+        "http://kyoto-jinjacho.or.jp",
+        "http://kyoto-jinjacho.or.jp/jinja.html",
+        "http://kyoto-jinjacho.or.jp/shrine.html",
+        "http://kyoto-jinjacho.or.jp/shrine/11.html",
+        "http://kyoto-jinjacho.or.jp/shrine/04.html"
+      ],
+      "html_cache": [
+        "http___kyoto_jinjacho_or_jp.html",
+        "http___kyoto_jinjacho_or_jp_jinja_html.html",
+        "http___kyoto_jinjacho_or_jp_shrine_html.html",
+        "http___kyoto_jinjacho_or_jp_shrine_11_html.html",
+        "http___kyoto_jinjacho_or_jp_shrine_04_html.html"
+      ]
+    },
+    "大阪府": {
+      "shrines": [],
+      "search_note": "府内神社の紹介ページへ遷移し、一覧・索引・検索を確認する。 / 府内神社一覧ページのため、各市区町村の詳細ページへ移動して祭神を確認する必要がある。まず堺市のページを確認する。 / 堺市第10支部の一覧には霧島・瓊瓊杵尊系と思われる社名が見当たらず、各詳細ページも未確認のため対象なし。大阪府内神社一覧トップに戻り、他支部の一覧から該当社名を探索する必要がある。",
+      "hops": 3,
+      "visited": [
+        "https://osaka-jinjacho.jp",
+        "https://www.osaka-jinjacho.jp/funai_jinja/index.html",
+        "https://www.osaka-jinjacho.jp/funai_jinja/dai10shibu/sakai-city/sakai.html"
+      ],
+      "html_cache": [
+        "https___osaka_jinjacho_jp.html",
+        "https___www_osaka_jinjacho_jp_funai_jinja_index_html.html",
+        "https___www_osaka_jinjacho_jp_funai_jinja_dai10shibu_sakai_city_sakai_html.html"
+      ]
+    },
+    "兵庫県": {
+      "shrines": [],
+      "search_note": "検索ページへ遷移し、キーワード検索フォームの構造を確認する / 検索フォームは住所検索(address, lat, lng等)のみで、神社名や祭神による検索・一覧機能が存在しない。GETパラメータで霧島・瓊瓊杵等のキーワード検索を組み立てることは不可能。他に神社一覧や五十音索引へのリンクも見当たらず、これ以上の探索手段がないため終了する。",
+      "hops": 2,
+      "visited": [
+        "https://www.hyogo-jinjacho.com",
+        "https://www.hyogo-jinjacho.com/search.html"
+      ],
+      "html_cache": [
+        "https___www_hyogo_jinjacho_com.html",
+        "https___www_hyogo_jinjacho_com_search_html.html"
+      ]
+    },
+    "奈良県": {
+      "shrines": [],
+      "search_note": "神社一覧ページへ遷移して霧島系神社の索引を探す / 奈良市の一覧(jinja.html)には霧島・瓠瓠杵・邇邇芸に関連する社名が見当たらなかった。他市町村の一覧ページ(jinja02.html以降)を順に確認する。 / 生駒市・生駒郡の一覧ページには瓊瓊杵尊/邇邇芸命を祀る霧島系神社の記載は確認できなかった。祭神情報は外部サイト(narashinsei.com)の詳細ページにあるが、本ページの一覧からは該当社名(霧島神社・新田神社等)が見つからないため、次の地域一覧ページ(jinja03.html)へ進む。 / jinja03.html(大和郡山市)には霧島・瓊瓊杵尊系の神社は確認できなかった。奈良県神道青年会の検索サイト(narashinsei.com)でWordPress標準の検索パラメータ(?s=)を用いて「霧島」で検索を試みる。 / 検索結果に霧島神社関連の情報なし。残り探索回数も1のため終了。奈良県神社庁サイト内でも該当社を確認できなかった。",
+      "hops": 5,
+      "visited": [
+        "https://www.naraken-jinjacho.jp/",
+        "https://www.naraken-jinjacho.jp/jinja.html",
+        "https://www.naraken-jinjacho.jp/jinja02.html",
+        "https://www.naraken-jinjacho.jp/jinja03.html",
+        "http://www.narashinsei.com/?s=%E9%9C%A7%E5%B3%B6"
+      ],
+      "html_cache": [
+        "https___www_naraken_jinjacho_jp_.html",
+        "https___www_naraken_jinjacho_jp_jinja_html.html",
+        "https___www_naraken_jinjacho_jp_jinja02_html.html",
+        "https___www_naraken_jinjacho_jp_jinja03_html.html",
+        "http___www_narashinsei_com__s__E9_9C_A7_E5_B3_B6.html"
+      ]
+    },
+    "和歌山県": {
+      "shrines": [],
+      "search_note": "祭神検索フォームSaijinmeiで「瓊瓊杵」検索を試みるためのURLを組み立てたいが、EUC-JPエンコードが必要。まず神社名検索で「霧島」を試す。次回は祭神名検索(Saijinmei=瓊瓊杵)も試す。 / 検索ページはDB接続エラーで機能していないため、トップページに戻って別の検索方法や索引を探す。",
+      "hops": 2,
+      "visited": [
+        "https://wakayama-jinjacho.or.jp",
+        "https://wakayama-jinjacho.or.jp/jdb/sys/user/SelectListWjtTbl.php?JinjyaMei=%c1%dc%c5%c7&button=%b8%a1%c0%f7"
+      ],
+      "html_cache": [
+        "https___wakayama_jinjacho_or_jp.html",
+        "https___wakayama_jinjacho_or_jp_jdb_sys_user_SelectListWjtTbl_php_JinjyaMei__c1_.html"
+      ]
+    },
+    "鳥取県": {
+      "shrines": [
+        {
+          "name": "小冠神社",
+          "city": "鳥取市",
+          "address": "鳥取市大塚212",
+          "main_deity": "天津彦火瓊瓊杵尊 猿田彦命 大山祇命 菅原道眞",
+          "source_quote": "住所鳥取市大塚212祭神天津彦火 瓊瓊杵 尊 猿田彦命 大山祇命 菅原道眞",
+          "source_url": "https://tottori-jinjacho.jp/publics/search/?search_word=瓊瓊杵",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-11",
+          "html_cache": "https___tottori_jinjacho_jp_publics_search__search_word____.html"
+        },
+        {
+          "name": "賀茂神社",
+          "city": "八頭町",
+          "address": "八頭町宮谷286",
+          "main_deity": "瓊瓊杵尊 木花咲耶姫尊 別雷尊 彦火火出見尊 豊玉姫尊 天穂日尊 素菟神 天児屋根尊 猿田彦尊 罔象女尊 須...",
+          "source_quote": "住所八頭町宮谷286電話（０８５８）７３－０２１１祭神 瓊瓊杵 尊 木花咲耶姫 尊別雷尊 彦火火出見尊 豊玉姫尊 天穂日尊 素菟神 天児屋根尊猿田彦尊 罔象女尊 須...",
+          "source_url": "https://tottori-jinjacho.jp/publics/search/?search_word=瓊瓊杵",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-11",
+          "html_cache": "https___tottori_jinjacho_jp_publics_search__search_word____.html"
+        },
+        {
+          "name": "宮谷神社",
+          "city": "鳥取市",
+          "address": "鳥取市用瀬町別府224",
+          "main_deity": "瓊瓊杵命",
+          "source_quote": "住所鳥取市用瀬町別府224祭神 瓊瓊杵 命",
+          "source_url": "https://tottori-jinjacho.jp/publics/search/?search_word=瓊瓊杵",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-11",
+          "html_cache": "https___tottori_jinjacho_jp_publics_search__search_word____.html"
+        }
+      ],
+      "search_note": "検索フォームがGET対応のため「霧島」で検索を実行する。まだ祭神確認済みの神社は無し。 / 「霧島」検索は0件だったため、別キーワード「瓊瓊杵」で再検索する。 / 検索結果全7件中5件を確認。3件を対象神社として記録。残り2件(赤波神社・水根神社)は他神と併祀のため未記録だが必要なら追加可。探索回数の節約のため7件目までの確認は行わずdoneとした。",
+      "hops": 3,
+      "visited": [
+        "https://tottori-jinjacho.jp",
+        "https://tottori-jinjacho.jp/publics/search/?search_word=霧島",
+        "https://tottori-jinjacho.jp/publics/search/?search_word=瓊瓊杵"
+      ],
+      "html_cache": [
+        "https___tottori_jinjacho_jp.html",
+        "https___tottori_jinjacho_jp_publics_search__search_word___.html",
+        "https___tottori_jinjacho_jp_publics_search__search_word____.html"
+      ]
+    },
+    "島根県": {
+      "shrines": [
+        {
+          "name": "地神神社",
+          "city": "松江市",
+          "address": "松江市八束町二子501番地",
+          "main_deity": "瓊々杵尊",
+          "source_quote": "地神神社 瓊々杵尊 松江市八束町二子501番地 家内安全・厄除け・学問成就・縁結び",
+          "source_url": "https://www.shimane-jinjacho.or.jp/matsue/index.html",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-11",
+          "html_cache": "https___www_shimane_jinjacho_or_jp_matsue_index_html.html"
+        },
+        {
+          "name": "出島神社",
+          "city": "松江市",
+          "address": "松江市西浜佐陀町881番地",
+          "main_deity": "瓊々杵尊外5柱",
+          "source_quote": "出島神社 瓊々杵尊外5柱 松江市西浜佐陀町881番地 農耕、漁業",
+          "source_url": "https://www.shimane-jinjacho.or.jp/matsue/index.html",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-11",
+          "html_cache": "https___www_shimane_jinjacho_or_jp_matsue_index_html.html"
+        },
+        {
+          "name": "長見神社",
+          "city": "松江市",
+          "address": "松江市長海町59番地",
+          "main_deity": "瓊々杵命・木花開耶姫命",
+          "source_quote": "長見神社 瓊々杵命・木花開耶姫命 松江市長海町59番地 農業、産業の発展",
+          "source_url": "https://www.shimane-jinjacho.or.jp/matsue/index.html",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-11",
+          "html_cache": "https___www_shimane_jinjacho_or_jp_matsue_index_html.html"
+        }
+      ],
+      "search_note": "神社検索ページへ遷移し、霧島・瓊瓊杵などのキーワードで検索を試みる / 検索フォームはGoogle CSE(cx不明のため使用不可)。市町村別一覧から探索を開始。まず松江市を確認する。 / 松江市のページ本文中に瓊々杵尊(瓊々杵命)を祀る神社3社を確認できたため、これで十分と判断しdoneとする。",
+      "hops": 3,
+      "visited": [
+        "https://shimane-jinjacho.or.jp",
+        "https://www.shimane-jinjacho.or.jp/search/index.html",
+        "https://www.shimane-jinjacho.or.jp/matsue/index.html"
+      ],
+      "html_cache": [
+        "https___shimane_jinjacho_or_jp.html",
+        "https___www_shimane_jinjacho_or_jp_search_index_html.html",
+        "https___www_shimane_jinjacho_or_jp_matsue_index_html.html"
+      ]
+    }
+  }
+}

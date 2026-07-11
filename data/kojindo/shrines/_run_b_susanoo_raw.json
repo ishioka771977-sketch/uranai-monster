@@ -1,0 +1,1093 @@
+{
+  "prefs": {
+    "石川県": {
+      "shrines": [
+        {
+          "name": "八坂神社",
+          "city": "能登町",
+          "address": "鳳珠郡能登町字宇出津チ58",
+          "main_deity": "須佐之男命,奇稲田姫命",
+          "source_quote": "[鎮座地] 鳳珠郡能登町字宇出津チ58 [御祭神] 須佐之男命,奇稲田姫命",
+          "source_url": "https://www.ishikawa-jinjacho.or.jp/?s=八坂",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-12",
+          "html_cache": "https___www_ishikawa_jinjacho_or_jp__s___.html"
+        },
+        {
+          "name": "徳光八坂神社",
+          "city": "白山市",
+          "address": "白山市徳光町223-1",
+          "main_deity": "須佐之男命 応神天皇 神功皇后",
+          "source_quote": "[鎮座地] 白山市徳光町223-1 [御祭神] 須佐之男命 応神天皇 神功皇后",
+          "source_url": "https://www.ishikawa-jinjacho.or.jp/?s=八坂",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-12",
+          "html_cache": "https___www_ishikawa_jinjacho_or_jp__s___.html"
+        },
+        {
+          "name": "打越八坂神社",
+          "city": "小松市",
+          "address": "小松市打越町甲109",
+          "main_deity": "須佐之男命",
+          "source_quote": "[鎮座地] 小松市打越町甲109 [御祭神] 須佐之男命",
+          "source_url": "https://www.ishikawa-jinjacho.or.jp/?s=八坂",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-12",
+          "html_cache": "https___www_ishikawa_jinjacho_or_jp__s___.html"
+        },
+        {
+          "name": "八坂社",
+          "city": "金沢市",
+          "address": "金沢市寺地町1丁目5番38号",
+          "main_deity": "素戔嗚尊",
+          "source_quote": "[御祭神] 素戔嗚尊",
+          "source_url": "https://www.ishikawa-jinjacho.or.jp/page/2/?s=八坂",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-12",
+          "html_cache": "https___www_ishikawa_jinjacho_or_jp_page_2__s___.html"
+        },
+        {
+          "name": "堂ノ森神社",
+          "city": "白山市",
+          "address": "白山市白峰ワ14-2",
+          "main_deity": "素盞嗚尊",
+          "source_quote": "[御祭神] 素盞嗚尊",
+          "source_url": "https://www.ishikawa-jinjacho.or.jp/page/2/?s=八坂",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-12",
+          "html_cache": "https___www_ishikawa_jinjacho_or_jp_page_2__s___.html"
+        },
+        {
+          "name": "下村神社",
+          "city": "白山市",
+          "address": "白山市白峰チ57",
+          "main_deity": "素戔嗚命",
+          "source_quote": "[御祭神] 素戔嗚命",
+          "source_url": "https://www.ishikawa-jinjacho.or.jp/page/2/?s=八坂",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-12",
+          "html_cache": "https___www_ishikawa_jinjacho_or_jp_page_2__s___.html"
+        }
+      ],
+      "search_note": "検索フォーム(s)を使い「八坂」で検索を試みる。まだ対象神社は未発見。 / 八坂検索1ページ目で10件確保。目安十分だが残り探索回数もあるため次ページも確認する。 / 「八坂」検索結果ページ2から素戔嗚尊系祭神が確認できる3社を確保。石川県分は目安数に達したため探索終了。",
+      "hops": 3,
+      "visited": [
+        "https://ishikawa-jinjacho.or.jp",
+        "https://www.ishikawa-jinjacho.or.jp/?s=八坂",
+        "https://www.ishikawa-jinjacho.or.jp/page/2/?s=八坂"
+      ],
+      "html_cache": [
+        "https___ishikawa_jinjacho_or_jp.html",
+        "https___www_ishikawa_jinjacho_or_jp__s___.html",
+        "https___www_ishikawa_jinjacho_or_jp_page_2__s___.html"
+      ]
+    },
+    "福井県": {
+      "shrines": [],
+      "search_note": "検索フォームはPOSTのみのため利用不可。「福井県の神社を探す」ページへ遷移し、索引等から対象神社を探索する。 / 検索フォームはPOSTのみでGETパラメータでの組み立てが不可能。市町村選択も必須のプルダウン式で、対象神社を特定できる一覧・索引ページへのリンクも本文中に見当たらないため、探索を終了する。",
+      "hops": 2,
+      "visited": [
+        "https://www.jinja-fukui.jp/",
+        "https://www.jinja-fukui.jp/search/index.php"
+      ],
+      "html_cache": [
+        "https___www_jinja_fukui_jp_.html",
+        "https___www_jinja_fukui_jp_search_index_php.html"
+      ]
+    },
+    "山梨県": {
+      "shrines": [
+        {
+          "name": "八坂神社",
+          "city": "甲府市",
+          "address": "甲府市大里町円満寺",
+          "main_deity": "素盞鳴尊",
+          "source_quote": "■鎮座地： 甲府市大里町円満寺 ■御祭神： 素盞鳴尊",
+          "source_url": "https://www.yamanashi-jinjacho.or.jp/intro/search/detail/1013",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-12",
+          "html_cache": "https___www_yamanashi_jinjacho_or_jp_intro_search_detail_1013.html"
+        },
+        {
+          "name": "氷川神社",
+          "city": "甲州市",
+          "address": "甲州市勝沼町上岩崎2628",
+          "main_deity": "素盞嗚尊、國常立尊",
+          "source_quote": "■御祭神： 素盞嗚尊、國常立尊",
+          "source_url": "https://www.yamanashi-jinjacho.or.jp/intro/search/detail/2108",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-12",
+          "html_cache": "https___www_yamanashi_jinjacho_or_jp_intro_search_detail_2108.html"
+        }
+      ],
+      "search_note": "八坂神社が4件見つかった。詳細ページを順に確認する。まず1013番から。 / 八坂神社(甲府市)を発見。続けて氷川・須賀・津島などのキーワードで検索を試みる。 / 氷川神社(甲州市勝沼町上岩崎)の詳細ページで祭神を確認する。もう1件(氷川神社 甲州市大和町田野)も後続で確認予定。 / 氷川神社(甲州市勝沼町上岩崎)の祭神を確認し取得済み。探索回数残り少なく終了とする。",
+      "hops": 4,
+      "visited": [
+        "https://www.yamanashi-jinjacho.or.jp/intro/search/result?jinjaName=八坂",
+        "https://www.yamanashi-jinjacho.or.jp/intro/search/detail/1013",
+        "https://www.yamanashi-jinjacho.or.jp/intro/search/result?jinjaName=氷川",
+        "https://www.yamanashi-jinjacho.or.jp/intro/search/detail/2108"
+      ],
+      "html_cache": [
+        "https___www_yamanashi_jinjacho_or_jp_intro_search_result_jinjaName___.html",
+        "https___www_yamanashi_jinjacho_or_jp_intro_search_detail_1013.html",
+        "https___www_yamanashi_jinjacho_or_jp_intro_search_result_jinjaName___.html",
+        "https___www_yamanashi_jinjacho_or_jp_intro_search_detail_2108.html"
+      ]
+    },
+    "長野県": {
+      "shrines": [],
+      "search_note": "取得失敗 https://www.nagano-jinjacho.jp/page/jinjasyoukai.html (0: HTTPError: HTTP Error 404: Not Found)",
+      "hops": 4,
+      "visited": [
+        "https://nagano-jinjacho.jp",
+        "https://nagano-jinjacho.jp/j-syoukai.html",
+        "https://www.nagano-jinjacho.jp/shibu/nagano.htm",
+        "https://www.nagano-jinjacho.jp/page/jinjasyoukai.html"
+      ]
+    },
+    "岐阜県": {
+      "shrines": [
+        {
+          "name": "八重垣神社",
+          "city": "不破郡垂井町",
+          "address": "岐阜県不破郡垂井町1126番地",
+          "main_deity": "素盞鳴尊、稲田姫命、八王子",
+          "source_quote": "祭神素盞鳴尊、稲田姫命、八王子。",
+          "source_url": "https://gifu-jinjacho.jp/search.php?keyword=八坂",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-12",
+          "html_cache": "https___gifu_jinjacho_jp_search_php_keyword___.html"
+        },
+        {
+          "name": "八坂神社",
+          "city": "各務原市",
+          "address": "岐阜県各務原市蘇原伊吹町1丁目24番地",
+          "main_deity": "須佐奈男尊（すさのおのみこと）",
+          "source_quote": "主祭神　　　　　　　須佐奈男尊（すさのおのみこと）",
+          "source_url": "https://gifu-jinjacho.jp/syosai.php?shrno=778&shrname=%E2%98%85%E5%85%AB%E5%9D%82%E7%A5%9E%E7%A4%BE%E2%98%85",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-12",
+          "html_cache": "https___gifu_jinjacho_jp_syosai_php_shrno_778_shrname__E2_98_85_E5_85_AB_E5_9D_8.html"
+        }
+      ],
+      "search_note": "祭神一覧ページ(godlist.php)も候補だが、まず検索フォームで八坂を検索する / 八重垣神社の祭神を確認。八坂神社(各務原市蘇原伊吹町、shrno=778)は京都八坂神社より勧請とあるが祭神未確認のため詳細ページへfollowする。次の10件(2ページ目以降)も未確認。 / 検索結果ページから当該神社詳細ページへ遷移し祭神を確認済み。残り探索回数が少ないため終了。",
+      "hops": 3,
+      "visited": [
+        "https://gifu-jinjacho.jp",
+        "https://gifu-jinjacho.jp/search.php?keyword=八坂",
+        "https://gifu-jinjacho.jp/syosai.php?shrno=778&shrname=%E2%98%85%E5%85%AB%E5%9D%82%E7%A5%9E%E7%A4%BE%E2%98%85"
+      ],
+      "html_cache": [
+        "https___gifu_jinjacho_jp.html",
+        "https___gifu_jinjacho_jp_search_php_keyword___.html",
+        "https___gifu_jinjacho_jp_syosai_php_shrno_778_shrname__E2_98_85_E5_85_AB_E5_9D_8.html"
+      ]
+    },
+    "静岡県": {
+      "shrines": [],
+      "search_note": "検索フォームのGETパラメータを使って「八坂」で検索を試みる / 検索パラメータsearch=八坂では絞り込みが機能せず、全神社一覧(あ行)が表示された。mode=nameパラメータを試して再検索する。 / 「八坂」での検索結果はフィルタされていない全件一覧(あ行から始まる)のように見え、対象神社を確認できなかった。氷川での再検索を試みる。 / 氷川での検索結果はあ行索引の全件表示のようで、対象神社は確認できなかった。須賀での検索を試みる。 / 「須賀」検索結果ページとして表示されているが、実際には静岡県の神社名『あ行』の全一覧(縣居神社〜秋葉神社)が表示されており、検索キーワードが機能していない状態。八坂・氷川・須賀での検索を試行済みだが対象神社(八坂神社・氷川神社・須賀神社等、素盞嗚尊系祭神)の詳細情報は本文中に確認できなかった。残り探索回数が1のため、これ以上の追跡を断念し0件で終了する。",
+      "hops": 5,
+      "visited": [
+        "http://www.shizuoka-jinjacho.or.jp",
+        "http://www.shizuoka-jinjacho.or.jp/shokai/search.php?mode=&search=八坂",
+        "http://www.shizuoka-jinjacho.or.jp/shokai/search.php?mode=name&search=八坂",
+        "http://www.shizuoka-jinjacho.or.jp/shokai/search.php?mode=name&search=氷川",
+        "http://www.shizuoka-jinjacho.or.jp/shokai/search.php?mode=name&search=須賀"
+      ],
+      "html_cache": [
+        "http___www_shizuoka_jinjacho_or_jp.html",
+        "http___www_shizuoka_jinjacho_or_jp_shokai_search_php_mode__search___.html",
+        "http___www_shizuoka_jinjacho_or_jp_shokai_search_php_mode_name_search___.html",
+        "http___www_shizuoka_jinjacho_or_jp_shokai_search_php_mode_name_search___.html",
+        "http___www_shizuoka_jinjacho_or_jp_shokai_search_php_mode_name_search___.html"
+      ]
+    },
+    "愛知県": {
+      "shrines": [],
+      "search_note": "検索フォーム(addr)を使って「八坂」で検索を試みる。祭神情報は未確認のため神社は0件。 / 八坂での検索結果は0件(トップページと同内容が返された)。次に津島で検索を試みる。 / 検索結果ページに神社一覧が表示されず、祭神情報も確認できなかった。次のキーワード「須賀」で検索を試みる。 / 「須賀」検索結果ページには神社一覧が表示されず(該当なしと判断)。八坂・津島・須賀は既に検索済みで対象確認できず。残り探索回数が少ないため氷川を検索してみる。 / 氷川検索結果ページに神社情報が見つからず、残り探索回数も0のため終了。これまでの探索(八坂・津島・須賀・氷川)で対象神社の詳細情報を確認できなかった。",
+      "hops": 5,
+      "visited": [
+        "https://aichi-jinjacho.or.jp",
+        "https://aichi-jinjacho.or.jp/?addr=八坂&orders=&result_page=1",
+        "https://aichi-jinjacho.or.jp/?addr=津島&orders=&result_page=1",
+        "https://aichi-jinjacho.or.jp/?addr=須賀&orders=&result_page=1",
+        "https://aichi-jinjacho.or.jp/?addr=氷川&orders=&result_page=1"
+      ],
+      "html_cache": [
+        "https___aichi_jinjacho_or_jp.html",
+        "https___aichi_jinjacho_or_jp__addr____orders__result_page_1.html",
+        "https___aichi_jinjacho_or_jp__addr____orders__result_page_1.html",
+        "https___aichi_jinjacho_or_jp__addr____orders__result_page_1.html",
+        "https___aichi_jinjacho_or_jp__addr____orders__result_page_1.html"
+      ]
+    },
+    "三重県": {
+      "shrines": [],
+      "search_note": "三重県の神社一覧ページへ遷移して対象神社を探索する。 / 三重県神社庁教化委員会の神社情報データベースへ遷移。検索機能や詳細情報があるか確認する。 / 支部一覧ページのみで対象神社情報なし。WordPress検索機能を試すため?s=八坂で検索を試みる。 / 「八坂」検索では祭神情報を含む神社詳細ページが見つからなかった(祭りイベント記事のみ)。次に「須賀」で検索を試みる。 / 検索結果ページには対象神社の祭神情報が確認できず、探索回数の残りが1のため終了。三重県は0件で報告。",
+      "hops": 5,
+      "visited": [
+        "https://www.mie-jinjachou.page/",
+        "https://www.mie-jinjachou.page/三重県の神社一覧",
+        "http://kyoka.mie-jinjacho.or.jp/shrine/",
+        "https://kyoka.mie-jinjacho.or.jp/?s=%E5%85%AB%E5%9D%82",
+        "https://kyoka.mie-jinjacho.or.jp/?s=%E9%A0%88%E8%B3%80"
+      ],
+      "html_cache": [
+        "https___www_mie_jinjachou_page_.html",
+        "https___www_mie_jinjachou_page_________.html",
+        "http___kyoka_mie_jinjacho_or_jp_shrine_.html",
+        "https___kyoka_mie_jinjacho_or_jp__s__E5_85_AB_E5_9D_82.html",
+        "https___kyoka_mie_jinjacho_or_jp__s__E9_A0_88_E8_B3_80.html"
+      ]
+    },
+    "滋賀県": {
+      "shrines": [],
+      "search_note": "検索フォームはPOSTのみのため、まず神社検索ページ自体を開いて索引やGET検索の手がかりを確認する。 / 検索フォームはPOSTのみでGET組み立てが困難。神社一覧・索引ページへのリンクと思われる search.html へ遷移して探索を続ける。 / 検索ページがエラーとなり、リンクも存在しないため探索継続不可。対象神社の情報は確認できなかった。",
+      "hops": 3,
+      "visited": [
+        "https://www.shiga-jinjacho.jp",
+        "https://www.shiga-jinjacho.jp/ycBBS/Board.cgi/02_jinja_db/db/ycDB_02jinja-pc-search.html?view:term=10",
+        "https://www.shiga-jinjacho.jp/ycBBS/Board.cgi/02_jinja_db/db/search.html"
+      ],
+      "html_cache": [
+        "https___www_shiga_jinjacho_jp.html",
+        "https___www_shiga_jinjacho_jp_ycBBS_Board_cgi_02_jinja_db_db_ycDB_02jinja_pc_sea.html",
+        "https___www_shiga_jinjacho_jp_ycBBS_Board_cgi_02_jinja_db_db_search_html.html"
+      ]
+    },
+    "京都府": {
+      "shrines": [],
+      "search_note": "神社紹介ページへ遷移し、対象神社を探索する。 / 神社紹介ページへ遷移して一覧・検索を確認する / 東山区に八坂神社があると推測されるため一覧ページを確認する。祭神情報はまだ未確認。 / 東山区ページには八坂神社の名称・住所はあるが祭神記載がなくこのページ単体では祭神確認不可。外部リンク(八坂神社公式)は神社庁サイト外のため未追跡。須賀神社等が期待できる左京区ページへ移動する。 / 左京区ページに『須賀神社』(左京区聖護院円頓美町1)の記載を確認したが、本文には所在地・電話番号のみで祭神情報が無く、詳細ページへのリンクも存在しないため祭神を確認できず出力対象外とした。残り探索回数が1のため、これ以上有望な追跡先(対象社名を含む詳細ページ)を特定できず、今回はshrines無しでdoneとする。",
+      "hops": 5,
+      "visited": [
+        "http://kyoto-jinjacho.or.jp",
+        "http://kyoto-jinjacho.or.jp/jinja.html",
+        "http://kyoto-jinjacho.or.jp/shrine.html",
+        "http://kyoto-jinjacho.or.jp/shrine/08.html",
+        "http://kyoto-jinjacho.or.jp/shrine/04.html"
+      ],
+      "html_cache": [
+        "http___kyoto_jinjacho_or_jp.html",
+        "http___kyoto_jinjacho_or_jp_jinja_html.html",
+        "http___kyoto_jinjacho_or_jp_shrine_html.html",
+        "http___kyoto_jinjacho_or_jp_shrine_08_html.html",
+        "http___kyoto_jinjacho_or_jp_shrine_04_html.html"
+      ]
+    },
+    "大阪府": {
+      "shrines": [],
+      "search_note": "神社一覧ページへ遷移して対象神社を探す / 市区町村一覧ページ。祭神情報がないため、八坂神社が所在する可能性の高い浪速区のページへ移動して確認する。 / 難波八阪神社の詳細ページを確認し祭神を調べる必要がある / 難波八阪神社のページには祭神情報が記載されておらず確認不可のため出力せず。残り探索回数内で他区への遷移リンクも本ページには存在しないため終了。",
+      "hops": 4,
+      "visited": [
+        "https://osaka-jinjacho.jp",
+        "https://www.osaka-jinjacho.jp/funai_jinja/index.html",
+        "https://www.osaka-jinjacho.jp/funai_jinja/dai8shibu/naniwa-ku/naniwa.html",
+        "https://www.osaka-jinjacho.jp/funai_jinja/dai8shibu/naniwa-ku/08007nanbayasakajinja.html"
+      ],
+      "html_cache": [
+        "https___osaka_jinjacho_jp.html",
+        "https___www_osaka_jinjacho_jp_funai_jinja_index_html.html",
+        "https___www_osaka_jinjacho_jp_funai_jinja_dai8shibu_naniwa_ku_naniwa_html.html",
+        "https___www_osaka_jinjacho_jp_funai_jinja_dai8shibu_naniwa_ku_08007nanbayasakaji.html"
+      ]
+    },
+    "兵庫県": {
+      "shrines": [],
+      "search_note": "検索ページへ移動して「八坂」等のキーワードで検索を試みる / 検索フォームは住所入力による近隣神社検索(GET action=search.html, fields=address, ie_taisaku, lat, lng)のみで、神社名や祭神でのキーワード検索・一覧・索引は提供されていない。about.html等も確認したが対象神社の情報は見つからず、これ以上の探索経路がないため終了する。",
+      "hops": 2,
+      "visited": [
+        "https://www.hyogo-jinjacho.com",
+        "https://www.hyogo-jinjacho.com/search.html"
+      ],
+      "html_cache": [
+        "https___www_hyogo_jinjacho_com.html",
+        "https___www_hyogo_jinjacho_com_search_html.html"
+      ]
+    },
+    "奈良県": {
+      "shrines": [],
+      "search_note": "神社一覧ページへ遷移して対象神社を探索する / 奈良市の神社一覧ページ。八坂神社(複数)、八阪神社、素盞鳴尊社などの候補社名を確認したが、祭神情報は詳細ページ(narashinsei.com)にしかないため、まず鹿野園町の八坂神社の詳細ページへfollowして祭神を確認する。 / 八坂神社(奈良市鹿野園町225)のページを確認したが、抽出テキストに御祭神の値が表示されておらず祭神を確認できなかったため、この神社は出力せず。次にサ行索引ページ(須賀・素盞候補)を探索する。 / サ行1ページ目には須賀神社・須佐神社・素盞嗚神社等の対象社名が確認できなかった。次ページで須賀・須佐・素盞嗚系を確認するため遷移する。 / サ行page2には須賀・素盞・祇園等の対象神社は見当たらなかった。次ページ(page/3)に須賀神社等がある可能性があるため探索を続ける。 / 探索回数残り0のため終了。本ページ(サ行一覧page3)には須賀神社・素盞男神社・須佐之男神社・素盞鳴神社などの候補社名は掲載されているが、祭神情報は各詳細ページにのみ記載されており、探索回数が残っていないため確認不可。祭神未確認のため出力を見送る。",
+      "hops": 6,
+      "visited": [
+        "https://www.naraken-jinjacho.jp/",
+        "https://www.naraken-jinjacho.jp/jinja.html",
+        "http://www.narashinsei.com/search/%e3%83%a4%e8%a1%8c/%e5%85%ab%e5%9d%82%e7%a5%9e%e7%a4%be/",
+        "http://www.narashinsei.com/search/kana/サ行/",
+        "http://www.narashinsei.com/search/kana/%E3%82%B5%E8%A1%8C/page/2/",
+        "http://www.narashinsei.com/search/kana/%E3%82%B5%E8%A1%8C/page/3/"
+      ],
+      "html_cache": [
+        "https___www_naraken_jinjacho_jp_.html",
+        "https___www_naraken_jinjacho_jp_jinja_html.html",
+        "http___www_narashinsei_com_search__e3_83_a4_e8_a1_8c__e5_85_ab_e5_9d_82_e7_a5_9e.html",
+        "http___www_narashinsei_com_search_kana____.html",
+        "http___www_narashinsei_com_search_kana__E3_82_B5_E8_A1_8C_page_2_.html",
+        "http___www_narashinsei_com_search_kana__E3_82_B5_E8_A1_8C_page_3_.html"
+      ]
+    },
+    "和歌山県": {
+      "shrines": [],
+      "search_note": "神社名検索フォームで「八坂」を検索するため遷移する。 / 検索ページはDB接続エラー(mysql_connect Access denied)で機能しておらず、情報取得不可。トップページも訪問済みで有効な索引リンクが見つからないため終了。",
+      "hops": 2,
+      "visited": [
+        "https://wakayama-jinjacho.or.jp",
+        "https://wakayama-jinjacho.or.jp/jdb/sys/user/SelectListWjtTbl.php?JinjyaMei=八坂"
+      ],
+      "html_cache": [
+        "https___wakayama_jinjacho_or_jp.html",
+        "https___wakayama_jinjacho_or_jp_jdb_sys_user_SelectListWjtTbl_php_JinjyaMei___.html"
+      ]
+    },
+    "鳥取県": {
+      "shrines": [
+        {
+          "name": "安長神社",
+          "city": "鳥取市",
+          "address": "鳥取市安長318",
+          "main_deity": "須佐之男命 菅原道真命",
+          "source_quote": "祭神 須佐之男命 菅原道真命",
+          "source_url": "http://tottori-jinjacho.jp/pages/452",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-12",
+          "html_cache": "http___tottori_jinjacho_jp_pages_452.html"
+        },
+        {
+          "name": "菖蒲神社",
+          "city": "鳥取市",
+          "address": "鳥取市菖蒲701-2",
+          "main_deity": "大物主神 素盞嗚尊",
+          "source_quote": "神社名菖蒲神社 よみしょうぶじんじゃ住所鳥取市菖蒲701-2祭神大物主神 素盞 嗚尊",
+          "source_url": "https://tottori-jinjacho.jp/publics/search/?search_word=素盞",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-12",
+          "html_cache": "https___tottori_jinjacho_jp_publics_search__search_word___.html"
+        },
+        {
+          "name": "釜口神社",
+          "city": "鳥取市",
+          "address": "鳥取市河原町釜口1737",
+          "main_deity": "素盞嗚尊 天鈿女尊 保食神 應神天皇",
+          "source_quote": "神社名釜口神社 よみかまのくちじんじゃ住所鳥取市河原町釜口1737祭神 素盞 嗚尊 天鈿女尊 保食神 應神天皇",
+          "source_url": "https://tottori-jinjacho.jp/publics/search/?search_word=素盞",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-12",
+          "html_cache": "https___tottori_jinjacho_jp_publics_search__search_word___.html"
+        },
+        {
+          "name": "鹽竈神社",
+          "city": "鳥取市",
+          "address": "鳥取市大杙448",
+          "main_deity": "鹽土神 素盞嗚尊",
+          "source_quote": "神社名鹽竈神社 よみしおがまじんじゃ住所鳥取市大杙448電話（０８５７）２４－９３００祭神鹽土神 素盞 嗚尊",
+          "source_url": "https://tottori-jinjacho.jp/publics/search/?search_word=素盞",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-12",
+          "html_cache": "https___tottori_jinjacho_jp_publics_search__search_word___.html"
+        },
+        {
+          "name": "末松神社",
+          "city": "鳥取市",
+          "address": "鳥取市金沢605",
+          "main_deity": "猿田彦大神 素盞嗚神 速玉男命 事解男命",
+          "source_quote": "神社名末松神社 よみすえまつじんじゃ住所鳥取市金沢605祭神猿田彦大神 素盞 嗚神 速玉男命 事解男命",
+          "source_url": "https://tottori-jinjacho.jp/publics/search/?search_word=素盞",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-12",
+          "html_cache": "https___tottori_jinjacho_jp_publics_search__search_word___.html"
+        }
+      ],
+      "search_note": "検索フォームを使って「八坂」で検索を試みる / 安長神社(pages/452)に「京都の八坂神社から素戔嗚尊を勧請」との記述があり有力候補。詳細ページで住所等を確認するためfollowする。 / 安長神社を発見(須佐之男命、社伝で八坂神社から素戔嗚尊を勧請)。他の対象神社を探すため検索キーワード「素盞」で追加探索する。 / 検索「素盞」の結果1ページ目から素盞嗚尊を祭神に含む4社を確認。合計4社確保できたため探索終了。",
+      "hops": 4,
+      "visited": [
+        "https://tottori-jinjacho.jp",
+        "https://tottori-jinjacho.jp/publics/search/?search_word=八坂",
+        "http://tottori-jinjacho.jp/pages/452",
+        "https://tottori-jinjacho.jp/publics/search/?search_word=素盞"
+      ],
+      "html_cache": [
+        "https___tottori_jinjacho_jp.html",
+        "https___tottori_jinjacho_jp_publics_search__search_word___.html",
+        "http___tottori_jinjacho_jp_pages_452.html",
+        "https___tottori_jinjacho_jp_publics_search__search_word___.html"
+      ]
+    },
+    "島根県": {
+      "shrines": [
+        {
+          "name": "氷川神社",
+          "city": "松江市",
+          "address": "松江市宍道町宍道858番地",
+          "main_deity": "須佐之男命・櫛稲田姫命・天穂日命・天忍穂耳命・天津日子根命・活津日子根命・熊野久須比命・多起理姫命・多岐津姫命",
+          "source_quote": "氷川神社 須佐之男命・櫛稲田姫命・天穂日命・天忍穂耳命・天津日子根命・活津日子根命・熊野久須比命・多起理姫命・多岐津姫命 松江市宍道町宍道858番地 病気平癒・開運・厄除け",
+          "source_url": "https://www.shimane-jinjacho.or.jp/matsue/index.html",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-12",
+          "html_cache": "https___www_shimane_jinjacho_or_jp_matsue_index_html.html"
+        },
+        {
+          "name": "須賀神社",
+          "city": "松江市",
+          "address": "松江市秋鹿町1632番地",
+          "main_deity": "須佐之男命",
+          "source_quote": "須賀神社 須佐之男命 松江市秋鹿町1632番地",
+          "source_url": "https://www.shimane-jinjacho.or.jp/matsue/index.html",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-12",
+          "html_cache": "https___www_shimane_jinjacho_or_jp_matsue_index_html.html"
+        }
+      ],
+      "search_note": "神社検索ページへ移動し、八坂・氷川・須賀・津島・素盞などのキーワードで検索を試みる / 検索フォームはGoogle CSEでcx未取得のため利用不可。市町村一覧から松江市ページへ進む。 / 松江市の一覧ページ内に主祭神が既に記載されていたため、氷川神社2社・須賀神社2社を確認できた。目安件数(1〜3社)に達したため探索を終了する。",
+      "hops": 3,
+      "visited": [
+        "https://shimane-jinjacho.or.jp",
+        "https://www.shimane-jinjacho.or.jp/search/index.html",
+        "https://www.shimane-jinjacho.or.jp/matsue/index.html"
+      ],
+      "html_cache": [
+        "https___shimane_jinjacho_or_jp.html",
+        "https___www_shimane_jinjacho_or_jp_search_index_html.html",
+        "https___www_shimane_jinjacho_or_jp_matsue_index_html.html"
+      ]
+    },
+    "岡山県": {
+      "shrines": [],
+      "search_note": "検索ページ/search/を発見。GETパラメータ形式を推測してkeyword=八坂で検索を試みる。 / keyword検索パラメータでは結果が本文に反映されない(JS動的処理の可能性)。全件一覧表示ページへ遷移して対象神社を探索する。 / 全件一覧は1609件・81ページと膨大で非効率なため、検索フォームでキーワード検索を継続する。まず「氷川」で検索を試みる。 / 氷川キーワードでは検索結果に神社情報が表示されず、フォームのみが返された。次に須賀キーワードで検索を試みる。 / 検索ページはJavaScript動的検索でおそらくAjax/APIベースであり、本文には検索結果自体が表示されていない（地図・条件UIのみ）。keyword=八坂/氷川/須賀のいずれも本文中に神社名・祭神情報が含まれず、探索回数も残り1回で尽きたため確認できる情報なし。0件で終了する。",
+      "hops": 5,
+      "visited": [
+        "https://okayama-jinjacho.or.jp",
+        "https://www.okayama-jinjacho.or.jp/search/?keyword=八坂",
+        "https://www.okayama-jinjacho.or.jp/search/list/",
+        "https://www.okayama-jinjacho.or.jp/search/?keyword=氷川",
+        "https://www.okayama-jinjacho.or.jp/search/?keyword=須賀"
+      ],
+      "html_cache": [
+        "https___okayama_jinjacho_or_jp.html",
+        "https___www_okayama_jinjacho_or_jp_search__keyword___.html",
+        "https___www_okayama_jinjacho_or_jp_search_list_.html",
+        "https___www_okayama_jinjacho_or_jp_search__keyword___.html",
+        "https___www_okayama_jinjacho_or_jp_search__keyword___.html"
+      ]
+    },
+    "広島県": {
+      "shrines": [],
+      "search_note": "神社一覧ページへ遷移して対象神社を探索する / 当ページには八坂・氷川・須賀・津島・素盞系の神社名が見当たらない。検索フォームはPOSTのみでURL組み立て不可のため、まずサイトマップを確認して地域一覧や祭神確認ページへの導線を探す。 / サイトマップには神社一覧が無いため、「広島の神社」ページへ遷移して一覧・検索機能を探す。 / 検索フォームはPOSTのみだが、GETパラメータでの動作を試すためsearch_txt=八坂で検索を試行する。ダメな場合は地域別一覧(search_area)を辿る必要がある。 / 検索結果ページが「八坂」の検索を反映せず広島市東区の一覧が表示されており、対象神社(八坂神社等)は本文中に確認できなかった。フォームはPOSTのみでGET組み立てができず、残り探索回数も0のため終了する。",
+      "hops": 5,
+      "visited": [
+        "https://hiroshima-jinjacho.jp",
+        "https://www.hiroshima-jinjacho.jp/hirosima_jinja/",
+        "https://www.hiroshima-jinjacho.jp/hirosima_jinja/sitemap",
+        "https://www.hiroshima-jinjacho.jp/hirosima_jinja",
+        "https://www.hiroshima-jinjacho.jp/hirosima_jinja/?search_txt=八坂"
+      ],
+      "html_cache": [
+        "https___hiroshima_jinjacho_jp.html",
+        "https___www_hiroshima_jinjacho_jp_hirosima_jinja_.html",
+        "https___www_hiroshima_jinjacho_jp_hirosima_jinja_sitemap.html",
+        "https___www_hiroshima_jinjacho_jp_hirosima_jinja.html",
+        "https___www_hiroshima_jinjacho_jp_hirosima_jinja__search_txt___.html"
+      ]
+    },
+    "山口県": {
+      "shrines": [
+        {
+          "name": "八坂神社",
+          "city": "山口市",
+          "address": "〒753-0035 山口市上竪小路100",
+          "main_deity": "素盞嗚尊",
+          "source_quote": "御祭神 （主祭神）素盞嗚尊 稲田姫命 手名槌命 足名槌命",
+          "source_url": "https://www.yamaguchi-jinjacho.or.jp/yamaguchi/yasaka/",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-12",
+          "html_cache": "https___www_yamaguchi_jinjacho_or_jp_yamaguchi_yasaka_.html"
+        }
+      ],
+      "search_note": "市町ごとの一覧ページから探索を開始する。まず県庁所在地の山口市を確認。 / 山口市神社一覧を確認。八坂神社(山口市上竪小路100)の詳細ページへのリンクがあるため、祭神確認のため遷移する。須賀神社(徳地小古祖419、阿東嘉年下3703)は一覧にあるが詳細ページへのリンクが本文中に見当たらないため保留。 / 山口市の八坂神社を確認。素盞嗚尊を主祭神として祀ることを確認した。残り探索回数が少ないため、他地域の索引探索は行わずここで終了する。",
+      "hops": 3,
+      "visited": [
+        "https://yamaguchi-jinjacho.or.jp",
+        "https://www.yamaguchi-jinjacho.or.jp/yamaguchi/",
+        "https://www.yamaguchi-jinjacho.or.jp/yamaguchi/yasaka/"
+      ],
+      "html_cache": [
+        "https___yamaguchi_jinjacho_or_jp.html",
+        "https___www_yamaguchi_jinjacho_or_jp_yamaguchi_.html",
+        "https___www_yamaguchi_jinjacho_or_jp_yamaguchi_yasaka_.html"
+      ]
+    },
+    "徳島県": {
+      "shrines": [],
+      "search_note": "取得失敗 http://awa-jinjacho.jp/ (0: URLError: <urlopen error [Errno 8] nodename nor servname pro)",
+      "hops": 1,
+      "visited": [
+        "http://awa-jinjacho.jp/"
+      ]
+    },
+    "香川県": {
+      "shrines": [],
+      "search_note": "検索フォームを利用し「八坂」で検索を試みる / 八坂神社の検索結果一覧を取得。祭神情報は詳細ページにあるため、まず綾歌郡綾川町萱原の八坂神社詳細ページを確認する。 / 八坂神社(綾歌郡綾川町萱原964番地)は御祭神欄が空白で確認できないため出力せず。次に須賀神社を検索する。 / 検索結果に須賀神社(観音寺市木之郷町)・須賀神社(観音寺市柞田町)・須賀社(仲多度郡まんのう町)を発見。祭神確認のため詳細ページへ遷移する。 / 須賀神社(観音寺市)ページには御祭神欄が空欄で記載なし。八坂神社(訪問済み)も祭神記載なしのため対象外。探索回数残り1回のため終了。",
+      "hops": 5,
+      "visited": [
+        "https://kagawakenjinjacho.or.jp/",
+        "https://kagawakenjinjacho.or.jp/?s=八坂",
+        "https://kagawakenjinjacho.or.jp/shrine/%e5%85%ab%e5%9d%82%e7%a5%9e%e7%a4%be-16/",
+        "https://kagawakenjinjacho.or.jp/?s=須賀",
+        "https://kagawakenjinjacho.or.jp/shrine/%e9%a0%88%e8%b3%80%e7%a5%9e%e7%a4%be-2/"
+      ],
+      "html_cache": [
+        "https___kagawakenjinjacho_or_jp_.html",
+        "https___kagawakenjinjacho_or_jp__s___.html",
+        "https___kagawakenjinjacho_or_jp_shrine__e5_85_ab_e5_9d_82_e7_a5_9e_e7_a4_be_16_.html",
+        "https___kagawakenjinjacho_or_jp__s___.html",
+        "https___kagawakenjinjacho_or_jp_shrine__e9_a0_88_e8_b3_80_e7_a5_9e_e7_a4_be_2_.html"
+      ]
+    },
+    "愛媛県": {
+      "shrines": [
+        {
+          "name": "八坂神社",
+          "city": "松山市",
+          "address": "松山市勝山町一丁目4番地1",
+          "main_deity": "素佐之男命（すさのをのみこと）",
+          "source_quote": "神社主祭神 素佐之男命（すさのをのみこと） 伊邪那岐命（いざなぎのみこと）",
+          "source_url": "http://ehime-jinjacho.jp/jinja/?p=5201",
+          "tier": "rejected_deity_unverified",
+          "retrieved_at": "2026-07-12",
+          "html_cache": "http___ehime_jinjacho_jp_jinja__p_5201.html"
+        },
+        {
+          "name": "須賀神社",
+          "city": "今治市",
+          "address": "今治市朝倉上甲368番地1",
+          "main_deity": "建速須佐之男命（たけはやすさのをのみこと）",
+          "source_quote": "神社主祭神 建速須佐之男命（たけはやすさのをのみこと）",
+          "source_url": "http://ehime-jinjacho.jp/jinja/?p=612",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-12",
+          "html_cache": "http___ehime_jinjacho_jp_jinja__p_612.html"
+        }
+      ],
+      "search_note": "検索フォームのGETパラメータ形式(?s=キーワード)を推測してfollowする。 / 検索結果一覧に多数の八坂神社・素鵞神社等を発見。祭神確認のため松山市勝山町の八坂神社(p=5201)詳細ページへ移動する。 / 八坂神社(松山市)を確認。愛媛県で他の対象神社を探すため氷川で検索を試みる。 / 氷川での検索結果は「投稿が見つかりませんでした」で0件。次に須賀で検索を試みる。 / 須賀神社の一覧が複数見つかったが祭神未確認。詳細ページ(p=612)を確認するためfollowする。残り探索回数が少ないため1件のみ選択。 / 残り探索回数0のため終了。八坂・氷川・須賀の検索を行い須賀神社を1社確保。",
+      "hops": 6,
+      "visited": [
+        "http://ehime-jinjacho.jp/",
+        "http://ehime-jinjacho.jp/jinja/?s=八坂",
+        "http://ehime-jinjacho.jp/jinja/?p=5201",
+        "http://ehime-jinjacho.jp/jinja/?s=氷川",
+        "http://ehime-jinjacho.jp/jinja/?s=須賀",
+        "http://ehime-jinjacho.jp/jinja/?p=612"
+      ],
+      "html_cache": [
+        "http___ehime_jinjacho_jp_.html",
+        "http___ehime_jinjacho_jp_jinja__s___.html",
+        "http___ehime_jinjacho_jp_jinja__p_5201.html",
+        "http___ehime_jinjacho_jp_jinja__s___.html",
+        "http___ehime_jinjacho_jp_jinja__s___.html",
+        "http___ehime_jinjacho_jp_jinja__p_612.html"
+      ]
+    },
+    "高知県": {
+      "shrines": [],
+      "search_note": "神社一覧ページまたは検索結果への遷移を試みる / 「八坂」検索結果には対象神社が見つからず、一覧ページへのリンクのみ確認できた。次のキーワード「氷川」で検索を試みる。 / 氷川検索では対象神社が見つからなかったため、須賀で再検索する / 「須賀」検索は0件。八坂・氷川・須賀の検索が全て空振りだったため、県神社一覧ページへ遷移して対象社名を探索する。 / 高知県神社庁の一覧・検索(八坂・氷川・須賀)を確認したが、対象となる八坂神社・氷川神社・須賀神社等の名称は見当たらず、祭神が素戔嗚尊系であることが確認できる神社も発見できなかった。残り探索回数もないため終了。",
+      "hops": 5,
+      "visited": [
+        "https://www.kochi-jinjyacho.com/",
+        "https://www.kochi-jinjyacho.com/search?q=八坂",
+        "https://www.kochi-jinjyacho.com/search?q=氷川",
+        "https://www.kochi-jinjyacho.com/search?q=須賀",
+        "https://www.kochi-jinjyacho.com/高知県神社一覧"
+      ],
+      "html_cache": [
+        "https___www_kochi_jinjyacho_com_.html",
+        "https___www_kochi_jinjyacho_com_search_q___.html",
+        "https___www_kochi_jinjyacho_com_search_q___.html",
+        "https___www_kochi_jinjyacho_com_search_q___.html",
+        "https___www_kochi_jinjyacho_com________.html"
+      ]
+    },
+    "福岡県": {
+      "shrines": [],
+      "search_note": "神社検索ページはエリア別(福岡・北九州・筑豊・筑後)に分かれている。まず福岡エリアを探索する。 / 福岡エリア一覧に『八坂神社 福岡市西区元岡26411』の記載があるが祭神情報は本ページに無く、詳細ページへのリンクも無いため確認できない。WordPress標準の検索機能(?s=)を推測し八坂神社の詳細を探索する。 / 検索ページ(?s=八坂)は実際には検索結果を表示せずトップページと同一内容のため対象神社を確認できなかった。エリア一覧ページ(北九州)を探索する。 / 北九州エリア一覧に須賀神社(八幡西区木屋瀬・小倉北区須賀町)、須佐神社(行橋市・築上町)を発見したが、詳細ページへのリンクがなく祭神が本文で確認できないため出力を保留。検索機能で詳細ページ・祭神情報を確認するため『須賀』で再検索する。 / 検索結果ページには神社の検索結果一覧が表示されておらず、対象の神社情報を確認できなかった。残り探索回数も1のため終了する。",
+      "hops": 5,
+      "visited": [
+        "https://fukuoka-jinjacho.or.jp",
+        "https://fukuoka-jinjacho.or.jp/area/fukuoka/",
+        "https://fukuoka-jinjacho.or.jp/?s=八坂",
+        "https://fukuoka-jinjacho.or.jp/area/kitakyusyu/",
+        "https://fukuoka-jinjacho.or.jp/?s=須賀"
+      ],
+      "html_cache": [
+        "https___fukuoka_jinjacho_or_jp.html",
+        "https___fukuoka_jinjacho_or_jp_area_fukuoka_.html",
+        "https___fukuoka_jinjacho_or_jp__s___.html",
+        "https___fukuoka_jinjacho_or_jp_area_kitakyusyu_.html",
+        "https___fukuoka_jinjacho_or_jp__s___.html"
+      ]
+    },
+    "佐賀県": {
+      "shrines": [
+        {
+          "name": "八坂神社",
+          "city": "佐賀市",
+          "address": "佐賀市北川副町新郷７８８",
+          "main_deity": "素盞鳴尊 菅原道真 武美加津知命",
+          "source_quote": "【御祭神】 素盞鳴尊 菅原道真 武美加津知命",
+          "source_url": "https://saga-jinjacho.jp/%e5%85%ab%e5%9d%82%e7%a5%9e%e7%a4%be%ef%bc%8f%e4%bd%90%e8%b3%80%e5%b8%82/",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-12",
+          "html_cache": "https___saga_jinjacho_jp__e5_85_ab_e5_9d_82_e7_a5_9e_e7_a4_be_ef_bc_8f_e4_bd_90_.html"
+        }
+      ],
+      "search_note": "神社一覧・地図ページへ遷移して対象神社を探索する / 一覧ページに八坂神社(佐賀市北川副町・鳥栖市本町・唐津市湊町・白石町福田)と須賀神社(小城市小城町)を発見。祭神確認のため各詳細ページへ遷移する必要あり。まず佐賀市北川副町の八坂神社詳細ページへfollowする。 / 八坂神社／佐賀市のページで祭神に素盞鳴尊を確認。残り探索回数が少ないため、他の対象神社(氷川・須賀・津島・素盞嗚・祇園)は確認できなかった。",
+      "hops": 3,
+      "visited": [
+        "https://saga-jinjacho.jp",
+        "https://saga-jinjacho.jp/jinja-map/",
+        "https://saga-jinjacho.jp/%e5%85%ab%e5%9d%82%e7%a5%9e%e7%a4%be%ef%bc%8f%e4%bd%90%e8%b3%80%e5%b8%82/"
+      ],
+      "html_cache": [
+        "https___saga_jinjacho_jp.html",
+        "https___saga_jinjacho_jp_jinja_map_.html",
+        "https___saga_jinjacho_jp__e5_85_ab_e5_9d_82_e7_a5_9e_e7_a4_be_ef_bc_8f_e4_bd_90_.html"
+      ]
+    },
+    "長崎県": {
+      "shrines": [],
+      "search_note": "検索ページへ遷移して八坂・氷川・須賀等のキーワードで検索を試みる / 検索ページには市町村名の一覧のみが表示されており、個別の神社一覧や祭神情報へのリンク・検索フォームのGETパラメータ形式が本文から確認できなかったため、対象神社を特定できませんでした。",
+      "hops": 2,
+      "visited": [
+        "https://nagasaki-jinjacho.or.jp",
+        "https://nagasaki-jinjacho.or.jp/search.html"
+      ],
+      "html_cache": [
+        "https___nagasaki_jinjacho_or_jp.html",
+        "https___nagasaki_jinjacho_or_jp_search_html.html"
+      ]
+    },
+    "熊本県": {
+      "shrines": [],
+      "search_note": "検索フォームは市区郡・町村選択のみで神社名検索不可。氏神様を探すページを確認する。 / 氏神様を探すページは市区町村・町名での絞り込みのみで、神社名による検索フォームがない。祭神情報も一覧表示されず詳細ページを個別に見る必要があり、全44ページを総当たりするのは非効率。WordPressの標準検索(?s=)を試す。 / 熊本県神社庁サイトには検索機能（?s=）が実質機能しておらず、検索結果ページも通常のトップページと同一内容が返される。氏神様検索は住所（市区町村・町村）ベースの絵検索のみで、神社名や祭神による検索ができない。また人吉・球磨地方のみ試験運用中と明記されており、全県的な神社一覧・詳細ページも存在しない。これ以上の探索経路（八坂/氷川/須賀/津島/素盞系神社の情報にたどり着けるリンク）が見つからないため終了する。",
+      "hops": 3,
+      "visited": [
+        "https://kumamotokenjinjacho.jp/",
+        "https://kumamotokenjinjacho.jp/patron-god/",
+        "https://kumamotokenjinjacho.jp/?s=八坂"
+      ],
+      "html_cache": [
+        "https___kumamotokenjinjacho_jp_.html",
+        "https___kumamotokenjinjacho_jp_patron_god_.html",
+        "https___kumamotokenjinjacho_jp__s___.html"
+      ]
+    },
+    "大分県": {
+      "shrines": [],
+      "search_note": "公式サイトなし(神社本庁一覧に掲載・電話のみ)。収集は神社公式・自治体ソースで代替。【くろたん条件】レコードのsource_typeに『県神社庁DB不存在につき代替』を注記",
+      "source_type_note": "県神社庁DB不存在につき代替(本走行で神社公式・自治体ソース収集)"
+    },
+    "宮崎県": {
+      "shrines": [],
+      "search_note": "公式サイトなし(『宮巡』は神職運営の紹介サイトで庁公式ではない)。収集は神社公式・自治体ソースで代替。【くろたん条件】レコードのsource_typeに『県神社庁DB不存在につき代替』を注記",
+      "source_type_note": "県神社庁DB不存在につき代替(本走行で神社公式・自治体ソース収集)"
+    },
+    "鹿児島県": {
+      "shrines": [
+        {
+          "name": "八坂神社",
+          "city": "鹿児島市",
+          "address": "〒892-0802 鹿児島市清水町26-1",
+          "main_deity": "素盞鳴命（スサノオノミコト）",
+          "source_quote": "御祭神 素盞鳴命（スサノオノミコト） 奇稲田姫命（クシナダヒメノミコト）",
+          "source_url": "https://www.kagojinjacho.or.jp/shrine-search/area-kagoshima/%e9%b9%bf%e5%85%90%e5%b3%b6%e5%b8%82/1267/",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-12",
+          "html_cache": "https___www_kagojinjacho_or_jp_shrine_search_area_kagoshima__e9_b9_bf_e5_85_90_e.html"
+        }
+      ],
+      "search_note": "検索フォームのGETパラメータ's'を使い「八坂」で検索を試みる。post_type=jinjaは推測だが失敗すれば次はsのみで試す。 / 検索結果一覧に八坂神社が複数(鹿児島市・指宿市・南九州市・南さつま市・いちき串木野市・薩摩川内市・さつま町・出水市)確認できたが、祭神情報は詳細ページにあるため、まず鹿児島市の八坂神社詳細ページを確認する。 / 鹿児島市の八坂神社を確認。祭神は素盞鳴命ほか。他地域の探索は残り回数の制約により打ち切り、確保できた1社を報告する。",
+      "hops": 3,
+      "visited": [
+        "https://www.kagojinjacho.or.jp/",
+        "https://www.kagojinjacho.or.jp/?s=八坂&post_type=jinja",
+        "https://www.kagojinjacho.or.jp/shrine-search/area-kagoshima/%e9%b9%bf%e5%85%90%e5%b3%b6%e5%b8%82/1267/"
+      ],
+      "html_cache": [
+        "https___www_kagojinjacho_or_jp_.html",
+        "https___www_kagojinjacho_or_jp__s____post_type_jinja.html",
+        "https___www_kagojinjacho_or_jp_shrine_search_area_kagoshima__e9_b9_bf_e5_85_90_e.html"
+      ]
+    },
+    "沖縄県": {
+      "shrines": [],
+      "search_note": "沖縄県神社庁の神社一覧(全10社:波上宮、普天満宮、識名宮、八幡宮、末吉宮、天久宮、宮古神社、浮島神社、世持神社、沖縄神社)を確認したが、八坂・氷川・須賀・津島・素盞・素戔・祇園系の神社は含まれていなかった。県内神社数が10社と少なく全て一覧に列挙されているため、これ以上の探索は不要と判断。",
+      "hops": 1,
+      "visited": [
+        "http://jinjacho.naminouegu.jp/"
+      ],
+      "html_cache": [
+        "http___jinjacho_naminouegu_jp_.html"
+      ]
+    },
+    "北海道": {
+      "shrines": [],
+      "search_note": "検索フォームは神社検索ではなく管理者ログイン用のため使用不可。北海道の神社は支部別一覧のみのため、まず札幌支部の一覧ページへ進む。 / 現ページ(札幌支部1ページ目)には八坂・氷川・須賀・津島・素盞系の社名が見当たらないため、次ページを確認する。 / このページ(札幌支部一覧2/5)には八坂・氷川・須賀・津島・素盞系の神社名が見当たらないため、次ページへ進む。 / このページには対象社名(八坂・氷川・須賀・津島・素盞・素戔・祇園)が見当たらない。検索フォームはログイン用のみで使用不可。残り探索回数が限られるため次ページへ進む。 / このページ(札幌支部一覧4ページ目)には八坂・氷川・須賀・津島・素盞嗚系の対象神社が見当たらず、社名一覧のみで祭神情報も個別詳細ページ側にしかないため確認不可。検索フォームはログイン用でGET検索は組めない。残り探索回数が1のため、これ以上他ページを辿らず終了する。",
+      "hops": 5,
+      "visited": [
+        "https://hokkaidojinjacho.jp",
+        "https://hokkaidojinjacho.jp/jinja-area/sapporo/",
+        "https://hokkaidojinjacho.jp/jinja-area/sapporo/page/2/",
+        "https://hokkaidojinjacho.jp/jinja-area/sapporo/page/3/",
+        "https://hokkaidojinjacho.jp/jinja-area/sapporo/page/4/"
+      ],
+      "html_cache": [
+        "https___hokkaidojinjacho_jp.html",
+        "https___hokkaidojinjacho_jp_jinja_area_sapporo_.html",
+        "https___hokkaidojinjacho_jp_jinja_area_sapporo_page_2_.html",
+        "https___hokkaidojinjacho_jp_jinja_area_sapporo_page_3_.html",
+        "https___hokkaidojinjacho_jp_jinja_area_sapporo_page_4_.html"
+      ]
+    },
+    "青森県": {
+      "shrines": [],
+      "search_note": "県内の神社紹介ページへ遷移して一覧・索引を確認する / 地域別一覧ページへ遷移。青森市,東津軽郡の一覧を確認する。 / 青森市・東津軽郡のページには八坂・氷川・須賀・津島・素盞系の神社は見当たらなかった。次のエリア(つがる市,西津軽郡)を確認する。 / このページ（つがる市・西津軽郡）の一覧には八坂・氷川・須賀・津島・素盞・素戔・祇園系の神社名が見当たらなかった。次の地域（弘前市,中津軽郡）の一覧ページへ移動する。 / 弘前市,中津軽郡の一覧ページに「八坂神社(弘前市大字銅屋町)」が記載されているが、祭神情報はこのページ上に無く、詳細ページへのリンクも一覧内に見当たらないため祭神未確認のまま出力できない。残り探索回数が尽きたため終了する。",
+      "hops": 5,
+      "visited": [
+        "http://aomori-jinjacho.or.jp",
+        "http://aomori-jinjacho.or.jp/sub_1.html",
+        "http://aomori-jinjacho.or.jp/jinja/sub_1a.html",
+        "http://aomori-jinjacho.or.jp/jinja/sub_1b.html",
+        "http://aomori-jinjacho.or.jp/jinja/sub_1c.html"
+      ],
+      "html_cache": [
+        "http___aomori_jinjacho_or_jp.html",
+        "http___aomori_jinjacho_or_jp_sub_1_html.html",
+        "http___aomori_jinjacho_or_jp_jinja_sub_1a_html.html",
+        "http___aomori_jinjacho_or_jp_jinja_sub_1b_html.html",
+        "http___aomori_jinjacho_or_jp_jinja_sub_1c_html.html"
+      ]
+    },
+    "岩手県": {
+      "shrines": [],
+      "search_note": "トップページには神社検索機能が見当たらない。県内神社等のHPリンク集ページで対象神社の有無を確認する。 / 岩手県神社庁のサイト内には神社検索機能や一覧・索引ページが存在せず、県内神社等のHPリンク集には志和稲荷神社・大宮神社・御嶽山御嶽神明社の3社のみが掲載されており、いずれも八坂・氷川・須賀・津島・素盞系の神社ではない。祭神情報を確認できる対象神社は見つからなかった。",
+      "hops": 2,
+      "visited": [
+        "https://www.jinjacho.jp/",
+        "https://www.jinjacho.jp/pages/62/"
+      ],
+      "html_cache": [
+        "https___www_jinjacho_jp_.html",
+        "https___www_jinjacho_jp_pages_62_.html"
+      ]
+    },
+    "宮城県": {
+      "shrines": [
+        {
+          "name": "八坂神社",
+          "city": "仙台市太白区",
+          "address": "宮城県仙台市太白区富田字上野中4",
+          "main_deity": "素盞鳴尊",
+          "source_quote": "鎮座地: 宮城県仙台市太白区富田字上野中4 主祭神: 素盞鳴尊",
+          "source_url": "https://miyagi-jinjacho.or.jp/jinja-search/detail.php?code=310010004&chinzachi=&jinja_name=八坂&jinja_kana=&page=0&per_page=15",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-12",
+          "html_cache": "https___miyagi_jinjacho_or_jp_jinja_search_detail_php_code_310010004_chinzachi__.html"
+        },
+        {
+          "name": "須賀神社",
+          "city": "塩竈市",
+          "address": "宮城県塩竈市牛生町8-11",
+          "main_deity": "速須佐之男命",
+          "source_quote": "鎮座地: 宮城県塩竈市牛生町8-11 主祭神: 速須佐之男命",
+          "source_url": "https://miyagi-jinjacho.or.jp/jinja-search/detail.php?code=311010003&chinzachi=&jinja_name=須賀&jinja_kana=&page=0&per_page=15",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-12",
+          "html_cache": "https___miyagi_jinjacho_or_jp_jinja_search_detail_php_code_311010003_chinzachi__.html"
+        }
+      ],
+      "search_note": "検索フォームがGETで組み立て可能なため、八坂で検索を実行する。 / 八坂神社の一覧を確認。祭神情報が詳細ページにあるため、最初の八坂神社の詳細ページへ遷移して祭神を確認する。 / 八坂神社(仙台市太白区)を確認。祭神は素盞鳴尊。続けて氷川神社の有無を検索する。 / 氷川で検索したが該当なし。次に須賀で検索を試みる。 / 須賀神社の一覧を確認したが祭神情報は詳細ページにしかないため、塩竈市の須賀神社詳細ページへ遷移して祭神を確認する。残り探索回数が1のため、他の候補(東松島市・気仙沼市など)は未確認。 / 須賀神社(塩竈市)の祭神を確認。八坂神社(310010004)は一覧から詳細ページへ遷移したが祭神情報のsource_quoteが未取得のため、探索回数切れにより確定情報のみ出力。氷川神社は宮城県内に該当なしと判断(一覧ページで対象なし)。",
+      "hops": 6,
+      "visited": [
+        "https://miyagi-jinjacho.or.jp",
+        "https://miyagi-jinjacho.or.jp/jinja-search/list.php?PC=&SEARCH=1&jinja_name=八坂&jinja_kana=&jinja_cnt=&jinja_sort_key=&jinja_sortdesc=&page_jinja=1&per_page_def=50&sortmode=",
+        "https://miyagi-jinjacho.or.jp/jinja-search/detail.php?code=310010004&chinzachi=&jinja_name=八坂&jinja_kana=&page=0&per_page=15",
+        "https://miyagi-jinjacho.or.jp/jinja-search/list.php?PC=&SEARCH=1&jinja_name=氷川&jinja_kana=&jinja_cnt=&jinja_sort_key=&jinja_sortdesc=&page_jinja=1&per_page_def=50&sortmode=",
+        "https://miyagi-jinjacho.or.jp/jinja-search/list.php?PC=&SEARCH=1&jinja_name=須賀&jinja_kana=&jinja_cnt=&jinja_sort_key=&jinja_sortdesc=&page_jinja=1&per_page_def=50&sortmode=",
+        "https://miyagi-jinjacho.or.jp/jinja-search/detail.php?code=311010003&chinzachi=&jinja_name=須賀&jinja_kana=&page=0&per_page=15"
+      ],
+      "html_cache": [
+        "https___miyagi_jinjacho_or_jp.html",
+        "https___miyagi_jinjacho_or_jp_jinja_search_list_php_PC__SEARCH_1_jinja_name____j.html",
+        "https___miyagi_jinjacho_or_jp_jinja_search_detail_php_code_310010004_chinzachi__.html",
+        "https___miyagi_jinjacho_or_jp_jinja_search_list_php_PC__SEARCH_1_jinja_name____j.html",
+        "https___miyagi_jinjacho_or_jp_jinja_search_list_php_PC__SEARCH_1_jinja_name____j.html",
+        "https___miyagi_jinjacho_or_jp_jinja_search_detail_php_code_311010003_chinzachi__.html"
+      ]
+    },
+    "秋田県": {
+      "shrines": [
+        {
+          "name": "須賀神社",
+          "city": "由利本荘市",
+          "address": "〒015-0837 由利本荘市出戸町字下川原中島103",
+          "main_deity": "建速須佐之男命（たけはやすさのおのみこと）",
+          "source_quote": "御祭神 建速須佐之男命（たけはやすさのおのみこと） 天目一箇命（あまのまひとつのみこと）",
+          "source_url": "https://akita-jinjacho.sakura.ne.jp/shrine_search/%e9%a0%88%e8%b3%80%e7%a5%9e%e7%a4%be/",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-12",
+          "html_cache": "https___akita_jinjacho_sakura_ne_jp_shrine_search__e9_a0_88_e8_b3_80_e7_a5_9e_e7.html"
+        }
+      ],
+      "search_note": "県内神社のご案内(検索)ページへ移動して対象神社を探す / 素盞嗚神社等の対象社を探すため「そ」の五十音索引ページへ遷移する。 / 現在の「そ」ページには八坂・祇園・氷川・須賀・津島・素盞嗚系の神社は見つからなかった。次に「す」(須賀・素盞嗚)の索引ページを確認する。 / 「す」行一覧に須賀神社を2件(にかほ市金浦地区、由利本荘市本荘地区)発見。祭神確認のため詳細ページへfollowする。 / 須賀神社（由利本荘市、通称：中島の祇園様）を確認。祭神は建速須佐之男命。残り探索回数が1のため、これ以上のfollowは行わずdoneとする。",
+      "hops": 5,
+      "visited": [
+        "https://akita-jinjacho.sakura.ne.jp",
+        "https://akita-jinjacho.sakura.ne.jp/shrine_search/",
+        "https://akita-jinjacho.sakura.ne.jp/cat_shrine/%e3%81%9d/",
+        "https://akita-jinjacho.sakura.ne.jp/cat_shrine/%e3%81%99/",
+        "https://akita-jinjacho.sakura.ne.jp/shrine_search/%e9%a0%88%e8%b3%80%e7%a5%9e%e7%a4%be/"
+      ],
+      "html_cache": [
+        "https___akita_jinjacho_sakura_ne_jp.html",
+        "https___akita_jinjacho_sakura_ne_jp_shrine_search_.html",
+        "https___akita_jinjacho_sakura_ne_jp_cat_shrine__e3_81_9d_.html",
+        "https___akita_jinjacho_sakura_ne_jp_cat_shrine__e3_81_99_.html",
+        "https___akita_jinjacho_sakura_ne_jp_shrine_search__e9_a0_88_e8_b3_80_e7_a5_9e_e7.html"
+      ]
+    },
+    "山形県": {
+      "shrines": [
+        {
+          "name": "八坂神社",
+          "city": "鶴岡市",
+          "address": "鶴岡市昭和町6－15",
+          "main_deity": "建速須佐之男神（タケハヤスサノヲノカミ）外一柱（ホカ１ハシラ）",
+          "source_quote": "御祭神 建速須佐之男神（タケハヤスサノヲノカミ） 外一柱（ホカ１ハシラ）",
+          "source_url": "https://yamagata-jinjyacho.or.jp/shrine_detail/10177",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-12",
+          "html_cache": "https___yamagata_jinjyacho_or_jp_shrine_detail_10177.html"
+        }
+      ],
+      "search_note": "検索フォームがGETで確認できたためkeywordパラメータで「八坂」を検索。今後「氷川」「須賀」「津島」「素盞」「祇園」も試す予定。 / 八坂神社の一覧を確認。祭神確認のため詳細ページ(鶴岡市・八坂神社)へ遷移する。 / 八坂神社（鶴岡市）を確認済み。続けて素盞キーワードで追加検索する。 / 「素盞」検索は該当なし。既に八坂検索で発見済みの神社(shrine_detail/10177)は前ターンで記録済みと想定。残り探索回数を使い「氷川」で追加検索を試みる。 / 氷川キーワードでは該当神社が見つからなかった。残り探索回数が1のため終了。八坂検索で発見したshrine_detail/10177は既に前ターンで確認済み(祭神情報はそちらで報告済み)。",
+      "hops": 5,
+      "visited": [
+        "https://yamagata-jinjyacho.or.jp/",
+        "https://yamagata-jinjyacho.or.jp/shrine_search?keyword=八坂",
+        "https://yamagata-jinjyacho.or.jp/shrine_detail/10177",
+        "https://yamagata-jinjyacho.or.jp/shrine_search?keyword=素盞",
+        "https://yamagata-jinjyacho.or.jp/shrine_search?keyword=氷川"
+      ],
+      "html_cache": [
+        "https___yamagata_jinjyacho_or_jp_.html",
+        "https___yamagata_jinjyacho_or_jp_shrine_search_keyword___.html",
+        "https___yamagata_jinjyacho_or_jp_shrine_detail_10177.html",
+        "https___yamagata_jinjyacho_or_jp_shrine_search_keyword___.html",
+        "https___yamagata_jinjyacho_or_jp_shrine_search_keyword___.html"
+      ]
+    },
+    "福島県": {
+      "shrines": [],
+      "search_note": "検索フォームはPOSTだが、GET形式でのアクセスを試みる。まず「八坂」で検索。 / 検索結果ページはJavaScriptによる動的表示のため、静的HTML取得ではダミーデータ(○○神社)のみが返され、実際の検索結果(八坂神社等)を確認できなかった。氷川・須賀等の別キーワードでも同様の結果になると判断し、これ以上の実質的な情報取得は困難と判断して終了する。",
+      "hops": 2,
+      "visited": [
+        "https://fukushima-jinjacho.or.jp",
+        "https://fukushima-jinjacho.or.jp/search/?q=八坂"
+      ],
+      "html_cache": [
+        "https___fukushima_jinjacho_or_jp.html",
+        "https___fukushima_jinjacho_or_jp_search__q___.html"
+      ]
+    },
+    "茨城県": {
+      "shrines": [
+        {
+          "name": "新宮素鵞神社",
+          "city": "ひたちなか市",
+          "address": "〒312-0021 ひたちなか市三反田2795",
+          "main_deity": "大日孁貴尊(おおひるめむちのみこと)・素盞鳴尊(すさのおのみこと)",
+          "source_quote": "【御祭神】 大日孁貴尊(おおひるめむちのみこと) 素盞鳴尊(すさのおのみこと)",
+          "source_url": "https://www.ibarakiken-jinjacho.or.jp/ibaraki/kenhoku/jinja/04019.htm",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-12",
+          "html_cache": "https___www_ibarakiken_jinjacho_or_jp_ibaraki_kenhoku_jinja_04019_htm.html"
+        }
+      ],
+      "search_note": "神社一覧ページへ遷移して探索を継続する / 県内神社紹介トップには地域別一覧へのリンクのみ。検索フォームは見当たらないため、まず県北地域一覧ページを確認する。 / 県北地域一覧に『新宮素鵞神社(しんぐうそがじんじゃ)』を発見。素鵞神社は素戔嗚尊を祀ることが多いため、詳細ページで祭神を確認する。 / 新宮素鵞神社の祭神に素盞鳴尊を確認。県北地域の一覧に戻り、他の対象神社(八坂・氷川・須賀・津島・素盞系)を探索継続。",
+      "hops": 4,
+      "visited": [
+        "https://www.ibarakiken-jinjacho.or.jp/",
+        "https://www.ibarakiken-jinjacho.or.jp/ibaraki/index.html",
+        "https://www.ibarakiken-jinjacho.or.jp/ibaraki/kenhoku/index.html",
+        "https://www.ibarakiken-jinjacho.or.jp/ibaraki/kenhoku/jinja/04019.htm"
+      ],
+      "html_cache": [
+        "https___www_ibarakiken_jinjacho_or_jp_.html",
+        "https___www_ibarakiken_jinjacho_or_jp_ibaraki_index_html.html",
+        "https___www_ibarakiken_jinjacho_or_jp_ibaraki_kenhoku_index_html.html",
+        "https___www_ibarakiken_jinjacho_or_jp_ibaraki_kenhoku_jinja_04019_htm.html"
+      ]
+    },
+    "栃木県": {
+      "shrines": [],
+      "search_note": "県内神社ご紹介ページ(p=32)へ遷移して一覧・検索を探索する / お参り作法ページには対象神社情報なし。県内神社ご紹介ページへ遷移して神社一覧・検索を探す / 現在ページは神社庁概要ページで対象神社の情報なし。フッターの並び順から『県内神社ご紹介』に相当するp=59へ遷移し、神社検索・一覧を探索する。 / 市町村一覧ページ。宇都宮市の一覧ページへ遷移して八坂・氷川・須賀等の神社を探す。 / 宇都宮市の八坂神社の詳細ページへ移動し祭神を確認する。 / 当ページ(八坂神社・宇都宮市今泉)には御神徳(厄除・方位除)の記載はあるが、祭神(素盞嗚尊等)の明記がなく確認できないため出力せず。残り探索回数が0のため終了。",
+      "hops": 6,
+      "visited": [
+        "http://tochigi-jinjacho.or.jp",
+        "http://www.tochigi-jinjacho.or.jp/?p=32",
+        "http://www.tochigi-jinjacho.or.jp/?p=14",
+        "http://www.tochigi-jinjacho.or.jp/?p=59",
+        "http://www.tochigi-jinjacho.or.jp/?p=90",
+        "http://www.tochigi-jinjacho.or.jp/?p=608"
+      ],
+      "html_cache": [
+        "http___tochigi_jinjacho_or_jp.html",
+        "http___www_tochigi_jinjacho_or_jp__p_32.html",
+        "http___www_tochigi_jinjacho_or_jp__p_14.html",
+        "http___www_tochigi_jinjacho_or_jp__p_59.html",
+        "http___www_tochigi_jinjacho_or_jp__p_90.html",
+        "http___www_tochigi_jinjacho_or_jp__p_608.html"
+      ]
+    },
+    "群馬県": {
+      "shrines": [
+        {
+          "name": "進雄神社",
+          "city": "高崎市",
+          "address": "群馬県高崎市柴崎町801番地",
+          "main_deity": "速須佐之男命",
+          "source_quote": "御祭神 天津神 速須佐之男命 國津神 稲田姫命 他２４柱",
+          "source_url": "http://www12.wind.ne.jp/susanoo/",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-12",
+          "html_cache": "http___www12_wind_ne_jp_susanoo_.html"
+        }
+      ],
+      "search_note": "県内神社紹介ページへ遷移して一覧・検索を確認する / 群馬県神社庁の一覧ページには社名・所在地のみで祭神情報がなかった。進雄神社(スサノオジンジャ、高崎市柴崎町801番地)は社名からスサノオを祀る可能性が高く、公式サイトへのリンクがあったためそちらへ遷移して祭神を確認する。 / 進雄神社（す さ の お進雄神社）で速須佐之男命を祭神として確認。他リンクは由緒・祈祷等の詳細ページであり神社一覧ではないため、これ以上のfollowは不要と判断。",
+      "hops": 3,
+      "visited": [
+        "https://gunma-jinjacho.jp",
+        "https://gunma-jinjacho.jp/jinja/",
+        "http://www12.wind.ne.jp/susanoo/"
+      ],
+      "html_cache": [
+        "https___gunma_jinjacho_jp.html",
+        "https___gunma_jinjacho_jp_jinja_.html",
+        "http___www12_wind_ne_jp_susanoo_.html"
+      ]
+    },
+    "埼玉県": {
+      "shrines": [],
+      "search_note": "検索フォームを使い「八坂」で検索します。GETパラメータ形式(s)が判明したため利用。 / 検索結果一覧から八坂神社の詳細ページ候補を発見。祭神確認のため詳細ページへ遷移する。 / 八坂神社(久喜市)の詳細ページには祭神情報が記載されていなかったため出力不可。氷川神社を検索するため次のURLへ遷移する。 / 氷川神社の検索結果一覧から詳細ページ(11955)を確認するため遷移。祭神情報は詳細ページにあるため。 / 氷川神社(久喜市)の詳細ページには祭神の記載がなく確認できなかったため対象外とした。残り探索回数が1のため、これまでの訪問(八坂・氷川検索等)でも祭神記載のある該当神社を確認できず、0件で終了する。",
+      "hops": 5,
+      "visited": [
+        "https://saitama-jinjacho.or.jp",
+        "https://www.saitama-jinjacho.or.jp/?s=八坂",
+        "https://www.saitama-jinjacho.or.jp/shrine/11936/",
+        "https://www.saitama-jinjacho.or.jp/?s=氷川",
+        "https://www.saitama-jinjacho.or.jp/shrine/11955/"
+      ],
+      "html_cache": [
+        "https___saitama_jinjacho_or_jp.html",
+        "https___www_saitama_jinjacho_or_jp__s___.html",
+        "https___www_saitama_jinjacho_or_jp_shrine_11936_.html",
+        "https___www_saitama_jinjacho_or_jp__s___.html",
+        "https___www_saitama_jinjacho_or_jp_shrine_11955_.html"
+      ]
+    },
+    "千葉県": {
+      "shrines": [],
+      "search_note": "取得失敗 http://chiba.jinjacho.or.jp/ (0: URLError: <urlopen error timed out>)",
+      "hops": 3,
+      "visited": [
+        "https://www.jinjacho.or.jp/",
+        "http://www.jinja.ne.jp/exploration/index.html",
+        "http://chiba.jinjacho.or.jp/"
+      ]
+    },
+    "東京都": {
+      "shrines": [
+        {
+          "name": "八坂神社【おてんのうさま】",
+          "city": "青梅市",
+          "address": "東京都青梅市小曽木3-1629-2",
+          "main_deity": "須佐之男命",
+          "source_quote": "御祭神 須佐之男命",
+          "source_url": "http://www.tokyo-jinjacho.or.jp/nishitama/ome/2985",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-12",
+          "html_cache": "http___www_tokyo_jinjacho_or_jp_nishitama_ome_2985.html"
+        }
+      ],
+      "search_note": "キーワード検索ページへ移動して「八坂」「氷川」等を検索する / 検索フォームがGETでs=パラメータを持つため、「八坂」で検索を試みる。 / 検索結果に八坂神社4件を発見。祭神確認のため詳細ページ(青梅市の八坂神社)へ遷移する。残り3件の詳細ページも後続で確認予定。 / 青梅市の八坂神社を確認し祭神須佐之男命を確認。残り探索回数が少ないため終了。",
+      "hops": 4,
+      "visited": [
+        "http://www.tokyo-jinjacho.or.jp",
+        "http://www.tokyo-jinjacho.or.jp/jinja/keyword/",
+        "http://www.tokyo-jinjacho.or.jp?s=八坂",
+        "http://www.tokyo-jinjacho.or.jp/nishitama/ome/2985"
+      ],
+      "html_cache": [
+        "http___www_tokyo_jinjacho_or_jp.html",
+        "http___www_tokyo_jinjacho_or_jp_jinja_keyword_.html",
+        "http___www_tokyo_jinjacho_or_jp_s___.html",
+        "http___www_tokyo_jinjacho_or_jp_nishitama_ome_2985.html"
+      ]
+    },
+    "神奈川県": {
+      "shrines": [],
+      "search_note": "トップページには対象神社の情報なし。神社検索フォーム(GET)を使い、キーワード「八坂」で検索を試みる。フィールド名s_keyword_3を使用してURLを組み立てた。 / 前回の検索(八坂)は結果一覧が本文に表示されず神社情報を確認できなかったため、キーワードを氷川に変えて再検索する。 / 氷川検索結果は本文に一覧が表示されなかったため神社を確認できず。次に須賀神社系キーワードで検索を試みる。 / このページはフォーム表示のみで検索結果本文が含まれていなかった。八坂・氷川・須賀は既に検索済みで対象社が見つからなかったため、残り回数で津島を検索する。 / 神奈川県神社庁サイトで「八坂」「氷川」「須賀」「津島」のフリーワード検索を試みたが、検索結果ページの本文には該当神社の一覧や祭神情報が表示されず、対象神社を確認できなかった。残り探索回数の制約により調査を終了する。",
+      "hops": 5,
+      "visited": [
+        "https://kanagawa-jinja.or.jp",
+        "https://www.kanagawa-jinja.or.jp/search/?s_keyword_3=八坂",
+        "https://www.kanagawa-jinja.or.jp/search/?s_keyword_3=氷川",
+        "https://www.kanagawa-jinja.or.jp/search/?s_keyword_3=須賀",
+        "https://www.kanagawa-jinja.or.jp/search/?s_keyword_3=津島"
+      ],
+      "html_cache": [
+        "https___kanagawa_jinja_or_jp.html",
+        "https___www_kanagawa_jinja_or_jp_search__s_keyword_3___.html",
+        "https___www_kanagawa_jinja_or_jp_search__s_keyword_3___.html",
+        "https___www_kanagawa_jinja_or_jp_search__s_keyword_3___.html",
+        "https___www_kanagawa_jinja_or_jp_search__s_keyword_3___.html"
+      ]
+    },
+    "新潟県": {
+      "shrines": [],
+      "search_note": "検索フォームを利用して「八坂」キーワードで検索を実行する。 / 八坂検索結果には神社名一覧のみ表示され、各神社の詳細ページへのリンクが取得できず祭神情報が確認できなかったため出力せず。次に氷川キーワードで検索を試みる。 / 氷川での検索結果は0件だった。次に「須賀」で検索を試みる。 / 「須賀」検索結果13件は社名・鎮座地のみで祭神情報が本文になく、詳細ページへのリンクも一覧内に確認できなかったため出力不可。八坂・氷川・須賀のキーワードでは対象神社の祭神確認ができなかったため、残り探索回数を使い「津島」で検索を試みる。 / 検索結果一覧には津島関連の神社名(津島社・津島神社等)が確認できたが、詳細ページへのリンクが本文中に見当たらず祭神情報を確認できなかった。残り探索回数が1のため、詳細ページURLが推測できず終了した。",
+      "hops": 5,
+      "visited": [
+        "https://niigata-jinjacho.jp",
+        "https://niigata-jinjacho.jp/shrine_niigata/search.php?area=&keyword=八坂",
+        "https://niigata-jinjacho.jp/shrine_niigata/search.php?area=&keyword=氷川",
+        "https://niigata-jinjacho.jp/shrine_niigata/search.php?area=&keyword=須賀",
+        "https://niigata-jinjacho.jp/shrine_niigata/search.php?area=&keyword=津島"
+      ],
+      "html_cache": [
+        "https___niigata_jinjacho_jp.html",
+        "https___niigata_jinjacho_jp_shrine_niigata_search_php_area__keyword___.html",
+        "https___niigata_jinjacho_jp_shrine_niigata_search_php_area__keyword___.html",
+        "https___niigata_jinjacho_jp_shrine_niigata_search_php_area__keyword___.html",
+        "https___niigata_jinjacho_jp_shrine_niigata_search_php_area__keyword___.html"
+      ]
+    },
+    "富山県": {
+      "shrines": [],
+      "search_note": "検索フォーム(s パラメータ)を使い「八坂」で検索する。 / 「八坂」検索では該当する神社詳細ページが見つからず、お知らせ記事のみだった。氏神神社検索ページも存在するが、まずキーワード「氷川」で再検索を試みる。 / 氷川での検索は0件だったため、須賀での検索を試みる。 / ?s=須賀は0件だったため、氏神神社検索ページへ遷移して神社一覧・検索機能を確認する。 / 検索(?s=八坂/氷川/須賀)を実施したがいずれもヒットせず、氏神神社検索ページも「non object」で機能していない模様。残り探索回数も尽きたため終了。富山県内の対象神社は確認できなかった。",
+      "hops": 5,
+      "visited": [
+        "https://toyama-jinjacho.sakura.ne.jp/",
+        "https://toyama-jinjacho.sakura.ne.jp/?s=八坂",
+        "https://toyama-jinjacho.sakura.ne.jp/?s=氷川",
+        "https://toyama-jinjacho.sakura.ne.jp/?s=須賀",
+        "https://toyama-jinjacho.sakura.ne.jp/%e5%af%8c%e5%b1%b1%e7%9c%8c%e6%b0%8f%e7%a5%9e%e7%a5%9e%e7%a4%be%e6%a4%9c%e7%b4%a2"
+      ],
+      "html_cache": [
+        "https___toyama_jinjacho_sakura_ne_jp_.html",
+        "https___toyama_jinjacho_sakura_ne_jp__s___.html",
+        "https___toyama_jinjacho_sakura_ne_jp__s___.html",
+        "https___toyama_jinjacho_sakura_ne_jp__s___.html",
+        "https___toyama_jinjacho_sakura_ne_jp__e5_af_8c_e5_b1_b1_e7_9c_8c_e6_b0_8f_e7_a5_.html"
+      ]
+    }
+  }
+}

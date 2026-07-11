@@ -1,0 +1,861 @@
+{
+  "prefs": {
+    "石川県": {
+      "shrines": [
+        {
+          "name": "多賀神社",
+          "city": "七尾市",
+          "address": "七尾市能登島二穴町イ56",
+          "main_deity": "伊弉諾命",
+          "source_quote": "多賀神社 （ たがじんじゃ ） [氏子区域] 七尾市 能登島二穴町 [鎮座地] 七尾市能登島二穴町イ56 [御祭神] 伊弉諾命",
+          "source_url": "https://www.ishikawa-jinjacho.or.jp/?s=多賀",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-11",
+          "html_cache": "https___www_ishikawa_jinjacho_or_jp__s___.html"
+        },
+        {
+          "name": "藤懸神社",
+          "city": "志賀町",
+          "address": "羽咋郡志賀町笹波ウ1,3",
+          "main_deity": "多賀大神（他多数の祭神の一柱）",
+          "source_quote": "藤懸神社 （ ふじかけじんじゃ ） [氏子区域] 志賀町 笹波 [鎮座地] 羽咋郡志賀町笹波ウ1,3 [御祭神] 大己貴命 天照大神 少彦名命 天児屋根命 稲田姫命 加茂大神 菊理姫命 武御名方命 素盞嗚命 三筒男命 仲哀天皇 龍王女 誉田別命 宇迦魂神 多賀大神",
+          "source_url": "https://www.ishikawa-jinjacho.or.jp/?s=多賀",
+          "tier": "rejected_deity_unverified",
+          "retrieved_at": "2026-07-11",
+          "html_cache": "https___www_ishikawa_jinjacho_or_jp__s___.html"
+        },
+        {
+          "name": "須々幾神社",
+          "city": "金沢市",
+          "address": "金沢市八田町丁57番地1",
+          "main_deity": "味耜高彦根神 伊弉諾神 伊弉册神 蛭児神",
+          "source_quote": "須々幾神社 （ すすきじんじゃ ） [氏子区域] 金沢市 八田町 [鎮座地] 金沢市八田町丁57番地1 [御祭神] 味耜高彦根神 伊弉諾神 伊弉册神 蛭児神",
+          "source_url": "https://www.ishikawa-jinjacho.or.jp/?s=多賀",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-11",
+          "html_cache": "https___www_ishikawa_jinjacho_or_jp__s___.html"
+        },
+        {
+          "name": "伊弉諾神社",
+          "city": "七尾市",
+          "address": "七尾市東三階町ツ8乙",
+          "main_deity": "伊弉那岐命",
+          "source_quote": "[氏子区域] 七尾市 東三階町 [鎮座地] 七尾市東三階町ツ8乙 [御祭神] 伊弉那岐命",
+          "source_url": "https://www.ishikawa-jinjacho.or.jp/?s=伊弉諾",
+          "tier": "rejected_deity_unverified",
+          "retrieved_at": "2026-07-11",
+          "html_cache": "https___www_ishikawa_jinjacho_or_jp__s____.html"
+        }
+      ],
+      "search_note": "検索フォーム(GET, s パラメータ)を使い「多賀」で検索する。まだ神社詳細は未確認のため0件で報告し、検索結果ページへfollowする。 / 「多賀」検索で3社を発見（多賀神社は社名・祭神ともに合致、藤懸神社・須々幾神社は多数祭神の中に多賀大神/伊弉諾神を含む）。追加確認のため「伊弉諾」でも検索を続行する。 / 石川県で伊弉諾神社2社・多賀神社1社を確認。目安件数(1〜3社)に達したため探索終了。",
+      "hops": 3,
+      "visited": [
+        "https://ishikawa-jinjacho.or.jp",
+        "https://www.ishikawa-jinjacho.or.jp/?s=多賀",
+        "https://www.ishikawa-jinjacho.or.jp/?s=伊弉諾"
+      ],
+      "html_cache": [
+        "https___ishikawa_jinjacho_or_jp.html",
+        "https___www_ishikawa_jinjacho_or_jp__s___.html",
+        "https___www_ishikawa_jinjacho_or_jp__s____.html"
+      ]
+    },
+    "福井県": {
+      "shrines": [],
+      "search_note": "取得失敗 https://www.jinja-fukui.jp/member/index.php (0: HTTPError: HTTP Error 401: Unauthorized)",
+      "hops": 3,
+      "visited": [
+        "https://www.jinja-fukui.jp/",
+        "https://www.jinja-fukui.jp/search/index.php",
+        "https://www.jinja-fukui.jp/member/index.php"
+      ]
+    },
+    "山梨県": {
+      "shrines": [],
+      "search_note": "「多賀」検索は0件だったため、次に「伊弉諾」で検索を試みる。 / 「多賀」「伊弉諾」での神社名検索はいずれも「神社は見つかりませんでした」の結果。次に「伊邪那岐」で検索を試みる。 / 山梨県神社庁の神社検索で「多賀」「伊弉諾」「伊邪那岐」を検索したが、いずれも該当する神社が見つからなかった（「神社は見つかりませんでした」と表示）。探索回数の上限に達したため終了。",
+      "hops": 3,
+      "visited": [
+        "https://www.yamanashi-jinjacho.or.jp/intro/search/result?jinjaName=多賀",
+        "https://www.yamanashi-jinjacho.or.jp/intro/search/result?jinjaName=伊弉諾",
+        "https://www.yamanashi-jinjacho.or.jp/intro/search/result?jinjaName=伊邪那岐"
+      ],
+      "html_cache": [
+        "https___www_yamanashi_jinjacho_or_jp_intro_search_result_jinjaName___.html",
+        "https___www_yamanashi_jinjacho_or_jp_intro_search_result_jinjaName____.html",
+        "https___www_yamanashi_jinjacho_or_jp_intro_search_result_jinjaName_____.html"
+      ]
+    },
+    "長野県": {
+      "shrines": [],
+      "search_note": "取得失敗 https://nagano-jinjacho.jp (0: URLError: <urlopen error timed out>)",
+      "hops": 1,
+      "visited": [
+        "https://nagano-jinjacho.jp"
+      ]
+    },
+    "岐阜県": {
+      "shrines": [
+        {
+          "name": "多賀神社",
+          "city": "岐阜市",
+          "address": "岐阜県岐阜市黒野46番地",
+          "main_deity": "伊弉諾命（いざなぎのみこと）",
+          "source_quote": "主祭神　　　　　　　伊弉諾命（いざなぎのみこと）",
+          "source_url": "https://gifu-jinjacho.jp/syosai.php?shrno=1070&shrname=%E2%96%A0%E5%A4%9A%E8%B3%80%E7%A5%9E%E7%A4%BE%E2%96%A0",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-11",
+          "html_cache": "https___gifu_jinjacho_jp_syosai_php_shrno_1070_shrname__E2_96_A0_E5_A4_9A_E8_B3_.html"
+        }
+      ],
+      "search_note": "祭神一覧または検索フォームから「多賀」で検索を試みる。GETパラメータのkeywordフィールドを利用。 / 一覧に複数の「多賀神社」を発見したが祭神未確認のため、詳細ページ(shrno=1070)を確認する。他の候補(shrno=932,1492,1516)も後続で確認予定。 / 多賀神社（岐阜市黒野）を発見。祭神は伊弉諾命で確認済み。探索回数残り少なく、対象県で1社確保できたため終了。",
+      "hops": 3,
+      "visited": [
+        "https://gifu-jinjacho.jp",
+        "https://gifu-jinjacho.jp/search.php?keyword=多賀",
+        "https://gifu-jinjacho.jp/syosai.php?shrno=1070&shrname=%E2%96%A0%E5%A4%9A%E8%B3%80%E7%A5%9E%E7%A4%BE%E2%96%A0"
+      ],
+      "html_cache": [
+        "https___gifu_jinjacho_jp.html",
+        "https___gifu_jinjacho_jp_search_php_keyword___.html",
+        "https___gifu_jinjacho_jp_syosai_php_shrno_1070_shrname__E2_96_A0_E5_A4_9A_E8_B3_.html"
+      ]
+    },
+    "静岡県": {
+      "shrines": [],
+      "search_note": "検索フォームで「多賀」検索を実行 / 熱海市上多賀の多賀神社の詳細ページを確認して祭神を調べる。次に三島市谷田の多賀神社(id=4402026)も確認予定。 / 多賀神社(熱海市)の詳細ページには祭神情報が記載されていなかったため出力せず。伊弉諾で再検索を試みる。 / 「伊弉諾」検索結果には熊野神社・三社神社・諏訪神社・白山神社・八幡神社・蛭子神明神社・六所神社のみが該当し、社名が多賀神社・伊弉諾神社系ではないため対象外。祭神未確認の社名一覧のみで採用できる神社なし。残り探索回数を使い「伊邪那岐」で再検索する。 / 検索結果は「大窪神社」「許禰神社」など社名が多賀・伊弉諾系ではない神社のみで、対象となる社名(多賀神社・伊弉諾神社)は見つからなかった。残り探索回数が尽きたため終了。",
+      "hops": 5,
+      "visited": [
+        "http://www.shizuoka-jinjacho.or.jp",
+        "http://www.shizuoka-jinjacho.or.jp/shokai/search.php?mode=search&search=多賀",
+        "http://www.shizuoka-jinjacho.or.jp/shokai/jinja.php?id=4402252",
+        "http://www.shizuoka-jinjacho.or.jp/shokai/search.php?mode=search&search=伊弉諾",
+        "http://www.shizuoka-jinjacho.or.jp/shokai/search.php?mode=search&search=伊邪那岐"
+      ],
+      "html_cache": [
+        "http___www_shizuoka_jinjacho_or_jp.html",
+        "http___www_shizuoka_jinjacho_or_jp_shokai_search_php_mode_search_search___.html",
+        "http___www_shizuoka_jinjacho_or_jp_shokai_jinja_php_id_4402252.html",
+        "http___www_shizuoka_jinjacho_or_jp_shokai_search_php_mode_search_search____.html",
+        "http___www_shizuoka_jinjacho_or_jp_shokai_search_php_mode_search_search_____.html"
+      ]
+    },
+    "愛知県": {
+      "shrines": [],
+      "search_note": "祭神情報のある詳細ページ未発見。検索フォームのフィールド(addr,orders,result_page)は住所検索用らしく神社名キーワード検索には使えない可能性があるため、地図検索ページを確認する。 / 神社名キーワード検索フォームがある可能性のあるsearch.htmlへ遷移し、フィールド名を確認してから「多賀」「伊弉諾」等で検索を試みる。 / 検索ページは住所・郵便番号による検索のみで、神社名によるキーワード検索フォームが存在せず、GETパラメータ構造も本文から確認できなかった。索引(あ行等)へのリンクも見当たらないため、これ以上安全に推測できる遷移先がない。多賀神社・伊弉諾神社に関する情報は本文中に確認できなかった。",
+      "hops": 3,
+      "visited": [
+        "https://aichi-jinjacho.or.jp",
+        "https://aichi-jinjacho.or.jp/search_map.html",
+        "https://aichi-jinjacho.or.jp/search.html"
+      ],
+      "html_cache": [
+        "https___aichi_jinjacho_or_jp.html",
+        "https___aichi_jinjacho_or_jp_search_map_html.html",
+        "https___aichi_jinjacho_or_jp_search_html.html"
+      ]
+    },
+    "三重県": {
+      "shrines": [],
+      "search_note": "三重県神社庁トップページ。対象神社の情報なし。「三重県の神社一覧」ページへ遷移して探索を続ける。 / 三重県の神社一覧ページは市町別リンク集で祭神情報がないため、祭神情報を含む可能性のある「三重県の神社情報」(教化委員会データベース)へ遷移する。 / 支部別一覧ページ。検索フォームがないため支部カテゴリを辿って多賀・伊弉諾系の神社を探索する。まず伊勢支部を確認。 / 伊勢支部一覧ページには多賀神社・伊弉諾神社に該当する社名が見当たらなかった。WordPressの標準検索機能(?s=)を試みるため『多賀』で検索を実行する。 / 検索結果ページ「?s=多賀」には多賀神社・伊弉諾神社に関する情報は見つからなかった。探索回数の制限のため終了。",
+      "hops": 5,
+      "visited": [
+        "https://www.mie-jinjachou.page/",
+        "https://www.mie-jinjachou.page/三重県の神社一覧",
+        "http://kyoka.mie-jinjacho.or.jp/shrine/",
+        "https://kyoka.mie-jinjacho.or.jp/shrine/cat/08_ise/",
+        "https://kyoka.mie-jinjacho.or.jp/?s=多賀"
+      ],
+      "html_cache": [
+        "https___www_mie_jinjachou_page_.html",
+        "https___www_mie_jinjachou_page_________.html",
+        "http___kyoka_mie_jinjacho_or_jp_shrine_.html",
+        "https___kyoka_mie_jinjacho_or_jp_shrine_cat_08_ise_.html",
+        "https___kyoka_mie_jinjacho_or_jp__s___.html"
+      ]
+    },
+    "滋賀県": {
+      "shrines": [],
+      "search_note": "検索フォームはPOSTのみで直接組み立て不可。神社検索/一覧ページへのリンクである『滋賀県の神社』(search.html)を辿り、索引や地域別リストから多賀・伊弉諾系神社を探す。 / 検索ページ本文・リンクが空で情報取得不可のため終了。滋賀県神社庁サイトの検索機能はJavaScript等で動作しており、静的HTML取得ではコンテンツが得られなかった。",
+      "hops": 2,
+      "visited": [
+        "https://www.shiga-jinjacho.jp",
+        "https://www.shiga-jinjacho.jp/search.html"
+      ],
+      "html_cache": [
+        "https___www_shiga_jinjacho_jp.html",
+        "https___www_shiga_jinjacho_jp_search_html.html"
+      ]
+    },
+    "京都府": {
+      "shrines": [],
+      "search_note": "神社紹介ページ(jinja.html)へ遷移し、一覧・索引を確認する。 / 神社紹介ページへ移動して神社一覧・検索を確認する / 府内の地域別一覧ページ(shrine.html)には神社名の個別記載がなく祭神情報もないため、多賀・伊弉諾系の神社を探すために区ごとの一覧(まず右京区)へ進む。 / 右京区ページには多賀神社・伊弉諾神社・伊邪那岐命等を祀る神社の記載が見当たらなかった。検索フォームも無いため、次の区(上京区)一覧ページを確認する。 / このページ(上京区)には多賀神社・伊弉諾神社に該当する社名が見当たらず、祭神情報も未確認。残り探索回数が1のため、これ以上の索引巡回は困難と判断し終了。",
+      "hops": 5,
+      "visited": [
+        "http://kyoto-jinjacho.or.jp",
+        "http://kyoto-jinjacho.or.jp/jinja.html",
+        "http://kyoto-jinjacho.or.jp/shrine.html",
+        "http://kyoto-jinjacho.or.jp/shrine/01.html",
+        "http://kyoto-jinjacho.or.jp/shrine/02.html"
+      ],
+      "html_cache": [
+        "http___kyoto_jinjacho_or_jp.html",
+        "http___kyoto_jinjacho_or_jp_jinja_html.html",
+        "http___kyoto_jinjacho_or_jp_shrine_html.html",
+        "http___kyoto_jinjacho_or_jp_shrine_01_html.html",
+        "http___kyoto_jinjacho_or_jp_shrine_02_html.html"
+      ]
+    },
+    "大阪府": {
+      "shrines": [],
+      "search_note": "府内神社の紹介ページへ遷移し、一覧や索引を確認する。 / 府内神社紹介は行政区ごとの一覧のみでキーワード検索フォームは無い。まず神社数の多い堺市(第10支部)のページを確認し、多賀神社・伊弉諾神社等の該当社があるか探索する。 / 堺市第10支部の一覧には多賀・伊弉諾・伊邪那岐系と思われる社名が見当たらなかった。大阪府内神社の紹介トップページに戻り、他支部の一覧（各市町村別）を確認して対象社を探索する必要がある。",
+      "hops": 3,
+      "visited": [
+        "https://osaka-jinjacho.jp",
+        "https://www.osaka-jinjacho.jp/funai_jinja/index.html",
+        "https://www.osaka-jinjacho.jp/funai_jinja/dai10shibu/sakai-city/sakai.html"
+      ],
+      "html_cache": [
+        "https___osaka_jinjacho_jp.html",
+        "https___www_osaka_jinjacho_jp_funai_jinja_index_html.html",
+        "https___www_osaka_jinjacho_jp_funai_jinja_dai10shibu_sakai_city_sakai_html.html"
+      ]
+    },
+    "兵庫県": {
+      "shrines": [],
+      "search_note": "検索ページへ遷移し、キーワード検索の入力方法を確認する。 / 検索フォームは住所検索のみでGETパラメータでの神社名検索に対応していない(address/ie_taisaku/lat/lngフィールドで住所入力専用)。神社一覧や五十音索引へのリンクも本ページには存在せず、他に辿れる適切なページが見つからないため探索を終了する。",
+      "hops": 2,
+      "visited": [
+        "https://www.hyogo-jinjacho.com",
+        "https://www.hyogo-jinjacho.com/search.html"
+      ],
+      "html_cache": [
+        "https___www_hyogo_jinjacho_com.html",
+        "https___www_hyogo_jinjacho_com_search_html.html"
+      ]
+    },
+    "奈良県": {
+      "shrines": [],
+      "search_note": "神社一覧ページへ遷移して対象神社を探索する / 奈良市の一覧(jinja.html)には多賀神社・伊弉諾神社に該当する社名が見当たらなかった。次の地域一覧(jinja02.html)へ進む。 / 生駒市上町に「伊弉諾神社」を発見。祭神確認のため詳細ページへfollowする。 / 伊弉諾神社(生駒市)のページを確認したが、御祭神欄に具体的な祭神名の記載が本文抽出できず確認不可のため出力せず。追加で「多賀」キーワード検索を試行。 / 「多賀」キーワード検索では結果一覧が表示されず(フォームのみ)、対象神社を確認できなかった。既訪問の伊弉諾神社詳細ページも祭神情報が抽出できなかったため、残り探索回数を使い「伊弉諾」でのキーワード検索を試みる。 / 探索回数が残り0のため終了。奈良県神社検索で「多賀」「伊弉諾」で検索したが該当する神社(祭神が確認できる伊弉諾尊・伊邪那岐命を祀る神社)は見つからなかった。",
+      "hops": 6,
+      "visited": [
+        "https://www.naraken-jinjacho.jp/",
+        "https://www.naraken-jinjacho.jp/jinja.html",
+        "https://www.naraken-jinjacho.jp/jinja02.html",
+        "http://www.narashinsei.com/search/%e3%82%a2%e8%a1%8c/%e4%bc%8a%e5%bc%89%e8%ab%be%e7%a5%9e%e7%a4%be/",
+        "http://www.narashinsei.com/search/keyword/?q=多賀",
+        "http://www.narashinsei.com/search/keyword/?q=伊弉諾"
+      ],
+      "html_cache": [
+        "https___www_naraken_jinjacho_jp_.html",
+        "https___www_naraken_jinjacho_jp_jinja_html.html",
+        "https___www_naraken_jinjacho_jp_jinja02_html.html",
+        "http___www_narashinsei_com_search__e3_82_a2_e8_a1_8c__e4_bc_8a_e5_bc_89_e8_ab_be.html",
+        "http___www_narashinsei_com_search_keyword__q___.html",
+        "http___www_narashinsei_com_search_keyword__q____.html"
+      ]
+    },
+    "和歌山県": {
+      "shrines": [],
+      "search_note": "神社名検索フォームで「多賀」を検索したいが、和歌山県サイトはEUC-JP等のエンコーディング不明のため、まずJinjyaMei=多賀での検索を試みる。次のnext_urlは文字コード変換が不確実なので、実際には日本語のまま送信し取得側でエンコードしてもらう想定。 / 検索ページはデータベース接続エラー(mysql_connect Access denied)が発生しており、検索結果を取得できなかった。他に神社一覧・索引ページへのリンクも見つからないため、これ以上の探索は不可能。",
+      "hops": 2,
+      "visited": [
+        "https://wakayama-jinjacho.or.jp",
+        "https://wakayama-jinjacho.or.jp/jdb/sys/user/SelectListWjtTbl.php?JinjyaMei=%c5%c5%d0&button=%b8%a1%c5%f7"
+      ],
+      "html_cache": [
+        "https___wakayama_jinjacho_or_jp.html",
+        "https___wakayama_jinjacho_or_jp_jdb_sys_user_SelectListWjtTbl_php_JinjyaMei__c5_.html"
+      ]
+    },
+    "鳥取県": {
+      "shrines": [
+        {
+          "name": "吉岡神社",
+          "city": "鳥取市",
+          "address": "鳥取市吉岡温泉町317",
+          "main_deity": "伊弉諾命 伊弉冉命 素盞嗚命",
+          "source_quote": "神社名吉岡神社 よみよしおかじんじゃ住所鳥取市吉岡温泉町317祭神 伊弉諾 命 伊弉冉命 素盞嗚命 祭祀例祭4月22日節分祭2月3日秋祭10月22日例祭と秋祭りに麒麟獅子舞...",
+          "source_url": "https://tottori-jinjacho.jp/publics/search/?search_word=伊弉諾",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-11",
+          "html_cache": "https___tottori_jinjacho_jp_publics_search__search_word____.html"
+        }
+      ],
+      "search_note": "検索フォームを使い「多賀」で検索する。次に「伊弉諾」「伊邪那岐」も試す予定。 / 「多賀」検索では対象の多賀神社・伊弉諾神社は見つからず、荒御崎神社の境内社としての言及のみだった。祭神未確認のため出力せず。次に「伊弉諾」で検索を試みる。 / 検索結果10件中、祭神が伊弉諾尊単独系(少数祭神)の神社として吉岡神社を確認。他の候補(熊野神社・隼神社・大江神社・都波只知上神社)は多数の祭神を合祀しており、伊弉諾尊が主祭神とは言い難いため除外した。残りの検索結果(6~10件目)は未確認だが、探索回数の制約により終了とする。",
+      "hops": 3,
+      "visited": [
+        "https://tottori-jinjacho.jp",
+        "https://tottori-jinjacho.jp/publics/search/?search_word=多賀",
+        "https://tottori-jinjacho.jp/publics/search/?search_word=伊弉諾"
+      ],
+      "html_cache": [
+        "https___tottori_jinjacho_jp.html",
+        "https___tottori_jinjacho_jp_publics_search__search_word___.html",
+        "https___tottori_jinjacho_jp_publics_search__search_word____.html"
+      ]
+    },
+    "島根県": {
+      "error": "JSONDecodeError: Unterminated string starting at: line 1 column 417 (char 416)"
+    },
+    "岡山県": {
+      "shrines": [],
+      "search_note": "検索ページの存在を確認したので、キーワード「多賀」で検索を試みる。GETパラメータは推測。 / ?q=多賀での検索結果ページには実際の検索結果(神社名リスト)が本文に含まれておらず、フォームのみが表示されている。フリーワード検索がJS動作でGETパラメータでは機能していない可能性があるため、全件一覧表示ページへ遷移して多賀・伊弉諾系の神社を探索する。 / 多賀での検索は既に実施済みだが結果不明。伊弉諾での検索を試みる。全件一覧は1609件・81ページと多く非効率なため検索機能を優先する。 / 岡山県神社庁の検索フォームはJavaScript/GETパラメータに対応しておらず、'q=多賀'および'q=伊弉諾'での検索結果ページも検索フォームUIのみが返され、実際の神社一覧・詳細情報は取得できなかった。全件一覧表示ページも同様にフォームのみで索引リンクが確認できず、対象社名・祭神情報を本文から確認できなかったため、該当神社は0件として報告する。",
+      "hops": 4,
+      "visited": [
+        "https://okayama-jinjacho.or.jp",
+        "https://okayama-jinjacho.or.jp/search/?q=多賀",
+        "https://okayama-jinjacho.or.jp/search/list/",
+        "https://okayama-jinjacho.or.jp/search/?q=伊弉諾"
+      ],
+      "html_cache": [
+        "https___okayama_jinjacho_or_jp.html",
+        "https___okayama_jinjacho_or_jp_search__q___.html",
+        "https___okayama_jinjacho_or_jp_search_list_.html",
+        "https___okayama_jinjacho_or_jp_search__q____.html"
+      ]
+    },
+    "広島県": {
+      "shrines": [],
+      "search_note": "神社一覧ページへ遷移して多賀・伊弉諾系の神社を探索する / POST専用フォームだがGETクエリでの動作可能性を確認するため search_txt=多賀 を試行。索引(あ行等)は本サイトに見当たらないため、まずGET試行、失敗時はsearch_area別一覧を巡回予定。 / 多賀での検索結果は該当なし(デフォルトの広島市東区一覧が表示された)。伊弉諾で再検索を試みる。 / 検索フォームはPOST専用でGETパラメータでは正しく機能せず、search_txt=多賀・伊弉諾のいずれも既定の広島市東区一覧が表示されるだけで対象神社の絞り込みができなかった。残り探索回数も少なく、地図検索(31市町×複数ページ)を総当たりするのは非効率と判断し、確認できた対象神社なしとして終了する。",
+      "hops": 4,
+      "visited": [
+        "https://hiroshima-jinjacho.jp",
+        "https://www.hiroshima-jinjacho.jp/hirosima_jinja/",
+        "https://www.hiroshima-jinjacho.jp/hirosima_jinja/?search_txt=多賀",
+        "https://www.hiroshima-jinjacho.jp/hirosima_jinja/?search_txt=伊弉諾"
+      ],
+      "html_cache": [
+        "https___hiroshima_jinjacho_jp.html",
+        "https___www_hiroshima_jinjacho_jp_hirosima_jinja_.html",
+        "https___www_hiroshima_jinjacho_jp_hirosima_jinja__search_txt___.html",
+        "https___www_hiroshima_jinjacho_jp_hirosima_jinja__search_txt____.html"
+      ]
+    },
+    "山口県": {
+      "shrines": [
+        {
+          "name": "多賀神社",
+          "city": "山口市",
+          "address": "〒753-0071 山口市滝町4-4",
+          "main_deity": "伊佐奈岐尊 伊佐奈美尊",
+          "source_quote": "御祭神 （主祭神）伊佐奈岐尊 伊佐奈美尊 （配祀神）（久須師神社）少彦名命 火具土神 （七神社）天照皇大神 国常立尊 伊弉册尊 素盞嗚尊 応神天皇 菅原道真命 大内教弘命",
+          "source_url": "https://www.yamaguchi-jinjacho.or.jp/yamaguchi/taga/",
+          "tier": "rejected_deity_unverified",
+          "retrieved_at": "2026-07-11",
+          "html_cache": "https___www_yamaguchi_jinjacho_or_jp_yamaguchi_taga_.html"
+        }
+      ],
+      "search_note": "検索フォームが見当たらないため、市町一覧から山口市を選択して探索を継続する。まず県庁所在地の山口市から確認する。 / 一覧に「多賀神社」(山口市滝町4-4)を発見。詳細ページで祭神を確認するためfollowする。 / 山口市の多賀神社を確認。主祭神は伊佐奈岐尊・伊佐奈美尊で伊弉諾系。他県内に同種の神社があるか探索回数の都合上、これ以上は探索しない。",
+      "hops": 3,
+      "visited": [
+        "https://yamaguchi-jinjacho.or.jp",
+        "https://www.yamaguchi-jinjacho.or.jp/yamaguchi/",
+        "https://www.yamaguchi-jinjacho.or.jp/yamaguchi/taga/"
+      ],
+      "html_cache": [
+        "https___yamaguchi_jinjacho_or_jp.html",
+        "https___www_yamaguchi_jinjacho_or_jp_yamaguchi_.html",
+        "https___www_yamaguchi_jinjacho_or_jp_yamaguchi_taga_.html"
+      ]
+    },
+    "徳島県": {
+      "shrines": [],
+      "search_note": "取得失敗 http://awa-jinjacho.jp/ (0: URLError: <urlopen error [Errno 8] nodename nor servname pro)",
+      "hops": 1,
+      "visited": [
+        "http://awa-jinjacho.jp/"
+      ]
+    },
+    "香川県": {
+      "shrines": [],
+      "search_note": "検索フォームを利用して「多賀」で検索を実行する。GETパラメータ s を使用。 / 多賀神社(高松市多賀町)の詳細ページへ遷移し祭神を確認する / 多賀神社(高松市)の詳細ページには御祭神欄が空欄で祭神が確認できなかったため出力せず。伊弉諾での検索を試みる。 / 伊弉諾での検索結果は0件だったため、伊邪那岐で再検索を試みる。多賀神社の詳細ページは訪問済みだが祭神情報の確認が必要。 / 「伊邪那岐」「伊弉諾」「多賀」での検索を行ったが、本ページでは該当結果なし。既に多賀神社(詳細ページ)は確認済み。残り探索回数もないため終了。",
+      "hops": 5,
+      "visited": [
+        "https://kagawakenjinjacho.or.jp/",
+        "https://kagawakenjinjacho.or.jp/?s=多賀",
+        "https://kagawakenjinjacho.or.jp/shrine/%e5%a4%9a%e8%b3%80%e7%a5%9e%e7%a4%be/",
+        "https://kagawakenjinjacho.or.jp/?s=伊弉諾",
+        "https://kagawakenjinjacho.or.jp/?s=伊邪那岐"
+      ],
+      "html_cache": [
+        "https___kagawakenjinjacho_or_jp_.html",
+        "https___kagawakenjinjacho_or_jp__s___.html",
+        "https___kagawakenjinjacho_or_jp_shrine__e5_a4_9a_e8_b3_80_e7_a5_9e_e7_a4_be_.html",
+        "https___kagawakenjinjacho_or_jp__s____.html",
+        "https___kagawakenjinjacho_or_jp__s_____.html"
+      ]
+    },
+    "愛媛県": {
+      "shrines": [
+        {
+          "name": "多賀神社",
+          "city": "宇和島市",
+          "address": "宇和島市藤江大字深泥1339",
+          "main_deity": "伊弉諾尊（いざなぎのみこと）",
+          "source_quote": "神社主祭神 伊弉諾尊（いざなぎのみこと）",
+          "source_url": "http://ehime-jinjacho.jp/jinja/?p=1674",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-11",
+          "html_cache": "http___ehime_jinjacho_jp_jinja__p_1674.html"
+        }
+      ],
+      "search_note": "検索フォームのGETパラメータ形式(s=)を推測してキーワード「多賀」で検索を試みる。 / 検索結果に複数の多賀神社を発見。まず宇和島市藤江の多賀神社(p=1674)の詳細ページへ遷移し祭神を確認する。他にも西予市、松山市、大洲市の多賀神社があり、次回以降に確認予定。 / 検索『多賀』で発見した宇和島市の多賀神社。祭神が伊弉諾尊であることを詳細ページで確認済み。他候補の探索は残り回数が少ないため終了する。",
+      "hops": 3,
+      "visited": [
+        "http://ehime-jinjacho.jp/",
+        "http://ehime-jinjacho.jp/jinja/?s=多賀",
+        "http://ehime-jinjacho.jp/jinja/?p=1674"
+      ],
+      "html_cache": [
+        "http___ehime_jinjacho_jp_.html",
+        "http___ehime_jinjacho_jp_jinja__s___.html",
+        "http___ehime_jinjacho_jp_jinja__p_1674.html"
+      ]
+    },
+    "高知県": {
+      "shrines": [],
+      "search_note": "神社一覧トップページ。祭神情報なし。検索フォームで「多賀」を検索してみる。 / 「多賀」検索は0件。次に「伊弉諾」で検索を試みる。 / 検索で「伊弉諾」「多賀」ともに0件だったため、神社一覧ページへ遷移して該当社を探索する。 / 高知県神社庁の一覧・検索(多賀・伊弉諾)を確認したが、多賀神社・伊弉諾神社に該当する神社は見つからなかった。一覧には土佐神社等の他の神社のみが記載され、伊弉諾尊・伊邪那岐命を祀る神社の記載は本文中に確認できなかった。探索回数の制約もあり終了する。",
+      "hops": 4,
+      "visited": [
+        "https://www.kochi-jinjyacho.com/",
+        "https://www.kochi-jinjyacho.com/search?q=多賀",
+        "https://www.kochi-jinjyacho.com/search?q=伊弉諾",
+        "https://www.kochi-jinjyacho.com/高知県神社一覧"
+      ],
+      "html_cache": [
+        "https___www_kochi_jinjyacho_com_.html",
+        "https___www_kochi_jinjyacho_com_search_q___.html",
+        "https___www_kochi_jinjyacho_com_search_q____.html",
+        "https___www_kochi_jinjyacho_com________.html"
+      ]
+    },
+    "福岡県": {
+      "shrines": [],
+      "search_note": "検索フォームが見当たらないため、地域エリア一覧(福岡エリア)から探索を開始する。他エリア(北九州・筑豊・筑後)も後続で確認予定。 / 福岡エリア一覧には多賀神社・伊弉諾神社に該当する社名が見当たらなかった。他エリア(北九州・筑後・筑豊など)の一覧ページを探すため、トップページに戻ってエリア一覧を確認する。 / 神社検索エリアページ(福岡エリア)へ遷移。多賀・伊弉諾等の該当神社を探索する。検索フォームは見当たらないためエリア一覧を辿る。",
+      "hops": 3,
+      "visited": [
+        "https://fukuoka-jinjacho.or.jp",
+        "https://fukuoka-jinjacho.or.jp/area/fukuoka/",
+        "https://fukuoka-jinjacho.or.jp/"
+      ],
+      "html_cache": [
+        "https___fukuoka_jinjacho_or_jp.html",
+        "https___fukuoka_jinjacho_or_jp_area_fukuoka_.html",
+        "https___fukuoka_jinjacho_or_jp_.html"
+      ]
+    },
+    "佐賀県": {
+      "shrines": [
+        {
+          "name": "白山神社",
+          "city": "伊万里市",
+          "address": "伊万里市南波多町井手野２９２５",
+          "main_deity": "伊弉諾命 伊弉冉命 菊理姫命（配祀）素佐男命",
+          "source_quote": "【祭神】 伊弉諾命 伊弉冉命 菊理姫命（配祀）素佐男命",
+          "source_url": "https://saga-jinjacho.jp/%e7%99%bd%e5%b1%b1%e7%a5%9e%e7%a4%be/",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-11",
+          "html_cache": "https___saga_jinjacho_jp__e7_99_bd_e5_b1_b1_e7_a5_9e_e7_a4_be_.html"
+        }
+      ],
+      "search_note": "神社一覧・マップページへ遷移して対象神社を探索する / 一覧ページに『多賀神社』『伊弉諾神社』に該当しそうな社名は見当たらなかった。検索フォーム(GET, s)を使い『多賀』で検索を試みる。 / 「多賀」検索は0件だったため、「伊弉諾」で再検索する。 / 検索結果が佐賀県内の神社一覧をほぼ全て返しており(検索機能が正しく絞り込めていない可能性)、社名リストから祭神が確認できる候補ページへ遷移する必要がある。白山神社は伊弉諾尊・伊弉冉尊を祀ることが多いため詳細確認のためfollowする。残り探索回数が少ないため優先度の高い候補を選択。 / 残り探索回数が1のため、白山神社（伊弉諾命・伊弉冉命を祀る）を確保して探索を終了。多賀・伊弉諾での検索は既に実施済み。",
+      "hops": 5,
+      "visited": [
+        "https://saga-jinjacho.jp",
+        "https://saga-jinjacho.jp/jinja-map/",
+        "https://saga-jinjacho.jp/?s=多賀",
+        "https://saga-jinjacho.jp/?s=伊弉諾",
+        "https://saga-jinjacho.jp/%e7%99%bd%e5%b1%b1%e7%a5%9e%e7%a4%be/"
+      ],
+      "html_cache": [
+        "https___saga_jinjacho_jp.html",
+        "https___saga_jinjacho_jp_jinja_map_.html",
+        "https___saga_jinjacho_jp__s___.html",
+        "https___saga_jinjacho_jp__s____.html",
+        "https___saga_jinjacho_jp__e7_99_bd_e5_b1_b1_e7_a5_9e_e7_a4_be_.html"
+      ]
+    },
+    "長崎県": {
+      "shrines": [],
+      "search_note": "検索ページへ遷移し「多賀」「伊弉諾」等で検索を試みる / search.htmlページには市町村名一覧(対馬市、壱岐市、長崎市など)が本文にテキストとして存在するが、対応するリンクURLがページ内リンク一覧に含まれておらず、検索フォームの実体(GETパラメータ)も確認できなかった。市町村別詳細ページやキーワード検索への遷移先が特定できないため、これ以上の追跡が不可能。多賀神社・伊弉諾神社に関する情報は本ページ上で確認できなかった。",
+      "hops": 2,
+      "visited": [
+        "https://nagasaki-jinjacho.or.jp",
+        "https://nagasaki-jinjacho.or.jp/search.html"
+      ],
+      "html_cache": [
+        "https___nagasaki_jinjacho_or_jp.html",
+        "https___nagasaki_jinjacho_or_jp_search_html.html"
+      ]
+    },
+    "熊本県": {
+      "shrines": [],
+      "search_note": "検索フォームは住所(市区郡・町村)選択方式で神社名検索には使えない。氏神様を探すページを確認し、他に神社一覧的なページがあるか調査する。 / 氏神様一覧ページは市区町村選択のみで神社名キーワード検索フォームがないため、WordPress標準検索(?s=)を試みる。祭神情報は各詳細ページにあり、当該ページには多賀・伊弉諾関連の社名は見当たらなかった。 / 熊本県神社庁サイトには神社名検索機能がなく、氏神様検索は住所(市区町村)ベースのみで神社名や祭神での検索・一覧が提供されていない。検索結果ページ(?s=多賀)にも神社情報は表示されず、多賀神社・伊弉諾神社に関する情報は確認できなかった。",
+      "hops": 3,
+      "visited": [
+        "https://kumamotokenjinjacho.jp/",
+        "https://kumamotokenjinjacho.jp/patron-god/",
+        "https://kumamotokenjinjacho.jp/?s=多賀"
+      ],
+      "html_cache": [
+        "https___kumamotokenjinjacho_jp_.html",
+        "https___kumamotokenjinjacho_jp_patron_god_.html",
+        "https___kumamotokenjinjacho_jp__s___.html"
+      ]
+    },
+    "大分県": {
+      "shrines": [],
+      "search_note": "公式サイトなし(神社本庁一覧に掲載・電話のみ)。収集は神社公式・自治体ソースで代替。【くろたん条件】レコードのsource_typeに『県神社庁DB不存在につき代替』を注記",
+      "source_type_note": "県神社庁DB不存在につき代替(本走行で神社公式・自治体ソース収集)"
+    },
+    "宮崎県": {
+      "shrines": [],
+      "search_note": "公式サイトなし(『宮巡』は神職運営の紹介サイトで庁公式ではない)。収集は神社公式・自治体ソースで代替。【くろたん条件】レコードのsource_typeに『県神社庁DB不存在につき代替』を注記",
+      "source_type_note": "県神社庁DB不存在につき代替(本走行で神社公式・自治体ソース収集)"
+    },
+    "鹿児島県": {
+      "shrines": [
+        {
+          "name": "多賀神社",
+          "city": "薩摩郡さつま町",
+          "address": "〒895-1816 薩摩郡さつま町時吉1520",
+          "main_deity": "伊邪那岐命",
+          "source_quote": "御祭神 伊邪那岐命（イザナギノミコト） 天之忍穂耳命（アメノオシホミミノミコト） 伊邪那美命（イザナミノミコト）",
+          "source_url": "https://www.kagojinjacho.or.jp/shrine-search/area-hokusatsu/%e3%81%95%e3%81%a4%e3%81%be%e7%94%ba/853/",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-11",
+          "html_cache": "https___www_kagojinjacho_or_jp_shrine_search_area_hokusatsu__e3_81_95_e3_81_a4_e.html"
+        }
+      ],
+      "search_note": "検索フォーム(GET, sフィールド)を使って「多賀」で検索を試みる / さつま町の多賀神社の詳細ページを確認する必要がある。祭神未確認のため一旦followで詳細ページへ。 / 多賀神社を発見し祭神を確認。伊邪那岐命・伊邪那美命を祀る。他の伊弉諾系神社の探索は残り回数の制約により終了する。",
+      "hops": 3,
+      "visited": [
+        "https://www.kagojinjacho.or.jp/",
+        "https://www.kagojinjacho.or.jp/?s=多賀",
+        "https://www.kagojinjacho.or.jp/shrine-search/area-hokusatsu/%e3%81%95%e3%81%a4%e3%81%be%e7%94%ba/853/"
+      ],
+      "html_cache": [
+        "https___www_kagojinjacho_or_jp_.html",
+        "https___www_kagojinjacho_or_jp__s___.html",
+        "https___www_kagojinjacho_or_jp_shrine_search_area_hokusatsu__e3_81_95_e3_81_a4_e.html"
+      ]
+    },
+    "沖縄県": {
+      "shrines": [],
+      "search_note": "沖縄県神社庁包括下の10社（波上宮、普天満宮、識名宮、八幡宮（安里八幡宮）、末吉宮、天久宮、宮古神社、浮島神社、世持神社、沖縄神社）は全て確認したが、いずれも多賀神社・伊弉諾神社系（伊弉諾尊・伊邪那岐命を主祭神とする神社）ではない。県内神社数が10社と明記されており全て一覧に含まれるため、対象となる神社は存在しないと判断した。",
+      "hops": 1,
+      "visited": [
+        "http://jinjacho.naminouegu.jp/"
+      ],
+      "html_cache": [
+        "http___jinjacho_naminouegu_jp_.html"
+      ]
+    },
+    "北海道": {
+      "shrines": [],
+      "search_note": "検索フォームはログイン用のためGETパラメータ組み立て不可。北海道の神社一覧ページ(/jinja)へ遷移して支部一覧や検索機能を確認する。 / 地域別一覧しかなく検索はログインフォームのみ。まず札幌支部の一覧ページを確認し、多賀・伊弉諾系の社名を探索する。 / 札幌支部一覧1ページ目(17社)には多賀神社・伊弉諾神社に該当する社名は見当たらなかった。検索フォームはログイン用でGETパラメータ検索には使えないため、支部一覧の次ページを辿って社名を確認する。 / 札幌支部一覧(2ページ目)には多賀神社・伊弉諾神社に該当する社名が見つからなかった。北海道には苫小牧多賀神社など胆振支部に該当社が存在する可能性があるため、胆振支部一覧ページへ移動して確認する。 / 胆振支部の神社一覧を確認したが、多賀神社・伊弉諾神社(伊弉諾尊/伊邪那岐命を祀る社)に該当する神社は見つからなかった。残り探索回数が1のため、これ以上の探索は行わず終了する。",
+      "hops": 5,
+      "visited": [
+        "https://hokkaidojinjacho.jp",
+        "https://hokkaidojinjacho.jp/jinja",
+        "https://hokkaidojinjacho.jp/jinja-area/sapporo/",
+        "https://hokkaidojinjacho.jp/jinja-area/sapporo/page/2/",
+        "https://hokkaidojinjacho.jp/jinja-area/iburi/"
+      ],
+      "html_cache": [
+        "https___hokkaidojinjacho_jp.html",
+        "https___hokkaidojinjacho_jp_jinja.html",
+        "https___hokkaidojinjacho_jp_jinja_area_sapporo_.html",
+        "https___hokkaidojinjacho_jp_jinja_area_sapporo_page_2_.html",
+        "https___hokkaidojinjacho_jp_jinja_area_iburi_.html"
+      ]
+    },
+    "青森県": {
+      "shrines": [],
+      "search_note": "県内の神社紹介ページへ遷移して一覧・検索機能を確認する。 / 地域別一覧のトップページ。まず青森市,東津軽郡のページを確認する。 / 現ページ(青森市,東津軽郡)には多賀神社・伊弉諾神社に該当する社名が見当たらない。次の地域一覧(つがる市,西津軽郡)を確認する。 / つがる市・西津軽郡の一覧には多賀神社・伊弉諾神社に該当する社名が見当たらなかった。他地域(弘前市,中津軽郡)の一覧ページへ移動して調査を継続する。 / 当ページ(弘前市,中津軽郡)の一覧に「多賀神社」(弘前市大字桜庭字外山)の記載を確認したが、詳細ページへのリンクが張られておらず祭神情報が本文に記載されていないため、確認できず出力不可。残り探索回数が1回のみのため、他の索引(青森市/つがる市/黒石市/五所川原市/十和田市/むつ市/八戸市)を辿ることもできず、伊弉諾・伊邪那岐を祀る神社は本ページ内で確認できなかった。",
+      "hops": 5,
+      "visited": [
+        "http://aomori-jinjacho.or.jp",
+        "http://aomori-jinjacho.or.jp/sub_1.html",
+        "http://aomori-jinjacho.or.jp/jinja/sub_1a.html",
+        "http://aomori-jinjacho.or.jp/jinja/sub_1b.html",
+        "http://aomori-jinjacho.or.jp/jinja/sub_1c.html"
+      ],
+      "html_cache": [
+        "http___aomori_jinjacho_or_jp.html",
+        "http___aomori_jinjacho_or_jp_sub_1_html.html",
+        "http___aomori_jinjacho_or_jp_jinja_sub_1a_html.html",
+        "http___aomori_jinjacho_or_jp_jinja_sub_1b_html.html",
+        "http___aomori_jinjacho_or_jp_jinja_sub_1c_html.html"
+      ]
+    },
+    "岩手県": {
+      "shrines": [],
+      "search_note": "トップページには神社検索機能や一覧が見当たらないため、サイトマップページから神社一覧・検索への導線を確認する。 / 岩手県神社庁サイトのサイトマップを確認したが、神社検索機能や神社一覧ページへのリンクが存在しない。トップページも既に訪問済みで、掲載されているのは神社庁の案内・沿革・アクセス・リンク集等のみで、個別神社の情報や検索機能は見当たらなかった。これ以上探索を続ける手段がないため終了する。",
+      "hops": 2,
+      "visited": [
+        "https://www.jinjacho.jp/",
+        "https://www.jinjacho.jp/pages/8/"
+      ],
+      "html_cache": [
+        "https___www_jinjacho_jp_.html",
+        "https___www_jinjacho_jp_pages_8_.html"
+      ]
+    },
+    "宮城県": {
+      "shrines": [
+        {
+          "name": "多賀神社",
+          "city": "仙台市太白区",
+          "address": "宮城県仙台市太白区富沢3-15-1",
+          "main_deity": "伊弉諾尊",
+          "source_quote": "多賀神社 （たがじんじゃ） 鎮座地: 宮城県仙台市太白区富沢3-15-1 主祭神: 伊弉諾尊",
+          "source_url": "https://miyagi-jinjacho.or.jp/jinja-search/detail.php?code=310010026&chinzachi=&jinja_name=多賀&jinja_kana=&page=0&per_page=15",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-11",
+          "html_cache": "https___miyagi_jinjacho_or_jp_jinja_search_detail_php_code_310010026_chinzachi__.html"
+        }
+      ],
+      "search_note": "検索フォームのjinja_name欄に「多賀」を指定して検索を実行する。結果を確認して祭神を持つ詳細ページへさらに追跡する予定。 / 多賀神社が3件見つかった。まず1件目の詳細ページ(code=310010026)へ祭神確認のため遷移する。 / 多賀神社(仙台市太白区)を発見し祭神確認済み。他にも伊弉諾系神社がないか「伊弉諾」で再検索を試みる。 / 「伊弉諾」検索は該当なし。表記違いの「伊邪那岐」で再検索を試みる。なお「多賀」検索でcode=310010026の神社が見つかっているが、詳細ページの祭神情報はまだ本文取得できていないため未収録。 / 「伊邪那岐」での検索は0件。「多賀」「伊弉諾」の検索は既に実施済みで、多賀神社(code=310010026)の詳細ページを訪問済みだが、本ターンでは本文内容が提示されておらず祭神の逐語引用を確認できないため出力не行う。残り探索回数が0のため終了する。",
+      "hops": 5,
+      "visited": [
+        "https://miyagi-jinjacho.or.jp",
+        "https://miyagi-jinjacho.or.jp/jinja-search/list.php?SEARCH=1&jinja_name=多賀&PC=&jinja_cnt=&jinja_kana=&jinja_sort_key=&jinja_sortdesc=&page_jinja=&per_page_def=&sortmode=",
+        "https://miyagi-jinjacho.or.jp/jinja-search/detail.php?code=310010026&chinzachi=&jinja_name=多賀&jinja_kana=&page=0&per_page=15",
+        "https://miyagi-jinjacho.or.jp/jinja-search/list.php?SEARCH=1&jinja_name=伊弉諾&PC=&jinja_cnt=&jinja_kana=&jinja_sort_key=&jinja_sortdesc=&page_jinja=&per_page_def=&sortmode=",
+        "https://miyagi-jinjacho.or.jp/jinja-search/list.php?SEARCH=1&jinja_name=伊邪那岐&PC=&jinja_cnt=&jinja_kana=&jinja_sort_key=&jinja_sortdesc=&page_jinja=&per_page_def=&sortmode="
+      ],
+      "html_cache": [
+        "https___miyagi_jinjacho_or_jp.html",
+        "https___miyagi_jinjacho_or_jp_jinja_search_list_php_SEARCH_1_jinja_name____PC__j.html",
+        "https___miyagi_jinjacho_or_jp_jinja_search_detail_php_code_310010026_chinzachi__.html",
+        "https___miyagi_jinjacho_or_jp_jinja_search_list_php_SEARCH_1_jinja_name_____PC__.html",
+        "https___miyagi_jinjacho_or_jp_jinja_search_list_php_SEARCH_1_jinja_name______PC_.html"
+      ]
+    },
+    "秋田県": {
+      "shrines": [],
+      "search_note": "県内神社のご案内ページへ遷移して神社検索・一覧を確認する / 「た行」索引ページへ遷移し、多賀神社を探索する。次に「い」行で伊弉諾神社も確認予定。 / 「た」行索引には多賀神社が見当たらなかった。伊弉諾神社・伊邪那岐命を祀る神社を探すため「い」行索引へ移動する。 / 「い」行の一覧を確認したが、伊弉諾神社・伊邪那岐命を祀る神社は見当たらなかった(伊豆神社・伊豆山神社・出雲神社等は該当せず、祭神記載もページ上になし)。WordPress標準検索(?s=)で「伊弉諾」を検索してみる。 / 検索結果ページには該当する神社情報が見つからなかった。「伊弉諾」での検索結果は空で、祭神情報を含む神社は確認できなかった。探索回数の制限のため終了。",
+      "hops": 5,
+      "visited": [
+        "https://akita-jinjacho.sakura.ne.jp",
+        "https://akita-jinjacho.sakura.ne.jp/shrine_search/",
+        "https://akita-jinjacho.sakura.ne.jp/cat_shrine/%e3%81%9f/",
+        "https://akita-jinjacho.sakura.ne.jp/cat_shrine/%e3%81%84/",
+        "https://akita-jinjacho.sakura.ne.jp/?s=%e4%bc%8a%e5%bc%89%e8%ab%be"
+      ],
+      "html_cache": [
+        "https___akita_jinjacho_sakura_ne_jp.html",
+        "https___akita_jinjacho_sakura_ne_jp_shrine_search_.html",
+        "https___akita_jinjacho_sakura_ne_jp_cat_shrine__e3_81_9f_.html",
+        "https___akita_jinjacho_sakura_ne_jp_cat_shrine__e3_81_84_.html",
+        "https___akita_jinjacho_sakura_ne_jp__s__e4_bc_8a_e5_bc_89_e8_ab_be.html"
+      ]
+    },
+    "山形県": {
+      "shrines": [],
+      "search_note": "検索フォームがGETなのでkeyword=多賀で検索を試みる。次に伊弉諾・伊邪那岐でも検索予定。 / 「多賀」での検索は該当なし。次に「伊弉諾」で検索を試みる。 / 「多賀」「伊弉諾」での検索は該当なし。残り探索回数を使い「伊邪那岐」で再検索する。 / キーワード「伊邪那岐」の検索結果として『熊野神社』(東置賜郡川西町)が返っているため、祭神に伊邪那岐命が含まれるか確認するため詳細ページへ遷移する。多賀・伊弉諾での検索では該当なし。 / このページ(熊野神社)は伊邪那岐命を含むが主祭神は早玉男命・事解男命であり、多賀・伊弉諾系の神社ではない。多賀・伊弉諾・伊邪那岐でのキーワード検索を実施済みだが、対象となる多賀神社・伊弉諾神社は見つからなかった。探索回数の上限に達したため終了する。",
+      "hops": 5,
+      "visited": [
+        "https://yamagata-jinjyacho.or.jp/",
+        "https://yamagata-jinjyacho.or.jp/shrine_search?keyword=多賀",
+        "https://yamagata-jinjyacho.or.jp/shrine_search?keyword=伊弉諾",
+        "https://yamagata-jinjyacho.or.jp/shrine_search?keyword=伊邪那岐",
+        "https://yamagata-jinjyacho.or.jp/shrine_detail/06028"
+      ],
+      "html_cache": [
+        "https___yamagata_jinjyacho_or_jp_.html",
+        "https___yamagata_jinjyacho_or_jp_shrine_search_keyword___.html",
+        "https___yamagata_jinjyacho_or_jp_shrine_search_keyword____.html",
+        "https___yamagata_jinjyacho_or_jp_shrine_search_keyword_____.html",
+        "https___yamagata_jinjyacho_or_jp_shrine_detail_06028.html"
+      ]
+    },
+    "福島県": {
+      "shrines": [],
+      "search_note": "トップページには対象神社の情報なし。検索フォームはPOSTのため、まず検索ページ自体を確認し、五十音索引等の閲覧手段を探す。 / 検索フォームのGETパラメータ形式を推測し、キーワード「多賀」で検索を試みる。 / 検索結果ページはダミーデータのみで実際の検索結果が確認できなかった。別キーワード「伊弉諾」で再検索を試みる。 / 福島県神社庁の検索ページ(keyword=多賀, keyword=伊弉諾)を試したが、いずれもテンプレートのダミーデータ(○○神社)のみが返され、実際の検索結果(祭神情報を含む神社詳細)は取得できなかった。JavaScript動的読み込みによるものと思われ、静的HTML取得では対象神社の実データを確認できないため、これ以上の追跡は困難と判断し探索を終了する。",
+      "hops": 4,
+      "visited": [
+        "https://fukushima-jinjacho.or.jp",
+        "https://fukushima-jinjacho.or.jp/search/",
+        "https://fukushima-jinjacho.or.jp/search/?keyword=多賀",
+        "https://fukushima-jinjacho.or.jp/search/?keyword=伊弉諾"
+      ],
+      "html_cache": [
+        "https___fukushima_jinjacho_or_jp.html",
+        "https___fukushima_jinjacho_or_jp_search_.html",
+        "https___fukushima_jinjacho_or_jp_search__keyword___.html",
+        "https___fukushima_jinjacho_or_jp_search__keyword____.html"
+      ]
+    },
+    "茨城県": {
+      "shrines": [],
+      "search_note": "神社一覧・検索ページへ遷移して多賀神社・伊弉諾神社を探索する / 県内神社紹介トップには祭神情報や検索フォームがないため、地域別一覧(県北)へ遷移して多賀神社・伊弉諾神社を探索する。 / 県北地域の一覧には多賀神社・伊弉諾神社に該当する社名が見当たらなかった。県内神社紹介トップページから他地域(県央・県南・県西・鹿行等)を確認する。",
+      "hops": 3,
+      "visited": [
+        "https://www.ibarakiken-jinjacho.or.jp/",
+        "https://www.ibarakiken-jinjacho.or.jp/ibaraki/index.html",
+        "https://www.ibarakiken-jinjacho.or.jp/ibaraki/kenhoku/index.html"
+      ],
+      "html_cache": [
+        "https___www_ibarakiken_jinjacho_or_jp_.html",
+        "https___www_ibarakiken_jinjacho_or_jp_ibaraki_index_html.html",
+        "https___www_ibarakiken_jinjacho_or_jp_ibaraki_kenhoku_index_html.html"
+      ]
+    },
+    "栃木県": {
+      "shrines": [],
+      "search_note": "県内神社ご紹介ページへ遷移し、神社一覧・検索機能を探す / お参り作法ページには対象神社情報なし。県内神社ご紹介ページ(p=194)へ移動して一覧・検索を探す。 / このページは伊勢神宮式年遷宮の説明ページで、対象神社の情報はない。県内神社ご紹介ページ(p=59)へ遷移して神社一覧・検索を試みる。 / 市町村一覧ページ。祭神情報なし。宇都宮市の神社一覧ページへ遷移し多賀神社・伊弉諾神社を探索する。 / 宇都宮市の神社一覧ページを確認したが、多賀神社・伊弉諾神社に該当する神社は見当たらなかった。祭神情報が確認できる対象神社も無し。残り探索回数が1回のため、これ以上の索引探索は行わず終了する。",
+      "hops": 5,
+      "visited": [
+        "http://tochigi-jinjacho.or.jp",
+        "http://www.tochigi-jinjacho.or.jp/?p=32",
+        "http://www.tochigi-jinjacho.or.jp/?p=194",
+        "http://www.tochigi-jinjacho.or.jp/?p=59",
+        "http://www.tochigi-jinjacho.or.jp/?p=90"
+      ],
+      "html_cache": [
+        "http___tochigi_jinjacho_or_jp.html",
+        "http___www_tochigi_jinjacho_or_jp__p_32.html",
+        "http___www_tochigi_jinjacho_or_jp__p_194.html",
+        "http___www_tochigi_jinjacho_or_jp__p_59.html",
+        "http___www_tochigi_jinjacho_or_jp__p_90.html"
+      ]
+    },
+    "群馬県": {
+      "shrines": [],
+      "search_note": "県内神社紹介ページへ遷移して検索・索引を探す / 群馬県神社庁の県内神社紹介ページ(全支部の神社名・所在地一覧)を確認したが、「多賀神社」「伊弉諾神社」「伊邪那岐神社」に該当する社名は見当たらなかった。また本一覧には祭神情報が記載されておらず、個別詳細ページへのリンクもほとんど無い(一部神社のみ外部公式サイトへのリンクがあるが、それらも多賀・伊弉諾系ではない)。索引や検索フォームも存在しないため、これ以上の追跡は困難と判断し0件で終了する。",
+      "hops": 2,
+      "visited": [
+        "https://gunma-jinjacho.jp",
+        "https://gunma-jinjacho.jp/jinja/"
+      ],
+      "html_cache": [
+        "https___gunma_jinjacho_jp.html",
+        "https___gunma_jinjacho_jp_jinja_.html"
+      ]
+    },
+    "埼玉県": {
+      "shrines": [],
+      "search_note": "検索フォーム(GET, s パラメータ)を利用して「多賀」で検索を試みる。 / 「多賀」検索で「多賀谷神社」が1件見つかったが祭神未確認のため詳細ページへ遷移して確認する。次に「伊弉諾」「伊邪那岐」でも検索する必要あり。 / 多賀谷神社は多賀谷氏由来の社名で祭神情報が本文になく対象外。伊弉諾キーワードで再検索を試みる。 / 伊弉諾神社の詳細ページ(shrine/9611)を確認し祭神を検証する必要がある。訪問済みのshrine/9846は別神社。 / 伊弉諾神社(熊谷市)詳細ページには祭神の記載がなく引用できないため出力せず。多賀・伊弉諾検索は実施済みだが伊邪那岐でも検索を試みる。 / 残り探索回数が0のため終了。「伊邪那岐」検索結果には白山神社・勝呂神社・今宮神社・十二社神社が表示されたが、本文中に伊弉諾尊/伊邪那岐命を主祭神として明記した記述が見当たらず、確認できなかった（十二社神社は天神七代地神五代の神霊を祀るとの記載のみで伊邪那岐命の明示なし）。既訪問の9846・9611の詳細ページ内容は今回のページ本文には含まれておらず判定不可。",
+      "hops": 6,
+      "visited": [
+        "https://saitama-jinjacho.or.jp",
+        "https://www.saitama-jinjacho.or.jp/?s=多賀",
+        "https://www.saitama-jinjacho.or.jp/shrine/9846/",
+        "https://www.saitama-jinjacho.or.jp/?s=伊弉諾",
+        "https://www.saitama-jinjacho.or.jp/shrine/9611/",
+        "https://www.saitama-jinjacho.or.jp/?s=伊邪那岐"
+      ],
+      "html_cache": [
+        "https___saitama_jinjacho_or_jp.html",
+        "https___www_saitama_jinjacho_or_jp__s___.html",
+        "https___www_saitama_jinjacho_or_jp_shrine_9846_.html",
+        "https___www_saitama_jinjacho_or_jp__s____.html",
+        "https___www_saitama_jinjacho_or_jp_shrine_9611_.html",
+        "https___www_saitama_jinjacho_or_jp__s_____.html"
+      ]
+    },
+    "千葉県": {
+      "shrines": [],
+      "search_note": "千葉県神社庁トップページには神社一覧がないため、検索フォームで「多賀」を検索する。 / 「多賀」で検索したが該当なし。次に「伊弉諾」で検索を試みる。 / 「多賀」「伊弉諾」検索は該当なし。「伊邪那岐」で再検索を試みる。 / 千葉県神社庁サイトで「多賀」「伊弉諾」「伊邪那岐」の3キーワードで検索を行ったが、いずれも一致する結果なし。残り探索回数も少ないため終了。",
+      "hops": 4,
+      "visited": [
+        "https://www.jinjacho.or.jp/",
+        "https://www.jinjacho.or.jp/search?q=多賀",
+        "https://www.jinjacho.or.jp/search?q=伊弉諾",
+        "https://www.jinjacho.or.jp/search?q=伊邪那岐"
+      ],
+      "html_cache": [
+        "https___www_jinjacho_or_jp_.html",
+        "https___www_jinjacho_or_jp_search_q___.html",
+        "https___www_jinjacho_or_jp_search_q____.html",
+        "https___www_jinjacho_or_jp_search_q_____.html"
+      ]
+    },
+    "東京都": {
+      "shrines": [
+        {
+          "name": "多賀神社",
+          "city": "八王子市",
+          "address": "東京都八王子市元本郷町4-9-21",
+          "main_deity": "伊弉諾尊（いざなぎのみこと）伊弉冊尊（いざなみのみこと）",
+          "source_quote": "御祭神 伊弉諾尊（いざなぎのみこと） 伊弉冊尊（いざなみのみこと）",
+          "source_url": "http://www.tokyo-jinjacho.or.jp/minamitama/hachiouji/200016",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-11",
+          "html_cache": "http___www_tokyo_jinjacho_or_jp_minamitama_hachiouji_200016.html"
+        }
+      ],
+      "search_note": "キーワード検索ページへ移動し、「多賀」「伊弉諾」等で検索を試みる。 / 検索フォーム(GET, s パラメータ)を発見。キーワード「多賀」で検索を試みる。 / 多賀神社(八王子市)の詳細ページで祭神を確認する必要あり / 東京都八王子市の多賀神社を発見。祭神は伊弉諾尊・伊弉冊尊で確認済み。目安の1〜3社確保のため探索を終了する。",
+      "hops": 4,
+      "visited": [
+        "http://www.tokyo-jinjacho.or.jp",
+        "http://www.tokyo-jinjacho.or.jp/jinja/keyword/",
+        "http://www.tokyo-jinjacho.or.jp?s=多賀",
+        "http://www.tokyo-jinjacho.or.jp/minamitama/hachiouji/200016"
+      ],
+      "html_cache": [
+        "http___www_tokyo_jinjacho_or_jp.html",
+        "http___www_tokyo_jinjacho_or_jp_jinja_keyword_.html",
+        "http___www_tokyo_jinjacho_or_jp_s___.html",
+        "http___www_tokyo_jinjacho_or_jp_minamitama_hachiouji_200016.html"
+      ]
+    },
+    "神奈川県": {
+      "shrines": [],
+      "search_note": "検索フォームのGETパラメータ形式で「多賀」を検索。次に「伊弉諾」「伊邪那岐」も試す予定。 / 検索結果ページはトップページにリダイレクトされ、検索結果が表示されなかった。神社検索ページ(/search/)から改めて伊弉諾で検索を試みる。 / 検索結果ページ(keyword=伊弉諾)には該当社の一覧が表示されず、検索フォームのみ。正しいGETパラメータ形式(s_keyword_3)で再検索を試みる。 / 検索結果ページはトップページにリダイレクトされ、検索結果が確認できなかった。神社検索ページのURL形式を変えて再試行する。 / 探索回数上限に達した。多賀・伊弉諾のキーワード検索を試みたが、検索結果ページに該当する神社の一覧・詳細情報が本文に含まれておらず、祭神情報を確認できる神社が見つからなかった。既に主要な検索キーワード（多賀・伊弉諾）とGET/POST両形式を訪問済みのため、これ以上の探索を終了する。",
+      "hops": 5,
+      "visited": [
+        "https://kanagawa-jinja.or.jp",
+        "https://www.kanagawa-jinja.or.jp/?csp=&fe_form_no=&feadvns_max_line_3=&s_keyword_3=多賀&search_element_2=&searchbutton=検索",
+        "https://www.kanagawa-jinja.or.jp/search/?keyword=伊弉諾",
+        "https://www.kanagawa-jinja.or.jp/?csp=&fe_form_no=&feadvns_max_line_3=&s_keyword_3=伊弉諾&search_element_2=&searchbutton=検索",
+        "https://www.kanagawa-jinja.or.jp/search/?keyword=多賀"
+      ],
+      "html_cache": [
+        "https___kanagawa_jinja_or_jp.html",
+        "https___www_kanagawa_jinja_or_jp__csp__fe_form_no__feadvns_max_line_3__s_keyword.html",
+        "https___www_kanagawa_jinja_or_jp_search__keyword____.html",
+        "https___www_kanagawa_jinja_or_jp__csp__fe_form_no__feadvns_max_line_3__s_keyword.html",
+        "https___www_kanagawa_jinja_or_jp_search__keyword___.html"
+      ]
+    },
+    "新潟県": {
+      "shrines": [],
+      "search_note": "検索フォームを用いて「多賀」キーワードで検索を実行する。 / 「多賀」検索で2件(浮洲多賀神社・多賀神社)を発見したが、詳細ページへのリンクURLが本文抽出結果に含まれておらず祭神情報を確認できなかったため未掲載。続けて「伊弉諾」で検索し、詳細ページの祭神情報を確認する。 / 「多賀」「伊弉諾」ともに該当なし。「伊邪那岐」で再検索を試みる。 / 「多賀」「伊弉諾」「伊邪那岐」の3キーワードで検索したが、いずれも該当する神社が0件だった。探索回数の制約もあり、これ以上の索引探索は行わず終了する。",
+      "hops": 4,
+      "visited": [
+        "https://niigata-jinjacho.jp",
+        "https://niigata-jinjacho.jp/shrine_niigata/search.php?area=&keyword=多賀",
+        "https://niigata-jinjacho.jp/shrine_niigata/search.php?area=&keyword=伊弉諾",
+        "https://niigata-jinjacho.jp/shrine_niigata/search.php?area=&keyword=伊邪那岐"
+      ],
+      "html_cache": [
+        "https___niigata_jinjacho_jp.html",
+        "https___niigata_jinjacho_jp_shrine_niigata_search_php_area__keyword___.html",
+        "https___niigata_jinjacho_jp_shrine_niigata_search_php_area__keyword____.html",
+        "https___niigata_jinjacho_jp_shrine_niigata_search_php_area__keyword_____.html"
+      ]
+    },
+    "富山県": {
+      "shrines": [],
+      "search_note": "氏神神社検索ページへの直接リンクがあるが、まずサイト内検索フォーム(s=多賀)を試す。次に伊弉諾・伊邪那岐も検索予定。 / 「多賀」検索は0件だったため、「伊弉諾」で再検索する。氏神神社検索ページも次の手として利用可能。 / 「伊弉諾」検索ではブログ記事しか見つからず神社詳細情報が無かった。氏神神社検索ページへ遷移して探索を続ける。 / 多賀・伊弉諾での検索は既に実施済みだが該当ページ内容が確認できず0件。伊邪那岐での検索を試みる。 / 「多賀」「伊弉諾」「伊邪那岐」の検索を試みたがいずれも0件だった。探索回数の残りがなくなったため終了。",
+      "hops": 5,
+      "visited": [
+        "https://toyama-jinjacho.sakura.ne.jp/",
+        "https://toyama-jinjacho.sakura.ne.jp/?s=%E5%A4%9A%E8%B3%80",
+        "https://toyama-jinjacho.sakura.ne.jp/?s=%E4%BC%8A%E5%BC%89%E8%AB%BE",
+        "https://toyama-jinjacho.sakura.ne.jp/%e5%af%8c%e5%b1%b1%e7%9c%8c%e6%b0%8f%e7%a5%9e%e7%a5%9e%e7%a4%be%e6%a4%9c%e7%b4%a2",
+        "https://toyama-jinjacho.sakura.ne.jp/?s=%E4%BC%8A%E9%82%AA%E9%82%A3%E5%B2%90"
+      ],
+      "html_cache": [
+        "https___toyama_jinjacho_sakura_ne_jp_.html",
+        "https___toyama_jinjacho_sakura_ne_jp__s__E5_A4_9A_E8_B3_80.html",
+        "https___toyama_jinjacho_sakura_ne_jp__s__E4_BC_8A_E5_BC_89_E8_AB_BE.html",
+        "https___toyama_jinjacho_sakura_ne_jp__e5_af_8c_e5_b1_b1_e7_9c_8c_e6_b0_8f_e7_a5_.html",
+        "https___toyama_jinjacho_sakura_ne_jp__s__E4_BC_8A_E9_82_AA_E9_82_A3_E5_B2_90.html"
+      ]
+    }
+  }
+}
