@@ -3,3 +3,4 @@ __pycache__/
 *.pyc
 .streamlit/secrets.toml
 _pilot_run.log
+data/kojindo/_html_cache/
