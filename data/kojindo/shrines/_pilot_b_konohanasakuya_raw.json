@@ -1,0 +1,613 @@
+{
+  "prefs": {
+    "秋田県": {
+      "shrines": [
+        {
+          "name": "浅間神社",
+          "city": "山本郡藤里町",
+          "address": "〒018-3201 山本郡藤里町藤琴字馬坂3",
+          "main_deity": "木花開耶姫神（このはなさくやひめのかみ）",
+          "source_quote": "御祭神 木花開耶姫神（このはなさくやひめのかみ） 応神天皇（おうじんてんのう） 天照大神（あまてらすおおかみ） 火産霊神（ほむすびのかみ） 猿田彦神（さるたひこのかみ） 豊受姫神（とようけひめのかみ） 武甕槌神（たけみかつちのかみ） 菅原神（すがわらのかみ） 大山祇神（おおやまつみのかみ） 日本武尊（やまとたけるのみこと） 加具土神（かぐつちのかみ）",
+          "source_url": "https://akita-jinjacho.sakura.ne.jp/shrine_search/%e6%b5%85%e9%96%93%e7%a5%9e%e7%a4%be/",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-11",
+          "html_cache": "https___akita_jinjacho_sakura_ne_jp_shrine_search__e6_b5_85_e9_96_93_e7_a5_9e_e7.html"
+        }
+      ],
+      "search_note": "当該ページに浅間神社（藤里町）の情報が掲載されており、祭神欄に木花開耶姫神が確認できたため出力した。残り探索回数が0のため追加調査は行わない。",
+      "hops": 4,
+      "visited": [
+        "https://akita-jinjacho.sakura.ne.jp",
+        "https://akita-jinjacho.sakura.ne.jp/shrine_search/",
+        "https://akita-jinjacho.sakura.ne.jp/cat_shrine/%e3%81%82/",
+        "https://akita-jinjacho.sakura.ne.jp/shrine_search/%e6%b5%85%e9%96%93%e7%a5%9e%e7%a4%be/"
+      ],
+      "html_cache": [
+        "https___akita_jinjacho_sakura_ne_jp.html",
+        "https___akita_jinjacho_sakura_ne_jp_shrine_search_.html",
+        "https___akita_jinjacho_sakura_ne_jp_cat_shrine__e3_81_82_.html",
+        "https___akita_jinjacho_sakura_ne_jp_shrine_search__e6_b5_85_e9_96_93_e7_a5_9e_e7.html"
+      ]
+    },
+    "大分県": {
+      "shrines": [],
+      "search_note": "公式サイトなし(神社本庁一覧に掲載・電話のみ)。収集は神社公式・自治体ソースで代替。【くろたん条件】レコードのsource_typeに『県神社庁DB不存在につき代替』を注記",
+      "source_type_note": "県神社庁DB不存在につき代替(本走行で神社公式・自治体ソース収集)"
+    },
+    "宮崎県": {
+      "shrines": [],
+      "search_note": "公式サイトなし(『宮巡』は神職運営の紹介サイトで庁公式ではない)。収集は神社公式・自治体ソースで代替。【くろたん条件】レコードのsource_typeに『県神社庁DB不存在につき代替』を注記",
+      "source_type_note": "県神社庁DB不存在につき代替(本走行で神社公式・自治体ソース収集)"
+    },
+    "沖縄県": {
+      "shrines": [],
+      "search_note": "沖縄県神社庁公式サイトの神社本庁包括神社一覧(全10社:波上宮、普天満宮、識名宮、八幡宮、末吉宮、天久宮、宮古神社、浮島神社、世持神社、沖縄神社)を確認したが、浅間神社という名称の神社は掲載されていなかった。他に索引や検索ページも存在しないため、これ以上の探索先はない。",
+      "hops": 1,
+      "visited": [
+        "http://jinjacho.naminouegu.jp/"
+      ],
+      "html_cache": [
+        "http___jinjacho_naminouegu_jp_.html"
+      ]
+    },
+    "北海道": {
+      "shrines": [],
+      "search_note": "検索フォームはログイン用でGET検索不可。神社一覧ページ(/jinja)へ遷移し、地域別支部一覧または検索機能を確認する。浅間神社は北海道では富士山信仰系の開拓神社として複数支部に存在しうるため、まず全体の神社検索ページを確認する。 / 一覧ページには浅間神社の情報が直接無く、検索フォームはログイン用POSTのみで使用不可。地域別支部リンクから探索する必要がある。北海道の浅間神社は有珠山周辺(胆振地方)に多いと推測されるため、まず胆振支部ページを確認する。 / 胆振支部一覧1ページ目には浅間神社が見当たらない。2ページ目(page/2)を確認する。 / 胆振支部のページ2件を確認したが浅間神社は見つからなかった。検索フォームはログイン用のみでPOSTのため使用不可。他の支部(日高支部など)を巡る必要がある。 / 日高支部の一覧に浅間神社は見当たらず。2ページ目が存在するため続きを確認する。検索フォームはログイン用のためGET検索には使用不可。 / 日高支部ページ(1,2ページ目)には浅間神社は見つからなかった。探索回数の残りが0のため終了する。",
+      "hops": 6,
+      "visited": [
+        "https://hokkaidojinjacho.jp",
+        "https://hokkaidojinjacho.jp/jinja",
+        "https://hokkaidojinjacho.jp/jinja-area/iburi/",
+        "https://hokkaidojinjacho.jp/jinja-area/iburi/page/2/",
+        "https://hokkaidojinjacho.jp/jinja-area/hidaka/",
+        "https://hokkaidojinjacho.jp/jinja-area/hidaka/page/2/"
+      ],
+      "html_cache": [
+        "https___hokkaidojinjacho_jp.html",
+        "https___hokkaidojinjacho_jp_jinja.html",
+        "https___hokkaidojinjacho_jp_jinja_area_iburi_.html",
+        "https___hokkaidojinjacho_jp_jinja_area_iburi_page_2_.html",
+        "https___hokkaidojinjacho_jp_jinja_area_hidaka_.html",
+        "https___hokkaidojinjacho_jp_jinja_area_hidaka_page_2_.html"
+      ]
+    },
+    "青森県": {
+      "shrines": [],
+      "search_note": "県内の神社紹介ページへ移動し、浅間神社を探索する / 地域別一覧のうち最初の青森市,東津軽郡ページへ移動し、浅間神社を探索する。他の地域ページも順次確認が必要。 / このページ(青森市,東津軽郡)には浅間神社の記載なし。他の地域一覧ページを探索する。 / つがる市・西津軽郡のページには浅間神社の記載なし。弘前市,中津軽郡のページへ探索を継続。 / 弘前市,中津軽郡のページ(sub_1c.html)には浅間神社の記載なし。残り探索回数が限られているため、未訪問の黒石市,平川市,南津軽郡ページ(sub_1d.html)を次に確認する。 / このページ(黒石市、平川市、南津軽郡の神社一覧)には浅間神社は掲載されていない。残り探索回数が0のため他ページへのfollowは実施できない。",
+      "hops": 6,
+      "visited": [
+        "http://aomori-jinjacho.or.jp",
+        "http://aomori-jinjacho.or.jp/sub_1.html",
+        "http://aomori-jinjacho.or.jp/jinja/sub_1a.html",
+        "http://aomori-jinjacho.or.jp/jinja/sub_1b.html",
+        "http://aomori-jinjacho.or.jp/jinja/sub_1c.html",
+        "http://aomori-jinjacho.or.jp/jinja/sub_1d.html"
+      ],
+      "html_cache": [
+        "http___aomori_jinjacho_or_jp.html",
+        "http___aomori_jinjacho_or_jp_sub_1_html.html",
+        "http___aomori_jinjacho_or_jp_jinja_sub_1a_html.html",
+        "http___aomori_jinjacho_or_jp_jinja_sub_1b_html.html",
+        "http___aomori_jinjacho_or_jp_jinja_sub_1c_html.html",
+        "http___aomori_jinjacho_or_jp_jinja_sub_1d_html.html"
+      ]
+    },
+    "岩手県": {
+      "shrines": [],
+      "search_note": "トップページには浅間神社の情報や検索フォームが見当たらないため、サイトマップページへ遷移し、神社一覧・検索ページへのリンクを探す。 / サイトマップには神社検索・一覧ページへの直接リンクが見当たらない。「県内神社等のHPリンク集」ページに浅間神社関連のリンクがあるか確認するため遷移する。 / 岩手県神社庁公式サイトには神社検索機能や神社一覧ページが見当たらず、県内神社等のHPリンク集ページにも浅間神社への言及・リンクは存在しない。サイトマップ及びトップページも確認済みだが、浅間神社に関する情報は確認できなかった。",
+      "hops": 3,
+      "visited": [
+        "https://www.jinjacho.jp/",
+        "https://www.jinjacho.jp/pages/8/",
+        "https://www.jinjacho.jp/pages/62/"
+      ],
+      "html_cache": [
+        "https___www_jinjacho_jp_.html",
+        "https___www_jinjacho_jp_pages_8_.html",
+        "https___www_jinjacho_jp_pages_62_.html"
+      ]
+    },
+    "福島県": {
+      "shrines": [],
+      "search_note": "検索フォームはPOSTだが、GETパラメータとしてq=浅間で試行する。だめなら索引ページを探す。 / 検索ページ(?q=浅間)を訪問したが、実際の検索結果は表示されず、ダミーデータ(○○神社)のみが本文に含まれていた。JavaScript等による動的読み込みが必要な可能性があり、静的HTML取得では浅間神社の情報を確認できなかった。索引一覧等の代替リンクも本文中に見つからなかったため、これ以上の探索を終了する。",
+      "hops": 2,
+      "visited": [
+        "https://fukushima-jinjacho.or.jp",
+        "https://fukushima-jinjacho.or.jp/search/?q=浅間"
+      ],
+      "html_cache": [
+        "https___fukushima_jinjacho_or_jp.html",
+        "https___fukushima_jinjacho_or_jp_search__q___.html"
+      ]
+    },
+    "茨城県": {
+      "shrines": [],
+      "search_note": "神社一覧・検索ページを探すため「茨城の神社」らしきページへ遷移する / 県内神社紹介トップページ。地域別ページ(県北・県西など)へのリンクのみで浅間神社の情報は未確認。まず県北地域ページを探索する。 / 県北地域のページには浅間神社が見当たらなかった。他地域(県央・県南・鹿行・県西など)の一覧ページを確認するため、県内神社紹介トップページへ戻って他地域へのリンクを探す。",
+      "hops": 3,
+      "visited": [
+        "https://www.ibarakiken-jinjacho.or.jp/",
+        "https://www.ibarakiken-jinjacho.or.jp/ibaraki/index.html",
+        "https://www.ibarakiken-jinjacho.or.jp/ibaraki/kenhoku/index.html"
+      ],
+      "html_cache": [
+        "https___www_ibarakiken_jinjacho_or_jp_.html",
+        "https___www_ibarakiken_jinjacho_or_jp_ibaraki_index_html.html",
+        "https___www_ibarakiken_jinjacho_or_jp_ibaraki_kenhoku_index_html.html"
+      ]
+    },
+    "新潟県": {
+      "shrines": [],
+      "search_note": "検索フォームを使い、キーワード「浅間」で県内神社検索を実行する。 / 検索結果ページに「富士浅間社」(新潟市西区赤塚4965番地)が1件表示されたが、詳細ページへのリンクが本文・リンク一覧内に存在せず、祭神情報を確認できなかったため出力できない。他の索引ページやリンクも見当たらず、これ以上探索を進める手段がない。",
+      "hops": 2,
+      "visited": [
+        "https://niigata-jinjacho.jp",
+        "https://niigata-jinjacho.jp/shrine_niigata/search.php?area=&keyword=浅間"
+      ],
+      "html_cache": [
+        "https___niigata_jinjacho_jp.html",
+        "https___niigata_jinjacho_jp_shrine_niigata_search_php_area__keyword___.html"
+      ]
+    },
+    "富山県": {
+      "shrines": [],
+      "search_note": "検索フォーム(GET, s パラメータ)を利用して「浅間」で検索する。まだ浅間神社の情報は見つかっていない。 / 検索結果は0件だったため、氏神神社検索ページへ遷移して浅間神社を探す。 / 氏神神社検索ページには一覧が表示されておらず、検索フォームのみ。既に「浅間」で検索済みだが結果が見えないため、「浅間神社」で再検索を試みる。 / 「浅間神社」「浅間」のいずれのキーワードでも検索結果は0件(「検索結果にありません」と表示)。氏神神社検索ページも既に訪問済みだが浅間神社の情報は確認できなかった。これ以上の有効な索引・検索手段が見つからないため、富山県神社庁公式サイトからは浅間神社の情報を確認できなかった。",
+      "hops": 4,
+      "visited": [
+        "https://toyama-jinjacho.sakura.ne.jp/",
+        "https://toyama-jinjacho.sakura.ne.jp/?s=%E6%B5%85%E9%96%93",
+        "https://toyama-jinjacho.sakura.ne.jp/%E5%AF%8C%E5%B1%B1%E7%9C%8C%E6%B0%8F%E7%A5%9E%E7%A5%9E%E7%A4%BE%E6%A4%9C%E7%B4%A2",
+        "https://toyama-jinjacho.sakura.ne.jp/?s=%E6%B5%85%E9%96%93%E7%A5%9E%E7%A4%BE"
+      ],
+      "html_cache": [
+        "https___toyama_jinjacho_sakura_ne_jp_.html",
+        "https___toyama_jinjacho_sakura_ne_jp__s__E6_B5_85_E9_96_93.html",
+        "https___toyama_jinjacho_sakura_ne_jp__E5_AF_8C_E5_B1_B1_E7_9C_8C_E6_B0_8F_E7_A5_.html",
+        "https___toyama_jinjacho_sakura_ne_jp__s__E6_B5_85_E9_96_93_E7_A5_9E_E7_A4_BE.html"
+      ]
+    },
+    "石川県": {
+      "shrines": [],
+      "search_note": "検索フォームがGETでs パラメータを受け付けるため、キーワード「浅間」で検索を実行する。 / 検索結果0件のため神社検索ページへ遷移して探索を続ける / 検索フォームのトップページのみで浅間神社の情報は確認できなかった。既に「浅間」での検索は訪問済みのため、ひらがな表記「あさま」での再検索を試みる。 / 検索キーワード「浅間」「あさま」いずれも0件だった。神社検索ページ(shrine/)は訪問済みだが一覧・索引形式ではなく検索フォームのみのため、追加の検索語では探索回数が尽きた。石川県神社庁のサイト内検索では浅間神社は確認できなかった。",
+      "hops": 4,
+      "visited": [
+        "https://ishikawa-jinjacho.or.jp",
+        "https://www.ishikawa-jinjacho.or.jp/?s=浅間",
+        "https://www.ishikawa-jinjacho.or.jp/shrine/",
+        "https://www.ishikawa-jinjacho.or.jp/?s=あさま"
+      ],
+      "html_cache": [
+        "https___ishikawa_jinjacho_or_jp.html",
+        "https___www_ishikawa_jinjacho_or_jp__s___.html",
+        "https___www_ishikawa_jinjacho_or_jp_shrine_.html",
+        "https___www_ishikawa_jinjacho_or_jp__s____.html"
+      ]
+    },
+    "福井県": {
+      "shrines": [],
+      "search_note": "取得失敗 https://www.jinja-fukui.jp/member/index.php (0: HTTPError: HTTP Error 401: Unauthorized)",
+      "hops": 3,
+      "visited": [
+        "https://www.jinja-fukui.jp/",
+        "https://www.jinja-fukui.jp/search/index.php",
+        "https://www.jinja-fukui.jp/member/index.php"
+      ]
+    },
+    "長野県": {
+      "shrines": [],
+      "search_note": "取得失敗 https://www.nagano-jinjacho.jp/page/jinjasyoukai.html (0: HTTPError: HTTP Error 404: Not Found)",
+      "hops": 4,
+      "visited": [
+        "https://nagano-jinjacho.jp",
+        "https://nagano-jinjacho.jp/j-syoukai.html",
+        "https://www.nagano-jinjacho.jp/shibu/syouenchiku.htm",
+        "https://www.nagano-jinjacho.jp/page/jinjasyoukai.html"
+      ]
+    },
+    "岐阜県": {
+      "shrines": [
+        {
+          "name": "富士浅間神社",
+          "city": "恵那市",
+          "address": "岐阜県恵那市大井町森脇2381番地",
+          "main_deity": "木花咲夜姫命",
+          "source_quote": "本神社は貞享2年（１６８５）に創建され、本宮は富士山麓にある浅間大社である。祭神は木花咲夜姫命である。",
+          "source_url": "https://gifu-jinjacho.jp/search.php?keyword=浅間",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-11",
+          "html_cache": "https___gifu_jinjacho_jp_search_php_keyword___.html"
+        },
+        {
+          "name": "浅間神社",
+          "city": "可児市",
+          "address": "岐阜県可児市今渡1479番地の1",
+          "main_deity": "木花咲夜比賣神",
+          "source_quote": "氏子の口伝によれば元禄時代の創祀と伝へられ、祭神は木花咲夜比賣神にして、境内に神明神社、金刀比羅神社、稲荷神社、大國神社、天神神社、南宮神社、貴船神社の七社ありしが、。",
+          "source_url": "https://gifu-jinjacho.jp/search.php?keyword=浅間",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-11",
+          "html_cache": "https___gifu_jinjacho_jp_search_php_keyword___.html"
+        }
+      ],
+      "search_note": "検索フォームを使用して「浅間」で検索を実行する / 検索結果一覧(19件中1-10件)には他に大垣市赤坂町の浅間神社(shrno=2081)があるが本文抜粋に祭神記載がないため詳細ページを確認する。残り9件(次の10件)も未確認で、浅間関連(富士ｹ根神社・子護神社・冨士神社など浅間勧請系)を含む可能性があるため、大垣詳細確認後に次ページも探索が必要。 / 検索結果ページから浅間神社詳細ページを確認し祭神を取得した。残り探索回数の制約もあり、これ以上の索引探索は行わず結果を確定した。",
+      "hops": 3,
+      "visited": [
+        "https://gifu-jinjacho.jp",
+        "https://gifu-jinjacho.jp/search.php?keyword=浅間",
+        "https://gifu-jinjacho.jp/syosai.php?shrno=2081&shrname=%E2%98%85%E6%B5%85%E9%96%93%E7%A5%9E%E7%A4%BE%E2%98%85"
+      ],
+      "html_cache": [
+        "https___gifu_jinjacho_jp.html",
+        "https___gifu_jinjacho_jp_search_php_keyword___.html",
+        "https___gifu_jinjacho_jp_syosai_php_shrno_2081_shrname__E2_98_85_E6_B5_85_E9_96_.html"
+      ]
+    },
+    "愛知県": {
+      "shrines": [],
+      "search_note": "トップページには浅間神社の情報なし。検索フォーム(addr, orders, result_page)を使い「浅間」で検索を試みる。 / 検索結果ページ(addr=浅間)を確認したが、本文中に神社一覧や浅間神社の情報は含まれていなかった(JS/AJAX等で検索結果が動的表示されている可能性あり)。代替手段として地図から探すページを確認する。 / search_map.htmlのフォームはaddr(住所)とzip(郵便番号)のみで、社名検索ができない。既にaddr=浅間で検索を試みた形跡があるが結果不明のため、search.htmlの検索フォーム(社名欄の有無)を確認する。 / 検索フォームは住所検索用(addrパラメータ)であり、既に「浅間」で検索済み(https://aichi-jinjacho.or.jp/?addr=浅間&orders=&result_page=1)だが結果に浅間神社の情報は確認できなかった。他に索引ページや神社名検索の手段が見当たらず、残り探索回数も限られるため、これ以上の追跡は断念する。",
+      "hops": 4,
+      "visited": [
+        "https://aichi-jinjacho.or.jp",
+        "https://aichi-jinjacho.or.jp/?addr=%E6%B5%85%E9%96%93&orders=&result_page=1",
+        "https://aichi-jinjacho.or.jp/search_map.html",
+        "https://aichi-jinjacho.or.jp/search.html"
+      ],
+      "html_cache": [
+        "https___aichi_jinjacho_or_jp.html",
+        "https___aichi_jinjacho_or_jp__addr__E6_B5_85_E9_96_93_orders__result_page_1.html",
+        "https___aichi_jinjacho_or_jp_search_map_html.html",
+        "https___aichi_jinjacho_or_jp_search_html.html"
+      ]
+    },
+    "三重県": {
+      "shrines": [],
+      "search_note": "三重県神社庁トップページ。神社一覧ページへ遷移して浅間神社を探索する。 / 三重県神社庁教化委員会の神社情報ページ(検索機能がある可能性)へ遷移。市町別一覧には祭神情報がなく、浅間神社の有無も不明なため、より詳細情報がありそうなページを探索する。 / 本ページ本文には浅間神社の情報がなかった。WordPress標準の検索機能(?s=)を利用し「浅間」で検索を試みる。 / 三重県神社庁教化委員会サイトで「浅間」を検索したが該当する浅間神社の情報は見つからなかった。検索結果ページには浅間神社に関する記載がなく、支部一覧(22支部)を個別に巡るには残り探索回数(2回)が不足するため、これ以上の特定は不可能と判断し0件で終了する。",
+      "hops": 4,
+      "visited": [
+        "https://www.mie-jinjachou.page/",
+        "https://www.mie-jinjachou.page/三重県の神社一覧",
+        "http://kyoka.mie-jinjacho.or.jp/shrine/",
+        "https://kyoka.mie-jinjacho.or.jp/?s=%E6%B5%85%E9%96%93"
+      ],
+      "html_cache": [
+        "https___www_mie_jinjachou_page_.html",
+        "https___www_mie_jinjachou_page_________.html",
+        "http___kyoka_mie_jinjacho_or_jp_shrine_.html",
+        "https___kyoka_mie_jinjacho_or_jp__s__E6_B5_85_E9_96_93.html"
+      ]
+    },
+    "滋賀県": {
+      "shrines": [],
+      "search_note": "検索フォームはPOSTのため利用不可。神社検索/一覧ページへ遷移して浅間神社を探す。 / search.htmlページ本文・リンクともに情報が取得できず、浅間神社の検索・一覧ページへの手がかりが見つからなかった。残り探索回数もあるが、次に辿るべき有効なリンクが本文から確認できないため終了する。",
+      "hops": 2,
+      "visited": [
+        "https://www.shiga-jinjacho.jp",
+        "https://www.shiga-jinjacho.jp/search.html"
+      ],
+      "html_cache": [
+        "https___www_shiga_jinjacho_jp.html",
+        "https___www_shiga_jinjacho_jp_search_html.html"
+      ]
+    },
+    "京都府": {
+      "shrines": [],
+      "search_note": "神社紹介ページ(jinja.html)へ遷移し、神社一覧・検索機能を確認する / 神社一覧・検索ページと思われるshrine.htmlへ移動する / トップの地域別一覧ページ。浅間神社の情報は本文になし。区市町村別リストへのリンクのみ存在。残り探索回数が限られるため、まず右京区の一覧ページを確認する。 / 京都市右京区の神社一覧(shrine/01.html)を確認したが、浅間神社(木花咲耶姫/浅間大神を祀る神社)に該当する社名は見当たらなかった。残り探索回数が少なく、京都府内の全34区市町ページを網羅的に辿ることができないため、これ以上の探索を断念する。",
+      "hops": 4,
+      "visited": [
+        "http://kyoto-jinjacho.or.jp",
+        "http://kyoto-jinjacho.or.jp/jinja.html",
+        "http://kyoto-jinjacho.or.jp/shrine.html",
+        "http://kyoto-jinjacho.or.jp/shrine/01.html"
+      ],
+      "html_cache": [
+        "http___kyoto_jinjacho_or_jp.html",
+        "http___kyoto_jinjacho_or_jp_jinja_html.html",
+        "http___kyoto_jinjacho_or_jp_shrine_html.html",
+        "http___kyoto_jinjacho_or_jp_shrine_01_html.html"
+      ]
+    },
+    "大阪府": {
+      "shrines": [],
+      "search_note": "府内神社の紹介ページへ遷移し、浅間神社の一覧・索引を探す。 / このページには市区町村別の支部リンク一覧のみで、浅間神社の情報や祭神情報は確認できなかった。検索フォームも見当たらないため、大阪市の神社一覧ページ(osaka.html)へ遷移して浅間神社の有無を確認する。 / 当ページは大阪市内区一覧のみで、浅間神社に関する情報や検索機能は見つからなかった。各区ページを個別に確認する必要があるが、探索回数の制約上、浅間神社の存在を示す索引・検索リンクが本ページ内に存在しないため探索を終了する。",
+      "hops": 3,
+      "visited": [
+        "https://osaka-jinjacho.jp",
+        "https://www.osaka-jinjacho.jp/funai_jinja/index.html",
+        "https://www.osaka-jinjacho.jp/funai_jinja/osaka.html"
+      ],
+      "html_cache": [
+        "https___osaka_jinjacho_jp.html",
+        "https___www_osaka_jinjacho_jp_funai_jinja_index_html.html",
+        "https___www_osaka_jinjacho_jp_funai_jinja_osaka_html.html"
+      ]
+    },
+    "兵庫県": {
+      "shrines": [],
+      "search_note": "検索ページへ遷移して「浅間」で検索を試みる / 検索フォームは住所検索専用(address, ie_taisaku, lat, lng)で神社名検索には使えない。神社一覧・索引ページを探すためトップページ(index.html)を確認する。 / トップページには浅間神社の情報なし。検索ページsearch.htmlは訪問済みだが本文未確認のため、検索フォームの形式を確認するために再度followする。",
+      "hops": 3,
+      "visited": [
+        "https://www.hyogo-jinjacho.com",
+        "https://www.hyogo-jinjacho.com/search.html",
+        "https://www.hyogo-jinjacho.com/index.html"
+      ],
+      "html_cache": [
+        "https___www_hyogo_jinjacho_com.html",
+        "https___www_hyogo_jinjacho_com_search_html.html",
+        "https___www_hyogo_jinjacho_com_index_html.html"
+      ]
+    },
+    "奈良県": {
+      "shrines": [],
+      "search_note": "神社一覧ページへ遷移して浅間神社を探索する / 奈良市のページには「浅間」を含む神社名が見当たらなかった。他の市町村ページ(jinja02.html以降)を順に確認する。 / jinja02.html(生駒市・生駒郡)には浅間神社は見当たらなかった。奈良県神道青年会の神社検索サイト(narashinsei.com)でのキーワード検索を試みる。検索フォームの実際のパラメータ形式が不明なため、推測でURLを構築した。効果がなければ奈良県神社庁のjinja03~13の各地域ページを順に確認する必要がある。 / 検索結果ページには浅間神社の情報がなかった。ア行索引ページを確認する。 / ア行索引ページ(1ページ目)には浅間神社は見当たらない。既に浅間キーワード検索も実施済みだが結果に浅間神社は確認できなかった。探索回数が残り1回のため、これ以上の索引ページ(2ページ目以降やサ行等)を辿れず、確認できた浅間神社は0件として終了する。",
+      "hops": 5,
+      "visited": [
+        "https://www.naraken-jinjacho.jp/",
+        "https://www.naraken-jinjacho.jp/jinja.html",
+        "https://www.naraken-jinjacho.jp/jinja02.html",
+        "http://www.narashinsei.com/search/?keyword=浅間",
+        "http://www.narashinsei.com/search/kana/ア行/"
+      ],
+      "html_cache": [
+        "https___www_naraken_jinjacho_jp_.html",
+        "https___www_naraken_jinjacho_jp_jinja_html.html",
+        "https___www_naraken_jinjacho_jp_jinja02_html.html",
+        "http___www_narashinsei_com_search__keyword___.html",
+        "http___www_narashinsei_com_search_kana____.html"
+      ]
+    },
+    "和歌山県": {
+      "shrines": [],
+      "search_note": "神社名検索フォームに「浅間」を入力して検索するURLへ遷移する。EUC-JPエンコードを想定(浅間=%c1%f0%b4%d6)。 / 検索ページはmysql_connectエラーのため使用不可。データベース接続エラーが発生しており、浅間神社の情報を取得できなかった。",
+      "hops": 2,
+      "visited": [
+        "https://wakayama-jinjacho.or.jp",
+        "https://wakayama-jinjacho.or.jp/jdb/sys/user/SelectListWjtTbl.php?JinjyaMei=%c1%f0%b4%d6&button=%b8%a1%bd%f5"
+      ],
+      "html_cache": [
+        "https___wakayama_jinjacho_or_jp.html",
+        "https___wakayama_jinjacho_or_jp_jdb_sys_user_SelectListWjtTbl_php_JinjyaMei__c1_.html"
+      ]
+    },
+    "鳥取県": {
+      "shrines": [],
+      "search_note": "検索フォームを使い「浅間」で検索する。GETパラメータ形式が確認できたため組み立てて遷移。 / 検索キーワード「浅間」で0件。既に「浅間」「浅間神社」の両方で検索済みで結果なし。鳥取県神社庁サイト内に浅間神社の情報は見つからなかった。",
+      "hops": 2,
+      "visited": [
+        "https://tottori-jinjacho.jp",
+        "https://tottori-jinjacho.jp/publics/search/?search_word=浅間"
+      ],
+      "html_cache": [
+        "https___tottori_jinjacho_jp.html",
+        "https___tottori_jinjacho_jp_publics_search__search_word___.html"
+      ]
+    },
+    "島根県": {
+      "shrines": [],
+      "search_note": "神社検索ページへ遷移し、浅間神社を検索する / 検索フォームはGoogle CSEでcx値が不明なため利用不可。市町村一覧から探索を開始する。まず松江市のページを確認する。 / 松江市のページには浅間神社に該当する社名が見当たらなかった。神社検索ページで「浅間」キーワードによる検索を試みる。 / 検索キーワード「浅間」での検索結果ページには市町村一覧のみが表示され、浅間神社に関する情報は本文中に確認できなかった。市町村別ページ(松江市など)も訪問済みだが浅間神社の記載は無く、残り探索回数の制約上、全市町村を網羅的に確認することができないため、確認できた情報のみで終了する。",
+      "hops": 4,
+      "visited": [
+        "https://shimane-jinjacho.or.jp",
+        "https://www.shimane-jinjacho.or.jp/search/index.html",
+        "https://www.shimane-jinjacho.or.jp/matsue/index.html",
+        "https://www.shimane-jinjacho.or.jp/search/index.html?keyword=浅間"
+      ],
+      "html_cache": [
+        "https___shimane_jinjacho_or_jp.html",
+        "https___www_shimane_jinjacho_or_jp_search_index_html.html",
+        "https___www_shimane_jinjacho_or_jp_matsue_index_html.html",
+        "https___www_shimane_jinjacho_or_jp_search_index_html_keyword___.html"
+      ]
+    },
+    "岡山県": {
+      "shrines": [],
+      "search_note": "神社検索ページや全件一覧表示ページへ遷移して浅間神社を探索する。まず全件一覧表示を確認する。 / 一覧ページ(1609件/81ページ)には浅間神社の情報は確認できなかった。検索フォームがある可能性のある/search/にキーワード「浅間」でのGET検索を試みる。失敗した場合は全件一覧のページ送りを辿る必要がある。 / 検索ページ(?q=浅間)は検索フォームのみを含む静的HTMLで、JavaScript実行が必要なため実際の検索結果(神社一覧)が本文に含まれていない。全件一覧表示ページ(https://okayama-jinjacho.or.jp/search/list/)も既に訪問済みだが同様に動的コンテンツのため浅間神社の情報を本文から確認できなかった。祭神情報を伴う浅間神社のページを発見できなかったため0件で終了する。",
+      "hops": 3,
+      "visited": [
+        "https://okayama-jinjacho.or.jp",
+        "https://okayama-jinjacho.or.jp/search/list/",
+        "https://okayama-jinjacho.or.jp/search/?q=浅間"
+      ],
+      "html_cache": [
+        "https___okayama_jinjacho_or_jp.html",
+        "https___okayama_jinjacho_or_jp_search_list_.html",
+        "https___okayama_jinjacho_or_jp_search__q___.html"
+      ]
+    },
+    "広島県": {
+      "shrines": [],
+      "search_note": "神社一覧ページへ遷移して浅間神社を探す / 現在のページには浅間神社の情報がなく、市町別一覧(search_area)のみで索引がない。検索フォームはPOSTだが、GETパラメータとして search_txt=浅間 を試すためfollowする。 / 検索キーワード「浅間」で検索した結果、広島市東区の神社一覧が表示されたが、浅間神社に該当する社名は見当たらなかった。検索フォームはPOST方式のためGETでのURL組み立てができず、search_areaによる市町別一覧は32件あり全て確認するのは非効率。既に「浅間」検索を実施済みで結果に浅間神社が含まれていないため、広島県内に浅間神社は登録されていないと判断し探索終了。",
+      "hops": 3,
+      "visited": [
+        "https://hiroshima-jinjacho.jp",
+        "https://www.hiroshima-jinjacho.jp/hirosima_jinja/",
+        "https://www.hiroshima-jinjacho.jp/hirosima_jinja/?search_txt=浅間"
+      ],
+      "html_cache": [
+        "https___hiroshima_jinjacho_jp.html",
+        "https___www_hiroshima_jinjacho_jp_hirosima_jinja_.html",
+        "https___www_hiroshima_jinjacho_jp_hirosima_jinja__search_txt___.html"
+      ]
+    },
+    "山口県": {
+      "shrines": [],
+      "search_note": "市町ごとの一覧ページから探索を開始する。まず山口市を確認し、他の市町も順に確認予定。浅間神社は静岡・山梨由来の神社で富士山信仰と関連するため、山口県では少ない可能性があるが確認する。 / このページ(山口市の神社一覧)には浅間神社は見当たらなかった。山口県神社庁は市町村別の神社一覧ページ構成のようで、他市町村(下関市・宇部市・防府市等)の一覧ページを確認する必要がある。トップページの「山口県の神社を探す」から他地域の一覧へアクセスしたいが、直接のURLが不明なため、まずはトップページに戻って地域一覧リンクを探索する。",
+      "hops": 2,
+      "visited": [
+        "https://yamaguchi-jinjacho.or.jp",
+        "https://www.yamaguchi-jinjacho.or.jp/yamaguchi/"
+      ],
+      "html_cache": [
+        "https___yamaguchi_jinjacho_or_jp.html",
+        "https___www_yamaguchi_jinjacho_or_jp_yamaguchi_.html"
+      ]
+    },
+    "徳島県": {
+      "shrines": [],
+      "search_note": "取得失敗 http://awa-jinjacho.jp/ (0: URLError: <urlopen error [Errno 8] nodename nor servname pro) | DNS不解決を実測(A/NS/SOAなし・8.8.8.8でも同様)。検索インデックスにはサイト存在=一時障害または移転の可能性。本走行で再試行",
+      "hops": 1,
+      "visited": [
+        "http://awa-jinjacho.jp/"
+      ]
+    },
+    "香川県": {
+      "shrines": [],
+      "search_note": "検索フォームを使い「浅間」で検索を実行する / 検索結果0件だったため、神社一覧ページへ遷移して探索を継続する。 / 検索(s=浅間)で結果なし。神社一覧は39ページに及び全件確認は探索回数の制約上困難。市町村別索引にも「浅間」の名を持つ神社は確認できず、香川県神社庁公式サイト内で浅間神社(木花咲耶姫/浅間大神)の情報は発見できなかった。",
+      "hops": 3,
+      "visited": [
+        "https://kagawakenjinjacho.or.jp/",
+        "https://kagawakenjinjacho.or.jp/?s=浅間",
+        "https://kagawakenjinjacho.or.jp/shrine/"
+      ],
+      "html_cache": [
+        "https___kagawakenjinjacho_or_jp_.html",
+        "https___kagawakenjinjacho_or_jp__s___.html",
+        "https___kagawakenjinjacho_or_jp_shrine_.html"
+      ]
+    },
+    "愛媛県": {
+      "shrines": [],
+      "search_note": "検索キーワード「浅間」で神社検索ページを試行 / 「浅間」での検索結果は0件だったため、神社一覧ページから浅間神社を探索する。 / 検索キーワード「浅間」で神社検索(http://ehime-jinjacho.jp/jinja/?s=浅間)を実施済みだが、該当する浅間神社の情報はページ本文・リンク一覧に見当たらなかった。市町別索引(松山市・今治市等)を確認しても社名に「浅間」を含む神社は確認できず、祭神情報も含め浅間神社に関する記載は本ページ内に存在しない。探索回数の制約もあり、これ以上の索引を辿っても発見の見込みが低いため終了する。",
+      "hops": 3,
+      "visited": [
+        "http://ehime-jinjacho.jp/",
+        "http://ehime-jinjacho.jp/jinja/?s=浅間",
+        "http://ehime-jinjacho.jp/jinja/"
+      ],
+      "html_cache": [
+        "http___ehime_jinjacho_jp_.html",
+        "http___ehime_jinjacho_jp_jinja__s___.html",
+        "http___ehime_jinjacho_jp_jinja_.html"
+      ]
+    },
+    "福岡県": {
+      "shrines": [],
+      "search_note": "神社検索ページへのエリア別リンクを発見。まず福岡エリアを探索する。他エリア(北九州、筑豊、筑後)も後で探索が必要。 / 福岡エリアの一覧には浅間神社が見当たらなかった。他エリア(北九州・筑豊・筑後など)の一覧ページを探すためトップページへ遷移する。 / トップページには検索フォームや浅間神社の情報なし。エリア別一覧(fukuoka/kitakyusyu/chikuho/chikugo)がある。fukuokaは訪問済みのため未訪問のkitakyusyuエリアへ遷移し浅間神社を探索する。 / 北九州エリアの神社一覧を確認したが、浅間神社は掲載されていなかった。他エリア(福岡・北九州)は既に訪問済みで、残り探索回数も少ないため、これ以上の追跡は行わない。",
+      "hops": 4,
+      "visited": [
+        "https://fukuoka-jinjacho.or.jp",
+        "https://fukuoka-jinjacho.or.jp/area/fukuoka/",
+        "https://fukuoka-jinjacho.or.jp/",
+        "https://fukuoka-jinjacho.or.jp/area/kitakyusyu/"
+      ],
+      "html_cache": [
+        "https___fukuoka_jinjacho_or_jp.html",
+        "https___fukuoka_jinjacho_or_jp_area_fukuoka_.html",
+        "https___fukuoka_jinjacho_or_jp_.html",
+        "https___fukuoka_jinjacho_or_jp_area_kitakyusyu_.html"
+      ]
+    },
+    "佐賀県": {
+      "shrines": [],
+      "search_note": "神社一覧・マップページへ遷移して浅間神社を探索する / 佐賀県神社庁の全一覧を確認したが「浅間神社」に該当する社名は見当たらなかった。検索フォーム(s=浅間)で再確認する。 / 「浅間」で検索したが該当する投稿はなく、サイト内の神社一覧(サイドバー)にも「浅間神社」という名称の神社は見当たらなかった。佐賀県神社庁サイト内に浅間神社(木花咲耶姫等を祀る)は確認できなかった。",
+      "hops": 3,
+      "visited": [
+        "https://saga-jinjacho.jp",
+        "https://saga-jinjacho.jp/jinja-map/",
+        "https://saga-jinjacho.jp/?s=浅間"
+      ],
+      "html_cache": [
+        "https___saga_jinjacho_jp.html",
+        "https___saga_jinjacho_jp_jinja_map_.html",
+        "https___saga_jinjacho_jp__s___.html"
+      ]
+    },
+    "長崎県": {
+      "shrines": [],
+      "search_note": "神社検索ページへ遷移。浅間神社を検索する。 / search.htmlには検索フォームの入力欄やGETパラメータ名がページ本文からは確認できなかった。地域一覧(市町村名)も本文にはあるがリンクURLが示されていないため辿れない。一般的なsearch.html形式を推測し、q=浅間でのGET検索を試行する。祭神が確認できる浅間神社はまだ発見できていない。 / 検索(q=浅間)の結果ページには浅間神社の情報が含まれておらず、県内の神社一覧も市町村名のみでリンク先や祭神情報が確認できなかった。他に辿れる索引・検索結果が見つからないため探索を終了する。",
+      "hops": 3,
+      "visited": [
+        "https://nagasaki-jinjacho.or.jp",
+        "https://nagasaki-jinjacho.or.jp/search.html",
+        "https://nagasaki-jinjacho.or.jp/search.html?q=浅間"
+      ],
+      "html_cache": [
+        "https___nagasaki_jinjacho_or_jp.html",
+        "https___nagasaki_jinjacho_or_jp_search_html.html",
+        "https___nagasaki_jinjacho_or_jp_search_html_q___.html"
+      ]
+    },
+    "熊本県": {
+      "shrines": [],
+      "search_note": "公式サイトには神社名検索フォームが見当たらず、住所（市区町村・町丁目）から氏神様を探す機能のみ確認できた。まず氏神様を探すページを確認し、神社名検索や一覧の手段があるか調査する。 / 現在のページは市区町村選択による氏神検索フォームで、神社名によるキーワード検索欄が無い。全44ページを総当たりするのは非効率なため、WordPress標準の検索機能(/?s=)を使い「浅間」で検索を試みる。 / 検索結果ページには浅間神社に関する情報が見つからず、検索フォームもGETではないため（city/townの住所選択式で、キーワード検索不可）、これ以上の探索手段がない。氏神様検索ページも住所選択のみで神社名検索には対応していないため、探索を終了する。",
+      "hops": 3,
+      "visited": [
+        "https://kumamotokenjinjacho.jp/",
+        "https://kumamotokenjinjacho.jp/patron-god/",
+        "https://kumamotokenjinjacho.jp/?s=%E6%B5%85%E9%96%93"
+      ],
+      "html_cache": [
+        "https___kumamotokenjinjacho_jp_.html",
+        "https___kumamotokenjinjacho_jp_patron_god_.html",
+        "https___kumamotokenjinjacho_jp__s__E6_B5_85_E9_96_93.html"
+      ]
+    },
+    "鹿児島県": {
+      "shrines": [],
+      "search_note": "検索フォームのsパラメータで「浅間」を検索して探す。post_typeは推測(神社データのpost_type名不明のため後続で確認要)。 / 検索結果に浅間神社は該当なし。神社を探すページ(検索・一覧ページ)へ遷移して探索を続ける。 / 検索フォームのフィールド(s)を使い『浅間』で検索を試みる。post_type=jinjaを付けた過去の訪問では結果が確認できなかったため、post_type無しで再試行する。 / 検索結果「浅間」で該当する投稿がありませんでした。search-page(神社を探す)も既に訪問済みで、残り探索回数も限られているため、これ以上の有効な手がかりがなく終了します。",
+      "hops": 4,
+      "visited": [
+        "https://www.kagojinjacho.or.jp/",
+        "https://www.kagojinjacho.or.jp/?s=浅間&post_type=jinja",
+        "https://www.kagojinjacho.or.jp/search-page/",
+        "https://www.kagojinjacho.or.jp/?s=%E6%B5%85%E9%96%93"
+      ],
+      "html_cache": [
+        "https___www_kagojinjacho_or_jp_.html",
+        "https___www_kagojinjacho_or_jp__s____post_type_jinja.html",
+        "https___www_kagojinjacho_or_jp_search_page_.html",
+        "https___www_kagojinjacho_or_jp__s__E6_B5_85_E9_96_93.html"
+      ]
+    },
+    "山形県": {
+      "shrines": [
+        {
+          "name": "浅間神社",
+          "city": "東根市",
+          "address": "東根市羽入731",
+          "main_deity": "木花咲耶姫命（コノハナサクヤヒメノミコト）",
+          "source_quote": "鎮座地 東根市羽入731 御祭神 木花咲耶姫命（コノハナサクヤヒメノミコト）",
+          "source_url": "https://yamagata-jinjyacho.or.jp/shrine_detail/04002",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-11",
+          "html_cache": "https___yamagata_jinjyacho_or_jp_shrine_detail_04002.html"
+        }
+      ],
+      "search_note": "検索フォームがGET形式で存在するため、keyword=浅間で検索実行する。 / 検索結果に浅間神社(東根市羽入)が1件見つかった。詳細ページへ移動して祭神を確認する。 / 検索結果ページに戻り、他に浅間神社があるか再確認する。既に東根市の浅間神社は発見済み。",
+      "hops": 3,
+      "visited": [
+        "https://yamagata-jinjyacho.or.jp/",
+        "https://yamagata-jinjyacho.or.jp/shrine_search?keyword=浅間",
+        "https://yamagata-jinjyacho.or.jp/shrine_detail/04002"
+      ],
+      "html_cache": [
+        "https___yamagata_jinjyacho_or_jp_.html",
+        "https___yamagata_jinjyacho_or_jp_shrine_search_keyword___.html",
+        "https___yamagata_jinjyacho_or_jp_shrine_detail_04002.html"
+      ]
+    },
+    "山梨県": {
+      "shrines": [
+        {
+          "name": "浅間神社",
+          "city": "甲府市",
+          "address": "甲府市青沼3-5-3",
+          "main_deity": "木花咲耶姫命",
+          "source_quote": "■鎮座地： 甲府市青沼3-5-3 ■御祭神： 木花咲耶姫命",
+          "source_url": "https://www.yamanashi-jinjacho.or.jp/intro/search/detail/1025",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-11",
+          "html_cache": "https___www_yamanashi_jinjacho_or_jp_intro_search_detail_1025.html"
+        }
+      ],
+      "search_note": "検索結果一覧に38件中25件を確認。まず最初の詳細ページ(1025)へ遷移し祭神を確認する。残りの一覧2ページ目や他の詳細ページは探索回数の制約上、次のステップで順次確認予定。 / 甲府市青沼の浅間神社を確認済み。検索結果ページに戻り、他の浅間神社（一宮浅間神社・河口浅間神社等）の詳細リンクを確認するため再訪する。",
+      "hops": 2,
+      "visited": [
+        "https://www.yamanashi-jinjacho.or.jp/intro/search/result?jinjaName=浅間",
+        "https://www.yamanashi-jinjacho.or.jp/intro/search/detail/1025"
+      ],
+      "html_cache": [
+        "https___www_yamanashi_jinjacho_or_jp_intro_search_result_jinjaName___.html",
+        "https___www_yamanashi_jinjacho_or_jp_intro_search_detail_1025.html"
+      ]
+    }
+  }
+}
