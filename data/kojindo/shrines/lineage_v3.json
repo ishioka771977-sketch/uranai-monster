@@ -232,5 +232,41 @@
         "source_type": "県神社庁DB"
       }
     ]
+  },
+  {
+    "lineage": "asama",
+    "god_id": "konohanasakuya",
+    "pref": "山形県",
+    "name": "浅間神社",
+    "city": "東根市羽入731",
+    "main_deity": [
+      "木花咲耶姫命（コノハナサクヤヒメノミコト）"
+    ],
+    "sources": [
+      {
+        "url": "https://yamagata-jinjyacho.or.jp/shrine_detail/04002",
+        "quote": "鎮座地 東根市羽入731 御祭神 木花咲耶姫命（コノハナサクヤヒメノミコト）",
+        "retrieved_at": "2026-07-11",
+        "source_type": "県神社庁DB"
+      }
+    ]
+  },
+  {
+    "lineage": "asama",
+    "god_id": "konohanasakuya",
+    "pref": "山梨県",
+    "name": "浅間神社",
+    "city": "甲府市青沼3-5-3",
+    "main_deity": [
+      "木花咲耶姫命"
+    ],
+    "sources": [
+      {
+        "url": "https://www.yamanashi-jinjacho.or.jp/intro/search/detail/1025",
+        "quote": "■鎮座地： 甲府市青沼3-5-3 ■御祭神： 木花咲耶姫命",
+        "retrieved_at": "2026-07-11",
+        "source_type": "県神社庁DB"
+      }
+    ]
   }
 ]
