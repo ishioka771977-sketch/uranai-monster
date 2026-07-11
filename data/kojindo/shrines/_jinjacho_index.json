@@ -36,10 +36,10 @@
   },
   "山形県": {
     "url": "https://yamagata-jinjyacho.or.jp/",
-    "title": "",
+    "title": "山形県神社庁",
     "verified_at": "2026-07-11",
     "tier": "tier1_auto",
-    "method": "search(検証は取得失敗・要目視)",
+    "method": "search+くろたん目視確定(綴りjinjya・一字照合済)",
     "fetch_status": 0
   },
   "福島県": {
@@ -131,7 +131,9 @@
     "title": "山梨県神社庁 | 山梨県神社庁は県内の神社を包括する組織です",
     "verified_at": "2026-07-11",
     "tier": "tier1_auto",
-    "method": "pattern"
+    "method": "pattern",
+    "search_url": "https://www.yamanashi-jinjacho.or.jp/intro/search/result?jinjaName=浅間",
+    "search_url_note": "検索フォーム実測(jinjaName param)・浅間38件ヒット確認 2026-07-11"
   },
   "長野県": {
     "url": "https://nagano-jinjacho.jp",
@@ -247,10 +249,10 @@
   },
   "徳島県": {
     "url": "http://awa-jinjacho.jp/",
-    "title": "",
+    "title": "徳島県神社庁",
     "verified_at": "2026-07-11",
     "tier": "tier1_auto",
-    "method": "search(検証は取得失敗・要目視)",
+    "method": "search+くろたん目視確定(旧国名awa・http運用・県観光公式の外部リンクで裏付き)",
     "fetch_status": 0
   },
   "香川県": {
@@ -304,11 +306,11 @@
   },
   "大分県": {
     "url": null,
-    "note": "公式サイトなし(神社本庁一覧に掲載・電話のみ)。収集は神社公式・自治体ソースで代替"
+    "note": "公式サイトなし(神社本庁一覧に掲載・電話のみ)。収集は神社公式・自治体ソースで代替。【くろたん条件】レコードのsource_typeに『県神社庁DB不存在につき代替』を注記"
   },
   "宮崎県": {
     "url": null,
-    "note": "公式サイトなし(『宮巡』は神職運営の紹介サイトで庁公式ではない)。収集は神社公式・自治体ソースで代替"
+    "note": "公式サイトなし(『宮巡』は神職運営の紹介サイトで庁公式ではない)。収集は神社公式・自治体ソースで代替。【くろたん条件】レコードのsource_typeに『県神社庁DB不存在につき代替』を注記"
   },
   "鹿児島県": {
     "url": "https://www.kagojinjacho.or.jp/",

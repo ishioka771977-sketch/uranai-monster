@@ -1,0 +1,236 @@
+[
+  {
+    "lineage": "asama",
+    "god_id": "konohanasakuya",
+    "pref": "静岡県",
+    "name": "富士山本宮浅間大社",
+    "city": "静岡県富士宮市宮町1-1",
+    "main_deity": [
+      "木花之佐久夜毘売命(浅間大神)"
+    ],
+    "sources": [
+      {
+        "url": "http://fuji-hongu.or.jp/sengen/history/index.html",
+        "quote": "この霊山を御神体として鎮まりますのは、浅間大神・木花之佐久夜毘売命にまします。",
+        "retrieved_at": "2026-07-08",
+        "source_type": "県神社庁DB"
+      }
+    ]
+  },
+  {
+    "lineage": "asama",
+    "god_id": "konohanasakuya",
+    "pref": "栃木県",
+    "name": "浅間神社(嘉多山浅間神社)",
+    "city": "栃木県佐野市嘉多山1786",
+    "main_deity": [
+      "木花咲耶姫命"
+    ],
+    "sources": [
+      {
+        "url": "https://sengenjinja-sano-katayama.com/",
+        "quote": "嘉多山 浅間神社（かたやま せんげんじんじゃ）は今より約800年前の弘長2年（1261）に創建され、主祭神「木花咲耶姫命」ほか7柱の神々を奉祭する神社です。",
+        "retrieved_at": "2026-07-08",
+        "source_type": "県神社庁DB"
+      }
+    ]
+  },
+  {
+    "lineage": "asama",
+    "god_id": "konohanasakuya",
+    "pref": "千葉県",
+    "name": "稲毛浅間神社",
+    "city": "千葉県千葉市稲毛区稲毛1-15-10",
+    "main_deity": [
+      "木花咲耶姫命（このはなのさくやひめのみこと）"
+    ],
+    "sources": [
+      {
+        "url": "https://www.inage-sengenjinja.or.jp/",
+        "quote": "稲毛浅間神社の主祭神である、木花咲耶姫命は安産・子育ての御神徳が高いことで広く崇敬されています",
+        "retrieved_at": "2026-07-08",
+        "source_type": "県神社庁DB"
+      }
+    ]
+  },
+  {
+    "lineage": "asama",
+    "god_id": "konohanasakuya",
+    "pref": "神奈川県",
+    "name": "横濱浅間神社",
+    "city": "神奈川県横浜市西区浅間町",
+    "main_deity": [
+      "木花咲耶姫命"
+    ],
+    "sources": [
+      {
+        "url": "https://yokohama-sengen.com/",
+        "quote": "主祭神:木花咲耶姫命 このはなさくやひめのみこと",
+        "retrieved_at": "2026-07-08",
+        "source_type": "県神社庁DB"
+      }
+    ]
+  },
+  {
+    "lineage": "asama",
+    "god_id": "konohanasakuya",
+    "pref": "宮城県",
+    "name": "浅間神社(せんげんじんじゃ)",
+    "city": "宮城県石巻市大瓜字八津山35",
+    "main_deity": [
+      "木花開耶姫命"
+    ],
+    "sources": [
+      {
+        "url": "https://www.miyagi-jinjacho.or.jp/jinja-search/detail.php?code=310030818",
+        "quote": "鎮座地 宮城県石巻市大瓜字八津山35 主祭神 木花開耶姫命",
+        "retrieved_at": "2026-07-08",
+        "source_type": "県神社庁DB"
+      }
+    ]
+  },
+  {
+    "lineage": "asama",
+    "god_id": "konohanasakuya",
+    "pref": "群馬県",
+    "name": "富士浅間神社",
+    "city": "群馬県藤岡市(詳細な番地は公式サイトで確認できず)",
+    "main_deity": [
+      "木花開耶姫命"
+    ],
+    "sources": [
+      {
+        "url": "https://sengen.skr.jp/",
+        "quote": "富士山を御神体とする 桜の女神、木花開耶姫命",
+        "retrieved_at": "2026-07-10",
+        "source_type": "県神社庁DB"
+      }
+    ]
+  },
+  {
+    "lineage": "asama",
+    "god_id": "konohanasakuya",
+    "pref": "埼玉県",
+    "name": "浅間神社(前玉神社境内社)",
+    "city": "埼玉県行田市大字埼玉5450",
+    "main_deity": [
+      "木花開耶姫命(コノハナサクヤヒメ)"
+    ],
+    "sources": [
+      {
+        "url": "https://sakitama-jinja.com/%E6%B5%85%E9%96%93%E7%A5%9E%E7%A4%BE/",
+        "quote": "浅間神社の御祭神は木花(桜だけを指すという説もある)の様に美しいとされる木花開耶姫命(コノハナサクヤヒメ)です。子育て・安産・産業の神様として関東一円に崇敬されています。",
+        "retrieved_at": "2026-07-08",
+        "source_type": "県神社庁DB"
+      }
+    ]
+  },
+  {
+    "lineage": "asama",
+    "god_id": "konohanasakuya",
+    "pref": "東京都",
+    "name": "浅間神社(多摩川浅間神社)",
+    "city": "東京都大田区田園調布1-55-12",
+    "main_deity": [
+      "木花咲耶姫命"
+    ],
+    "sources": [
+      {
+        "url": "http://www.tokyo-jinjacho.or.jp/ota/5666",
+        "quote": "御祭神・木花咲耶姫命・例祭日・6月1日・所在地・〒145-0071 東京都大田区田園調布1-55-12",
+        "retrieved_at": "2026-07-10",
+        "source_type": "県神社庁DB"
+      }
+    ]
+  },
+  {
+    "lineage": "asama",
+    "god_id": "konohanasakuya",
+    "pref": "東京都",
+    "name": "浅間神社(せんげんさま)",
+    "city": "東京都大田区大森西2-2-7",
+    "main_deity": [
+      "木花咲耶姫命"
+    ],
+    "sources": [
+      {
+        "url": "http://www.tokyo-jinjacho.or.jp/ota/5393",
+        "quote": "木花咲耶姫命（このはなさくやひめのみこと）",
+        "retrieved_at": "2026-07-10",
+        "source_type": "県神社庁DB"
+      }
+    ]
+  },
+  {
+    "lineage": "asama",
+    "god_id": "konohanasakuya",
+    "pref": "高知県",
+    "name": "朝峯神社",
+    "city": "高知県高知市介良乙1927番地",
+    "main_deity": [
+      "木花開耶姫命（コノハナサクヤヒメノミコト）"
+    ],
+    "sources": [
+      {
+        "url": "https://asamine-jinja.jp/about/",
+        "quote": "【主祭神】木花開耶姫命（コノハナサクヤヒメノミコト） 【相殿神】瓊々杵命（ニニギノミコト）、大山津見命（オオヤマヅミノミコト）",
+        "retrieved_at": "2026-07-09",
+        "source_type": "県神社庁DB"
+      }
+    ]
+  },
+  {
+    "lineage": "asama",
+    "god_id": "konohanasakuya",
+    "pref": "秋田県",
+    "name": "浅間神社",
+    "city": "〒018-3201 山本郡藤里町藤琴字馬坂3",
+    "main_deity": [
+      "木花開耶姫神（このはなさくやひめのかみ）"
+    ],
+    "sources": [
+      {
+        "url": "https://akita-jinjacho.sakura.ne.jp/shrine_search/%e6%b5%85%e9%96%93%e7%a5%9e%e7%a4%be/",
+        "quote": "御祭神 木花開耶姫神（このはなさくやひめのかみ） 応神天皇（おうじんてんのう） 天照大神（あまてらすおおかみ） 火産霊神（ほむすびのかみ） 猿田彦神（さるたひこのかみ） 豊受姫神（とようけひめのかみ） 武甕槌神（たけみかつちのかみ） 菅原神（すがわらのかみ） 大山祇神（おおやまつみのかみ） 日本武尊（やまとたけるのみこと） 加具土神（かぐつちのかみ）",
+        "retrieved_at": "2026-07-11",
+        "source_type": "県神社庁DB"
+      }
+    ]
+  },
+  {
+    "lineage": "asama",
+    "god_id": "konohanasakuya",
+    "pref": "岐阜県",
+    "name": "富士浅間神社",
+    "city": "岐阜県恵那市大井町森脇2381番地",
+    "main_deity": [
+      "木花咲夜姫命"
+    ],
+    "sources": [
+      {
+        "url": "https://gifu-jinjacho.jp/search.php?keyword=浅間",
+        "quote": "本神社は貞享2年（１６８５）に創建され、本宮は富士山麓にある浅間大社である。祭神は木花咲夜姫命である。",
+        "retrieved_at": "2026-07-11",
+        "source_type": "県神社庁DB"
+      }
+    ]
+  },
+  {
+    "lineage": "asama",
+    "god_id": "konohanasakuya",
+    "pref": "岐阜県",
+    "name": "浅間神社",
+    "city": "岐阜県可児市今渡1479番地の1",
+    "main_deity": [
+      "木花咲夜比賣神"
+    ],
+    "sources": [
+      {
+        "url": "https://gifu-jinjacho.jp/search.php?keyword=浅間",
+        "quote": "氏子の口伝によれば元禄時代の創祀と伝へられ、祭神は木花咲夜比賣神にして、境内に神明神社、金刀比羅神社、稲荷神社、大國神社、天神神社、南宮神社、貴船神社の七社ありしが、。",
+        "retrieved_at": "2026-07-11",
+        "source_type": "県神社庁DB"
+      }
+    ]
+  }
+]

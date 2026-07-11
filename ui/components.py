@@ -1106,6 +1106,9 @@ def render_kojindo_course(bundle: DivinationBundle, data: dict = None):
 </div>
 """, unsafe_allow_html=True)
 
+    # 推奨参拝（v3 P4: 総本社+県内系列社の二段構え）+ 意識の種
+    _render_kojindo_shrine_section(bundle, k)
+
     # 注釈（占いモンスター独自構築であることの透明化）
     st.markdown("""
 <div style="text-align:center; margin:10px 0; color:#5A5A5A; font-size:0.7em;">
@@ -1115,6 +1118,78 @@ def render_kojindo_course(bundle: DivinationBundle, data: dict = None):
 """, unsafe_allow_html=True)
 
     st.markdown('</div>', unsafe_allow_html=True)
+
+
+def _render_kojindo_shrine_section(bundle, k):
+    """推奨参拝の二段構え表示（古神道v3 P4）
+
+    一段目: 守護神の総本社（全国どこからでも・遥拝含む）
+    二段目: 現住所の県内系列社（P2収集データがある場合のみ）
+    末尾: 意識の種（柱×支の参拝所作。該当データがある場合のみ）
+    """
+    from core.kojindo import get_shrine_recommendation, get_seed
+
+    god_id = getattr(k, "god_id", "")
+    if not god_id:
+        return
+    pref = getattr(getattr(bundle, "person", None), "current_pref", None)
+    try:
+        rec = get_shrine_recommendation(god_id, pref)
+        seed = get_seed(god_id, getattr(k, "getsu_shi", ""))
+    except Exception:
+        return  # データ不備時は本文表示を壊さない
+
+    if not rec["sohonsha"] and not rec["local"] and not seed:
+        return
+
+    st.markdown(f"""
+<div style="margin:18px 0 8px; text-align:center;">
+<span style="color:#BFA350; font-size:0.95em; letter-spacing:0.15em;">— {k.god_name}とつながる場所 —</span>
+</div>
+""", unsafe_allow_html=True)
+
+    # 一段目: 総本社（両論収載の社は複数表示）
+    for s in rec["sohonsha"]:
+        loc = s.get("location", {})
+        desig = s.get("self_designation") or s.get("lineage") or ""
+        lc = s.get("lineage_count") or {}
+        scale = f"（{lc['label']}）" if lc.get("label") else ""
+        st.markdown(f"""
+<div style="margin:8px 0; padding:14px; background:rgba(191,163,80,0.06); border:1px solid rgba(191,163,80,0.35); border-radius:8px;">
+<div style="color:#D4B96A; font-weight:bold; font-family:Noto Serif JP, serif;">⛩️ {s['name']} <span style="color:#8A8478; font-weight:normal; font-size:0.8em;">{loc.get('pref','')}{loc.get('city','')}</span></div>
+<div style="color:#F0EBE0; font-size:0.88em; margin-top:4px;">{desig}{scale}</div>
+</div>
+""", unsafe_allow_html=True)
+
+    # 二段目: 県内系列社（現住所設定済み＆収集データあり）
+    if rec["local"]:
+        st.markdown(f"""
+<div style="color:#BFA350; font-size:0.85em; margin:10px 0 4px;">お住まいの{rec['pref']}なら、こちらでも{k.god_name}に会えます</div>
+""", unsafe_allow_html=True)
+        for s in rec["local"][:3]:
+            deity = "・".join(s.get("main_deity", [])) if isinstance(s.get("main_deity"), list) else (s.get("main_deity") or "")
+            st.markdown(f"""
+<div style="margin:6px 0; padding:10px 14px; background:rgba(191,163,80,0.03); border:1px solid rgba(191,163,80,0.2); border-radius:8px;">
+<div style="color:#F0EBE0; font-size:0.92em;">⛩️ {s['name']} <span style="color:#8A8478; font-size:0.82em;">{s.get('city','')}</span></div>
+<div style="color:#8A8478; font-size:0.78em; margin-top:2px;">御祭神: {deity}</div>
+</div>
+""", unsafe_allow_html=True)
+    elif rec["pref"]:
+        st.markdown(f"""
+<div style="color:#8A8478; font-size:0.78em; margin:8px 0;">
+{rec['pref']}の系列社データは順次拡充中です。総本社は遠くても、心を向ければ届きます（遥拝）。
+</div>
+""", unsafe_allow_html=True)
+
+    # 意識の種（柱×支の参拝所作）
+    if seed:
+        st.markdown(f"""
+<div style="margin:14px 0; padding:14px; background:linear-gradient(135deg, rgba(191,163,80,0.08) 0%, rgba(191,163,80,0.02) 100%); border:1px solid rgba(212,185,106,0.4); border-radius:10px;">
+<div style="color:#BFA350; font-size:0.8em; letter-spacing:0.12em; margin-bottom:6px;">— 参拝のとき、あなただけの所作 —</div>
+<div style="text-align:center; margin:8px 0;"><span style="color:#D4B96A; font-family:Noto Serif JP, serif; font-size:1.05em;">{seed.get('phrase','')}</span></div>
+<div style="color:#F0EBE0; font-size:0.9em; line-height:1.9;">{seed.get('action','')}</div>
+</div>
+""", unsafe_allow_html=True)
 
 
 def render_aisho_result(bundle1, bundle2, data: dict, relationship: str = "love"):
