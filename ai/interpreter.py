@@ -78,6 +78,20 @@ def _get_claude_client():
             return None
         key = os.environ.get("ANTHROPIC_API_KEY", "").strip()
         if not key:
+            # secrets/.env からの読み込みを試す(従来は環境変数のみ参照で、
+            # ローカル実行等では黙ってGeminiに落ちていた。2026-07-12修正)
+            try:
+                import streamlit as st
+                if hasattr(st, "secrets") and "ANTHROPIC_API_KEY" in st.secrets:
+                    os.environ["ANTHROPIC_API_KEY"] = st.secrets["ANTHROPIC_API_KEY"]
+            except Exception:
+                pass
+            if not os.environ.get("ANTHROPIC_API_KEY"):
+                env_path = os.path.join(
+                    os.path.dirname(os.path.dirname(os.path.abspath(__file__))), ".env")
+                load_dotenv(env_path, override=False)
+            key = os.environ.get("ANTHROPIC_API_KEY", "").strip()
+        if not key:
             return None
         try:
             _claude_client = anthropic.Anthropic(api_key=key)
@@ -4546,23 +4560,19 @@ def generate_bansho_reading(bundle: DivinationBundle) -> dict:
     )
 
     try:
-        client = _get_client()
-        response = client.models.generate_content(
-            model="gemini-2.5-pro",
-            contents=_with_person(prompt, bundle, v3_polish=True),
-            config=types.GenerateContentConfig(
-                system_instruction=BANSHO_SYSTEM_PROMPT,
-                max_output_tokens=5000 + 4096,
-                temperature=0.9,
-                thinking_config=types.ThinkingConfig(thinking_budget=4096),
-            ),
+        # プロバイダ切替(_call_api_text)経由に統一(2026-07-12):
+        # AI_PROVIDER=claude なら Claude(Fable)、失敗時は Gemini に自動フォールバック。
+        # プロンプト(BANSHO_SYSTEM_PROMPT/BANSHO_USER_PROMPT)は不変。
+        text = _call_api_text(
+            BANSHO_SYSTEM_PROMPT,
+            _with_person(prompt, bundle, v3_polish=True),
+            max_tokens=5000,
         )
-        text = response.text or ""
         result = _parse_json_response(text)
         if result and result.get("reading"):
             return result
     except Exception as ex:
-        print(f"[万象学] AI鑑定生成エラー: {ex}")
+        print(f"[万象学] AI鑑定生成エラー: {ex}", flush=True)
 
     return _bansho_fallback(bundle)
 
@@ -5408,17 +5418,10 @@ def generate_kaiyun_taiun_reading(
 
 
 def _call_api_with_system(system: str, prompt: str, max_tokens: int = 1500) -> dict:
-    """システムプロンプト指定付きでGemini APIを呼び、JSON応答をパースする"""
-    client = _get_client()
-    response = client.models.generate_content(
-        model="gemini-2.5-pro",
-        contents=prompt,
-        config=types.GenerateContentConfig(
-            system_instruction=system,
-            max_output_tokens=max_tokens + 4096,
-            temperature=0.9,
-            thinking_config=types.ThinkingConfig(thinking_budget=4096),
-        ),
-    )
-    text = response.text or ""
+    """システムプロンプト指定付きでAIを呼び、JSON応答をパースする。
+
+    プロバイダ切替(_call_api_text)経由に統一(2026-07-12):
+    AI_PROVIDER=claude なら Claude(Fable)、失敗時は Gemini に自動フォールバック。
+    """
+    text = _call_api_text(system, prompt, max_tokens=max_tokens)
     return _parse_json_response(text)
