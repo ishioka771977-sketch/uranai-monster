@@ -132,8 +132,8 @@
     "verified_at": "2026-07-11",
     "tier": "tier1_auto",
     "method": "pattern",
-    "search_url": "https://www.yamanashi-jinjacho.or.jp/intro/search/result?jinjaName=浅間",
-    "search_url_note": "検索フォーム実測(jinjaName param)・浅間38件ヒット確認 2026-07-11"
+    "search_url": "https://www.yamanashi-jinjacho.or.jp/intro/search/result?jinjaName={kw}",
+    "search_url_note": "検索フォーム実測(jinjaNameパラメータ)。{kw}に系列キーワードを差し込む 2026-07-11"
   },
   "長野県": {
     "url": "https://nagano-jinjacho.jp",

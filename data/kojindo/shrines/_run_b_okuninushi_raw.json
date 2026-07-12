@@ -1,0 +1,992 @@
+{
+  "prefs": {
+    "石川県": {
+      "shrines": [
+        {
+          "name": "子浦出雲神社",
+          "city": "宝達志水町",
+          "address": "羽咋郡宝達志水町子浦レ213外10筆合併地",
+          "main_deity": "大国主命 伊邪那美命",
+          "source_quote": "[鎮座地] 羽咋郡宝達志水町子浦レ213外10筆合併地 [御祭神] 大国主命 伊邪那美命",
+          "source_url": "https://www.ishikawa-jinjacho.or.jp/?s=出雲",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-11",
+          "html_cache": "https___www_ishikawa_jinjacho_or_jp__s___.html"
+        },
+        {
+          "name": "出雲神社",
+          "city": "宝達志水町",
+          "address": "羽咋郡宝達志水町荻市リの77番地",
+          "main_deity": "大国主命",
+          "source_quote": "[鎮座地] 羽咋郡宝達志水町荻市リの77番地 [御祭神] 大国主命",
+          "source_url": "https://www.ishikawa-jinjacho.or.jp/?s=出雲",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-11",
+          "html_cache": "https___www_ishikawa_jinjacho_or_jp__s___.html"
+        }
+      ],
+      "search_note": "検索フォーム(GET, フィールド名s)を使って「出雲」で検索。次に「大国主」「大己貴」「大國魂」も試す予定。 / 石川県神社庁の「出雲」検索結果1ページ目で祭神付きの出雲神社を複数確認。大国主命/大己貴神を祀る3社を代表として記録。他にも金沢市内に同系の出雲神社(北町・二宮町・二ツ屋町・西念町・出雲町)が複数あり、いずれも大国主神/大国主命を祭神とすることが一覧本文で確認できたため十分な件数を確保できたと判断しdoneとした。",
+      "hops": 2,
+      "visited": [
+        "https://ishikawa-jinjacho.or.jp",
+        "https://www.ishikawa-jinjacho.or.jp/?s=出雲"
+      ],
+      "html_cache": [
+        "https___ishikawa_jinjacho_or_jp.html",
+        "https___www_ishikawa_jinjacho_or_jp__s___.html"
+      ]
+    },
+    "福井県": {
+      "shrines": [],
+      "search_note": "取得失敗 https://www.jinja-fukui.jp/member/index.php (0: HTTPError: HTTP Error 401: Unauthorized)",
+      "hops": 3,
+      "visited": [
+        "https://www.jinja-fukui.jp/",
+        "https://www.jinja-fukui.jp/search/index.php",
+        "https://www.jinja-fukui.jp/member/index.php"
+      ]
+    },
+    "山梨県": {
+      "shrines": [],
+      "search_note": "出雲神社(山梨市中村95)の詳細ページを確認して祭神を検証する必要がある。詳細ページへfollowする。 / 詳細ページ確認:出雲神社(山梨市中村)の御祭神は建速素盞鳴神でありスサノオ系のため対象外。大国主で再検索を試みる。 / 「大国主」検索は0件。次に「大己貴」で検索を試みる。 / 「出雲」「大国主」「大己貴」で検索済み(大己貴は0件)。残り探索回数を使い「大國魂」で検索を試みる。過去に訪問した detail/2045(出雲検索でヒット)は本文が確認できていないため今回は祭神を引用できず出力していない。 / 山梨県神社庁の神社検索で「出雲」「大国主」「大己貴」「大國魂」を検索したが、「大國魂」検索では『神社は見つかりませんでした』と表示され、対象神社は確認できなかった。過去に訪問したdetail/2045についても祭神が出雲系（大国主命・大己貴命・大穴牟遅神・大國主大神）であることを示す記載は確認できず、該当する神社は発見できなかった。残り探索回数の制約により調査を終了する。",
+      "hops": 5,
+      "visited": [
+        "https://www.yamanashi-jinjacho.or.jp/intro/search/result?jinjaName=出雲",
+        "https://www.yamanashi-jinjacho.or.jp/intro/search/detail/2045",
+        "https://www.yamanashi-jinjacho.or.jp/intro/search/result?jinjaName=大国主",
+        "https://www.yamanashi-jinjacho.or.jp/intro/search/result?jinjaName=大己貴",
+        "https://www.yamanashi-jinjacho.or.jp/intro/search/result?jinjaName=大國魂"
+      ],
+      "html_cache": [
+        "https___www_yamanashi_jinjacho_or_jp_intro_search_result_jinjaName___.html",
+        "https___www_yamanashi_jinjacho_or_jp_intro_search_detail_2045.html",
+        "https___www_yamanashi_jinjacho_or_jp_intro_search_result_jinjaName____.html",
+        "https___www_yamanashi_jinjacho_or_jp_intro_search_result_jinjaName____.html",
+        "https___www_yamanashi_jinjacho_or_jp_intro_search_result_jinjaName____.html"
+      ]
+    },
+    "長野県": {
+      "shrines": [
+        {
+          "name": "大國主神社",
+          "city": "長野市",
+          "address": "長野県長野市大字南長野字徳永沖1044-4",
+          "main_deity": "大國主大神（おおくにぬしおおかみ）",
+          "source_quote": "神社名 大國主神社（おおくにぬしじんじゃ） 鎮座地 長野県長野市大字南長野字徳永沖1044-4 本社祭神名 大國主大神（おおくにぬしおおかみ）",
+          "source_url": "https://www.nagano-jinjacho.jp/shibu/01hokusin/04nagano/ookuninusi.htm",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-11",
+          "html_cache": "https___www_nagano_jinjacho_jp_shibu_01hokusin_04nagano_ookuninusi_htm.html"
+        }
+      ],
+      "search_note": "神社紹介ページ(地区別一覧)へ遷移し、出雲系神社を探索する / 検索フォームなし。各支部ごとに神社一覧ページがあるため、長野支部の一覧を確認し、出雲・大国主系の社名がないか探索する。 / 大國主神社の詳細ページ(ookuninusi.htm)へ遷移し祭神を確認する。 / 対象神社を1件確認。残り探索回数が少ないため終了。",
+      "hops": 4,
+      "visited": [
+        "https://nagano-jinjacho.jp",
+        "https://nagano-jinjacho.jp/j-syoukai.html",
+        "https://www.nagano-jinjacho.jp/shibu/nagano.htm",
+        "https://www.nagano-jinjacho.jp/shibu/01hokusin/04nagano/ookuninusi.htm"
+      ],
+      "html_cache": [
+        "https___nagano_jinjacho_jp.html",
+        "https___nagano_jinjacho_jp_j_syoukai_html.html",
+        "https___www_nagano_jinjacho_jp_shibu_nagano_htm.html",
+        "https___www_nagano_jinjacho_jp_shibu_01hokusin_04nagano_ookuninusi_htm.html"
+      ]
+    },
+    "岐阜県": {
+      "shrines": [
+        {
+          "name": "出雲福徳神社",
+          "city": "中津川市",
+          "address": "岐阜県中津川市坂下字松源地638番地の4",
+          "main_deity": "大国主命（おおくにぬしのみこと）",
+          "source_quote": "主祭神　　　　　　　　　大国主命（おおくにぬしのみこと）",
+          "source_url": "https://gifu-jinjacho.jp/syosai.php?shrno=2293&shrname=%E2%96%A0%E5%87%BA%E9%9B%B2%E7%A6%8F%E5%BE%B3%E7%A5%9E%E7%A4%BE%E2%96%A0",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-11",
+          "html_cache": "https___gifu_jinjacho_jp_syosai_php_shrno_2293_shrname__E2_96_A0_E5_87_BA_E9_9B_.html"
+        }
+      ],
+      "search_note": "祭神一覧(godlist.php)や検索フォームがあるため、まず検索フォームで「出雲」をキーワードに検索を試みる。 / 検索結果一覧に出雲福徳神社(中津川市)を発見。祭神に大国主命・事代主命の記載があるため詳細ページで確認する。 / 検索キーワード「出雲」で発見。祭神が大国主命と確認できたため採用。探索回数に余裕がないため終了。",
+      "hops": 3,
+      "visited": [
+        "https://gifu-jinjacho.jp",
+        "https://gifu-jinjacho.jp/search.php?keyword=出雲",
+        "https://gifu-jinjacho.jp/syosai.php?shrno=2293&shrname=%E2%96%A0%E5%87%BA%E9%9B%B2%E7%A6%8F%E5%BE%B3%E7%A5%9E%E7%A4%BE%E2%96%A0"
+      ],
+      "html_cache": [
+        "https___gifu_jinjacho_jp.html",
+        "https___gifu_jinjacho_jp_search_php_keyword___.html",
+        "https___gifu_jinjacho_jp_syosai_php_shrno_2293_shrname__E2_96_A0_E5_87_BA_E9_9B_.html"
+      ]
+    },
+    "静岡県": {
+      "shrines": [
+        {
+          "name": "小國神社",
+          "city": "周智郡森町",
+          "address": "〒437-0226 周智郡森町一宮3956-1",
+          "main_deity": "大己貴命",
+          "source_quote": "小國神社（おくにじんじゃ）のご祭神は「大己貴命」（おおなむちのみこと）です。",
+          "source_url": "http://www.shizuoka-jinjacho.or.jp/shokai/jinja.php?id=4410001",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-11",
+          "html_cache": "http___www_shizuoka_jinjacho_or_jp_shokai_jinja_php_id_4410001.html"
+        }
+      ],
+      "search_note": "検索フォームを利用して「出雲」で検索を試みる / 出雲神社(掛川市)の詳細ページへ遷移し祭神を確認する。 / 出雲神社(掛川市)の詳細ページには祭神情報の記載がなく確認不可のため出力せず。次に「大国主」で検索を試みる。 / 検索結果から小國神社(おくにじんじゃ)が大国主命を祀る有力な候補として見つかったため、詳細ページを確認する。他の候補(飯室乃神社・岐佐神社・於呂神社・野原神社・三嶽神社・女神社・横須賀神社)は探索回数の制約上未確認。 / 検索キーワード「出雲」「大国主」で発見した小國神社(大己貴命)を確認。探索回数上限のため終了。",
+      "hops": 5,
+      "visited": [
+        "http://www.shizuoka-jinjacho.or.jp",
+        "http://www.shizuoka-jinjacho.or.jp/shokai/search.php?mode=search&search=出雲",
+        "http://www.shizuoka-jinjacho.or.jp/shokai/jinja.php?id=4409111",
+        "http://www.shizuoka-jinjacho.or.jp/shokai/search.php?mode=search&search=大国主",
+        "http://www.shizuoka-jinjacho.or.jp/shokai/jinja.php?id=4410001"
+      ],
+      "html_cache": [
+        "http___www_shizuoka_jinjacho_or_jp.html",
+        "http___www_shizuoka_jinjacho_or_jp_shokai_search_php_mode_search_search___.html",
+        "http___www_shizuoka_jinjacho_or_jp_shokai_jinja_php_id_4409111.html",
+        "http___www_shizuoka_jinjacho_or_jp_shokai_search_php_mode_search_search____.html",
+        "http___www_shizuoka_jinjacho_or_jp_shokai_jinja_php_id_4410001.html"
+      ]
+    },
+    "愛知県": {
+      "shrines": [],
+      "search_note": "トップページには対象神社の情報なし。検索フォーム(addr)を用いて「出雲」で検索を試みる。 / 「出雲」での検索結果が0件だったため、別キーワード「大国主」で再検索を試みる。 / 「出雲」「大国主」での検索結果は本文に表示されなかった(検索結果一覧が本文抽出に含まれていない可能性)。次に「大己貴」で検索を試みる。 / 「出雲」「大国主」「大己貴」での検索は結果なし(本文に神社リストが表示されていない)。残り探索回数を使い「大國魂」で検索を試みる。 / 探索回数の上限に達したため終了。愛知県神社庁の検索(出雲・大国主・大己貴・大國魂)ではいずれも該当する神社が見つからなかった。",
+      "hops": 5,
+      "visited": [
+        "https://aichi-jinjacho.or.jp",
+        "https://aichi-jinjacho.or.jp/?addr=出雲&orders=&result_page=1",
+        "https://aichi-jinjacho.or.jp/?addr=大国主&orders=&result_page=1",
+        "https://aichi-jinjacho.or.jp/?addr=大己貴&orders=&result_page=1",
+        "https://aichi-jinjacho.or.jp/?addr=大國魂&orders=&result_page=1"
+      ],
+      "html_cache": [
+        "https___aichi_jinjacho_or_jp.html",
+        "https___aichi_jinjacho_or_jp__addr____orders__result_page_1.html",
+        "https___aichi_jinjacho_or_jp__addr_____orders__result_page_1.html",
+        "https___aichi_jinjacho_or_jp__addr_____orders__result_page_1.html",
+        "https___aichi_jinjacho_or_jp__addr_____orders__result_page_1.html"
+      ]
+    },
+    "三重県": {
+      "shrines": [],
+      "search_note": "トップページのため神社一覧ページへ遷移する。 / 三重県の神社一覧ページには地域別リンクのみで祭神情報は無し。外部の「三重県の神社情報」サイト(kyoka.mie-jinjacho.or.jp/shrine/)に神社検索機能がある可能性があるため、そちらを探索する。 / 支部一覧のみで祭神情報なし。WordPressサイトのため検索パラメータ?s=出雲を試す。 / 「出雲」での検索結果には出雲系神社の情報が見つからなかった。祭神で検索するため「大国主」で再検索を試みる。 / 検索結果ページには関係のない祭事記事のみが表示され、出雲系神社の該当情報は確認できなかった。残り探索回数が0になったため終了する。",
+      "hops": 5,
+      "visited": [
+        "https://www.mie-jinjachou.page/",
+        "https://www.mie-jinjachou.page/三重県の神社一覧",
+        "http://kyoka.mie-jinjacho.or.jp/shrine/",
+        "https://kyoka.mie-jinjacho.or.jp/?s=出雲",
+        "https://kyoka.mie-jinjacho.or.jp/?s=大国主"
+      ],
+      "html_cache": [
+        "https___www_mie_jinjachou_page_.html",
+        "https___www_mie_jinjachou_page_________.html",
+        "http___kyoka_mie_jinjacho_or_jp_shrine_.html",
+        "https___kyoka_mie_jinjacho_or_jp__s___.html",
+        "https___kyoka_mie_jinjacho_or_jp__s____.html"
+      ]
+    },
+    "滋賀県": {
+      "shrines": [],
+      "search_note": "検索フォームはPOSTのため直接組み立てられない。まず「滋賀県の神社」一覧ページ(search.html)を確認し、あ行索引等の適切なページを探す。 / search.htmlページの本文・リンクが空で、検索フォームや索引リンクが確認できなかったため探索を終了。祭神情報も取得できず対象神社は0件。",
+      "hops": 2,
+      "visited": [
+        "https://www.shiga-jinjacho.jp",
+        "https://www.shiga-jinjacho.jp/search.html"
+      ],
+      "html_cache": [
+        "https___www_shiga_jinjacho_jp.html",
+        "https___www_shiga_jinjacho_jp_search_html.html"
+      ]
+    },
+    "京都府": {
+      "shrines": [],
+      "search_note": "神社紹介ページへ遷移し、神社一覧または検索フォームを探す / 神社紹介ページ(shrine.html)へ移動し、神社一覧・検索機能を確認する。 / 京丹後市など丹後地方は出雲系神社が多い傾向があるため、まず京丹後市の一覧ページを確認する。 / 京丹後市のページには出雲神社・大国主神社・大己貴神社・大國魂神社に該当する社名および祭神記載が見当たらなかった。次に宮津市の一覧ページを確認する。 / 宮津市の神社一覧ページを確認したが、出雲神社・大国主神社・大己貴神社・大國魂神社に該当する社名は見当たらず、また祭神情報も一覧のみで確認できなかった。探索回数の上限に達したため終了。",
+      "hops": 5,
+      "visited": [
+        "http://kyoto-jinjacho.or.jp",
+        "http://kyoto-jinjacho.or.jp/jinja.html",
+        "http://kyoto-jinjacho.or.jp/shrine.html",
+        "http://kyoto-jinjacho.or.jp/shrine/16.html",
+        "http://kyoto-jinjacho.or.jp/shrine/21.html"
+      ],
+      "html_cache": [
+        "http___kyoto_jinjacho_or_jp.html",
+        "http___kyoto_jinjacho_or_jp_jinja_html.html",
+        "http___kyoto_jinjacho_or_jp_shrine_html.html",
+        "http___kyoto_jinjacho_or_jp_shrine_16_html.html",
+        "http___kyoto_jinjacho_or_jp_shrine_21_html.html"
+      ]
+    },
+    "大阪府": {
+      "shrines": [],
+      "search_note": "府内神社の紹介ページへ進み、神社一覧・索引を探索する。 / 府内一覧ページ。大阪市西成区に大国主神社(岸里)が知られているため、まず西成区の神社一覧ページを確認する。 / 西成区第8支部のページには出雲・大国主・大己貴・大國魂系の神社名が見当たらなかった。大阪府内神社一覧のindexページに戻り、他の支部・地域を確認する。",
+      "hops": 3,
+      "visited": [
+        "https://osaka-jinjacho.jp",
+        "https://www.osaka-jinjacho.jp/funai_jinja/index.html",
+        "https://www.osaka-jinjacho.jp/funai_jinja/dai8shibu/nishinari-ku/nishinari.html"
+      ],
+      "html_cache": [
+        "https___osaka_jinjacho_jp.html",
+        "https___www_osaka_jinjacho_jp_funai_jinja_index_html.html",
+        "https___www_osaka_jinjacho_jp_funai_jinja_dai8shibu_nishinari_ku_nishinari_html.html"
+      ]
+    },
+    "兵庫県": {
+      "shrines": [],
+      "search_note": "検索ページへ移動し、出雲・大国主等のキーワードで検索を試みる / 検索フォームは住所検索のみで祭神名や社名での検索には対応していない(fieldsがaddress/ie_taisaku/lat/lngのみ)。GETパラメータで社名検索を組み立てられないため、まずトップページから神社一覧・索引ページを探索する。 / index.htmlには神社一覧や地域索引への直接リンクが見当たらず、祭神情報も確認できなかった。検索ページ(search.html)は訪問済みだが具体的なGETパラメータ形式が不明なため、一般的なkeywordパラメータを推測してfollowを試みる。 / 兵庫県神社庁のサイトはGPS/住所による近隣神社検索のみで、神社名や祭神による検索機能・五十音索引が存在しない。search.htmlのフォームフィールドはaddress, ie_taisaku, lat, lngのみでkeywordパラメータは機能していない。トップページ・about・topics等のリンクにも神社一覧や索引は見当たらず、出雲系神社を発見できなかった。",
+      "hops": 4,
+      "visited": [
+        "https://www.hyogo-jinjacho.com",
+        "https://www.hyogo-jinjacho.com/search.html",
+        "https://www.hyogo-jinjacho.com/index.html",
+        "https://www.hyogo-jinjacho.com/search.html?keyword=出雲"
+      ],
+      "html_cache": [
+        "https___www_hyogo_jinjacho_com.html",
+        "https___www_hyogo_jinjacho_com_search_html.html",
+        "https___www_hyogo_jinjacho_com_index_html.html",
+        "https___www_hyogo_jinjacho_com_search_html_keyword___.html"
+      ]
+    },
+    "奈良県": {
+      "shrines": [],
+      "search_note": "神社一覧ページへ遷移して出雲系神社を探索する / 奈良市の一覧(jinja.html)には出雲神社・大国主神社・大己貴神社・大國魂神社に該当する社名が見当たらなかった。他市町村の一覧(jinja02.html以降)を確認する。 / jinja02.htmlには出雲系(出雲神社・大国主神社・大己貴神社・大國魂神社)に該当する社名は見当たらなかった。奈良県神道青年会の検索サイト(narashinsei.com)がWordPress形式である可能性が高いため、検索パラメータ?s=出雲で試行する。 / 検索結果ページが空だったため、県内神社検索ページで再検索を試みる。 / 検索結果ページに具体的な神社情報が表示されておらず、祭神情報も確認できなかった。残り探索回数が尽きたため終了。",
+      "hops": 5,
+      "visited": [
+        "https://www.naraken-jinjacho.jp/",
+        "https://www.naraken-jinjacho.jp/jinja.html",
+        "https://www.naraken-jinjacho.jp/jinja02.html",
+        "http://www.narashinsei.com/?s=%E5%87%BA%E9%9B%B2",
+        "http://www.narashinsei.com/search/?q=%E5%87%BA%E9%9B%B2"
+      ],
+      "html_cache": [
+        "https___www_naraken_jinjacho_jp_.html",
+        "https___www_naraken_jinjacho_jp_jinja_html.html",
+        "https___www_naraken_jinjacho_jp_jinja02_html.html",
+        "http___www_narashinsei_com__s__E5_87_BA_E9_9B_B2.html",
+        "http___www_narashinsei_com_search__q__E5_87_BA_E9_9B_B2.html"
+      ]
+    },
+    "和歌山県": {
+      "shrines": [],
+      "search_note": "祭神名検索フォームで「大国主」を検索するページへ遷移する。まだ神社詳細は未確認。 / 検索ページでDB接続エラー(mysql_connect: Access denied)が発生しており、検索結果を取得できない。残り探索回数も少なく、他に有効な索引ページのリンクが本文中に確認できないため終了する。",
+      "hops": 2,
+      "visited": [
+        "https://wakayama-jinjacho.or.jp",
+        "https://wakayama-jinjacho.or.jp/jdb/sys/user/SelectListWjtTbl.php?Saijinmei=大国主&button3=検索"
+      ],
+      "html_cache": [
+        "https___wakayama_jinjacho_or_jp.html",
+        "https___wakayama_jinjacho_or_jp_jdb_sys_user_SelectListWjtTbl_php_Saijinmei_____.html"
+      ]
+    },
+    "鳥取県": {
+      "shrines": [
+        {
+          "name": "高藤神社",
+          "city": "八頭町",
+          "address": "八頭町大門９８",
+          "main_deity": "素盞嗚神 大己貴神",
+          "source_quote": "祭神 素盞嗚神 大己貴神",
+          "source_url": "http://tottori-jinjacho.jp/pages/636",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-11",
+          "html_cache": "http___tottori_jinjacho_jp_pages_636.html"
+        }
+      ],
+      "search_note": "検索フォームでキーワード「出雲」を試す。GET形式のためURL構築。 / 検索結果一覧より高藤神社が大己貴命を奉斎とあり有力候補。詳細ページで祭神・所在地を確認するためfollowする。他候補(大森神社・味拝神社・酒賀神社・小倉神社)は出雲大社勧請の記述はあるが祭神名の明記が本文抜粋に無いため保留。 / 高藤神社で大己貴神を確認。検索キーワード「出雲」は既に訪問済みのため、次に「大己貴」で検索して他の該当神社を探索する。 / 検索結果は0件だったため、別キーワード「大國魂」で再検索を試みる。残り探索回数が少ないため次で見つからなければ終了予定。 / 探索回数が残り0となったため終了。検索語「出雲」「大己貴」「大國魂」で検索したが対象神社は検出できなかった。",
+      "hops": 5,
+      "visited": [
+        "https://tottori-jinjacho.jp",
+        "https://tottori-jinjacho.jp/publics/search/?search_word=出雲",
+        "http://tottori-jinjacho.jp/pages/636",
+        "http://tottori-jinjacho.jp/publics/search/?search_word=大己貴",
+        "http://tottori-jinjacho.jp/publics/search/?search_word=大國魂"
+      ],
+      "html_cache": [
+        "https___tottori_jinjacho_jp.html",
+        "https___tottori_jinjacho_jp_publics_search__search_word___.html",
+        "http___tottori_jinjacho_jp_pages_636.html",
+        "http___tottori_jinjacho_jp_publics_search__search_word____.html",
+        "http___tottori_jinjacho_jp_publics_search__search_word____.html"
+      ]
+    },
+    "島根県": {
+      "shrines": [
+        {
+          "name": "出雲大社",
+          "city": "出雲市",
+          "address": "出雲市大社町杵築東195番地",
+          "main_deity": "大國主大神",
+          "source_quote": "出雲大社 大國主大神 出雲市大社町杵築東１９５番地 縁結び・商売繁盛・除災招福・五穀豊穣・土地屋敷守護",
+          "source_url": "https://www.shimane-jinjacho.or.jp/izumo/index.html",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-12",
+          "html_cache": "https___www_shimane_jinjacho_or_jp_izumo_index_html.html"
+        },
+        {
+          "name": "眞幸社",
+          "city": "出雲市",
+          "address": "出雲市西谷町1521番地1",
+          "main_deity": "大國主命",
+          "source_quote": "眞幸社 大國主命 出雲市西谷町1521番地1 病気平癒",
+          "source_url": "https://www.shimane-jinjacho.or.jp/izumo/index.html",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-12",
+          "html_cache": "https___www_shimane_jinjacho_or_jp_izumo_index_html.html"
+        },
+        {
+          "name": "玖潭神社",
+          "city": "出雲市",
+          "address": "出雲市久多見町301番地",
+          "main_deity": "大国主神（大穴牟遅神）",
+          "source_quote": "玖潭神社 大国主神（大穴牟遅神） 出雲市久多見町301番地 家内安全 五穀成就 交通安全",
+          "source_url": "https://www.shimane-jinjacho.or.jp/izumo/index.html",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-12",
+          "html_cache": "https___www_shimane_jinjacho_or_jp_izumo_index_html.html"
+        }
+      ],
+      "search_note": "神社検索ページへ移動し、出雲・大国主等のキーワードで検索を試みる / 島根県神社庁の市町村一覧ページ。出雲市エリアに出雲系神社が多いと推測されるため出雲市のページへ遷移する。 / 出雲市の一覧ページ本文中に祭神が明記されていたため、詳細ページへのfollowなしで確認できた。他にも山辺神社(大国主命他)、阿須利神社(大己貴命)、宇賀神社(大己貴命)、浮洲神社(大己貴命)、御名方神社(大国主命)、若宮神社・斐川町坂田(大穴牟遅神)など出雲系祭神を持つ神社が多数あるが、目安件数を満たしたため3社のみ採用。",
+      "hops": 3,
+      "visited": [
+        "https://shimane-jinjacho.or.jp",
+        "https://www.shimane-jinjacho.or.jp/search/index.html",
+        "https://www.shimane-jinjacho.or.jp/izumo/index.html"
+      ],
+      "html_cache": [
+        "https___shimane_jinjacho_or_jp.html",
+        "https___www_shimane_jinjacho_or_jp_search_index_html.html",
+        "https___www_shimane_jinjacho_or_jp_izumo_index_html.html"
+      ]
+    },
+    "岡山県": {
+      "shrines": [],
+      "search_note": "検索フォームがあるためキーワード「出雲」で検索を試みる。GETパラメータの形式は推測（q=出雲）。 / 検索?q=出雲は機能しておらず検索フォームのみが表示された。フリーワード検索のGETパラメータ名が不明なため、全件一覧表示ページへ移動して索引から出雲系神社を探す。 / 全件一覧は1609件・81ページと大量で非効率なため、検索機能で別キーワード(大国主)を試す。前回のq=出雲では対象を発見できなかった。 / 検索ページはJS駆動のフォームで、URLパラメータq=出雲/大国主では実際の検索結果が本文に表示されなかった(地図検索UIの説明文のみ取得)。まだ試していない『大己貴』キーワードで検索を試みる。残り探索回数が少ないため、次に結果が得られなければ全件一覧(search/list/)から絞り込みを検討する必要がある。 / 検索結果ページには具体的な神社名や祭神情報が表示されておらず、検索フォームのUIのみが本文として取得された。探索回数の残りが1回のため、これ以上のfollowは不可。「出雲」「大国主」「大己貴」の検索を試みたが対象神社を確認できなかった。",
+      "hops": 5,
+      "visited": [
+        "https://okayama-jinjacho.or.jp",
+        "https://okayama-jinjacho.or.jp/search?q=出雲",
+        "https://okayama-jinjacho.or.jp/search/list/",
+        "https://okayama-jinjacho.or.jp/search?q=大国主",
+        "https://okayama-jinjacho.or.jp/search?q=大己貴"
+      ],
+      "html_cache": [
+        "https___okayama_jinjacho_or_jp.html",
+        "https___okayama_jinjacho_or_jp_search_q___.html",
+        "https___okayama_jinjacho_or_jp_search_list_.html",
+        "https___okayama_jinjacho_or_jp_search_q____.html",
+        "https___okayama_jinjacho_or_jp_search_q____.html"
+      ]
+    },
+    "広島県": {
+      "shrines": [],
+      "search_note": "神社一覧ページへ遷移し、出雲系神社を探索する。 / 現在のページは広島市東区の神社一覧のみで、出雲系祭神(大国主命等)を祀る神社は確認できなかった。検索フォームはPOSTのみでGET不可のため、エリア別一覧(search_area)を順に辿って調査する。まずsearch_area=2を確認する。 / search_area=2(福山市)の一覧を確認したが、出雲・大国主・大己貴・大國魂に該当する社名は見当たらなかった(素盞嗚神社・荒神社等はあるが該当祭神は未確認かつ該当神社名ではない)。検索フォームはPOSTのみでGET組み立て不可のため、次のエリア(search_area=3)へ探索を続行する。 / search_area=3(神石高原町)の一覧には出雲系神社は見当たらなかった。検索フォームはPOSTのみだが、GETパラメータでの動作を試すためsearch_txt=出雲を付与したURLへ遷移してみる。 / 検索結果ページには「出雲」のキーワードに対する検索結果が表示されず、代わりに広島市東区の神社一覧(地域別一覧)が表示されている。検索フォームはPOSTのみでGET URL組み立て不可。残り探索回数が1のため索引を辿れず、対象となる出雲系神社(出雲神社・大国主神社・大己貴神社・大國魂神社)を確認できなかった。",
+      "hops": 5,
+      "visited": [
+        "https://hiroshima-jinjacho.jp",
+        "https://www.hiroshima-jinjacho.jp/hirosima_jinja/",
+        "https://www.hiroshima-jinjacho.jp/hirosima_jinja/?search_area=2",
+        "https://www.hiroshima-jinjacho.jp/hirosima_jinja/?search_area=3",
+        "https://www.hiroshima-jinjacho.jp/hirosima_jinja/?search_txt=出雲"
+      ],
+      "html_cache": [
+        "https___hiroshima_jinjacho_jp.html",
+        "https___www_hiroshima_jinjacho_jp_hirosima_jinja_.html",
+        "https___www_hiroshima_jinjacho_jp_hirosima_jinja__search_area_2.html",
+        "https___www_hiroshima_jinjacho_jp_hirosima_jinja__search_area_3.html",
+        "https___www_hiroshima_jinjacho_jp_hirosima_jinja__search_txt___.html"
+      ]
+    },
+    "山口県": {
+      "shrines": [
+        {
+          "name": "出雲神社",
+          "city": "山口市",
+          "address": "〒747-0231 山口市徳地堀3572",
+          "main_deity": "大己貴命 事代主命",
+          "source_quote": "御祭神 （主祭神）大己貴命 事代主命",
+          "source_url": "https://www.yamaguchi-jinjacho.or.jp/yamaguchi/izumo/",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-12",
+          "html_cache": "https___www_yamaguchi_jinjacho_or_jp_yamaguchi_izumo_.html"
+        }
+      ],
+      "search_note": "市町ごとの一覧ページから探索を開始する。まず山口市の一覧を確認し、出雲・大国主・大己貴・大國魂系の神社名がないか探す。 / 一覧に「出雲神社」(山口市徳地堀3572)を発見。詳細ページへ遷移し祭神を確認する。 / 出雲神社(山口市徳地堀)を発見し祭神を確認。残り探索回数が少ないため、これ以上の索引探索は行わず終了とする。",
+      "hops": 3,
+      "visited": [
+        "https://yamaguchi-jinjacho.or.jp",
+        "https://www.yamaguchi-jinjacho.or.jp/yamaguchi/",
+        "https://www.yamaguchi-jinjacho.or.jp/yamaguchi/izumo/"
+      ],
+      "html_cache": [
+        "https___yamaguchi_jinjacho_or_jp.html",
+        "https___www_yamaguchi_jinjacho_or_jp_yamaguchi_.html",
+        "https___www_yamaguchi_jinjacho_or_jp_yamaguchi_izumo_.html"
+      ]
+    },
+    "徳島県": {
+      "shrines": [],
+      "search_note": "取得失敗 http://awa-jinjacho.jp/ (0: URLError: <urlopen error [Errno 8] nodename nor servname pro)",
+      "hops": 1,
+      "visited": [
+        "http://awa-jinjacho.jp/"
+      ]
+    },
+    "香川県": {
+      "shrines": [],
+      "search_note": "検索フォームを使い「出雲」で検索を試みる / 「出雲」検索は結果0件だったため、「大国主」で再検索する。 / 「大国主」検索は0件(検索結果ページに一覧なし)。「出雲」も既に検索済みで0件だった。次に「大己貴」で検索を試みる。 / 出雲・大国主・大己貴での検索は結果0件だった。大國魂で検索を試みる。 / 検索キーワード「出雲・大国主・大己貴・大國魂」いずれも香川県神社庁サイト内検索で該当なし。残り探索回数も尽きたため終了。",
+      "hops": 5,
+      "visited": [
+        "https://kagawakenjinjacho.or.jp/",
+        "https://kagawakenjinjacho.or.jp/?s=出雲",
+        "https://kagawakenjinjacho.or.jp/?s=大国主",
+        "https://kagawakenjinjacho.or.jp/?s=大己貴",
+        "https://kagawakenjinjacho.or.jp/?s=大國魂"
+      ],
+      "html_cache": [
+        "https___kagawakenjinjacho_or_jp_.html",
+        "https___kagawakenjinjacho_or_jp__s___.html",
+        "https___kagawakenjinjacho_or_jp__s____.html",
+        "https___kagawakenjinjacho_or_jp__s____.html",
+        "https___kagawakenjinjacho_or_jp__s____.html"
+      ]
+    },
+    "愛媛県": {
+      "shrines": [
+        {
+          "name": "八千矛神社",
+          "city": "今治市",
+          "address": "今治市来島字東側571番地",
+          "main_deity": "大己貴命（おほなむちのみこと）",
+          "source_quote": "神社主祭神 大己貴命（おほなむちのみこと） 日本磐余彦命（やまといわれひこのみこと）",
+          "source_url": "http://ehime-jinjacho.jp/jinja/?p=1958",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-12",
+          "html_cache": "http___ehime_jinjacho_jp_jinja__p_1958.html"
+        },
+        {
+          "name": "大己貴神社",
+          "city": "今治市",
+          "address": "今治市松木61,62",
+          "main_deity": "大己貴命（おおなむちのみこと）",
+          "source_quote": "神社主祭神 大己貴命（おおなむちのみこと）",
+          "source_url": "http://ehime-jinjacho.jp/jinja/?p=567",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-12",
+          "html_cache": "http___ehime_jinjacho_jp_jinja__p_567.html"
+        }
+      ],
+      "search_note": "検索フォームのsパラメータを使い「出雲」で検索を試みる。cat付きリンクからs=パラメータが検索キーワード用と推測。 / 検索結果に「八千矛神社」(今治市来島)を発見。八千矛神は大国主命の別名であるため、詳細ページで祭神を確認するためfollowする。 / 八千矛神社を発見(大己貴命)。他の出雲系神社を探すため『大己貴』で再検索を試みる。 / 検索結果に「大己貴神社」(今治市松木61,62)を発見。詳細ページで祭神を確認するためfollowする。残り探索回数が少ないため優先してこのページを確認。 / 訪問済みの検索結果(?s=出雲, ?s=大己貴)から大己貴神社(今治市松木)を発見し祭神を確認した。残り探索回数が1のため、これ以上の索引探索は行わずdoneとする。",
+      "hops": 5,
+      "visited": [
+        "http://ehime-jinjacho.jp/",
+        "http://ehime-jinjacho.jp/jinja/?s=出雲",
+        "http://ehime-jinjacho.jp/jinja/?p=1958",
+        "http://ehime-jinjacho.jp/jinja/?s=大己貴",
+        "http://ehime-jinjacho.jp/jinja/?p=567"
+      ],
+      "html_cache": [
+        "http___ehime_jinjacho_jp_.html",
+        "http___ehime_jinjacho_jp_jinja__s___.html",
+        "http___ehime_jinjacho_jp_jinja__p_1958.html",
+        "http___ehime_jinjacho_jp_jinja__s____.html",
+        "http___ehime_jinjacho_jp_jinja__p_567.html"
+      ]
+    },
+    "高知県": {
+      "shrines": [],
+      "search_note": "高知県神社一覧ページへ遷移して出雲系神社を探索する / 椙本神社(いの町大国町)の公式サイトURLが「inodaikokusama.jp」(いのの大国様)であり、大国主命を祀る可能性が高いため詳細確認のため訪問する。 / inodaikokusama.jp はディレクトリインデックスのみで有用な情報なし。訪問済みの高知県神社庁一覧ページも既に探索済みで、出雲神社・大国主神社等の該当社は確認できなかった。残り探索回数も少なく、これ以上有望な索引・検索リンクが見当たらないため終了する。",
+      "hops": 3,
+      "visited": [
+        "https://www.kochi-jinjyacho.com/",
+        "https://www.kochi-jinjyacho.com/高知県神社一覧",
+        "http://inodaikokusama.jp/"
+      ],
+      "html_cache": [
+        "https___www_kochi_jinjyacho_com_.html",
+        "https___www_kochi_jinjyacho_com________.html",
+        "http___inodaikokusama_jp_.html"
+      ]
+    },
+    "福岡県": {
+      "shrines": [],
+      "search_note": "取得失敗 https://fukuoka-jinjacho.or.jp/area/kitakyushu/ (0: HTTPError: HTTP Error 404: Not Found)",
+      "hops": 3,
+      "visited": [
+        "https://fukuoka-jinjacho.or.jp",
+        "https://fukuoka-jinjacho.or.jp/area/fukuoka/",
+        "https://fukuoka-jinjacho.or.jp/area/kitakyushu/"
+      ]
+    },
+    "佐賀県": {
+      "shrines": [
+        {
+          "name": "出雲神社",
+          "city": "佐賀市",
+          "address": "佐賀県佐賀市蓮池町大字小松３２１－１",
+          "main_deity": "大巳貴尊",
+          "source_quote": "【鎮座地】 佐賀市蓮池町大字小松３２１－１ 【御祭神】 大巳貴尊 伊弉諾尊 伊弉冉尊 綿津見大神 天児屋根命 春日四柱大神 天照大神 爾爾藝命 経津主大神 建御雷大神",
+          "source_url": "https://saga-jinjacho.jp/%e5%87%ba%e9%9b%b2%e7%a5%9e%e7%a4%be/",
+          "tier": "rejected_deity_unverified",
+          "retrieved_at": "2026-07-12",
+          "html_cache": "https___saga_jinjacho_jp__e5_87_ba_e9_9b_b2_e7_a5_9e_e7_a4_be_.html"
+        }
+      ],
+      "search_note": "神社一覧・マップページへ遷移し出雲系神社を探索する / 一覧内に「出雲神社」(佐賀市蓮池町)を発見。詳細ページへ遷移して祭神を確認する。 / 出雲神社(佐賀市蓮池町)に大巳貴尊が確認できた。jinja-map一覧から他の出雲・大国主系候補が見当たらず、探索回数の制約もあるためここで終了する。",
+      "hops": 3,
+      "visited": [
+        "https://saga-jinjacho.jp",
+        "https://saga-jinjacho.jp/jinja-map/",
+        "https://saga-jinjacho.jp/%e5%87%ba%e9%9b%b2%e7%a5%9e%e7%a4%be/"
+      ],
+      "html_cache": [
+        "https___saga_jinjacho_jp.html",
+        "https___saga_jinjacho_jp_jinja_map_.html",
+        "https___saga_jinjacho_jp__e5_87_ba_e9_9b_b2_e7_a5_9e_e7_a4_be_.html"
+      ]
+    },
+    "長崎県": {
+      "shrines": [],
+      "search_note": "神社検索ページへ遷移して「出雲」等のキーワードで検索を試みる / search.htmlには市町村一覧が表示されているが、各市町村名にリンクURLが付与されておらず(プルダウン選択等の可能性)、検索フォームのGETパラメータも本文から確認できなかった。神社一覧や詳細ページへ辿る手段が見つからず、出雲系祭神(大国主命等)を祀る神社の情報をこのページ内で確認できなかったため0件とする。",
+      "hops": 2,
+      "visited": [
+        "https://nagasaki-jinjacho.or.jp",
+        "https://nagasaki-jinjacho.or.jp/search.html"
+      ],
+      "html_cache": [
+        "https___nagasaki_jinjacho_or_jp.html",
+        "https___nagasaki_jinjacho_or_jp_search_html.html"
+      ]
+    },
+    "熊本県": {
+      "shrines": [],
+      "search_note": "検索は市区町村選択式(GET city/town)で神社名キーワード検索は不可。氏神様を探すページへ遷移して神社一覧・詳細への導線を確認する。 / 氏神様一覧ページは市区町村選択式で神社名によるキーワード検索フォームがないため、WordPress標準の検索(?s=)を試みる。 / 熊本県神社庁サイトには検索機能が実質存在せず(?s=検索は結果を返さない)、氏神様検索は住所ベースのみで人吉・球磨地方限定の試験運用。神社一覧や祭神情報を確認できるページが見つからないため、対象神社を特定できなかった。",
+      "hops": 3,
+      "visited": [
+        "https://kumamotokenjinjacho.jp/",
+        "https://kumamotokenjinjacho.jp/patron-god/",
+        "https://kumamotokenjinjacho.jp/?s=出雲"
+      ],
+      "html_cache": [
+        "https___kumamotokenjinjacho_jp_.html",
+        "https___kumamotokenjinjacho_jp_patron_god_.html",
+        "https___kumamotokenjinjacho_jp__s___.html"
+      ]
+    },
+    "大分県": {
+      "shrines": [],
+      "search_note": "公式サイトなし(神社本庁一覧に掲載・電話のみ)。収集は神社公式・自治体ソースで代替。【くろたん条件】レコードのsource_typeに『県神社庁DB不存在につき代替』を注記",
+      "source_type_note": "県神社庁DB不存在につき代替(本走行で神社公式・自治体ソース収集)"
+    },
+    "宮崎県": {
+      "shrines": [],
+      "search_note": "公式サイトなし(『宮巡』は神職運営の紹介サイトで庁公式ではない)。収集は神社公式・自治体ソースで代替。【くろたん条件】レコードのsource_typeに『県神社庁DB不存在につき代替』を注記",
+      "source_type_note": "県神社庁DB不存在につき代替(本走行で神社公式・自治体ソース収集)"
+    },
+    "鹿児島県": {
+      "shrines": [
+        {
+          "name": "大宮神社",
+          "city": "薩摩川内市",
+          "address": "〒895-1402薩摩川内市入来町浦之名7308",
+          "main_deity": "大己貴命",
+          "source_quote": "大宮神社おおみやじんじゃ沿革 薩摩川内市入来町浦之名「日の丸」に鎮座する大宮神社の御祭神は大己貴命で、鎌倉時代に薩摩国入来院地頭職であった渋谷氏（後に入来院と称す）が近江国坂本の日吉大社山王権現を勧請した神社と伝えられる。",
+          "source_url": "https://www.kagojinjacho.or.jp/?s=出雲&post_type=&cat=&addresearch=",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-12",
+          "html_cache": "https___www_kagojinjacho_or_jp__s____post_type__cat__addresearch_.html"
+        },
+        {
+          "name": "大穴持神社",
+          "city": "霧島市",
+          "address": "国分広瀬",
+          "main_deity": "大己貴命",
+          "source_quote": "霧島市国分広瀬に鎮座する大穴持神社では旧暦3月13日に「まむし除祓祭」が斎行される（平成28年は4月19日）。…先代の宮司の口伝によると大己貴命が農道を歩いている時に向こうから犢牛（コッテ牛＝雄牛）が突進してきたので麻畑に遁れられたところ、その麻畑にいた蝮に咬まれたとのこと。",
+          "source_url": "https://www.kagojinjacho.or.jp/?s=大己貴&post_type=&cat=&addresearch=",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-12",
+          "html_cache": "https___www_kagojinjacho_or_jp__s_____post_type__cat__addresearch_.html"
+        },
+        {
+          "name": "大汝牟遅神社",
+          "city": "日置市",
+          "address": "吹上町（旧伊作庄）",
+          "main_deity": "大汝牟遅命・玉依姫命",
+          "source_quote": "鹿児島県日置市吹上町（旧伊作庄）に鎮座する大汝牟遅神社は、大汝牟遅命・玉依姫命を主祭神とし、相殿に応神天皇・神功皇后・仲哀天皇・仁徳天皇を祀り、明治以前には大汝八幡宮と称した。",
+          "source_url": "https://www.kagojinjacho.or.jp/?s=大己貴&post_type=&cat=&addresearch=",
+          "tier": "rejected_deity_unverified",
+          "retrieved_at": "2026-07-12",
+          "html_cache": "https___www_kagojinjacho_or_jp__s_____post_type__cat__addresearch_.html"
+        }
+      ],
+      "search_note": "検索フォームがGETで存在するため、キーワード「出雲」で検索を実行する。 / 「出雲」検索で大宮神社(大己貴命)を発見。他の検索結果(松尾神社・御崎神社・南方神社×2)は祭神記載なく対象外。追加で「大己貴」キーワードで検索を継続する。 / 「大己貴」検索結果から3社（大宮神社・大穴持神社・大汝牟遅神社）を確認。いずれも祭神が本文で明記されており、県内で目安の1〜3社を確保できたため探索を終了する。",
+      "hops": 3,
+      "visited": [
+        "https://www.kagojinjacho.or.jp/",
+        "https://www.kagojinjacho.or.jp/?s=出雲&post_type=&cat=&addresearch=",
+        "https://www.kagojinjacho.or.jp/?s=大己貴&post_type=&cat=&addresearch="
+      ],
+      "html_cache": [
+        "https___www_kagojinjacho_or_jp_.html",
+        "https___www_kagojinjacho_or_jp__s____post_type__cat__addresearch_.html",
+        "https___www_kagojinjacho_or_jp__s_____post_type__cat__addresearch_.html"
+      ]
+    },
+    "沖縄県": {
+      "shrines": [],
+      "search_note": "沖縄県神社庁の一覧には神社本庁包括下の10社(波上宮・普天満宮・識名宮・八幡宮・末吉宮・天久宮・宮古神社・浮島神社・世持神社・沖縄神社)が全て明記されているが、いずれも社名が「出雲神社・大国主神社・大己貴神社・大國魂神社」に該当しない。県内神社は既に全社リスト化されており、出雲系(大国主命/大己貴命等を祀る)神社は確認できなかった。",
+      "hops": 1,
+      "visited": [
+        "http://jinjacho.naminouegu.jp/"
+      ],
+      "html_cache": [
+        "http___jinjacho_naminouegu_jp_.html"
+      ]
+    },
+    "北海道": {
+      "shrines": [],
+      "search_note": "検索フォームはログイン専用のため利用不可。神社一覧ページ(北海道の神社情報)へのリンクを辿って探索を継続する。 / 検索フォームはログインフォームのため利用不可。地域一覧のみで祭神情報なし。まず札幌支部の一覧ページを確認する。 / 札幌支部の一覧には出雲・大国主・大己貴・大國魂系の社名が確認できなかった。検索フォームはログイン専用(POST log/pwd)のため使用不可。他支部(胆振支部など)を巡回して該当社名を探索する。 / 胆振支部1ページ目の一覧には出雲・大国主・大己貴・大國魂系と思われる社名が見当たらなかった。2ページ目を確認するためfollowする。 / 胆振支部の神社一覧(1・2ページ)を確認したが、社名一覧のみで祭神情報が本文に記載されておらず、出雲系(大国主命等)を祀る神社を確認できなかった。検索フォームはログイン用POSTのみで使用不可。残り探索回数が尽きたため終了。",
+      "hops": 5,
+      "visited": [
+        "https://hokkaidojinjacho.jp",
+        "https://hokkaidojinjacho.jp/jinja",
+        "https://hokkaidojinjacho.jp/jinja-area/sapporo/",
+        "https://hokkaidojinjacho.jp/jinja-area/iburi/",
+        "https://hokkaidojinjacho.jp/jinja-area/iburi/page/2/"
+      ],
+      "html_cache": [
+        "https___hokkaidojinjacho_jp.html",
+        "https___hokkaidojinjacho_jp_jinja.html",
+        "https___hokkaidojinjacho_jp_jinja_area_sapporo_.html",
+        "https___hokkaidojinjacho_jp_jinja_area_iburi_.html",
+        "https___hokkaidojinjacho_jp_jinja_area_iburi_page_2_.html"
+      ]
+    },
+    "青森県": {
+      "shrines": [],
+      "search_note": "県内の神社紹介ページへ遷移し、一覧・検索機能を確認する。 / 地域別一覧ページへ遷移し、出雲系神社を探索する。まず青森市,東津軽郡のページを確認する。 / 青森市・東津軽郡のページには出雲神社・大国主神社・大己貴神社・大國魂神社に該当する社名が見当たらなかった。事代主神社は祭神が異なるため対象外。次のエリア(つがる市,西津軽郡)を探索する。 / つがる市・西津軽郡のページには出雲・大国主・大己貴・大國魂系の社名が見当たらなかったため、未訪問の弘前市,中津軽郡ページへ移動する。 / 当ページ(弘前市,中津軽郡)の神社一覧には出雲神社・大国主神社・大己貴神社・大國魂神社に該当する社名が見当たらず、祭神欄も本文になく詳細ページへの遷移も残り探索回数がないため確認不能。対象0件で終了。",
+      "hops": 5,
+      "visited": [
+        "http://aomori-jinjacho.or.jp",
+        "http://aomori-jinjacho.or.jp/sub_1.html",
+        "http://aomori-jinjacho.or.jp/jinja/sub_1a.html",
+        "http://aomori-jinjacho.or.jp/jinja/sub_1b.html",
+        "http://aomori-jinjacho.or.jp/jinja/sub_1c.html"
+      ],
+      "html_cache": [
+        "http___aomori_jinjacho_or_jp.html",
+        "http___aomori_jinjacho_or_jp_sub_1_html.html",
+        "http___aomori_jinjacho_or_jp_jinja_sub_1a_html.html",
+        "http___aomori_jinjacho_or_jp_jinja_sub_1b_html.html",
+        "http___aomori_jinjacho_or_jp_jinja_sub_1c_html.html"
+      ]
+    },
+    "岩手県": {
+      "shrines": [],
+      "search_note": "神社一覧・検索ページの可能性がある/pages/52/へ遷移して探索を継続する。 / 岩手県神社庁のページには神社検索機能や一覧が見当たらず、ログインフォームのみ。県内神社等のHPリンク集ページへ遷移して手がかりを探す。 / 岩手県神社庁サイト内には神社検索機能や一覧・索引ページが見当たらず、県内神社等のHPリンク集ページには個別神社(志和稲荷神社、大宮神社、御嶽山御嶽神明社)のみが列挙されており、いずれも社名から出雲系(大国主命等を祀る)神社とは判断できない。祭神情報がページ上で確認できる出雲・大国主・大己貴・大國魂系の神社は見つからなかった。探索回数の制約もあり、これ以上の索引が存在しないため終了する。",
+      "hops": 3,
+      "visited": [
+        "https://www.jinjacho.jp/",
+        "https://www.jinjacho.jp/pages/52/",
+        "https://www.jinjacho.jp/pages/62/"
+      ],
+      "html_cache": [
+        "https___www_jinjacho_jp_.html",
+        "https___www_jinjacho_jp_pages_52_.html",
+        "https___www_jinjacho_jp_pages_62_.html"
+      ]
+    },
+    "宮城県": {
+      "shrines": [
+        {
+          "name": "出雲神社",
+          "city": "登米市",
+          "address": "宮城県登米市東和町錦織字山居沢55",
+          "main_deity": "素戔嗚尊、大国主尊",
+          "source_quote": "出雲神社（いずもじんじゃ） 鎮座地: 宮城県登米市東和町錦織字山居沢55 主祭神: 素戔嗚尊、大国主尊",
+          "source_url": "https://miyagi-jinjacho.or.jp/jinja-search/detail.php?code=310030692&chinzachi=&jinja_name=出雲&jinja_kana=&page=0&per_page=15",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-12",
+          "html_cache": "https___miyagi_jinjacho_or_jp_jinja_search_detail_php_code_310030692_chinzachi__.html"
+        }
+      ],
+      "search_note": "検索フォームが見つかったので、jinja_nameパラメータに「出雲」を指定して検索を試みる。GETメソッドで組み立て可能。 / 出雲神社(登米市)の詳細ページで祭神を確認する。まだ祭神未確認のため保留。今後「大国主」「大己貴」「大國魂」も検索予定。 / 出雲神社を確認。続けて「大国主」で検索し他の該当社を探索する。 / 「大国主」検索は0件。次に「大己貴」で検索を試みる。既に発見済みの出雲神社(code=310030692)は別ターンで報告済みのため今回は蓄積のみ。 / 「大己貴」検索は0件だった。残り探索回数が少ないため最後に「大國魂」で検索を試みる。なお既に訪問済みの出雲神社詳細ページ(code=310030692)で祭神が確認できていればそちらを別途shrinesとして記録すべきだが、本ターンの本文には該当情報が含まれていないため追加しない。 / 残り探索回数が0のため終了。今回のページ(大國魂検索)は0件。宮城県では「出雲」「大国主」「大己貴」「大國魂」で検索を行い、出雲検索でdetail.php?code=310030692の詳細ページに遷移したが、その後の探索回数が尽きたため祭神記載内容を本ターンでは確認できていない。",
+      "hops": 6,
+      "visited": [
+        "https://miyagi-jinjacho.or.jp",
+        "https://miyagi-jinjacho.or.jp/jinja-search/list.php?PC=&SEARCH=1&jinja_name=出雲&jinja_kana=&jinja_cnt=&jinja_sort_key=&jinja_sortdesc=&page_jinja=1&per_page_def=&sortmode=",
+        "https://miyagi-jinjacho.or.jp/jinja-search/detail.php?code=310030692&chinzachi=&jinja_name=出雲&jinja_kana=&page=0&per_page=15",
+        "https://miyagi-jinjacho.or.jp/jinja-search/list.php?PC=&SEARCH=1&jinja_name=大国主&jinja_kana=&jinja_cnt=&jinja_sort_key=&jinja_sortdesc=&page_jinja=1&per_page_def=&sortmode=",
+        "https://miyagi-jinjacho.or.jp/jinja-search/list.php?PC=&SEARCH=1&jinja_name=大己貴&jinja_kana=&jinja_cnt=&jinja_sort_key=&jinja_sortdesc=&page_jinja=1&per_page_def=&sortmode=",
+        "https://miyagi-jinjacho.or.jp/jinja-search/list.php?PC=&SEARCH=1&jinja_name=大國魂&jinja_kana=&jinja_cnt=&jinja_sort_key=&jinja_sortdesc=&page_jinja=1&per_page_def=&sortmode="
+      ],
+      "html_cache": [
+        "https___miyagi_jinjacho_or_jp.html",
+        "https___miyagi_jinjacho_or_jp_jinja_search_list_php_PC__SEARCH_1_jinja_name____j.html",
+        "https___miyagi_jinjacho_or_jp_jinja_search_detail_php_code_310030692_chinzachi__.html",
+        "https___miyagi_jinjacho_or_jp_jinja_search_list_php_PC__SEARCH_1_jinja_name_____.html",
+        "https___miyagi_jinjacho_or_jp_jinja_search_list_php_PC__SEARCH_1_jinja_name_____.html",
+        "https___miyagi_jinjacho_or_jp_jinja_search_list_php_PC__SEARCH_1_jinja_name_____.html"
+      ]
+    },
+    "秋田県": {
+      "shrines": [
+        {
+          "name": "大国主神社",
+          "city": "大館市",
+          "address": "〒017-0005 大館市花岡町字繋沢557",
+          "main_deity": "大己貴命（おおなむちのみこと）",
+          "source_quote": "御祭神 大己貴命（おおなむちのみこと） 少彦名命（すくなひこなのみこと） 応神天皇（おうじんてんのう）",
+          "source_url": "https://akita-jinjacho.sakura.ne.jp/shrine_search/%e5%a4%a7%e5%9b%bd%e4%b8%bb%e7%a5%9e%e7%a4%be/",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-12",
+          "html_cache": "https___akita_jinjacho_sakura_ne_jp_shrine_search__e5_a4_a7_e5_9b_bd_e4_b8_bb_e7.html"
+        }
+      ],
+      "search_note": "県内神社のご案内ページへ移動し、神社検索・一覧を確認する / 出雲・大国主系の神社は「大国主神社」「出雲神社」等「お」または「い」から始まる可能性が高いため五十音索引「お」を確認する。まず「お」行(大国主・大己貴)を辿る。 / 大国主神社(大館市)、大国主神社(仙北市西木町)、大己貴神社(鹿角市)、大名持神社(北秋田市)の4件が「お」索引に見つかった。まず大国主神社(大館市)の詳細ページへ祭神確認のため遷移する。 / 大国主神社を発見し祭神を確認できた。残り探索回数が少ないため終了とする。",
+      "hops": 4,
+      "visited": [
+        "https://akita-jinjacho.sakura.ne.jp",
+        "https://akita-jinjacho.sakura.ne.jp/shrine_search/",
+        "https://akita-jinjacho.sakura.ne.jp/cat_shrine/%e3%81%8a/",
+        "https://akita-jinjacho.sakura.ne.jp/shrine_search/%e5%a4%a7%e5%9b%bd%e4%b8%bb%e7%a5%9e%e7%a4%be/"
+      ],
+      "html_cache": [
+        "https___akita_jinjacho_sakura_ne_jp.html",
+        "https___akita_jinjacho_sakura_ne_jp_shrine_search_.html",
+        "https___akita_jinjacho_sakura_ne_jp_cat_shrine__e3_81_8a_.html",
+        "https___akita_jinjacho_sakura_ne_jp_shrine_search__e5_a4_a7_e5_9b_bd_e4_b8_bb_e7.html"
+      ]
+    },
+    "山形県": {
+      "shrines": [
+        {
+          "name": "大社神社",
+          "city": "東置賜郡高畠町",
+          "address": "東置賜郡高畠町大字二井宿字宮下5429－1",
+          "main_deity": "大國主命（オホクニヌシノミコト）",
+          "source_quote": "御祭神 大國主命（オホクニヌシノミコト） 熊野神（クマノノカミ） そのほか数柱",
+          "source_url": "https://yamagata-jinjyacho.or.jp/shrine_detail/07030",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-12",
+          "html_cache": "https___yamagata_jinjyacho_or_jp_shrine_detail_07030.html"
+        },
+        {
+          "name": "劔龍神社",
+          "city": "飽海郡遊佐町",
+          "address": "飽海郡遊佐町当山字上戸2",
+          "main_deity": "大己貴神（オホナムチノカミ）",
+          "source_quote": "御祭神 大己貴神（オホナムチノカミ）",
+          "source_url": "https://yamagata-jinjyacho.or.jp/shrine_detail/11095",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-12",
+          "html_cache": "https___yamagata_jinjyacho_or_jp_shrine_detail_11095.html"
+        }
+      ],
+      "search_note": "検索フォームがGET形式で確認できたため、keyword=出雲で検索を実行する。 / 検索結果に「大社神社」(東置賜郡高畠町)が出雲キーワードでヒット。祭神確認のため詳細ページへ遷移。日枝神社は地名(日吉町)ヒットの可能性が高く保留。 / 大社神社を確認済み。さらに大己貴で検索を続ける。 / 「大己貴」検索結果に劔龍神社(飽海郡遊佐町)と熊野神社(鶴岡市湯温海)が表示された。祭神確認のため劔龍神社の詳細ページへ遷移。 / 検索キーワード「出雲」「大己貴」で調査。劔龍神社（大己貴神を祀る）を発見。残り探索回数が尽きたため終了。",
+      "hops": 5,
+      "visited": [
+        "https://yamagata-jinjyacho.or.jp/",
+        "https://yamagata-jinjyacho.or.jp/shrine_search?keyword=出雲",
+        "https://yamagata-jinjyacho.or.jp/shrine_detail/07030",
+        "https://yamagata-jinjyacho.or.jp/shrine_search?keyword=大己貴",
+        "https://yamagata-jinjyacho.or.jp/shrine_detail/11095"
+      ],
+      "html_cache": [
+        "https___yamagata_jinjyacho_or_jp_.html",
+        "https___yamagata_jinjyacho_or_jp_shrine_search_keyword___.html",
+        "https___yamagata_jinjyacho_or_jp_shrine_detail_07030.html",
+        "https___yamagata_jinjyacho_or_jp_shrine_search_keyword____.html",
+        "https___yamagata_jinjyacho_or_jp_shrine_detail_11095.html"
+      ]
+    },
+    "福島県": {
+      "shrines": [],
+      "search_note": "検索フォームはPOST指定だが、GETパラメータでの検索を試行する。まず「出雲」で検索。 / 検索結果はダミーデータのみ表示され実際の検索結果が反映されていなかった。GETパラメータでの検索キーワードを変えて再試行する。 / 出雲・大国主での検索結果はダミーテンプレート(○○神社)のみで実データが確認できなかった。大己貴で再試行する。 / 検索結果はダミーデータ(○○神社)のみが表示され、実際の検索結果が確認できない。JavaScript動的読み込みの可能性があり、これまで出雲・大国主・大己貴で検索したがいずれも同様。残り探索回数を使い大國魂で検索を試みる。 / 検索クエリ「出雲・大国主・大己貴・大國魂」いずれもダミーテンプレートのみが表示され、実際の検索結果(該当神社)は確認できなかった。残り探索回数も0となったため終了。",
+      "hops": 5,
+      "visited": [
+        "https://fukushima-jinjacho.or.jp",
+        "https://fukushima-jinjacho.or.jp/search/?q=出雲",
+        "https://fukushima-jinjacho.or.jp/search/?q=大国主",
+        "https://fukushima-jinjacho.or.jp/search/?q=大己貴",
+        "https://fukushima-jinjacho.or.jp/search/?q=大國魂"
+      ],
+      "html_cache": [
+        "https___fukushima_jinjacho_or_jp.html",
+        "https___fukushima_jinjacho_or_jp_search__q___.html",
+        "https___fukushima_jinjacho_or_jp_search__q____.html",
+        "https___fukushima_jinjacho_or_jp_search__q____.html",
+        "https___fukushima_jinjacho_or_jp_search__q____.html"
+      ]
+    },
+    "茨城県": {
+      "shrines": [],
+      "search_note": "トップページには神社検索・一覧が見当たらないため、'ibaraki'ページ(おそらく神社紹介・検索)へ遷移して探索を続ける。 / 県内神社紹介ページから地域別一覧(県北)へ遷移。県央・県西・鹿行・県南等も後続で確認が必要。 / 県北地域の神社一覧に出雲・大国主・大己貴・大國魂系の社名は見当たらなかった。他地域(県央・鹿行・県南・県西)の一覧を確認するため地域トップページへ戻る。",
+      "hops": 3,
+      "visited": [
+        "https://www.ibarakiken-jinjacho.or.jp/",
+        "https://www.ibarakiken-jinjacho.or.jp/ibaraki/index.html",
+        "https://www.ibarakiken-jinjacho.or.jp/ibaraki/kenhoku/index.html"
+      ],
+      "html_cache": [
+        "https___www_ibarakiken_jinjacho_or_jp_.html",
+        "https___www_ibarakiken_jinjacho_or_jp_ibaraki_index_html.html",
+        "https___www_ibarakiken_jinjacho_or_jp_ibaraki_kenhoku_index_html.html"
+      ]
+    },
+    "栃木県": {
+      "shrines": [],
+      "search_note": "「県内神社ご紹介」ページ(p=194)へ遷移し、神社一覧・検索機能を探す。 / 現在のページは式年遷宮に関する内容で対象神社の情報はなし。県内神社ご紹介ページ(p=32)へ遷移して神社一覧・検索を探す。 / 現在のページはお参り作法ページで神社一覧情報なし。「県内神社ご紹介」(?p=14)へ遷移して神社一覧・検索を探す。 / 県内神社ご紹介ページ(p=32)へ再度アクセスし、一覧・索引から出雲系神社を探索する。まだ祭神確認できた対象神社は見つかっていない。",
+      "hops": 4,
+      "visited": [
+        "http://tochigi-jinjacho.or.jp",
+        "http://www.tochigi-jinjacho.or.jp/?p=194",
+        "http://www.tochigi-jinjacho.or.jp/?p=32",
+        "http://www.tochigi-jinjacho.or.jp/?p=14"
+      ],
+      "html_cache": [
+        "http___tochigi_jinjacho_or_jp.html",
+        "http___www_tochigi_jinjacho_or_jp__p_194.html",
+        "http___www_tochigi_jinjacho_or_jp__p_32.html",
+        "http___www_tochigi_jinjacho_or_jp__p_14.html"
+      ]
+    },
+    "群馬県": {
+      "shrines": [],
+      "search_note": "県内神社紹介ページへ遷移して一覧・検索を探す / 県内神社紹介ページ(一覧)を確認したが、これは全神社を網羅した一括ページであり個別詳細ページへのリンクは基本的に提供されていない(ホームページ列は外部サイトへのリンクのみ)。伊勢崎佐波支部・沼田利根支部(片品村・沼田市利根町追貝)に「大國神社」が計3社見つかったが、本文中に祭神の記載が無く、詳細ページへのリンクも無いため祭神を確認できなかった。ルールに従い祭神未確認の神社は出力できないため0件とする。検索フォームやページネーションによる個別詳細ページの存在も確認できず、これ以上の有効なfollow先が無いため探索を終了する。",
+      "hops": 2,
+      "visited": [
+        "https://gunma-jinjacho.jp",
+        "https://gunma-jinjacho.jp/jinja/"
+      ],
+      "html_cache": [
+        "https___gunma_jinjacho_jp.html",
+        "https___gunma_jinjacho_jp_jinja_.html"
+      ]
+    },
+    "埼玉県": {
+      "shrines": [
+        {
+          "name": "久伊豆神社",
+          "city": "さいたま市岩槻区",
+          "address": "さいたま市岩槻区宮町2-6-55",
+          "main_deity": "大国主命（大己貴神）",
+          "source_quote": "祭神 大国主命（大己貴神） （おおくにぬしのみこと）",
+          "source_url": "https://www.saitama-jinjacho.or.jp/shrine/9068/",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-12",
+          "html_cache": "https___www_saitama_jinjacho_or_jp_shrine_9068_.html"
+        }
+      ],
+      "search_note": "検索フォームがGETでs=キーワードのため、まず「出雲」で検索する。 / 出雲祝神社の詳細ページを確認して祭神を調べる。他にも出雲伊波比神社、出雲乃伊波比神社が2件あるため順次確認予定。 / 出雲祝神社(入間市)のページには祭神情報が記載されておらず(鎮座地/内容/電話番号/お祭りのみ)、祭神を確認できないため出力不可。他のキーワードで再検索を試みる。 / 検索結果に久伊豆神社(2社)・玉敷神社が見つかったが祭神情報は一覧に無いため、久伊豆神社の詳細ページを確認する。残り探索回数が少ないため次ページ(page/2)は保留。 / 探索回数上限のため終了。久伊豆神社(岩槻区)にて大国主命(大己貴神)を確認済み。",
+      "hops": 5,
+      "visited": [
+        "https://saitama-jinjacho.or.jp",
+        "https://www.saitama-jinjacho.or.jp/?s=出雲",
+        "https://www.saitama-jinjacho.or.jp/shrine/8920/",
+        "https://www.saitama-jinjacho.or.jp/?s=大国主",
+        "https://www.saitama-jinjacho.or.jp/shrine/9068/"
+      ],
+      "html_cache": [
+        "https___saitama_jinjacho_or_jp.html",
+        "https___www_saitama_jinjacho_or_jp__s___.html",
+        "https___www_saitama_jinjacho_or_jp_shrine_8920_.html",
+        "https___www_saitama_jinjacho_or_jp__s____.html",
+        "https___www_saitama_jinjacho_or_jp_shrine_9068_.html"
+      ]
+    },
+    "千葉県": {
+      "shrines": [],
+      "search_note": "取得失敗 http://chiba.jinjacho.or.jp/ (0: URLError: <urlopen error timed out>)",
+      "hops": 3,
+      "visited": [
+        "https://www.jinjacho.or.jp/",
+        "http://www.jinja.ne.jp/exploration/index.html",
+        "http://chiba.jinjacho.or.jp/"
+      ]
+    },
+    "東京都": {
+      "shrines": [],
+      "search_note": "キーワードから探すページへ遷移し、出雲・大国主等で検索を試みる / 検索フォーム(GET, s パラメータ)を使い「出雲」で検索するページへ遷移する。区一覧しか無く該当社不明のため検索を試みる。 / 「出雲」での検索は0件だったため、「大国主」で再検索する。 / 「大国主」「出雲」での検索は結果なし。残り探索回数が少ないため「大己貴」で検索を試みる。 / 検索キーワード「出雲」「大国主」「大己貴」で検索したがいずれも該当ページなし。残り探索回数が尽きたため終了。",
+      "hops": 5,
+      "visited": [
+        "http://www.tokyo-jinjacho.or.jp",
+        "http://www.tokyo-jinjacho.or.jp/jinja/keyword/",
+        "http://www.tokyo-jinjacho.or.jp/?s=出雲",
+        "http://www.tokyo-jinjacho.or.jp/?s=大国主",
+        "http://www.tokyo-jinjacho.or.jp/?s=大己貴"
+      ],
+      "html_cache": [
+        "http___www_tokyo_jinjacho_or_jp.html",
+        "http___www_tokyo_jinjacho_or_jp_jinja_keyword_.html",
+        "http___www_tokyo_jinjacho_or_jp__s___.html",
+        "http___www_tokyo_jinjacho_or_jp__s____.html",
+        "http___www_tokyo_jinjacho_or_jp__s____.html"
+      ]
+    },
+    "神奈川県": {
+      "shrines": [],
+      "search_note": "検索フォームのGETパラメータs_keyword_3を使い「出雲」で検索を試みる。 / 出雲での検索結果は神社一覧が表示されず、フォーム画面のみだったため該当社なし。大国主キーワードで再検索を試みる。 / 「出雲」「大国主」での検索は既に試行済みで結果が本文に反映されていない(検索結果が別ページ構造の可能性)。次に「大己貴」で検索を試みる。 / 出雲・大国主・大己貴での検索結果ページには神社一覧や祭神情報が本文に含まれておらず、対象神社を確認できなかった。残り探索回数を使い『大國魂』で検索を試みる。 / 検索結果ページには検索結果一覧が表示されず、トップページと同じ内容が返された（検索フォームのみで結果リストなし）。「出雲」「大国主」「大己貴」「大國魂」の4キーワードで検索を試みたが、いずれも該当神社の情報を本文中で確認できなかった。探索回数の残りがないため終了する。",
+      "hops": 5,
+      "visited": [
+        "https://kanagawa-jinja.or.jp",
+        "https://www.kanagawa-jinja.or.jp/?s_keyword_3=出雲&searchbutton=検索",
+        "https://www.kanagawa-jinja.or.jp/?s_keyword_3=大国主&searchbutton=検索",
+        "https://www.kanagawa-jinja.or.jp/?s_keyword_3=大己貴&searchbutton=検索",
+        "https://www.kanagawa-jinja.or.jp/?s_keyword_3=大國魂&searchbutton=検索"
+      ],
+      "html_cache": [
+        "https___kanagawa_jinja_or_jp.html",
+        "https___www_kanagawa_jinja_or_jp__s_keyword_3____searchbutton___.html",
+        "https___www_kanagawa_jinja_or_jp__s_keyword_3_____searchbutton___.html",
+        "https___www_kanagawa_jinja_or_jp__s_keyword_3_____searchbutton___.html",
+        "https___www_kanagawa_jinja_or_jp__s_keyword_3_____searchbutton___.html"
+      ]
+    },
+    "新潟県": {
+      "shrines": [],
+      "search_note": "検索フォームのGETパラメータ(area, keyword)を利用して「出雲」で検索を実行する。 / 新潟県神社庁の検索(keyword=出雲)で見附市市野坪町56番地の「出雲神社」を発見したが、詳細ページへのリンクが本文抽出に含まれておらず祭神を確認できなかった。keyword=出雲神社で再検索し詳細ページへのリンクを探索する。 / 「出雲神社」で検索し見附市市野坪町56番地に出雲神社を発見したが、詳細ページへのリンクが本文中に見つからず祭神を確認できなかったため保留。他のキーワードで追加調査を継続する。 / 新発田市に「大国主神社」を発見したが、検索結果ページに祭神情報および詳細ページへのリンクが確認できなかったため、source_quoteを引用できず今回は出力を保留。残り探索回数を使い「大己貴」で追加検索を実施する。 / 「大己貴」検索で3件(大己貴社:上越市、大己貴神社:新潟市西蒲区、大己貴神社:長岡市)がヒットしたが、一覧ページには祭神情報が記載されておらず、詳細ページへのリンクも本文中に見つからなかったため祭神を確認できなかった。探索回数の上限に達したため終了する。",
+      "hops": 5,
+      "visited": [
+        "https://niigata-jinjacho.jp",
+        "https://niigata-jinjacho.jp/shrine_niigata/search.php?area=&keyword=出雲",
+        "https://niigata-jinjacho.jp/shrine_niigata/search.php?area=&keyword=出雲神社",
+        "https://niigata-jinjacho.jp/shrine_niigata/search.php?area=&keyword=大国主",
+        "https://niigata-jinjacho.jp/shrine_niigata/search.php?area=&keyword=大己貴"
+      ],
+      "html_cache": [
+        "https___niigata_jinjacho_jp.html",
+        "https___niigata_jinjacho_jp_shrine_niigata_search_php_area__keyword___.html",
+        "https___niigata_jinjacho_jp_shrine_niigata_search_php_area__keyword_____.html",
+        "https___niigata_jinjacho_jp_shrine_niigata_search_php_area__keyword____.html",
+        "https___niigata_jinjacho_jp_shrine_niigata_search_php_area__keyword____.html"
+      ]
+    },
+    "富山県": {
+      "shrines": [],
+      "search_note": "氏神神社検索ページまたは検索フォームを利用して「出雲」で検索を試みる。まずはトップページの検索フォーム(s=出雲)を使用。 / 検索「出雲」は0件だった。氏神神社検索ページへ遷移して一覧・索引から出雲系神社を探す。 / 氏神神社検索ページは検索フォームのみで結果が表示されていない。既に?s=出雲は訪問済みのため、別キーワード「大国主」で再検索を試みる。 / 「大国主」検索では対象神社の詳細ページが見つからなかった(氏神検索ページへのリンクのみ)。残り探索回数を使い「大己貴」で再検索する。 / 「出雲」「大国主」「大己貴」で検索したが該当する神社は見つからなかった。探索回数の上限に達したため終了する。",
+      "hops": 5,
+      "visited": [
+        "https://toyama-jinjacho.sakura.ne.jp/",
+        "https://toyama-jinjacho.sakura.ne.jp/?s=出雲",
+        "https://toyama-jinjacho.sakura.ne.jp/%E5%AF%8C%E5%B1%B1%E7%9C%8C%E6%B0%8F%E7%A5%9E%E7%A5%9E%E7%A4%BE%E6%A4%9C%E7%B4%A2",
+        "https://toyama-jinjacho.sakura.ne.jp/?s=大国主",
+        "https://toyama-jinjacho.sakura.ne.jp/?s=大己貴"
+      ],
+      "html_cache": [
+        "https___toyama_jinjacho_sakura_ne_jp_.html",
+        "https___toyama_jinjacho_sakura_ne_jp__s___.html",
+        "https___toyama_jinjacho_sakura_ne_jp__E5_AF_8C_E5_B1_B1_E7_9C_8C_E6_B0_8F_E7_A5_.html",
+        "https___toyama_jinjacho_sakura_ne_jp__s____.html",
+        "https___toyama_jinjacho_sakura_ne_jp__s____.html"
+      ]
+    }
+  }
+}

@@ -1,0 +1,959 @@
+{
+  "prefs": {
+    "秋田県": {
+      "shrines": [
+        {
+          "name": "神明社",
+          "city": "山本郡三種町",
+          "address": "〒018-2404 山本郡三種町富岡新田字富岡52",
+          "main_deity": "天照皇大神（あまてらすすめおおかみ）",
+          "source_quote": "御祭神 天照皇大神（あまてらすすめおおかみ）",
+          "source_url": "https://akita-jinjacho.sakura.ne.jp/shrine_search/%e7%a5%9e%e6%98%8e%e7%a4%be-7/",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-11",
+          "html_cache": "https___akita_jinjacho_sakura_ne_jp_shrine_search__e7_a5_9e_e6_98_8e_e7_a4_be_7_.html"
+        }
+      ],
+      "search_note": "県内神社のご案内(検索/一覧)ページへ遷移して神明系神社を探索する / 神明・皇大神・天祖は「し」(神明)行に該当するため、五十音索引「し」を確認する。 / 「し」一覧で多数の神明社を発見。祭神確認のため詳細ページへ遷移する。 / 神明社(三種町)の祭神を確認できた。残り探索回数が少ないため終了する。",
+      "hops": 4,
+      "visited": [
+        "https://akita-jinjacho.sakura.ne.jp",
+        "https://akita-jinjacho.sakura.ne.jp/shrine_search/",
+        "https://akita-jinjacho.sakura.ne.jp/cat_shrine/%e3%81%97/",
+        "https://akita-jinjacho.sakura.ne.jp/shrine_search/%e7%a5%9e%e6%98%8e%e7%a4%be-7/"
+      ],
+      "html_cache": [
+        "https___akita_jinjacho_sakura_ne_jp.html",
+        "https___akita_jinjacho_sakura_ne_jp_shrine_search_.html",
+        "https___akita_jinjacho_sakura_ne_jp_cat_shrine__e3_81_97_.html",
+        "https___akita_jinjacho_sakura_ne_jp_shrine_search__e7_a5_9e_e6_98_8e_e7_a4_be_7_.html"
+      ]
+    },
+    "北海道": {
+      "shrines": [
+        {
+          "name": "新川皇大神社",
+          "city": "札幌市",
+          "address": "北海道札幌市北区新川3条13丁目3番12号",
+          "main_deity": "天照大御神",
+          "source_quote": "祭神 天照大御神(あまてらすおおみかみ) 豊受毘賣神(とようけひめのかみ) 品陀和気命(ほんだわけのみこと) 大己貴命(おおなむちのみこと) 少彦名命(すくなひこなのみこと)",
+          "source_url": "https://hokkaidojinjacho.jp/%e6%96%b0%e5%b7%9d%e7%9a%87%e5%a4%a7%e7%a5%9e%e7%a4%be/",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-11",
+          "html_cache": "https___hokkaidojinjacho_jp__e6_96_b0_e5_b7_9d_e7_9a_87_e5_a4_a7_e7_a5_9e_e7_a4_.html"
+        }
+      ],
+      "search_note": "検索フォームはログイン用のみで神社検索に使えないため、支部一覧から札幌支部ページへ遷移して神明系神社を探す。 / 1ページ目に神明系の社名が見当たらないため、次ページを確認する。検索フォームはログイン用のため利用不可。 / このページ(札幌支部一覧2/5)には神明系(神明社・神明宮・皇大神社・天祖神社)の社名は見当たらなかった。次ページを確認する。 / このページ(3/5)には神明社・皇大神社・天祖神社等の対象社名が見当たらず、詳細ページも未確認。次ページ4/5を探索する。 / 新川皇大神社(札幌市北区)が皇大神社系で対象候補のため詳細ページを確認する。残り探索回数が1のためこの1件のみ追跡。 / 残り探索回数が0のため終了。新川皇大神社を祭神・所在地確認済みで登録。他の神明系神社は札幌支部一覧等をさらに探索すれば見つかる可能性あり。",
+      "hops": 6,
+      "visited": [
+        "https://hokkaidojinjacho.jp",
+        "https://hokkaidojinjacho.jp/jinja-area/sapporo/",
+        "https://hokkaidojinjacho.jp/jinja-area/sapporo/page/2/",
+        "https://hokkaidojinjacho.jp/jinja-area/sapporo/page/3/",
+        "https://hokkaidojinjacho.jp/jinja-area/sapporo/page/4/",
+        "https://hokkaidojinjacho.jp/%e6%96%b0%e5%b7%9d%e7%9a%87%e5%a4%a7%e7%a5%9e%e7%a4%be/"
+      ],
+      "html_cache": [
+        "https___hokkaidojinjacho_jp.html",
+        "https___hokkaidojinjacho_jp_jinja_area_sapporo_.html",
+        "https___hokkaidojinjacho_jp_jinja_area_sapporo_page_2_.html",
+        "https___hokkaidojinjacho_jp_jinja_area_sapporo_page_3_.html",
+        "https___hokkaidojinjacho_jp_jinja_area_sapporo_page_4_.html",
+        "https___hokkaidojinjacho_jp__e6_96_b0_e5_b7_9d_e7_9a_87_e5_a4_a7_e7_a5_9e_e7_a4_.html"
+      ]
+    },
+    "青森県": {
+      "shrines": [],
+      "search_note": "取得失敗 http://aomori-jinjacho.or.jp/jinja/Tosei/sub_1a_013.html (0: HTTPError: HTTP Error 404: Not Found)",
+      "hops": 4,
+      "visited": [
+        "http://aomori-jinjacho.or.jp",
+        "http://aomori-jinjacho.or.jp/sub_1.html",
+        "http://aomori-jinjacho.or.jp/jinja/sub_1a.html",
+        "http://aomori-jinjacho.or.jp/jinja/Tosei/sub_1a_013.html"
+      ]
+    },
+    "岩手県": {
+      "shrines": [],
+      "search_note": "トップページには神社検索フォームが見当たらない。神社一覧・検索ページと思われるpages/52を確認する。 / 神社一覧・検索機能が見つからず、ログインページのみ。県内神社等のHPリンク集ページへ遷移して神社情報を探索する。 / 岩手県神社庁のHPリンク集ページ。検索機能や神社一覧は見当たらないが、「御嶽山御嶽神明社（一関市花泉町老松鎮座）」というリンクを発見。神明社を含む社名のため、祭神確認のため詳細ページへfollowする。 / このページはバイナリ/圧縮データが返っており本文を取得できなかった。訪問済みの県神社庁サイトのページでも該当情報が確認できず、残り探索回数も少ないため終了する。",
+      "hops": 4,
+      "visited": [
+        "https://www.jinjacho.jp/",
+        "https://www.jinjacho.jp/pages/52/",
+        "https://www.jinjacho.jp/pages/62/",
+        "https://ontakesan.amebaownd.com/"
+      ],
+      "html_cache": [
+        "https___www_jinjacho_jp_.html",
+        "https___www_jinjacho_jp_pages_52_.html",
+        "https___www_jinjacho_jp_pages_62_.html",
+        "https___ontakesan_amebaownd_com_.html"
+      ]
+    },
+    "宮城県": {
+      "shrines": [
+        {
+          "name": "伊勢神明社",
+          "city": "仙台市青葉区",
+          "address": "宮城県仙台市青葉区千代田町4-33",
+          "main_deity": "天照大御神、豊宇気毘売神",
+          "source_quote": "伊勢神明社 （いせしんめいしゃ） 鎮座地: 宮城県仙台市青葉区千代田町4-33 主祭神: 天照大御神、豊宇気毘売神",
+          "source_url": "https://miyagi-jinjacho.or.jp/jinja-search/detail.php?code=311010001&chinzachi=&jinja_name=神明&jinja_kana=&page=0&per_page=15",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-11",
+          "html_cache": "https___miyagi_jinjacho_or_jp_jinja_search_detail_php_code_311010001_chinzachi__.html"
+        },
+        {
+          "name": "小田原神明宮",
+          "city": "仙台市宮城野区",
+          "address": "宮城県仙台市宮城野区枡江9-5",
+          "main_deity": "天照皇大神、豊受大神",
+          "source_quote": "小田原神明宮 （おだわらしんめいぐう） 鎮座地: 宮城県仙台市宮城野区枡江9-5 主祭神: 天照皇大神、豊受大神",
+          "source_url": "https://miyagi-jinjacho.or.jp/jinja-search/detail.php?code=310010015&chinzachi=&jinja_name=神明&jinja_kana=&page=0&per_page=15",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-11",
+          "html_cache": "https___miyagi_jinjacho_or_jp_jinja_search_detail_php_code_310010015_chinzachi__.html"
+        }
+      ],
+      "search_note": "検索フォームがGETで確認できたため、神社名「神明」で検索を試みる。まずは検索結果ページを取得して一覧から詳細ページへ進む。 / 一覧に35件の神明社系候補を発見。祭神確認のため伊勢神明社の詳細ページへ遷移する。次に他の神明社詳細ページや「次の15件」も探索予定。 / 詳細ページで伊勢神明社を確認。祭神は天照大御神を含む。一覧ページに戻り他の「神明」検索結果を確認する。 / 神明社系の一覧を確認。祭神情報は詳細ページにのみ記載されるため、伊勢神明社(311010001)は既訪問だが祭神未確認。次に小田原神明宮の詳細ページへ遷移し祭神を確認する。残り探索回数が少ないため優先度の高い候補を選択。 / 残り探索回数が1のため、これまでに確認できた神明系神社（小田原神明宮）を確定として終了する。",
+      "hops": 5,
+      "visited": [
+        "https://miyagi-jinjacho.or.jp",
+        "https://miyagi-jinjacho.or.jp/jinja-search/list.php?SEARCH=1&jinja_name=神明&jinja_cnt=&jinja_kana=&jinja_sort_key=&jinja_sortdesc=&page_jinja=&per_page_def=&PC=1",
+        "https://miyagi-jinjacho.or.jp/jinja-search/detail.php?code=311010001&chinzachi=&jinja_name=神明&jinja_kana=&page=0&per_page=15",
+        "https://miyagi-jinjacho.or.jp/jinja-search/list.php?jinja_name=%E7%A5%9E%E6%98%8E&page=0&per_page=15",
+        "https://miyagi-jinjacho.or.jp/jinja-search/detail.php?code=310010015&chinzachi=&jinja_name=神明&jinja_kana=&page=0&per_page=15"
+      ],
+      "html_cache": [
+        "https___miyagi_jinjacho_or_jp.html",
+        "https___miyagi_jinjacho_or_jp_jinja_search_list_php_SEARCH_1_jinja_name____jinja.html",
+        "https___miyagi_jinjacho_or_jp_jinja_search_detail_php_code_311010001_chinzachi__.html",
+        "https___miyagi_jinjacho_or_jp_jinja_search_list_php_jinja_name__E7_A5_9E_E6_98_8.html",
+        "https___miyagi_jinjacho_or_jp_jinja_search_detail_php_code_310010015_chinzachi__.html"
+      ]
+    },
+    "山形県": {
+      "shrines": [
+        {
+          "name": "皇大神社",
+          "city": "鶴岡市",
+          "address": "鶴岡市上山添字神明前368",
+          "main_deity": "大日靈命（オホヒルメノミコト）",
+          "source_quote": "鎮座地 鶴岡市上山添字神明前368 御祭神 大日靈命（オホヒルメノミコト）",
+          "source_url": "https://yamagata-jinjyacho.or.jp/shrine_detail/09068",
+          "tier": "rejected_deity_unverified",
+          "retrieved_at": "2026-07-11",
+          "html_cache": "https___yamagata_jinjyacho_or_jp_shrine_detail_09068.html"
+        }
+      ],
+      "search_note": "検索フォームがGET形式で確認できたため、keyword=神明で検索を実行する。 / 神明社一覧を発見(47件中12件表示)。祭神確認のため詳細ページ(皇大神社 鶴岡市)へfollowする。他の候補(神明神社山形市01075, 神明社鶴岡市09193, 神明社最上郡鮭川村05073等)も後続で確認予定。 / 皇大神社(鶴岡市)を確認、祭神は大日靈命(天照大神の別名)。追加調査のため「皇大神」で再検索。 / 検索結果に皇大神社が複数(酒田市・鶴岡市・米沢市など)ヒットしたが、祭神は一覧ページに記載がないため詳細ページを確認する必要がある。残り探索回数が限られるため、まず酒田市の皇大神社(shrine_detail/11121)の詳細ページへfollowし祭神を確認する。 / 皇大神社を1件確保。残り探索回数が1のため探索を終了する。",
+      "hops": 5,
+      "visited": [
+        "https://yamagata-jinjyacho.or.jp/",
+        "https://yamagata-jinjyacho.or.jp/shrine_search?keyword=神明",
+        "https://yamagata-jinjyacho.or.jp/shrine_detail/09068",
+        "https://yamagata-jinjyacho.or.jp/shrine_search?keyword=皇大神",
+        "https://yamagata-jinjyacho.or.jp/shrine_detail/11121"
+      ],
+      "html_cache": [
+        "https___yamagata_jinjyacho_or_jp_.html",
+        "https___yamagata_jinjyacho_or_jp_shrine_search_keyword___.html",
+        "https___yamagata_jinjyacho_or_jp_shrine_detail_09068.html",
+        "https___yamagata_jinjyacho_or_jp_shrine_search_keyword____.html",
+        "https___yamagata_jinjyacho_or_jp_shrine_detail_11121.html"
+      ]
+    },
+    "福島県": {
+      "shrines": [],
+      "search_note": "検索フォームはPOSTだが、GETパラメータ形式で試行。fields=['q']からq=神明で組み立てた。 / 「神明」での検索結果はテンプレートのダミー社名(○○神社/まるまるじんじゃ)のみで実データが取得できなかった(JS動的読み込みの可能性)。別キーワード「皇大神」で再試行する。 / 検索結果はダミーテンプレートのみ表示され実データが確認できなかった。天祖で再検索を試みる。 / 検索ページはダミーテンプレートのみでJavaScript動的読み込みのため実データが取得できず、神明・皇大神・天祖のいずれの検索クエリでも本文中に実際の神社名・祭神情報が確認できなかった。残り探索回数も少ないため終了する。",
+      "hops": 4,
+      "visited": [
+        "https://fukushima-jinjacho.or.jp",
+        "https://fukushima-jinjacho.or.jp/search/?q=神明",
+        "https://fukushima-jinjacho.or.jp/search/?q=皇大神",
+        "https://fukushima-jinjacho.or.jp/search/?q=天祖"
+      ],
+      "html_cache": [
+        "https___fukushima_jinjacho_or_jp.html",
+        "https___fukushima_jinjacho_or_jp_search__q___.html",
+        "https___fukushima_jinjacho_or_jp_search__q____.html",
+        "https___fukushima_jinjacho_or_jp_search__q___.html"
+      ]
+    },
+    "茨城県": {
+      "shrines": [],
+      "search_note": "神社一覧らしきページへ遷移して探索を続ける / 県内神社紹介ページに地域別リンク(県北・県西など)があったため、県北の一覧ページへ遷移して神明系神社を探索する。 / 県北地域の一覧ページには神明社・神明宮・皇大神社・天祖神社に該当する社名が見当たらなかった(伊勢神社等はあるが対象社名外)。他地域(県央・鹿行・県南等)の一覧を確認するため、地域選択ページに戻る。",
+      "hops": 3,
+      "visited": [
+        "https://www.ibarakiken-jinjacho.or.jp/",
+        "https://www.ibarakiken-jinjacho.or.jp/ibaraki/index.html",
+        "https://www.ibarakiken-jinjacho.or.jp/ibaraki/kenhoku/index.html"
+      ],
+      "html_cache": [
+        "https___www_ibarakiken_jinjacho_or_jp_.html",
+        "https___www_ibarakiken_jinjacho_or_jp_ibaraki_index_html.html",
+        "https___www_ibarakiken_jinjacho_or_jp_ibaraki_kenhoku_index_html.html"
+      ]
+    },
+    "栃木県": {
+      "shrines": [
+        {
+          "name": "神明宮",
+          "city": "栃木市",
+          "address": "栃木県栃木市旭町２６－３",
+          "main_deity": "天照皇大神",
+          "source_quote": "神明宮は、栃木市の中心部に位置する。天照皇大神をお祭りする神社です。",
+          "source_url": "http://www.tochigi-jinjacho.or.jp/?p=774",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-11",
+          "html_cache": "http___www_tochigi_jinjacho_or_jp__p_774.html"
+        }
+      ],
+      "search_note": "「県内神社ご紹介」ページ(p=194)へ遷移し、神社一覧・検索から神明系神社を探索する。 / 式年遷宮の説明ページで対象神社情報なし。「県内神社ご紹介」(p=32)へ遷移し神明系神社を探索する。 / 現在ページはお参り作法のページで神社情報なし。県内神社ご紹介ページ(?p=168)へ遷移して神明系神社を探索する。 / 一覧ページで「神明宮（しんめいぐう）栃木市旭町」を発見。詳細ページ(p=774)へ遷移して祭神を確認する。残り探索回数が少ないため、この1件のみ優先確認。 / 残り探索回数が1のため、神明宮の祭神を確認した時点で終了とした。",
+      "hops": 5,
+      "visited": [
+        "http://tochigi-jinjacho.or.jp",
+        "http://www.tochigi-jinjacho.or.jp/?p=194",
+        "http://www.tochigi-jinjacho.or.jp/?p=32",
+        "http://www.tochigi-jinjacho.or.jp/?p=168",
+        "http://www.tochigi-jinjacho.or.jp/?p=774"
+      ],
+      "html_cache": [
+        "http___tochigi_jinjacho_or_jp.html",
+        "http___www_tochigi_jinjacho_or_jp__p_194.html",
+        "http___www_tochigi_jinjacho_or_jp__p_32.html",
+        "http___www_tochigi_jinjacho_or_jp__p_168.html",
+        "http___www_tochigi_jinjacho_or_jp__p_774.html"
+      ]
+    },
+    "群馬県": {
+      "shrines": [],
+      "search_note": "県内神社紹介ページへ遷移して一覧・検索を確認する / jinja/一覧ページには神明宮・神明社が多数記載されているが祭神情報は本文に記載されていない(所在地・連絡先のみ)。個別詳細ページへのリンクも存在しないため、WordPressの検索機能(?s=)を利用して神明系神社の詳細情報を探索する。 / 検索クエリ「神明」は検索結果を返さずトップページと同一内容が表示された。県内神社紹介一覧ページから索引を辿る必要がある。",
+      "hops": 3,
+      "visited": [
+        "https://gunma-jinjacho.jp",
+        "https://gunma-jinjacho.jp/jinja/",
+        "https://gunma-jinjacho.jp/?s=神明"
+      ],
+      "html_cache": [
+        "https___gunma_jinjacho_jp.html",
+        "https___gunma_jinjacho_jp_jinja_.html",
+        "https___gunma_jinjacho_jp__s___.html"
+      ]
+    },
+    "埼玉県": {
+      "shrines": [],
+      "search_note": "検索フォームを利用して「神明」キーワードで検索を試みる / 検索結果一覧から神明社/神明神社の詳細ページへ移動して祭神を確認する。まず1件目(11928)を訪問。 / このページ(11928 神明社 久喜市)には祭神情報が記載されていないため出力不可。検索結果ページに戻り他の神明社候補を探索する。",
+      "hops": 3,
+      "visited": [
+        "https://saitama-jinjacho.or.jp",
+        "https://www.saitama-jinjacho.or.jp/?s=神明",
+        "https://www.saitama-jinjacho.or.jp/shrine/11928/"
+      ],
+      "html_cache": [
+        "https___saitama_jinjacho_or_jp.html",
+        "https___www_saitama_jinjacho_or_jp__s___.html",
+        "https___www_saitama_jinjacho_or_jp_shrine_11928_.html"
+      ]
+    },
+    "千葉県": {
+      "shrines": [],
+      "search_note": "取得失敗 http://chiba.jinjacho.or.jp/ (0: URLError: <urlopen error timed out>)",
+      "hops": 4,
+      "visited": [
+        "https://www.jinjacho.or.jp/",
+        "https://www.jinjacho.or.jp/search?q=神明",
+        "http://www.jinja.ne.jp/exploration/index.html",
+        "http://chiba.jinjacho.or.jp/"
+      ]
+    },
+    "東京都": {
+      "shrines": [
+        {
+          "name": "芝大神宮",
+          "city": "港区",
+          "address": "東京都港区芝大門1-12-7",
+          "main_deity": "天照皇大御神・豊受大御神",
+          "source_quote": "御祭神 天照皇大御神（あまてらすすめおおみかみ） 豊受大御神（とようけおおみかみ）",
+          "source_url": "http://www.tokyo-jinjacho.or.jp/minato/200076",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-12",
+          "html_cache": "http___www_tokyo_jinjacho_or_jp_minato_200076.html"
+        }
+      ],
+      "search_note": "祭神情報が確認できる詳細ページを探すため、キーワード検索ページへ遷移する。次に「神明」等のキーワードで検索を試みる。 / 検索フォーム(GET, s パラメータ)を使い「神明」で検索を試みる / 検索結果一覧で神明系の神社(秋川神明社、梅田神明宮、芝大神宮、天祖神社など)を多数発見。祭神確認のため詳細ページ(芝大神宮)へ遷移する。 / 芝大神宮（芝神明）は天照皇大御神を主祭神とする神明系の神社として確認できた。残り探索回数が少ないため、ここで終了する。",
+      "hops": 4,
+      "visited": [
+        "http://www.tokyo-jinjacho.or.jp",
+        "http://www.tokyo-jinjacho.or.jp/jinja/keyword/",
+        "http://www.tokyo-jinjacho.or.jp/?s=神明",
+        "http://www.tokyo-jinjacho.or.jp/minato/200076"
+      ],
+      "html_cache": [
+        "http___www_tokyo_jinjacho_or_jp.html",
+        "http___www_tokyo_jinjacho_or_jp_jinja_keyword_.html",
+        "http___www_tokyo_jinjacho_or_jp__s___.html",
+        "http___www_tokyo_jinjacho_or_jp_minato_200076.html"
+      ]
+    },
+    "神奈川県": {
+      "shrines": [],
+      "search_note": "検索フォームのGETパラメータ(s_keyword_3)を使い「神明」で検索を試みる。 / 検索結果ページが表示されず、フォームのあるトップページの内容が返された。神社検索ページへ遷移して再検索を試みる。 / 前回訪問済みの検索URLだが再度followして結果を確認する。パラメータ順やcsp等の空欄を含めて完全なGETリクエストを試みる。もし既に結果が空だった場合は皇大神・天祖などの別キーワードで再検索する必要がある。 / 検索結果ページが正しく機能せず、トップページにリダイレクトされている。検索フォームはGETパラメータでの検索結果を表示できず、由緒や祭神情報も個別ページで未整備との案内あり(「神社検索の情報について」参照)。残り探索回数も少ないため、これ以上の追跡は困難と判断し0件で終了。",
+      "hops": 4,
+      "visited": [
+        "https://kanagawa-jinja.or.jp",
+        "https://www.kanagawa-jinja.or.jp/?s_keyword_3=神明&searchbutton=1",
+        "https://www.kanagawa-jinja.or.jp/search/",
+        "https://www.kanagawa-jinja.or.jp/?s_keyword_3=神明&searchbutton=1&csp=&fe_form_no=&feadvns_max_line_3=&search_element_2="
+      ],
+      "html_cache": [
+        "https___kanagawa_jinja_or_jp.html",
+        "https___www_kanagawa_jinja_or_jp__s_keyword_3____searchbutton_1.html",
+        "https___www_kanagawa_jinja_or_jp_search_.html",
+        "https___www_kanagawa_jinja_or_jp__s_keyword_3____searchbutton_1_csp__fe_form_no_.html"
+      ]
+    },
+    "新潟県": {
+      "shrines": [],
+      "search_note": "検索フォームを用いて『神明』で検索を実行する。GETパラメータarea/keywordを使用。 / 検索結果一覧には神社名・ふりがな・鎮座地のみで祭神情報が無く、詳細ページへのリンクも本文中に見つからない。祭神が確認できないため今回は0件。次ページ(page=2)を確認して詳細ページ導線や追加候補の有無を調べる。 / 検索結果一覧には社名・鎮座地のみ表示され、祭神情報や詳細ページへのリンクが確認できないため、この2ページ目からは対象神社を確定できなかった。次ページを確認し、詳細ページリンクや祭神情報の有無を継続調査する。 / 検索結果一覧ページには神社名・鎮座地のみが表示され、祭神情報および詳細ページへのリンクが本文・リンク一覧に存在しないため、祭神を確認できず対象神社を確定できなかった。残り探索回数も少ないため探索を終了する。",
+      "hops": 4,
+      "visited": [
+        "https://niigata-jinjacho.jp",
+        "https://niigata-jinjacho.jp/shrine_niigata/search.php?area=&keyword=神明",
+        "https://niigata-jinjacho.jp/shrine_niigata/search.php?area=&keyword=神明&page=2&num=10",
+        "https://niigata-jinjacho.jp/shrine_niigata/search.php?area=&keyword=神明&page=3&num=10"
+      ],
+      "html_cache": [
+        "https___niigata_jinjacho_jp.html",
+        "https___niigata_jinjacho_jp_shrine_niigata_search_php_area__keyword___.html",
+        "https___niigata_jinjacho_jp_shrine_niigata_search_php_area__keyword____page_2_nu.html",
+        "https___niigata_jinjacho_jp_shrine_niigata_search_php_area__keyword____page_3_nu.html"
+      ]
+    },
+    "富山県": {
+      "shrines": [],
+      "search_note": "氏神神社検索の詳細ページはまだ見ていない。検索フォーム(GET, パラメータ's')が見つかったので「神明」で検索を試みる。 / 検索結果には神明系神社の詳細情報が見つからなかった。氏神神社検索ページへ遷移して神社一覧・検索を試みる。 / 氏神神社検索ページには検索フォームがあるがGET形式のsパラメータのみ確認。既に「神明」で検索済みのため、別表記「皇大神」で再検索を試みる。 / 「皇大神」での検索結果には対象神社の情報は見つからなかった(お正月飾りQ&Aや神棚まつり方の記事のみ)。残り探索回数が少ないため「天祖」キーワードで再検索を試みる。 / 「神明」「皇大神」「天祖」のいずれの検索でも0件で、対象の神明系神社(祭神が確認できるページ)を発見できなかった。氏神神社検索ページも訪問済みだが該当社が見当たらず、残り探索回数の制約により富山県神社庁サイト内でこれ以上の追跡は行わなかった。",
+      "hops": 5,
+      "visited": [
+        "https://toyama-jinjacho.sakura.ne.jp/",
+        "https://toyama-jinjacho.sakura.ne.jp/?s=神明",
+        "https://toyama-jinjacho.sakura.ne.jp/%E5%AF%8C%E5%B1%B1%E7%9C%8C%E6%B0%8F%E7%A5%9E%E7%A5%9E%E7%A4%BE%E6%A4%9C%E7%B4%A2",
+        "https://toyama-jinjacho.sakura.ne.jp/?s=皇大神",
+        "https://toyama-jinjacho.sakura.ne.jp/?s=天祖"
+      ],
+      "html_cache": [
+        "https___toyama_jinjacho_sakura_ne_jp_.html",
+        "https___toyama_jinjacho_sakura_ne_jp__s___.html",
+        "https___toyama_jinjacho_sakura_ne_jp__E5_AF_8C_E5_B1_B1_E7_9C_8C_E6_B0_8F_E7_A5_.html",
+        "https___toyama_jinjacho_sakura_ne_jp__s____.html",
+        "https___toyama_jinjacho_sakura_ne_jp__s___.html"
+      ]
+    },
+    "石川県": {
+      "shrines": [
+        {
+          "name": "神明神社",
+          "city": "七尾市",
+          "address": "七尾市小池川原町ホ1番地2",
+          "main_deity": "天照皇大神",
+          "source_quote": "[鎮座地] 七尾市小池川原町ホ1番地2 [御祭神] 天照皇大神",
+          "source_url": "https://www.ishikawa-jinjacho.or.jp/?s=神明",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-12",
+          "html_cache": "https___www_ishikawa_jinjacho_or_jp__s___.html"
+        },
+        {
+          "name": "神明宮",
+          "city": "能登町",
+          "address": "鳳珠郡能登町字柿生8字70番地",
+          "main_deity": "天照大神 豊受大神",
+          "source_quote": "[鎮座地] 鳳珠郡能登町字柿生8字70番地 [御祭神] 天照大神 豊受大神",
+          "source_url": "https://www.ishikawa-jinjacho.or.jp/?s=神明",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-12",
+          "html_cache": "https___www_ishikawa_jinjacho_or_jp__s___.html"
+        },
+        {
+          "name": "神明社",
+          "city": "中能登町",
+          "address": "鹿島郡中能登町西イ32",
+          "main_deity": "天照大御神",
+          "source_quote": "[鎮座地] 鹿島郡中能登町西イ32 [御祭神] 天照大御神",
+          "source_url": "https://www.ishikawa-jinjacho.or.jp/?s=神明",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-12",
+          "html_cache": "https___www_ishikawa_jinjacho_or_jp__s___.html"
+        }
+      ],
+      "search_note": "検索フォーム(GET, s)を使って「神明」で検索する。まずはキーワード検索を試みる。 / 検索結果一覧ページに御祭神が既に明記されていたため、詳細ページへの遷移不要と判断。天照系の御祭神を持つ神明社・神明神社・神明宮を8社確認。石川県内で十分な件数(目安3社以上)を確保できたためdoneとする。",
+      "hops": 2,
+      "visited": [
+        "https://ishikawa-jinjacho.or.jp",
+        "https://www.ishikawa-jinjacho.or.jp/?s=神明"
+      ],
+      "html_cache": [
+        "https___ishikawa_jinjacho_or_jp.html",
+        "https___www_ishikawa_jinjacho_or_jp__s___.html"
+      ]
+    },
+    "福井県": {
+      "shrines": [],
+      "search_note": "取得失敗 https://www.jinja-fukui.jp/member/index.php (0: HTTPError: HTTP Error 401: Unauthorized)",
+      "hops": 3,
+      "visited": [
+        "https://www.jinja-fukui.jp/",
+        "https://www.jinja-fukui.jp/search/index.php",
+        "https://www.jinja-fukui.jp/member/index.php"
+      ]
+    },
+    "山梨県": {
+      "shrines": [
+        {
+          "name": "神明社",
+          "city": "甲府市",
+          "address": "甲府市中央4-5-28",
+          "main_deity": "天照皇大神",
+          "source_quote": "■御祭神： 天照皇大神",
+          "source_url": "https://www.yamanashi-jinjacho.or.jp/intro/search/detail/1028",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-12",
+          "html_cache": "https___www_yamanashi_jinjacho_or_jp_intro_search_detail_1028.html"
+        },
+        {
+          "name": "皇大神社",
+          "city": "甲州市",
+          "address": "甲州市勝沼町藤井818",
+          "main_deity": "大日瑠?貴命",
+          "source_quote": "皇大神社 (旧村社) コードNo.：2110 ■鎮座地： 甲州市勝沼町藤井818 ■御祭神： 大日瑠?貴命",
+          "source_url": "https://www.yamanashi-jinjacho.or.jp/intro/search/detail/2110",
+          "tier": "rejected_deity_unverified",
+          "retrieved_at": "2026-07-12",
+          "html_cache": "https___www_yamanashi_jinjacho_or_jp_intro_search_detail_2110.html"
+        }
+      ],
+      "search_note": "神明社一覧を発見。詳細ページで祭神確認のため最初の候補(1028)へfollowする。残り探索回数が限られるため詳細確認は1件のみ実施し、その後まとめる予定。 / 神明社(甲府市)を発見。祭神確認済み。他のキーワード(皇大神・天祖)でも追加探索を継続する。 / 皇大神社が6件見つかった。まず甲州市勝沼町の皇大神社(2110)の詳細ページで祭神を確認する。残り探索回数が少ないため優先度の高いものから訪問。 / 皇大神社(甲州市)を発見。御祭神は「大日瑠?貴命」と表記されており、天照大御神の別名である大日孁貴命の異表記(OCR文字欠損)と推定される。残り探索回数が少ないため探索を終了する。",
+      "hops": 4,
+      "visited": [
+        "https://www.yamanashi-jinjacho.or.jp/intro/search/result?jinjaName=神明",
+        "https://www.yamanashi-jinjacho.or.jp/intro/search/detail/1028",
+        "https://www.yamanashi-jinjacho.or.jp/intro/search/result?jinjaName=皇大神",
+        "https://www.yamanashi-jinjacho.or.jp/intro/search/detail/2110"
+      ],
+      "html_cache": [
+        "https___www_yamanashi_jinjacho_or_jp_intro_search_result_jinjaName___.html",
+        "https___www_yamanashi_jinjacho_or_jp_intro_search_detail_1028.html",
+        "https___www_yamanashi_jinjacho_or_jp_intro_search_result_jinjaName____.html",
+        "https___www_yamanashi_jinjacho_or_jp_intro_search_detail_2110.html"
+      ]
+    },
+    "長野県": {
+      "shrines": [],
+      "search_note": "神社紹介ページ(地区別一覧)へ移動して神明系神社を探索する / 支部一覧ページから神明社等を探すため、長野支部のページへ遷移する。 / 一覧内に「皇大神社」「更級神明大神社」「伊勢神社」等の候補があるが、詳細ページ未確認のため祭神記載なし。リンクのある伊勢神社(17016.html)から祭神確認を試みる。 / このページの伊勢神社は豊受大神を祀り、天照大御神ではないため対象外。長野支部一覧ページに戻り、神明社・神明宮・皇大神社・天祖神社の名を持つ神社を探索する必要がある。",
+      "hops": 4,
+      "visited": [
+        "https://nagano-jinjacho.jp",
+        "https://nagano-jinjacho.jp/j-syoukai.html",
+        "https://www.nagano-jinjacho.jp/shibu/nagano.htm",
+        "https://www.nagano-jinjacho.jp/shibu/01hokusin/04nagano/17016.html"
+      ],
+      "html_cache": [
+        "https___nagano_jinjacho_jp.html",
+        "https___nagano_jinjacho_jp_j_syoukai_html.html",
+        "https___www_nagano_jinjacho_jp_shibu_nagano_htm.html",
+        "https___www_nagano_jinjacho_jp_shibu_01hokusin_04nagano_17016_html.html"
+      ]
+    },
+    "岐阜県": {
+      "shrines": [
+        {
+          "name": "神明神社",
+          "city": "岐阜市",
+          "address": "岐阜県岐阜市御望961番地の3",
+          "main_deity": "天照大御神（あまてらすおおみかみ）",
+          "source_quote": "主祭神　　天照大御神（あまてらすおおみかみ）",
+          "source_url": "https://gifu-jinjacho.jp/syosai.php?shrno=1088&shrname=%E2%98%85%E7%A5%9E%E6%98%8E%E7%A5%9E%E7%A4%BE%E2%98%85",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-12",
+          "html_cache": "https___gifu_jinjacho_jp_syosai_php_shrno_1088_shrname__E2_98_85_E7_A5_9E_E6_98_.html"
+        }
+      ],
+      "search_note": "検索フォームでキーワード「神明」を試す / 検索結果一覧に「神明神社」(岐阜市御望961、shrno=1088)を発見。祭神確認のため詳細ページへfollow。他の候補(若江神社の境内社「神明神社」等は主祭神ではないため対象外)。次のページ(11件目以降)の探索も残っていれば継続予定。 / 検索結果ページから神明神社(岐阜市御望)の詳細を確認、祭神は天照大御神。他の検索結果は残り探索回数が少ないため未確認。",
+      "hops": 3,
+      "visited": [
+        "https://gifu-jinjacho.jp",
+        "https://gifu-jinjacho.jp/search.php?keyword=神明",
+        "https://gifu-jinjacho.jp/syosai.php?shrno=1088&shrname=%E2%98%85%E7%A5%9E%E6%98%8E%E7%A5%9E%E7%A4%BE%E2%98%85"
+      ],
+      "html_cache": [
+        "https___gifu_jinjacho_jp.html",
+        "https___gifu_jinjacho_jp_search_php_keyword___.html",
+        "https___gifu_jinjacho_jp_syosai_php_shrno_1088_shrname__E2_98_85_E7_A5_9E_E6_98_.html"
+      ]
+    },
+    "静岡県": {
+      "shrines": [],
+      "search_note": "検索フォームを使い「神明」で検索を試みる / 検索結果一覧から候補多数(伊勢神明宮、蒲神明宮、鎌田神明宮、静岡神明宮等)発見。祭神確認のため静岡神明宮の詳細ページへfollowする。まだ祭神未確認のため0件で報告。 / 静岡神明宮の詳細ページには祭神情報が記載されていなかったため出力せず。別キーワード「皇大神」で再検索を試みる。 / 検索結果一覧から「皇大神社」(伊豆の国市韮山山木1072)の詳細ページを確認するためfollowする。祭神はまだ未確認のため出力していない。 / 皇大神社（伊豆の国市韮山山木1072）のページには祭神情報の記載がなく確認できなかったため出力せず。残り探索回数が0のため終了。",
+      "hops": 5,
+      "visited": [
+        "http://www.shizuoka-jinjacho.or.jp",
+        "http://www.shizuoka-jinjacho.or.jp/shokai/search.php?mode=search&search=神明",
+        "http://www.shizuoka-jinjacho.or.jp/shokai/jinja.php?id=4406026",
+        "http://www.shizuoka-jinjacho.or.jp/shokai/search.php?mode=search&search=皇大神",
+        "http://www.shizuoka-jinjacho.or.jp/shokai/jinja.php?id=4402099"
+      ],
+      "html_cache": [
+        "http___www_shizuoka_jinjacho_or_jp.html",
+        "http___www_shizuoka_jinjacho_or_jp_shokai_search_php_mode_search_search___.html",
+        "http___www_shizuoka_jinjacho_or_jp_shokai_jinja_php_id_4406026.html",
+        "http___www_shizuoka_jinjacho_or_jp_shokai_search_php_mode_search_search____.html",
+        "http___www_shizuoka_jinjacho_or_jp_shokai_jinja_php_id_4402099.html"
+      ]
+    },
+    "愛知県": {
+      "shrines": [],
+      "search_note": "検索フォームのaddrフィールドに「神明」を入れて検索を試みる。祭神情報未確認のため0件。 / 検索?addr=神明では結果一覧が表示されず、トップページと同じ内容しか取得できなかった。地図から探すページ(search_map.html)を確認し、そこから神社一覧や索引を辿る。 / 住所検索(addr)は既に試行済み(?addr=神明)。神社名での検索欄を確認するためsearch.htmlへ遷移し、フォームのfield名を確認する。 / 住所検索フォームで「神明」を再検索。以前訪問済みだが結果内容が未確認のため再度followして祭神情報を探す。",
+      "hops": 4,
+      "visited": [
+        "https://aichi-jinjacho.or.jp",
+        "https://aichi-jinjacho.or.jp/?addr=神明&orders=&result_page=1",
+        "https://aichi-jinjacho.or.jp/search_map.html",
+        "https://aichi-jinjacho.or.jp/search.html"
+      ],
+      "html_cache": [
+        "https___aichi_jinjacho_or_jp.html",
+        "https___aichi_jinjacho_or_jp__addr____orders__result_page_1.html",
+        "https___aichi_jinjacho_or_jp_search_map_html.html",
+        "https___aichi_jinjacho_or_jp_search_html.html"
+      ]
+    },
+    "三重県": {
+      "shrines": [],
+      "search_note": "トップページには神社一覧へのリンクがあるため、そちらへ遷移して神明系神社を探索する。 / 三重県神社庁の一覧ページには市町別リンクのみで祭神情報が無い。三重県神社庁教化委員会の神社情報ページ(kyoka.mie-jinjacho.or.jp/shrine/)に検索機能がありそうなので探索する。 / 検索フォームが見当たらないため支部一覧から探索を継続。伊勢神宮に近い度会支部に神明系神社が多い可能性があるため訪問。 / 度会支部のページには神明社・神明宮・皇大神社・天祖神社に該当する社名が見当たらなかった。中川神社は天照大御神を祀るが社名が対象外のため除外。残り探索回数が少ないため、WordPress標準の検索機能(?s=)を使い「皇大神」で県内検索を試みる。 / 検索結果ページに神明社・皇大神社等の該当神社は見当たらず、祭神情報も確認できなかった。残り探索回数が1回のため、これ以上の追跡は困難と判断し終了する。",
+      "hops": 5,
+      "visited": [
+        "https://www.mie-jinjachou.page/",
+        "https://www.mie-jinjachou.page/三重県の神社一覧",
+        "http://kyoka.mie-jinjacho.or.jp/shrine/",
+        "https://kyoka.mie-jinjacho.or.jp/shrine/cat/02_watarai/",
+        "https://kyoka.mie-jinjacho.or.jp/?s=%e7%9a%87%e5%a4%a7%e7%a5%9e"
+      ],
+      "html_cache": [
+        "https___www_mie_jinjachou_page_.html",
+        "https___www_mie_jinjachou_page_________.html",
+        "http___kyoka_mie_jinjacho_or_jp_shrine_.html",
+        "https___kyoka_mie_jinjacho_or_jp_shrine_cat_02_watarai_.html",
+        "https___kyoka_mie_jinjacho_or_jp__s__e7_9a_87_e5_a4_a7_e7_a5_9e.html"
+      ]
+    },
+    "滋賀県": {
+      "shrines": [],
+      "search_note": "検索フォームはPOSTのみのため利用不可。まず「滋賀県の神社」一覧・索引ページを確認する。 / search.htmlページの本文・リンクが空で、検索フォームや索引へのリンクが取得できなかったため、これ以上の探索ができません。祭神情報も確認できないため0件で終了します。",
+      "hops": 2,
+      "visited": [
+        "https://www.shiga-jinjacho.jp",
+        "https://www.shiga-jinjacho.jp/search.html"
+      ],
+      "html_cache": [
+        "https___www_shiga_jinjacho_jp.html",
+        "https___www_shiga_jinjacho_jp_search_html.html"
+      ]
+    },
+    "京都府": {
+      "shrines": [],
+      "search_note": "神社紹介ページへ移動して一覧・検索を確認する / 神社紹介ページ(shrine.html)へ遷移して神社一覧・検索を確認する / 地域別一覧ページへ移動。右京区の神社リストを確認し、神明系の社名があれば詳細ページへ進む。 / 01.html(右京区)には神明社・皇大神社等の該当社名が見当たらず、祭神情報も記載されていないため該当なし。次の地区ページ(上京区)を確認する。 / 上京区のページには神明社・神明宮・皇大神社・天祖神社に該当する社名が見当たらなかった。残り探索回数が1のため、これ以上の追跡は行わず終了する。",
+      "hops": 5,
+      "visited": [
+        "http://kyoto-jinjacho.or.jp",
+        "http://kyoto-jinjacho.or.jp/jinja.html",
+        "http://kyoto-jinjacho.or.jp/shrine.html",
+        "http://kyoto-jinjacho.or.jp/shrine/01.html",
+        "http://kyoto-jinjacho.or.jp/shrine/02.html"
+      ],
+      "html_cache": [
+        "http___kyoto_jinjacho_or_jp.html",
+        "http___kyoto_jinjacho_or_jp_jinja_html.html",
+        "http___kyoto_jinjacho_or_jp_shrine_html.html",
+        "http___kyoto_jinjacho_or_jp_shrine_01_html.html",
+        "http___kyoto_jinjacho_or_jp_shrine_02_html.html"
+      ]
+    },
+    "大阪府": {
+      "shrines": [],
+      "search_note": "府内神社の紹介ページへ遷移し、一覧・索引を確認する / 市区町村一覧のインデックスページ。祭神情報がないため、まず大阪市の一覧ページへ遷移して神明系神社を探す。 / 区一覧ページ。祭神情報が無いため、まず北区の神社一覧ページへ遷移して神明系神社を探索する。 / 北区(第5支部)の一覧には神明社・皇大神社・天祖神社に該当する社名が見当たらなかった。全体の支部一覧ページに戻り、他区の一覧(神明系神社が含まれそうな支部)を探索する。残り探索回数が少ないため効率化を優先。",
+      "hops": 4,
+      "visited": [
+        "https://osaka-jinjacho.jp",
+        "https://www.osaka-jinjacho.jp/funai_jinja/index.html",
+        "https://www.osaka-jinjacho.jp/funai_jinja/osaka.html",
+        "https://www.osaka-jinjacho.jp/funai_jinja/dai5shibu/kita-ku/kita.html"
+      ],
+      "html_cache": [
+        "https___osaka_jinjacho_jp.html",
+        "https___www_osaka_jinjacho_jp_funai_jinja_index_html.html",
+        "https___www_osaka_jinjacho_jp_funai_jinja_osaka_html.html",
+        "https___www_osaka_jinjacho_jp_funai_jinja_dai5shibu_kita_ku_kita_html.html"
+      ]
+    },
+    "兵庫県": {
+      "shrines": [],
+      "search_note": "検索ページへ移動し、キーワード「神明」等で検索を試みる / 検索フォームは住所入力による近隣神社検索のみでGETパラメータに神社名や祭神での検索欄がなく、キーワード検索は不可。他に神社一覧・索引ページへのリンクも見当たらないため、対象神社を特定できない。",
+      "hops": 2,
+      "visited": [
+        "https://www.hyogo-jinjacho.com",
+        "https://www.hyogo-jinjacho.com/search.html"
+      ],
+      "html_cache": [
+        "https___www_hyogo_jinjacho_com.html",
+        "https___www_hyogo_jinjacho_com_search_html.html"
+      ]
+    },
+    "奈良県": {
+      "shrines": [],
+      "search_note": "神社一覧ページへ遷移して神明系神社を探索する / 奈良市のページで「神明神社」(奈良市都祁馬場町564)を発見。祭神確認のため詳細ページへfollowする。 / 神明神社(奈良市都祁馬場町)の詳細ページを確認したが、御祭神欄の値がページ本文抽出で欠落しており本文中に祭神情報が確認できなかったため出力見送り。他の神明系神社を探すためキーワード検索ページへ遷移する。 / キーワード検索ページのURLパターン(/search/サ行/神明神社/)を参考に、/search/keyword/神明/ を試行する。 / 神明社(磯城郡田原本町唐古534)の詳細ページを確認したが、御祭神欄に具体的な神名の記載が本文中に見当たらず、祭神を確認できなかったため出力対象外とした。探索回数の制限により他のキーワード(皇大神・天祖等)でのさらなる調査は実施できず、対象0件で終了する。",
+      "hops": 5,
+      "visited": [
+        "https://www.naraken-jinjacho.jp/",
+        "https://www.naraken-jinjacho.jp/jinja.html",
+        "http://www.narashinsei.com/search/%e3%82%b5%e8%a1%8c/%e7%a5%9e%e6%98%8e%e7%a5%9e%e7%a4%be/",
+        "http://www.narashinsei.com/search/keyword/",
+        "http://www.narashinsei.com/search/keyword/神明/"
+      ],
+      "html_cache": [
+        "https___www_naraken_jinjacho_jp_.html",
+        "https___www_naraken_jinjacho_jp_jinja_html.html",
+        "http___www_narashinsei_com_search__e3_82_b5_e8_a1_8c__e7_a5_9e_e6_98_8e_e7_a5_9e.html",
+        "http___www_narashinsei_com_search_keyword_.html",
+        "http___www_narashinsei_com_search_keyword____.html"
+      ]
+    },
+    "和歌山県": {
+      "shrines": [],
+      "search_note": "神社名検索フォームに「神明」を入力して検索を実行する。まだ祭神情報は確認できていない。 / 検索クエリはDB接続エラー(mysql_connect access denied)となり結果を取得できなかった。トップページに戻っても同様のDBエラーが発生する可能性が高く、他に索引ページへのリンクも確認できないため、これ以上の探索を断念する。",
+      "hops": 2,
+      "visited": [
+        "https://wakayama-jinjacho.or.jp",
+        "https://wakayama-jinjacho.or.jp/jdb/sys/user/SelectListWjtTbl.php?JinjyaMei=神明"
+      ],
+      "html_cache": [
+        "https___wakayama_jinjacho_or_jp.html",
+        "https___wakayama_jinjacho_or_jp_jdb_sys_user_SelectListWjtTbl_php_JinjyaMei___.html"
+      ]
+    },
+    "鳥取県": {
+      "shrines": [
+        {
+          "name": "上小路神社",
+          "city": "鳥取市",
+          "address": "鳥取市賀露町南5丁目1715",
+          "main_deity": "天照大神",
+          "source_quote": "爾来、古くより神明宮、神明社と呼称され、特に農家の信仰が篤く、江戸時代には「伊勢講」が氏子内に数講存在したという。",
+          "source_url": "http://tottori-jinjacho.jp/pages/145",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-12",
+          "html_cache": "http___tottori_jinjacho_jp_pages_145.html"
+        }
+      ],
+      "search_note": "検索フォームでキーワード「神明」を試す。まずはこの結果を確認する。 / 上小路神社(pages/145)は「古くより神明宮、神明社と呼称され」との記述があり神明系の可能性が高いため詳細ページで祭神を確認する。岩戸神社(pages/499)は伊勢より神明宮を勧請した由緒はあるが現在の社名・祭神未確認。次に上小路神社の詳細を確認する。 / 上小路神社は祭神が天照大神で、由緒に神明宮・神明社と呼称されていた旨の記載があり対象と判断。鳥取大神宮など他の候補ページも存在するが祭神未確認のため今回は含めていない。追加検索キーワード「皇大神」で探索を継続する。 / 検索結果ページに該当なし。残り探索回数が少ないため『天祖』で検索を試みる。 / 検索キーワード「神明」「皇大神」「天祖」いずれも検索結果に対象神社が見つからず、残り探索回数も0となったため終了。",
+      "hops": 5,
+      "visited": [
+        "https://tottori-jinjacho.jp",
+        "https://tottori-jinjacho.jp/publics/search/?search_word=神明",
+        "http://tottori-jinjacho.jp/pages/145",
+        "http://tottori-jinjacho.jp/publics/search/?search_word=皇大神",
+        "http://tottori-jinjacho.jp/publics/search/?search_word=天祖"
+      ],
+      "html_cache": [
+        "https___tottori_jinjacho_jp.html",
+        "https___tottori_jinjacho_jp_publics_search__search_word___.html",
+        "http___tottori_jinjacho_jp_pages_145.html",
+        "http___tottori_jinjacho_jp_publics_search__search_word____.html",
+        "http___tottori_jinjacho_jp_publics_search__search_word___.html"
+      ]
+    },
+    "島根県": {
+      "shrines": [],
+      "search_note": "神社検索ページへ遷移し、神明系神社を検索する / 検索フォームはGoogle CSEでcx値が不明なため使用不可。松江市の一覧ページへ遷移し神明系神社を探す。 / 松江市のページ内には『神明社・神明宮・皇大神社・天祖神社』に該当する社名は見つからなかった(伊勢宮・日御碕神社等は天照大御神/天照大神を祀るが指定の社名パターンに一致しないため対象外)。他市町村の一覧ページへのリンクを確認するためトップページへ戻る。 / トップページのみで対象神社の情報なし。サイトがWordPress構造(/2026/05/369.html等)のため、標準検索パラメータ?s=を用いて「神明」で検索を試みる。松江市・検索ページは訪問済みだが詳細情報未確認。 / 検索クエリ「神明」による?s=検索結果はトップページと同内容で、神明社・神明宮・皇大神社・天祖神社に関する情報は本文中に見当たらなかった。残り探索回数が1回のため、神社検索ページ(地域別検索)への遷移では祭神情報まで到達できる可能性が低く、これ以上の探索を断念し0件で終了する。",
+      "hops": 5,
+      "visited": [
+        "https://shimane-jinjacho.or.jp",
+        "https://www.shimane-jinjacho.or.jp/search/index.html",
+        "https://www.shimane-jinjacho.or.jp/matsue/index.html",
+        "https://www.shimane-jinjacho.or.jp/",
+        "https://www.shimane-jinjacho.or.jp/?s=神明"
+      ],
+      "html_cache": [
+        "https___shimane_jinjacho_or_jp.html",
+        "https___www_shimane_jinjacho_or_jp_search_index_html.html",
+        "https___www_shimane_jinjacho_or_jp_matsue_index_html.html",
+        "https___www_shimane_jinjacho_or_jp_.html",
+        "https___www_shimane_jinjacho_or_jp__s___.html"
+      ]
+    },
+    "岡山県": {
+      "shrines": [],
+      "search_note": "検索フォームがあるため『神明』で検索を試みる。GETパラメータ形式は推測。 / 検索フォームはJSページのためGETパラメータでの結果取得ができなかった。全件一覧やフリーワード検索パラメータを推測してfollowを試みる。 / 検索結果ページは全件一覧(1609件)が表示され絞り込みが機能していない可能性がある。一覧内に「内宮」(01011, 岡山市南区浜野1-3-8)という神明系らしき社名を発見したため詳細ページを確認する。 / 現在のページの内宮は天照大御神を祀るが社名が神明系(神明社/神明宮/皇大神社/天祖神社)に該当しないため対象外。皇大神をキーワードに再検索を試みる。 / 検索キーワード「皇大神」「神明」ともにフリーワード検索が機能せず全件一覧(1609件)が返される状態で、対象社名を効率的に絞り込めなかった。内宮(16420)を訪問したが祭神情報は本文中に確認できず、残り探索回数も尽きたため0件で終了する。",
+      "hops": 5,
+      "visited": [
+        "https://okayama-jinjacho.or.jp",
+        "https://okayama-jinjacho.or.jp/search/?q=神明",
+        "https://okayama-jinjacho.or.jp/search/list/?freeword=神明",
+        "https://www.okayama-jinjacho.or.jp/search/16420",
+        "https://www.okayama-jinjacho.or.jp/search/list/?freeword=皇大神"
+      ],
+      "html_cache": [
+        "https___okayama_jinjacho_or_jp.html",
+        "https___okayama_jinjacho_or_jp_search__q___.html",
+        "https___okayama_jinjacho_or_jp_search_list__freeword___.html",
+        "https___www_okayama_jinjacho_or_jp_search_16420.html",
+        "https___www_okayama_jinjacho_or_jp_search_list__freeword____.html"
+      ]
+    },
+    "広島県": {
+      "shrines": [],
+      "search_note": "神社一覧ページへ遷移して神明系神社を探索する / 検索フォームはPOSTのみだが、同一URLでGETパラメータ検索が可能か試行する。ダメなら次にsearch_area系の地域一覧を辿る。 / 検索フォームはPOSTのみでGETパラメータ(search_txt=神明)は機能せず、通常の地域一覧が表示された。祭神情報も確認できないため、サイトマップページへ遷移して神社名索引などの手がかりを探す。 / サイトマップには対象情報なし。既に「神明」で検索済みのため、別キーワード「皇大神」で検索を試みる。 / 検索結果ページには「戸坂くるめ木」地区の一覧が表示されているが、これは検索キーワード「皇大神」の結果ではなく広島市東区の全神社一覧のように見え、神明・皇大神・天祖に該当する社名は存在しない。祭神情報も掲載されていないため対象社を確認できなかった。残り探索回数が1のため、これ以上のfollowは行わずdoneとする。",
+      "hops": 5,
+      "visited": [
+        "https://hiroshima-jinjacho.jp",
+        "https://www.hiroshima-jinjacho.jp/hirosima_jinja/",
+        "https://www.hiroshima-jinjacho.jp/hirosima_jinja/?search_txt=神明",
+        "https://www.hiroshima-jinjacho.jp/hirosima_jinja/sitemap",
+        "https://www.hiroshima-jinjacho.jp/hirosima_jinja/?search_txt=皇大神"
+      ],
+      "html_cache": [
+        "https___hiroshima_jinjacho_jp.html",
+        "https___www_hiroshima_jinjacho_jp_hirosima_jinja_.html",
+        "https___www_hiroshima_jinjacho_jp_hirosima_jinja__search_txt___.html",
+        "https___www_hiroshima_jinjacho_jp_hirosima_jinja_sitemap.html",
+        "https___www_hiroshima_jinjacho_jp_hirosima_jinja__search_txt____.html"
+      ]
+    },
+    "山口県": {
+      "shrines": [
+        {
+          "name": "山口大神宮",
+          "city": "山口市",
+          "address": "〒753-0071 山口市滝町4-4",
+          "main_deity": "天照皇大神",
+          "source_quote": "御祭神 内宮 （主祭神）天照皇大神 （配祀神）天手力男命 萬幡豊秋津姫命",
+          "source_url": "https://www.yamaguchi-jinjacho.or.jp/yamaguchi/daijingu/",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-12",
+          "html_cache": "https___www_yamaguchi_jinjacho_or_jp_yamaguchi_daijingu_.html"
+        }
+      ],
+      "search_note": "市町別一覧の入口。まず山口市の一覧ページを確認し、神明系の社名がないか探索する。 / 山口市の神社一覧ページ。「山口大神宮」が天照大神を祀る神明系の可能性が高いため詳細ページを確認する。他に神明社・天祖神社等の名称は見当たらない。 / 山口大神宮（内宮主祭神:天照皇大神）を発見。県内神明系神社として1社確保。他ページ（神社検索・索引）は探索回数の制約により未探索。",
+      "hops": 3,
+      "visited": [
+        "https://yamaguchi-jinjacho.or.jp",
+        "https://www.yamaguchi-jinjacho.or.jp/yamaguchi/",
+        "https://www.yamaguchi-jinjacho.or.jp/yamaguchi/daijingu/"
+      ],
+      "html_cache": [
+        "https___yamaguchi_jinjacho_or_jp.html",
+        "https___www_yamaguchi_jinjacho_or_jp_yamaguchi_.html",
+        "https___www_yamaguchi_jinjacho_or_jp_yamaguchi_daijingu_.html"
+      ]
+    },
+    "徳島県": {
+      "shrines": [],
+      "search_note": "取得失敗 http://awa-jinjacho.jp/ (0: URLError: <urlopen error [Errno 8] nodename nor servname pro)",
+      "hops": 1,
+      "visited": [
+        "http://awa-jinjacho.jp/"
+      ]
+    },
+    "香川県": {
+      "shrines": [],
+      "search_note": "検索フォームでキーワード「神明」を試す / 神明神社が4件見つかった。祭神確認のため詳細ページへ遷移する。まず東かがわ市川東の神明神社を確認。 / 神明神社(東かがわ市川東494番地)のページには御祭神の記載がなく、確認できなかったため出力しない。別キーワードで検索を継続する。 / 皇大神での検索は0件。神明神社-4は既訪問だが祭神確認できず未登録。天祖で追加検索を試みる。 / 香川県神社庁サイトで「神明」「皇大神」「天祖」で検索したが、天祖のキーワードでは該当なし。神明神社-4の詳細ページは既に確認済みだが、祭神情報は本文中に見当たらず、確実な引用が取得できなかったため、香川県では対象神社を確認できなかった。",
+      "hops": 5,
+      "visited": [
+        "https://kagawakenjinjacho.or.jp/",
+        "https://kagawakenjinjacho.or.jp/?s=神明",
+        "https://kagawakenjinjacho.or.jp/shrine/%e7%a5%9e%e6%98%8e%e7%a5%9e%e7%a4%be-4/",
+        "https://kagawakenjinjacho.or.jp/?s=皇大神",
+        "https://kagawakenjinjacho.or.jp/?s=天祖"
+      ],
+      "html_cache": [
+        "https___kagawakenjinjacho_or_jp_.html",
+        "https___kagawakenjinjacho_or_jp__s___.html",
+        "https___kagawakenjinjacho_or_jp_shrine__e7_a5_9e_e6_98_8e_e7_a5_9e_e7_a4_be_4_.html",
+        "https___kagawakenjinjacho_or_jp__s____.html",
+        "https___kagawakenjinjacho_or_jp__s___.html"
+      ]
+    },
+    "愛媛県": {
+      "shrines": [
+        {
+          "name": "神明神社",
+          "city": "今治市",
+          "address": "今治市辻堂字古屋敷148-1,2",
+          "main_deity": "天照皇大神(あまてらすすめおおみかみ)",
+          "source_quote": "神社主祭神 天照皇大神(あまてらすすめおおみかみ) 大穴牟遅命(おおなむぢのみこと)",
+          "source_url": "http://ehime-jinjacho.jp/jinja/?p=808",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-12",
+          "html_cache": "http___ehime_jinjacho_jp_jinja__p_808.html"
+        }
+      ],
+      "search_note": "検索ページで「神明」キーワード検索を試みる / 検索結果一覧に複数の「神明神社」が見つかった。祭神確認のため詳細ページ(今治市辻堂の神明神社)へfollowする。 / 検索結果ページ「?s=神明」から本詳細ページに到達し祭神を確認できた。残り探索回数が少ないため、確保できた1社を確定してdoneとする。",
+      "hops": 3,
+      "visited": [
+        "http://ehime-jinjacho.jp/",
+        "http://ehime-jinjacho.jp/jinja/?s=神明",
+        "http://ehime-jinjacho.jp/jinja/?p=808"
+      ],
+      "html_cache": [
+        "http___ehime_jinjacho_jp_.html",
+        "http___ehime_jinjacho_jp_jinja__s___.html",
+        "http___ehime_jinjacho_jp_jinja__p_808.html"
+      ]
+    },
+    "高知県": {
+      "shrines": [
+        {
+          "name": "高知大神宮",
+          "city": "高知市",
+          "address": "高知県高知市帯屋町2丁目7-2",
+          "main_deity": "天照皇大神",
+          "source_quote": "高知大神宮 天照皇大神を祭る「高知のお伊勢さん」",
+          "source_url": "https://www.yosakoi-inari.com/kochidaijingu/",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-12",
+          "html_cache": "https___www_yosakoi_inari_com_kochidaijingu_.html"
+        }
+      ],
+      "search_note": "神社一覧ページへ遷移して神明系神社を探索する / 高知県神社一覧ページに神明社・神明宮・皇大神社・天祖神社という社名は見当たらないが、「高知大神宮」が神明系(天照大神系)の可能性があるため詳細ページを確認する。 / 高知県神社庁サイトでは一覧・詳細に祭神記載が確認できなかったため、高知大神宮公式サイトから天照皇大神を祀る神明系神社を1社確保した。県神社庁の索引を辿る探索回数が尽きたため終了。",
+      "hops": 3,
+      "visited": [
+        "https://www.kochi-jinjyacho.com/",
+        "https://www.kochi-jinjyacho.com/高知県神社一覧",
+        "https://www.yosakoi-inari.com/kochidaijingu/"
+      ],
+      "html_cache": [
+        "https___www_kochi_jinjyacho_com_.html",
+        "https___www_kochi_jinjyacho_com________.html",
+        "https___www_yosakoi_inari_com_kochidaijingu_.html"
+      ]
+    },
+    "福岡県": {
+      "shrines": [],
+      "search_note": "神社検索エリア別ページへ遷移。福岡エリアから神明系神社を探索する。 / 福岡エリア一覧に「天照皇太神宮」（糟屋郡久山町猪野604）を発見したが、詳細ページ・祭神情報が本文に無いため確認できず。まだ0件確定。検索機能で天照/神明系のキーワードを試す。 / 検索『天照』では神社一覧が本文に表示されず該当なし。キーワード『神明』で再検索を試みる。 / 「神明」「天照」での検索結果には対象神社の情報が見つからなかった。エリア別一覧(北九州)を確認する。 / 北九州エリア神社一覧を確認したが、神明社・神明宮・皇大神社・天祖神社に該当する社名は見当たらなかった。既に全県検索(?s=天照、?s=神明)およびエリア別一覧(福岡・北九州)を確認済みで、残り探索回数もないため終了する。",
+      "hops": 5,
+      "visited": [
+        "https://fukuoka-jinjacho.or.jp",
+        "https://fukuoka-jinjacho.or.jp/area/fukuoka/",
+        "https://fukuoka-jinjacho.or.jp/?s=天照",
+        "https://fukuoka-jinjacho.or.jp/?s=神明",
+        "https://fukuoka-jinjacho.or.jp/area/kitakyusyu/"
+      ],
+      "html_cache": [
+        "https___fukuoka_jinjacho_or_jp.html",
+        "https___fukuoka_jinjacho_or_jp_area_fukuoka_.html",
+        "https___fukuoka_jinjacho_or_jp__s___.html",
+        "https___fukuoka_jinjacho_or_jp__s___.html",
+        "https___fukuoka_jinjacho_or_jp_area_kitakyusyu_.html"
+      ]
+    },
+    "佐賀県": {
+      "shrines": [
+        {
+          "name": "大江神大神宮",
+          "city": "杵島郡江北町",
+          "address": "杵島郡江北町大字山口５０３６",
+          "main_deity": "天照大神・菅原道真・海津見神",
+          "source_quote": "【鎮座地】 杵島郡江北町大字山口５０３６ 【祭神】 天照大神 菅原道真 海津見神",
+          "source_url": "https://saga-jinjacho.jp/%e5%a4%a7%e6%b1%9f%e7%a5%9e%e5%a4%a7%e7%a5%9e%e5%ae%ae/",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-12",
+          "html_cache": "https___saga_jinjacho_jp__e5_a4_a7_e6_b1_9f_e7_a5_9e_e5_a4_a7_e7_a5_9e_e5_ae_ae_.html"
+        }
+      ],
+      "search_note": "神社一覧・検索に繋がりそうなjinja-mapページへ遷移して探索を継続する。 / 一覧ページには神明社・神明宮・皇大神社・天祖神社に該当する社名が見当たらなかった。検索フォームでキーワード「神明」を試す。 / 「神明」検索は0件だった。一覧に『伊勢神社（太神宮）』があり天照大神を祀る可能性が高いため詳細ページを確認する。 / 伊勢神社（太神宮）は祭神が天照皇大神だが、社名が神明社・神明宮・皇大神社・天祖神社のいずれにも該当しないため対象外とした。別の検索キーワード「皇大神」で神明系神社を再検索する。 / 検索結果ページには祭神情報が無く、社名一覧のみ。神明系の可能性がある『大江神大神宮』の詳細ページへ残り1回のfollowを使用して祭神を確認する。伊勢神社（太神宮）は訪問済みだが祭神未確認のため今回は出力せず。 / 残り探索回数0のため終了。伊勢神社ページも確認済みだが祭神記載なし。大江神大神宮のみ祭神確認できたため出力。",
+      "hops": 6,
+      "visited": [
+        "https://saga-jinjacho.jp",
+        "https://saga-jinjacho.jp/jinja-map/",
+        "https://saga-jinjacho.jp/?s=神明",
+        "https://saga-jinjacho.jp/%e4%bc%8a%e5%8b%a2%e7%a5%9e%e7%a4%be/",
+        "https://saga-jinjacho.jp/?s=皇大神",
+        "https://saga-jinjacho.jp/%e5%a4%a7%e6%b1%9f%e7%a5%9e%e5%a4%a7%e7%a5%9e%e5%ae%ae/"
+      ],
+      "html_cache": [
+        "https___saga_jinjacho_jp.html",
+        "https___saga_jinjacho_jp_jinja_map_.html",
+        "https___saga_jinjacho_jp__s___.html",
+        "https___saga_jinjacho_jp__e4_bc_8a_e5_8b_a2_e7_a5_9e_e7_a4_be_.html",
+        "https___saga_jinjacho_jp__s____.html",
+        "https___saga_jinjacho_jp__e5_a4_a7_e6_b1_9f_e7_a5_9e_e5_a4_a7_e7_a5_9e_e5_ae_ae_.html"
+      ]
+    },
+    "長崎県": {
+      "shrines": [],
+      "search_note": "神社検索ページへ遷移して「神明」等で検索を試みる / search.htmlには地域別の神社一覧への導線(市町村名)が表示されているが、抽出されたテキストにはこれらのリンクURLが含まれておらず、キーワード検索フォームも見当たらなかった。ページ内リンクはナビゲーションメニューのみで、神明社・皇大神社等の個別詳細ページへ遷移する手段が確認できなかったため、これ以上の探索を断念した。",
+      "hops": 2,
+      "visited": [
+        "https://nagasaki-jinjacho.or.jp",
+        "https://nagasaki-jinjacho.or.jp/search.html"
+      ],
+      "html_cache": [
+        "https___nagasaki_jinjacho_or_jp.html",
+        "https___nagasaki_jinjacho_or_jp_search_html.html"
+      ]
+    },
+    "熊本県": {
+      "shrines": [],
+      "search_note": "氏神様検索ページへ移動。市区町村選択式のため実際のフォームを確認する必要がある。検索フォームはcity/town選択式でキーワード検索不可のため、まずpatron-godページの構造を確認する。 / このページは地域選択フォームで、44ページに及ぶ一覧のため神明系神社名での検索を試みる。検索フォームがGETで組み立て可能なためsパラメータで試行。 / 検索結果ページには神社一覧や祭神情報が見当たらず、氏神様検索は住所（市区町村・町丁）ベースの選択式で神社名検索には対応していない。検索フォームもcity/town選択式でキーワード検索不可のため、これ以上の探索経路がない。対象神社を特定できず0件とする。",
+      "hops": 3,
+      "visited": [
+        "https://kumamotokenjinjacho.jp/",
+        "https://kumamotokenjinjacho.jp/patron-god/",
+        "https://kumamotokenjinjacho.jp/?s=神明"
+      ],
+      "html_cache": [
+        "https___kumamotokenjinjacho_jp_.html",
+        "https___kumamotokenjinjacho_jp_patron_god_.html",
+        "https___kumamotokenjinjacho_jp__s___.html"
+      ]
+    },
+    "大分県": {
+      "shrines": [],
+      "search_note": "公式サイトなし(神社本庁一覧に掲載・電話のみ)。収集は神社公式・自治体ソースで代替。【くろたん条件】レコードのsource_typeに『県神社庁DB不存在につき代替』を注記",
+      "source_type_note": "県神社庁DB不存在につき代替(本走行で神社公式・自治体ソース収集)"
+    },
+    "宮崎県": {
+      "shrines": [],
+      "search_note": "公式サイトなし(『宮巡』は神職運営の紹介サイトで庁公式ではない)。収集は神社公式・自治体ソースで代替。【くろたん条件】レコードのsource_typeに『県神社庁DB不存在につき代替』を注記",
+      "source_type_note": "県神社庁DB不存在につき代替(本走行で神社公式・自治体ソース収集)"
+    },
+    "鹿児島県": {
+      "shrines": [],
+      "search_note": "検索フォームのsパラメータで神明を検索。post_typeフィールドがあるためjinjaを試す。まず検索ページ構造を確認する必要あり / 検索結果は神明とは無関係なお知らせ記事のみだったため、神社検索ページへ移動して神明系神社を探す。 / 『神明』での検索は既に実施済み(訪問済みリストにあり結果不明)。別キーワード『皇大神』で再検索を試みる。 / 「皇大神」検索結果には神明社・神明宮・皇大神社・天祖神社に該当する社名が見当たらなかった(豊日孁神社・北尾神社等は名称が異なるため対象外)。残り探索回数を使い「天祖」で再検索を試みる。 / 「神明」「皇大神」「天祖」で検索したが、いずれも神明系(天照大御神を祀る神明社・神明宮・皇大神社・天祖神社)に該当する神社は見つからなかった。「天祖」検索結果の高千穂神社は名称・文脈から該当しないと判断。探索回数の上限に達したため終了。",
+      "hops": 5,
+      "visited": [
+        "https://www.kagojinjacho.or.jp/",
+        "https://www.kagojinjacho.or.jp/?s=神明&post_type=jinja",
+        "https://www.kagojinjacho.or.jp/search-page/",
+        "https://www.kagojinjacho.or.jp/?s=皇大神&post_type=jinja",
+        "https://www.kagojinjacho.or.jp/?s=天祖&post_type=jinja"
+      ],
+      "html_cache": [
+        "https___www_kagojinjacho_or_jp_.html",
+        "https___www_kagojinjacho_or_jp__s____post_type_jinja.html",
+        "https___www_kagojinjacho_or_jp_search_page_.html",
+        "https___www_kagojinjacho_or_jp__s_____post_type_jinja.html",
+        "https___www_kagojinjacho_or_jp__s____post_type_jinja.html"
+      ]
+    },
+    "沖縄県": {
+      "shrines": [],
+      "search_note": "沖縄県神社庁包括下の神社一覧（10社: 波上宮、普天満宮、識名宮、八幡宮、末吉宮、天久宮、宮古神社、浮島神社、世持神社、沖縄神社）を確認したが、神明社・神明宮・皇大神社・天祖神社に該当する社名は存在せず、天照大御神を主祭神とする神社も見当たらない。全社が神社名一覧で確認済みのため対象0件と判断。",
+      "hops": 1,
+      "visited": [
+        "http://jinjacho.naminouegu.jp/"
+      ],
+      "html_cache": [
+        "http___jinjacho_naminouegu_jp_.html"
+      ]
+    }
+  }
+}

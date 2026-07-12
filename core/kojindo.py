@@ -495,8 +495,11 @@ def get_shrine_recommendation(god_id: str, pref: Optional[str] = None) -> dict:
     sohonsha.sort(key=lambda r: not r.get("is_primary", False))
     local = []
     if pref:
+        sohonsha_names = {r["name"] for r in sohonsha}
+        # 総本社と同名の社は二段目から除外(島根×出雲大社等の重複表示防止)
         local = [r for r in _load_lineage()
-                 if r.get("god_id") == god_id and r.get("pref") == pref]
+                 if r.get("god_id") == god_id and r.get("pref") == pref
+                 and r.get("name") not in sohonsha_names]
     return {"sohonsha": sohonsha, "local": local, "pref": pref}
 
 

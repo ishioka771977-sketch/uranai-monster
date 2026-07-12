@@ -1,0 +1,912 @@
+{
+  "prefs": {
+    "岡山県": {
+      "shrines": [],
+      "search_note": "検索ページから綿津見をキーワードに検索を試みる。まだ神社は発見できていない。 / 検索フォームはJS動作でGETパラメータでの結果が確認できなかったため、全件一覧表示ページへ移動して該当社を探す。 / 全件一覧(1609件・81ページ)を1件ずつ辿るのは非効率なため、検索キーワードを変えて再試行する。前回の『綿津見』検索が機能しなかった可能性があるため『海神』で試す。 / 検索結果ページはJS駆動の地図検索フォームのみでテキスト結果が抽出できず、綿津見・海神での検索では対象神社を確認できなかった。志賀での検索を試みる。 / 検索フォームはJavaScript/GETパラメータ非対応の地図検索UIであり、実際の検索結果ページ内容が本文に反映されていない(フォーム項目のみ表示)。綿津見・海神・志賀のいずれのキーワードでも具体的な神社名・祭神情報を含む検索結果は確認できなかった。残り探索回数も1のため終了する。",
+      "hops": 5,
+      "visited": [
+        "https://okayama-jinjacho.or.jp",
+        "https://okayama-jinjacho.or.jp/search?q=綿津見",
+        "https://okayama-jinjacho.or.jp/search/list/",
+        "https://okayama-jinjacho.or.jp/search?q=海神",
+        "https://okayama-jinjacho.or.jp/search?q=志賀"
+      ],
+      "html_cache": [
+        "https___okayama_jinjacho_or_jp.html",
+        "https___okayama_jinjacho_or_jp_search_q____.html",
+        "https___okayama_jinjacho_or_jp_search_list_.html",
+        "https___okayama_jinjacho_or_jp_search_q___.html",
+        "https___okayama_jinjacho_or_jp_search_q___.html"
+      ]
+    },
+    "広島県": {
+      "shrines": [],
+      "search_note": "神社一覧ページへ遷移して対象神社を探索する / 現在ページは広島市東区の一覧のみで綿津見系祭神の記載なし。検索フォームはPOSTのみで組み立て不可のため、地域別一覧(search_area)を辿って探索を継続する。まずsearch_area=9を確認する。 / 呉市(search_area=9)の一覧を確認したが、綿津見系(海神社・綿津見神社・志賀神社・和多都美神社)に該当する神社名は見当たらなかった。祭神情報も詳細ページへのリンクが個々になく、検索フォームはPOST方式のためURL組み立て不可。他エリア(search_area=2など)を辿って探索を継続する。 / 福山市の神社一覧ページ(search_area=2)を確認したが、海神社・綿津見神社・志賀神社・和多都美神社に該当する社名は見つからなかった。検索フォームはPOSTのみでURL組み立てによる検索ができず、area番号と地域の対応も不明で効率的な追跡が困難なため、既訪問(area=2,9)の内容から対象なしと判断しdoneとする。",
+      "hops": 4,
+      "visited": [
+        "https://hiroshima-jinjacho.jp",
+        "https://www.hiroshima-jinjacho.jp/hirosima_jinja/",
+        "https://www.hiroshima-jinjacho.jp/hirosima_jinja/?search_area=9",
+        "https://www.hiroshima-jinjacho.jp/hirosima_jinja/?search_area=2"
+      ],
+      "html_cache": [
+        "https___hiroshima_jinjacho_jp.html",
+        "https___www_hiroshima_jinjacho_jp_hirosima_jinja_.html",
+        "https___www_hiroshima_jinjacho_jp_hirosima_jinja__search_area_9.html",
+        "https___www_hiroshima_jinjacho_jp_hirosima_jinja__search_area_2.html"
+      ]
+    },
+    "山口県": {
+      "shrines": [
+        {
+          "name": "龍王神社",
+          "city": "下関市",
+          "address": "下関市大字吉見下1726番地",
+          "main_deity": "玉依姫命 天津児屋根命 大綿津見神 住吉荒魂大神 息長足姫命 誉田和気命",
+          "source_quote": "御祭神 玉依姫命 天津児屋根命 大綿津見神 住吉荒魂大神 息長足姫命 誉田和気命",
+          "source_url": "https://www.yamaguchi-jinjacho.or.jp/shimonoseki/ryuou/",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-11",
+          "html_cache": "https___www_yamaguchi_jinjacho_or_jp_shimonoseki_ryuou_.html"
+        }
+      ],
+      "search_note": "市町村一覧から沿岸部の下関市ページへ遷移し、海神・綿津見系神社を探索する。 / 下関市の神社一覧を確認したが、海神社・綿津見神社・志賀神社・和多都美神社に該当する社名は見つからなかった(住吉神社等はあるが対象外)。他市町の一覧を探すため、市町村リストへのリンクがあるトップページへ戻る。 / 下関市ページは訪問済みだが対象神社未確認。海に面した周防大島町(離島)は綿津見系神社が存在する可能性が高いため、ここを次に探索する。 / 周防大島町の神社一覧には海神社・綿津見神社・志賀神社・和多都美神社に該当する社名が見当たらなかった。WordPress型サイト構造のためサイト内検索(?s=)を試行する。 / 検索結果一覧には祭神情報が無いため、詳細ページを確認する必要がある。残り探索回数が1のため、最有力候補(龍王神社)を選択してfollowした。他の候補(高嶺神社、假嶋神社、中津瀬神社等)も綿津見系の可能性があるが未確認。 / 残り探索回数0のため終了。龍王神社は大綿津見神社を合祀した神社で大綿津見神を祭神として確認できたため出力。",
+      "hops": 6,
+      "visited": [
+        "https://yamaguchi-jinjacho.or.jp",
+        "https://www.yamaguchi-jinjacho.or.jp/shimonoseki/",
+        "https://www.yamaguchi-jinjacho.or.jp/",
+        "https://www.yamaguchi-jinjacho.or.jp/suo-oshima/",
+        "https://www.yamaguchi-jinjacho.or.jp/?s=綿津見",
+        "https://www.yamaguchi-jinjacho.or.jp/shimonoseki/ryuou/"
+      ],
+      "html_cache": [
+        "https___yamaguchi_jinjacho_or_jp.html",
+        "https___www_yamaguchi_jinjacho_or_jp_shimonoseki_.html",
+        "https___www_yamaguchi_jinjacho_or_jp_.html",
+        "https___www_yamaguchi_jinjacho_or_jp_suo_oshima_.html",
+        "https___www_yamaguchi_jinjacho_or_jp__s____.html",
+        "https___www_yamaguchi_jinjacho_or_jp_shimonoseki_ryuou_.html"
+      ]
+    },
+    "徳島県": {
+      "shrines": [],
+      "search_note": "取得失敗 http://awa-jinjacho.jp/ (0: URLError: <urlopen error [Errno 8] nodename nor servname pro)",
+      "hops": 1,
+      "visited": [
+        "http://awa-jinjacho.jp/"
+      ]
+    },
+    "香川県": {
+      "shrines": [],
+      "search_note": "検索フォームを使い「綿津見」で検索を試みる / 綿津見での検索結果0件。次に「海神」で検索を試みる。 / 「海神」検索で青海神社が該当。祭神確認のため詳細ページへ遷移。残り探索回数を考慮し、次に「志賀」等のキーワードも試したい。 / 青海神社は崇徳天皇を祀り対象外。綿津見・海神での検索は済み(訪問済み)なので志賀で検索を試みる。 / 「志賀」検索は0件だった。残り探索回数1のため「和多都美」で検索を試みる。なお青海神社(訪問済み)は本文中に祭神記載が確認できなかったため出力対象外とした。 / 香川県神社庁サイトで「綿津見」「海神」「志賀」「和多都美」で検索したが該当する神社は見つからなかった。青海神社(https://kagawakenjinjacho.or.jp/shrine/青海神社/)は訪問済みだが、綿津見系祭神の記載が本文中で確認できず、探索回数上限に達したため終了する。",
+      "hops": 6,
+      "visited": [
+        "https://kagawakenjinjacho.or.jp/",
+        "https://kagawakenjinjacho.or.jp/?s=綿津見",
+        "https://kagawakenjinjacho.or.jp/?s=海神",
+        "https://kagawakenjinjacho.or.jp/shrine/%e9%9d%92%e6%b5%b7%e7%a5%9e%e7%a4%be/",
+        "https://kagawakenjinjacho.or.jp/?s=志賀",
+        "https://kagawakenjinjacho.or.jp/?s=和多都美"
+      ],
+      "html_cache": [
+        "https___kagawakenjinjacho_or_jp_.html",
+        "https___kagawakenjinjacho_or_jp__s____.html",
+        "https___kagawakenjinjacho_or_jp__s___.html",
+        "https___kagawakenjinjacho_or_jp_shrine__e9_9d_92_e6_b5_b7_e7_a5_9e_e7_a4_be_.html",
+        "https___kagawakenjinjacho_or_jp__s___.html",
+        "https___kagawakenjinjacho_or_jp__s_____.html"
+      ]
+    },
+    "愛媛県": {
+      "shrines": [
+        {
+          "name": "綿津見神社",
+          "city": "宇和島市",
+          "address": "宇和島市津島町北灘丁９１４番地",
+          "main_deity": "豊玉彦命（とよたまひこのみこと）",
+          "source_quote": "神社主祭神 豊玉彦命（とよたまひこのみこと）",
+          "source_url": "http://ehime-jinjacho.jp/jinja/?p=1627",
+          "tier": "rejected_deity_unverified",
+          "retrieved_at": "2026-07-11",
+          "html_cache": "http___ehime_jinjacho_jp_jinja__p_1627.html"
+        }
+      ],
+      "search_note": "検索フォームのGETパラメータ形式が不明だが、s=キーワードで試行する。愛媛県は今治市に大山祇神社など海事系神社が多いため、検索結果を確認したい。 / 検索結果に「綿津見神社」が2件見つかった(宇和島市津島町北灘、北宇和郡鬼北町日向谷)。祭神確認のため詳細ページへ遷移する。まず宇和島市の綿津見神社(p=1627)を確認。 / 検索キーワード「綿津見」の結果から詳細ページを確認し祭神を取得した。愛媛県内で1社確保できたため探索を終了する。",
+      "hops": 3,
+      "visited": [
+        "http://ehime-jinjacho.jp/",
+        "http://ehime-jinjacho.jp/jinja/?s=綿津見",
+        "http://ehime-jinjacho.jp/jinja/?p=1627"
+      ],
+      "html_cache": [
+        "http___ehime_jinjacho_jp_.html",
+        "http___ehime_jinjacho_jp_jinja__s____.html",
+        "http___ehime_jinjacho_jp_jinja__p_1627.html"
+      ]
+    },
+    "高知県": {
+      "shrines": [],
+      "search_note": "検索フォームで綿津見を検索。まだ祭神情報は確認できていない。 / 検索結果は無関係なニュース記事のみで対象神社は見つからなかった。神社一覧ページへ遷移して調査を続ける。 / 高知県神社一覧ページには綿津見系神社(海神社・綿津見神社・志賀神社・和多都美神社)に該当する社名は見当たらなかった。既に「綿津見」で検索済みのため、別キーワード「海神」で検索を試みる。 / 「海神」検索では対象神社が見つからなかった。残り探索回数を使い「志賀」で再検索する。 / 高知県神社庁サイトで「綿津見」「海神」「志賀」の検索を試みたが、いずれも一致する結果なしだった。探索回数の上限に達したため終了。対象神社は発見できなかった。",
+      "hops": 5,
+      "visited": [
+        "https://www.kochi-jinjyacho.com/",
+        "https://www.kochi-jinjyacho.com/search?q=綿津見",
+        "https://www.kochi-jinjyacho.com/高知県神社一覧",
+        "https://www.kochi-jinjyacho.com/search?q=海神",
+        "https://www.kochi-jinjyacho.com/search?q=志賀"
+      ],
+      "html_cache": [
+        "https___www_kochi_jinjyacho_com_.html",
+        "https___www_kochi_jinjyacho_com_search_q____.html",
+        "https___www_kochi_jinjyacho_com________.html",
+        "https___www_kochi_jinjyacho_com_search_q___.html",
+        "https___www_kochi_jinjyacho_com_search_q___.html"
+      ]
+    },
+    "福岡県": {
+      "shrines": [],
+      "search_note": "検索フォームが見当たらないため、まずエリア別一覧(福岡エリア)を辿る。志賀海神社など綿津見系神社が福岡市東区に多いため福岡エリアから探索開始。 / 福岡エリア一覧には海神社・綿津見神社・志賀神社・和多都美神社に該当する社名が見当たらなかった(志賀海神社なども確認できず)。他エリア(北九州・筑豊・筑後など)へのリンクを探すためトップページへ遷移する。 / トップページには祭神情報なし。エリア別一覧(福岡市エリアは訪問済み)から志賀海神社等の綿津見系神社を探すため、次は北九州エリアの一覧ページを確認する。 / 北九州エリア一覧に「綿都美神社(北九州市小倉南区中吉田1-23-10)」を発見したが、詳細ページ・祭神情報がこの一覧ページには無く、外部公式サイトリンクも存在しないため祭神未確認。サイト内検索を試すためWordPress想定の検索URLへfollowする。 / 検索結果ページに検索フォームの結果一覧が表示されず、該当する神社情報が本文中に見つからなかった。探索回数の残りが1のため終了。福岡県内には志賀海神社など綿津見系神社の存在が知られるが、本ページ本文からは祭神情報を含む詳細な記載を確認できなかったため出力を見送る。",
+      "hops": 5,
+      "visited": [
+        "https://fukuoka-jinjacho.or.jp",
+        "https://fukuoka-jinjacho.or.jp/area/fukuoka/",
+        "https://fukuoka-jinjacho.or.jp/",
+        "https://fukuoka-jinjacho.or.jp/area/kitakyusyu/",
+        "https://fukuoka-jinjacho.or.jp/?s=綿津見"
+      ],
+      "html_cache": [
+        "https___fukuoka_jinjacho_or_jp.html",
+        "https___fukuoka_jinjacho_or_jp_area_fukuoka_.html",
+        "https___fukuoka_jinjacho_or_jp_.html",
+        "https___fukuoka_jinjacho_or_jp_area_kitakyusyu_.html",
+        "https___fukuoka_jinjacho_or_jp__s____.html"
+      ]
+    },
+    "佐賀県": {
+      "shrines": [
+        {
+          "name": "海童神社",
+          "city": "佐賀郡川副町(現佐賀市)",
+          "address": "佐賀郡川副町大字犬井道６２４",
+          "main_deity": "表津綿津見神・中津綿津見神・底津綿津見神",
+          "source_quote": "【祭神】 表津綿津見神 中津綿津見神 底津綿津見神 天照皇大神 菅原道真",
+          "source_url": "https://saga-jinjacho.jp/%e6%b5%b7%e7%ab%a5%e7%a5%9e%e7%a4%be/",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-11",
+          "html_cache": "https___saga_jinjacho_jp__e6_b5_b7_e7_ab_a5_e7_a5_9e_e7_a4_be_.html"
+        }
+      ],
+      "search_note": "神社マップページへ遷移して一覧・検索を確認する / 佐賀市川副町に「海童神社」「志賀神社」を発見。綿津見系候補として詳細ページを確認する。まず海童神社の詳細ページへfollowし祭神を確認する。 / 海童神社を発見し祭神を確認済み。ページ内に他の索引・一覧リンクが無く、jinja-map/は既訪問のため追加探索先が見つからずここで終了。",
+      "hops": 3,
+      "visited": [
+        "https://saga-jinjacho.jp",
+        "https://saga-jinjacho.jp/jinja-map/",
+        "https://saga-jinjacho.jp/%e6%b5%b7%e7%ab%a5%e7%a5%9e%e7%a4%be/"
+      ],
+      "html_cache": [
+        "https___saga_jinjacho_jp.html",
+        "https___saga_jinjacho_jp_jinja_map_.html",
+        "https___saga_jinjacho_jp__e6_b5_b7_e7_ab_a5_e7_a5_9e_e7_a4_be_.html"
+      ]
+    },
+    "長崎県": {
+      "shrines": [],
+      "search_note": "検索ページへ遷移。綿津見・海神・志賀等のキーワードで検索を試みる。 / search.htmlには検索フォームがあるはずだがフォームの構造・GETパラメータ名が本文から確認できなかったため、一般的な形式(keyword)で推測しURLを組み立てて試行する。地域一覧(対馬市豊玉町など和多都美神社が所在する可能性のある地域)へのリンクも本文中に地域名は見えるが実際のURLがページ内リンク一覧に含まれておらず特定できなかった。 / 綿津見での検索結果ページには該当社の情報が本文中に見つからなかった(市町村一覧のみでリンク先不明)。次に「海神」で再検索を試みる。 / 「綿津見」「海神」での検索では結果一覧ページに祭神情報や神社名の記載が確認できず、地域一覧(対馬市豊玉町など)のみが表示された。長崎県対馬市豊玉町には和多都美神社が実在するため、キーワード「和多都美」で再検索を試みる。 / 長崎県神社庁サイトで「綿津見」「海神」「和多都美」で検索したが、該当する神社の詳細情報(祭神記載)を含む検索結果ページを確認できなかった。対馬市豊玉町に和多都美神社が実在することは知られているが、当サイトの検索機能・地域別リンクからは該当ページに到達できず、祭神の逐語引用が取得できないため出力を見送る。探索回数の上限に達したため終了。",
+      "hops": 5,
+      "visited": [
+        "https://nagasaki-jinjacho.or.jp",
+        "https://nagasaki-jinjacho.or.jp/search.html",
+        "https://nagasaki-jinjacho.or.jp/search.html?keyword=綿津見",
+        "https://nagasaki-jinjacho.or.jp/search.html?keyword=海神",
+        "https://nagasaki-jinjacho.or.jp/search.html?keyword=和多都美"
+      ],
+      "html_cache": [
+        "https___nagasaki_jinjacho_or_jp.html",
+        "https___nagasaki_jinjacho_or_jp_search_html.html",
+        "https___nagasaki_jinjacho_or_jp_search_html_keyword____.html",
+        "https___nagasaki_jinjacho_or_jp_search_html_keyword___.html",
+        "https___nagasaki_jinjacho_or_jp_search_html_keyword_____.html"
+      ]
+    },
+    "熊本県": {
+      "shrines": [],
+      "search_note": "検索フォームは市区郡・町村選択のみでキーワード検索不可。氏神様を探すページを確認し、地域一覧等の索引があるか調査する。 / 氏神様を探すページは市区町村選択式のフォームで、キーワード検索フィールドがない。WordPress標準の検索(?s=)を試すためトップ検索を試行。 / 熊本県神社庁サイトには検索機能(?s=)は結果を返さず、氏神検索は住所(市区町村)ベースのみで祭神名や神社名での検索ができない。一覧・索引ページも存在せず、綿津見系神社の情報を確認できるページが見つからなかった。探索回数の制約もあり0件で終了。",
+      "hops": 3,
+      "visited": [
+        "https://kumamotokenjinjacho.jp/",
+        "https://kumamotokenjinjacho.jp/patron-god/",
+        "https://kumamotokenjinjacho.jp/?s=%e7%b6%bb%e6%b4%a5%e8%a6%8b"
+      ],
+      "html_cache": [
+        "https___kumamotokenjinjacho_jp_.html",
+        "https___kumamotokenjinjacho_jp_patron_god_.html",
+        "https___kumamotokenjinjacho_jp__s__e7_b6_bb_e6_b4_a5_e8_a6_8b.html"
+      ]
+    },
+    "大分県": {
+      "shrines": [],
+      "search_note": "公式サイトなし(神社本庁一覧に掲載・電話のみ)。収集は神社公式・自治体ソースで代替。【くろたん条件】レコードのsource_typeに『県神社庁DB不存在につき代替』を注記",
+      "source_type_note": "県神社庁DB不存在につき代替(本走行で神社公式・自治体ソース収集)"
+    },
+    "宮崎県": {
+      "shrines": [],
+      "search_note": "公式サイトなし(『宮巡』は神職運営の紹介サイトで庁公式ではない)。収集は神社公式・自治体ソースで代替。【くろたん条件】レコードのsource_typeに『県神社庁DB不存在につき代替』を注記",
+      "source_type_note": "県神社庁DB不存在につき代替(本走行で神社公式・自治体ソース収集)"
+    },
+    "鹿児島県": {
+      "shrines": [],
+      "search_note": "取得失敗 https://www.kagojinjacho.or.jp/?s=綿津見&post_type=jinja (0: URLError: <urlopen error _ssl.c:1112: The handshake operatio)",
+      "hops": 2,
+      "visited": [
+        "https://www.kagojinjacho.or.jp/",
+        "https://www.kagojinjacho.or.jp/?s=綿津見&post_type=jinja"
+      ]
+    },
+    "沖縄県": {
+      "shrines": [],
+      "search_note": "沖縄県神社庁の神社本庁包括神社一覧には波上宮・普天満宮・識名宮・八幡宮・末吉宮・天久宮・宮古神社・浮島神社・世持神社・沖縄神社の10社が掲載されているが、社名に「海神・綿津見・志賀・和多都美」に該当するものは存在しない。県内神社数は10社のみと明記されており、これ以上探索を続けても対象神社は見つからないと判断し、0件で終了する。",
+      "hops": 1,
+      "visited": [
+        "http://jinjacho.naminouegu.jp/"
+      ],
+      "html_cache": [
+        "http___jinjacho_naminouegu_jp_.html"
+      ]
+    },
+    "北海道": {
+      "shrines": [
+        {
+          "name": "海神社",
+          "city": "函館市",
+          "address": "函館市栄町9番6号",
+          "main_deity": "綿津見大神(わたつみのおおかみ)",
+          "source_quote": "祭神 綿津見大神(わたつみのおおかみ)",
+          "source_url": "https://hokkaidojinjacho.jp/%e6%b5%b7%e7%a5%9e%e7%a4%be/",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-12",
+          "html_cache": "https___hokkaidojinjacho_jp__e6_b5_b7_e7_a5_9e_e7_a4_be_.html"
+        }
+      ],
+      "search_note": "検索フォームはログイン用のみで対象神社の検索には使えない。北海道は海岸部に多いため道南支部・後志支部・胆振支部など海沿いの支部一覧を辿って綿津見系神社を探索する。まず札幌支部一覧を確認する。 / 札幌支部一覧には海神社・綿津見神社・志賀神社・和多都美神社に該当する社名が見当たらなかった。検索フォームはログイン用のみでGET検索不可。港湾部の多い道南支部へ探索を移す。 / 函館市栄町9番6号に「海神社」を発見。祭神確認のため詳細ページへfollowする。 / 海神社ページで祭神確認済み。残り探索回数が少ないため他支部の追加探索は行わず終了。",
+      "hops": 4,
+      "visited": [
+        "https://hokkaidojinjacho.jp",
+        "https://hokkaidojinjacho.jp/jinja-area/sapporo/",
+        "https://hokkaidojinjacho.jp/jinja-area/dounan/",
+        "https://hokkaidojinjacho.jp/%e6%b5%b7%e7%a5%9e%e7%a4%be/"
+      ],
+      "html_cache": [
+        "https___hokkaidojinjacho_jp.html",
+        "https___hokkaidojinjacho_jp_jinja_area_sapporo_.html",
+        "https___hokkaidojinjacho_jp_jinja_area_dounan_.html",
+        "https___hokkaidojinjacho_jp__e6_b5_b7_e7_a5_9e_e7_a4_be_.html"
+      ]
+    },
+    "青森県": {
+      "shrines": [],
+      "search_note": "県内の神社紹介ページへ遷移し、一覧または索引から綿津見系神社を探す。 / むつ市,下北郡は海沿い地域で綿津見系神社の存在可能性が高いため探索します。 / むつ市・下北郡のページには海神社・綿津見神社・志賀神社・和多都美神社に該当する社名が見当たらなかった。青森市,東津軽郡の一覧ページへ移動して探索を続ける。 / sub_1a(青森市・東津軽郡)には海神社・綿津見神社・志賀神社・和多都美神社に該当する社名が見当たらなかった。海沿いの八戸市・三戸郡(sub_1h)を次に確認する。 / 八戸市・三戸郡の神社一覧(sub_1h.html)には綿津見・海神・志賀・和多都美系の神社名は見当たらなかった。未訪問のつがる市,西津軽郡(sub_1b.html)へ探索を継続する。 / 残り探索回数が0のため終了。当ページ一覧には海神社・綿津見神社・志賀神社・和多都美神社に該当する社名が見当たらず、祭神確認も不可のため0件で終了する。",
+      "hops": 6,
+      "visited": [
+        "http://aomori-jinjacho.or.jp",
+        "http://aomori-jinjacho.or.jp/sub_1.html",
+        "http://aomori-jinjacho.or.jp/jinja/sub_1g.html",
+        "http://aomori-jinjacho.or.jp/jinja/sub_1a.html",
+        "http://aomori-jinjacho.or.jp/jinja/sub_1h.html",
+        "http://aomori-jinjacho.or.jp/jinja/sub_1b.html"
+      ],
+      "html_cache": [
+        "http___aomori_jinjacho_or_jp.html",
+        "http___aomori_jinjacho_or_jp_sub_1_html.html",
+        "http___aomori_jinjacho_or_jp_jinja_sub_1g_html.html",
+        "http___aomori_jinjacho_or_jp_jinja_sub_1a_html.html",
+        "http___aomori_jinjacho_or_jp_jinja_sub_1h_html.html",
+        "http___aomori_jinjacho_or_jp_jinja_sub_1b_html.html"
+      ]
+    },
+    "岩手県": {
+      "shrines": [],
+      "search_note": "検索フォームが見当たらないため、サイトマップページを確認して神社一覧・索引への導線を探す。 / サイトマップに神社検索・一覧ページが見当たらないため、県内神社等のHPリンク集ページを確認する。 / 岩手県神社庁サイトには神社検索機能や神社一覧・詳細ページが存在せず、HPリンク集のみで対象神社(海神社・綿津見神社・志賀神社・和多都美神社)に関する情報は確認できなかった。残り探索回数も限られるため終了。",
+      "hops": 3,
+      "visited": [
+        "https://www.jinjacho.jp/",
+        "https://www.jinjacho.jp/pages/8/",
+        "https://www.jinjacho.jp/pages/62/"
+      ],
+      "html_cache": [
+        "https___www_jinjacho_jp_.html",
+        "https___www_jinjacho_jp_pages_8_.html",
+        "https___www_jinjacho_jp_pages_62_.html"
+      ]
+    },
+    "宮城県": {
+      "shrines": [],
+      "search_note": "検索フォームに祭神候補キーワード「綿津見」を入れて検索を試みる。まだ結果未確認。 / 「綿津見」で検索したが該当なし。次に「海神」で検索を試みる。 / 「綿津見」「海神」で検索したが該当なし(鳥海神社は無関係)。次に「志賀」で検索を試みる。 / 綿津見・海神・志賀での検索はいずれも0件だった。残り試行で「和多都美」を検索する。 / 宮城県神社庁の神社検索で「和多都美」「綿津見」「海神」「志賀」の各キーワードを試したが、いずれも該当する神社は見つからなかった(今回のページでは「検索された条件の神社はみつかりませんでした。」と表示)。残り探索回数も尽きたため終了する。",
+      "hops": 5,
+      "visited": [
+        "https://miyagi-jinjacho.or.jp",
+        "https://miyagi-jinjacho.or.jp/jinja-search/list.php?PC=&SEARCH=1&jinja_name=%E7%B6%BF%E6%B4%A5%E8%A6%8B&jinja_cnt=&jinja_kana=&jinja_sort_key=&jinja_sortdesc=&page_jinja=1&per_page_def=50&sortmode=",
+        "https://miyagi-jinjacho.or.jp/jinja-search/list.php?PC=&SEARCH=1&jinja_name=%E6%B5%B7%E7%A5%9E&jinja_cnt=&jinja_kana=&jinja_sort_key=&jinja_sortdesc=&page_jinja=1&per_page_def=50&sortmode=",
+        "https://miyagi-jinjacho.or.jp/jinja-search/list.php?PC=&SEARCH=1&jinja_name=%E5%BF%97%E8%B3%80&jinja_cnt=&jinja_kana=&jinja_sort_key=&jinja_sortdesc=&page_jinja=1&per_page_def=50&sortmode=",
+        "https://miyagi-jinjacho.or.jp/jinja-search/list.php?PC=&SEARCH=1&jinja_name=%E5%92%8C%E5%A4%9A%E9%83%BD%E7%BE%8E&jinja_cnt=&jinja_kana=&jinja_sort_key=&jinja_sortdesc=&page_jinja=1&per_page_def=50&sortmode="
+      ],
+      "html_cache": [
+        "https___miyagi_jinjacho_or_jp.html",
+        "https___miyagi_jinjacho_or_jp_jinja_search_list_php_PC__SEARCH_1_jinja_name__E7_.html",
+        "https___miyagi_jinjacho_or_jp_jinja_search_list_php_PC__SEARCH_1_jinja_name__E6_.html",
+        "https___miyagi_jinjacho_or_jp_jinja_search_list_php_PC__SEARCH_1_jinja_name__E5_.html",
+        "https___miyagi_jinjacho_or_jp_jinja_search_list_php_PC__SEARCH_1_jinja_name__E5_.html"
+      ]
+    },
+    "秋田県": {
+      "shrines": [
+        {
+          "name": "和多津見神社",
+          "city": "にかほ市",
+          "address": "〒018-0108 にかほ市象潟町字入湖の澗65",
+          "main_deity": "海津見大神（わたつみのおおかみ）",
+          "source_quote": "御祭神 海津見大神（わたつみのおおかみ）",
+          "source_url": "https://akita-jinjacho.sakura.ne.jp/shrine_search/%e5%92%8c%e5%a4%9a%e6%b4%a5%e8%a6%8b%e7%a5%9e%e7%a4%be/",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-12",
+          "html_cache": "https___akita_jinjacho_sakura_ne_jp_shrine_search__e5_92_8c_e5_a4_9a_e6_b4_a5_e8.html"
+        }
+      ],
+      "search_note": "県内神社のご案内ページへ遷移して神社検索・一覧を確認する / 綿津見・和多都美系は「わ」行索引に含まれる可能性が高いため、わ行一覧ページへ遷移する。海神社・志賀神社の可能性を考慮し次回は「か」行・「し」行も確認予定。 / 和多津見神社(にかほ市象潟町)を発見。詳細ページで祭神を確認するためfollowする。 / 和多津見神社を確認できたため終了。残り探索回数が少なく、他の綿津見系神社（海神社・志賀神社等）は検索フォームのURL形式が不明で追加探索できなかった。",
+      "hops": 4,
+      "visited": [
+        "https://akita-jinjacho.sakura.ne.jp",
+        "https://akita-jinjacho.sakura.ne.jp/shrine_search/",
+        "https://akita-jinjacho.sakura.ne.jp/cat_shrine/wa/",
+        "https://akita-jinjacho.sakura.ne.jp/shrine_search/%e5%92%8c%e5%a4%9a%e6%b4%a5%e8%a6%8b%e7%a5%9e%e7%a4%be/"
+      ],
+      "html_cache": [
+        "https___akita_jinjacho_sakura_ne_jp.html",
+        "https___akita_jinjacho_sakura_ne_jp_shrine_search_.html",
+        "https___akita_jinjacho_sakura_ne_jp_cat_shrine_wa_.html",
+        "https___akita_jinjacho_sakura_ne_jp_shrine_search__e5_92_8c_e5_a4_9a_e6_b4_a5_e8.html"
+      ]
+    },
+    "山形県": {
+      "shrines": [],
+      "search_note": "検索フォームがGET形式で確認できたため、keywordパラメータで綿津見を検索する。 / 「綿津見」での検索結果は0件だったため、別キーワード「海神」で再検索する。 / 「綿津見」「海神」での検索は該当0件だった。次に「志賀」キーワードで検索を試みる。 / 綿津見・海神・志賀のキーワード検索では該当なし。祭神カナ検索(ワタツミ)を試みる。 / 山形県神社庁の検索(keyword=綿津見/海神/志賀、enshrined_deity_kana=ワタツミ)を実施したが、結果として表示された遠賀美神社・龍神神社・住吉神社はいずれも祭神が綿津見神/少童命であることをページ上で確認できず、探索回数の上限に達したため確認を断念。対象神社は0件として終了する。",
+      "hops": 5,
+      "visited": [
+        "https://yamagata-jinjyacho.or.jp/",
+        "https://yamagata-jinjyacho.or.jp/shrine_search?keyword=綿津見",
+        "https://yamagata-jinjyacho.or.jp/shrine_search?keyword=海神",
+        "https://yamagata-jinjyacho.or.jp/shrine_search?keyword=志賀",
+        "https://yamagata-jinjyacho.or.jp/shrine_search?enshrined_deity_kana=ワタツミ"
+      ],
+      "html_cache": [
+        "https___yamagata_jinjyacho_or_jp_.html",
+        "https___yamagata_jinjyacho_or_jp_shrine_search_keyword____.html",
+        "https___yamagata_jinjyacho_or_jp_shrine_search_keyword___.html",
+        "https___yamagata_jinjyacho_or_jp_shrine_search_keyword___.html",
+        "https___yamagata_jinjyacho_or_jp_shrine_search_enshrined_deity_kana_____.html"
+      ]
+    },
+    "福島県": {
+      "shrines": [],
+      "search_note": "検索フォームはPOSTだが、GET形式で組み立てて試行する。まだ祭神確認できる神社は見つかっていない。 / 綿津見での検索結果はダミーテンプレートのみで実データが確認できなかった。別キーワード「海神」で再検索を試みる。 / 「綿津見」「海神」での検索結果はダミーテンプレートのみで実際の検索結果が確認できなかった。次に「志賀」で検索を試みる。 / 検索結果ページはダミーデータ（○○神社）のみでJS依存のため静的取得では実際の検索結果が確認できない。綿津見・海神・志賀での検索も同様にダミー表示のみで対象神社は確認できなかった。残り探索回数を使い和多都美で再試行する。 / 福島県神社庁サイトで「綿津見」「海神」「志賀」「和多都美」の検索を全て試したが、結果はダミーデータのみで実際の該当神社は確認できなかった。探索回数の上限に達したため終了する。",
+      "hops": 5,
+      "visited": [
+        "https://fukushima-jinjacho.or.jp",
+        "https://fukushima-jinjacho.or.jp/search/?q=綿津見",
+        "https://fukushima-jinjacho.or.jp/search/?q=海神",
+        "https://fukushima-jinjacho.or.jp/search/?q=志賀",
+        "https://fukushima-jinjacho.or.jp/search/?q=和多都美"
+      ],
+      "html_cache": [
+        "https___fukushima_jinjacho_or_jp.html",
+        "https___fukushima_jinjacho_or_jp_search__q____.html",
+        "https___fukushima_jinjacho_or_jp_search__q___.html",
+        "https___fukushima_jinjacho_or_jp_search__q___.html",
+        "https___fukushima_jinjacho_or_jp_search__q_____.html"
+      ]
+    },
+    "茨城県": {
+      "shrines": [],
+      "search_note": "神社一覧ページへ遷移して対象社を探索する / 県内神社紹介トップから地域別ページ(県北)へ移動。祭神情報のある詳細ページを探索する。 / 県北地域の一覧には海神社・綿津見神社・志賀神社・和多都美神社に該当する社名が見当たらなかった。県内神社紹介トップページに戻り、他の地域(県央・県南・鹿行など)を確認する。",
+      "hops": 3,
+      "visited": [
+        "https://www.ibarakiken-jinjacho.or.jp/",
+        "https://www.ibarakiken-jinjacho.or.jp/ibaraki/index.html",
+        "https://www.ibarakiken-jinjacho.or.jp/ibaraki/kenhoku/index.html"
+      ],
+      "html_cache": [
+        "https___www_ibarakiken_jinjacho_or_jp_.html",
+        "https___www_ibarakiken_jinjacho_or_jp_ibaraki_index_html.html",
+        "https___www_ibarakiken_jinjacho_or_jp_ibaraki_kenhoku_index_html.html"
+      ]
+    },
+    "栃木県": {
+      "shrines": [],
+      "search_note": "県内神社ご紹介ページ(p=194)へ遷移し、神社一覧・索引を確認する / 現在のページは式年遷宮に関する内容で祭神情報なし。県内神社ご紹介ページ(p=32)へ移動して神社一覧・検索を探す。 / 現在のページはお参り作法の説明で神社情報なし。「県内神社ご紹介」リンク(?p=14)へ遷移して神社一覧・検索を探す。 / 神社庁について/サイトマップページのため、県内神社ご紹介ページ(?p=194)へ再度followして一覧・索引を探す。まだ対象神社は未発見。",
+      "hops": 4,
+      "visited": [
+        "http://tochigi-jinjacho.or.jp",
+        "http://www.tochigi-jinjacho.or.jp/?p=194",
+        "http://www.tochigi-jinjacho.or.jp/?p=32",
+        "http://www.tochigi-jinjacho.or.jp/?p=14"
+      ],
+      "html_cache": [
+        "http___tochigi_jinjacho_or_jp.html",
+        "http___www_tochigi_jinjacho_or_jp__p_194.html",
+        "http___www_tochigi_jinjacho_or_jp__p_32.html",
+        "http___www_tochigi_jinjacho_or_jp__p_14.html"
+      ]
+    },
+    "群馬県": {
+      "shrines": [],
+      "search_note": "県内神社紹介ページへ移動して神社一覧・検索機能を確認する / 群馬県神社庁の県内神社紹介ページ(全支部一覧)を確認したが、綿津見神・少童命を祀る「海神社・綿津見神社・志賀神社・和多都美神社」に該当する神社名は見当たらなかった。このページは既に県内全神社の一覧(社名・カナ・所在地・連絡先)を網羅しているが祭神情報は掲載されておらず、該当社名(海神社/綿津見神社/志賀神社/和多都美神社)自体が一覧中に存在しないため、詳細ページを辿る対象がない。検索フォームも見当たらないため探索を終了する。",
+      "hops": 2,
+      "visited": [
+        "https://gunma-jinjacho.jp",
+        "https://gunma-jinjacho.jp/jinja/"
+      ],
+      "html_cache": [
+        "https___gunma_jinjacho_jp.html",
+        "https___gunma_jinjacho_jp_jinja_.html"
+      ]
+    },
+    "埼玉県": {
+      "shrines": [],
+      "search_note": "検索フォームがあるため、キーワード「綿津見」でGET検索を実行する。 / 「綿津見」検索は0件だったため、「海神」で再検索を試みる。 / 綿津見・海神での検索は0件だったため、志賀で再検索する。 / 「志賀」検索結果に八宮神社が1件見つかったため、祭神確認のため詳細ページへ遷移する。 / このページ(八宮神社)には祭神情報が記載されておらず、綿津見系の祭神は確認できなかった。既に「綿津見」「海神」「志賀」で検索済みだが対象社が見つからず、残り探索回数も1のため終了する。",
+      "hops": 5,
+      "visited": [
+        "https://saitama-jinjacho.or.jp",
+        "https://www.saitama-jinjacho.or.jp/?s=綿津見",
+        "https://www.saitama-jinjacho.or.jp/?s=海神",
+        "https://www.saitama-jinjacho.or.jp/?s=志賀",
+        "https://www.saitama-jinjacho.or.jp/shrine/11533/"
+      ],
+      "html_cache": [
+        "https___saitama_jinjacho_or_jp.html",
+        "https___www_saitama_jinjacho_or_jp__s____.html",
+        "https___www_saitama_jinjacho_or_jp__s___.html",
+        "https___www_saitama_jinjacho_or_jp__s___.html",
+        "https___www_saitama_jinjacho_or_jp_shrine_11533_.html"
+      ]
+    },
+    "千葉県": {
+      "shrines": [],
+      "search_note": "取得失敗 http://chiba.jinjacho.or.jp/ (0: URLError: <urlopen error timed out>)",
+      "hops": 5,
+      "visited": [
+        "https://www.jinjacho.or.jp/",
+        "https://www.jinjacho.or.jp/search?q=綿津見",
+        "https://www.jinjacho.or.jp/search?q=海神",
+        "http://www.jinja.ne.jp/exploration/index.html",
+        "http://chiba.jinjacho.or.jp/"
+      ]
+    },
+    "東京都": {
+      "shrines": [],
+      "search_note": "キーワードから探すページへ遷移し、綿津見・海神・志賀等のキーワード検索を試みる / 検索フォームがGETでs=フィールドを使うため、綿津見をキーワードに検索を実行する。 / 「綿津見」検索は0件だったため、別キーワード「志賀」で再検索を試みる。 / 「志賀」検索は結果なし。残り探索回数を使い「海神」で検索を試みる。 / 探索回数が残り0のため終了。海神・綿津見・志賀での検索は全て「見つかりませんでした」で、対象神社は東京都神社庁サイト内で確認できなかった。",
+      "hops": 5,
+      "visited": [
+        "http://www.tokyo-jinjacho.or.jp",
+        "http://www.tokyo-jinjacho.or.jp/jinja/keyword/",
+        "http://www.tokyo-jinjacho.or.jp/?s=綿津見",
+        "http://www.tokyo-jinjacho.or.jp/?s=志賀",
+        "http://www.tokyo-jinjacho.or.jp/?s=海神"
+      ],
+      "html_cache": [
+        "http___www_tokyo_jinjacho_or_jp.html",
+        "http___www_tokyo_jinjacho_or_jp_jinja_keyword_.html",
+        "http___www_tokyo_jinjacho_or_jp__s____.html",
+        "http___www_tokyo_jinjacho_or_jp__s___.html",
+        "http___www_tokyo_jinjacho_or_jp__s___.html"
+      ]
+    },
+    "神奈川県": {
+      "shrines": [],
+      "search_note": "検索フォームのフィールド名(s_keyword_3)を使って「綿津見」で検索を試みる。GET形式のためURLを組み立てて実行。 / 綿津見での検索結果は本文に反映されておらず該当社を確認できなかった。次に「海神」で検索を試みる。 / 「綿津見」「海神」での検索は結果一覧が確認できず(ページ内に該当社の一覧やリンクが見当たらない)。次に「志賀」で検索を試みる。 / 「綿津見」「海神」「志賀」で検索したが該当する神社は見つからなかった(検索結果一覧自体が表示されずトップページと同内容)。残り探索回数を使って「和多都美」で検索を試みる。 / 検索キーワード「綿津見・海神・志賀・和多都美」で検索を試みたが、いずれも検索結果が本文に表示されず、トップページと同じ内容が返された。探索回数の上限に達したため終了する。",
+      "hops": 5,
+      "visited": [
+        "https://kanagawa-jinja.or.jp",
+        "https://www.kanagawa-jinja.or.jp/?s_keyword_3=%E7%B6%BF%E6%B4%A5%E8%A6%8B&searchbutton=%E6%A4%9C%E7%B4%A2",
+        "https://www.kanagawa-jinja.or.jp/?s_keyword_3=%E6%B5%B7%E7%A5%9E&searchbutton=%E6%A4%9C%E7%B4%A2",
+        "https://www.kanagawa-jinja.or.jp/?s_keyword_3=%E5%BF%97%E8%B3%80&searchbutton=%E6%A4%9C%E7%B4%A2",
+        "https://www.kanagawa-jinja.or.jp/?s_keyword_3=%E5%92%8C%E5%A4%9A%E9%83%BD%E7%BE%8E&searchbutton=%E6%A4%9C%E7%B4%A2"
+      ],
+      "html_cache": [
+        "https___kanagawa_jinja_or_jp.html",
+        "https___www_kanagawa_jinja_or_jp__s_keyword_3__E7_B6_BF_E6_B4_A5_E8_A6_8B_search.html",
+        "https___www_kanagawa_jinja_or_jp__s_keyword_3__E6_B5_B7_E7_A5_9E_searchbutton__E.html",
+        "https___www_kanagawa_jinja_or_jp__s_keyword_3__E5_BF_97_E8_B3_80_searchbutton__E.html",
+        "https___www_kanagawa_jinja_or_jp__s_keyword_3__E5_92_8C_E5_A4_9A_E9_83_BD_E7_BE_.html"
+      ]
+    },
+    "新潟県": {
+      "shrines": [],
+      "search_note": "検索フォームを利用して綿津見キーワードで検索を試みる / 「綿津見」で検索したが該当なし。「海神」で再検索する。 / 「海神」検索結果は青海神社・渋海神社・八海神社等で対象外(祭神未確認かつ社名から綿津見系と無関係)。次に「志賀」で検索を試みる。 / 「志賀」検索結果は宇志賀峯神社のみで祭神情報なし、対象外。残り探索回数を使い「和多都美」で再検索を試みる。 / 新潟県神社庁サイトで「綿津見」「海神」「志賀」「和多都美」の全キーワードで検索したが、いずれも該当する神社は見つからなかった(0件)。探索回数の上限に達したため終了。",
+      "hops": 5,
+      "visited": [
+        "https://niigata-jinjacho.jp",
+        "https://niigata-jinjacho.jp/shrine_niigata/search.php?area=&keyword=綿津見",
+        "https://niigata-jinjacho.jp/shrine_niigata/search.php?area=&keyword=海神",
+        "https://niigata-jinjacho.jp/shrine_niigata/search.php?area=&keyword=志賀",
+        "https://niigata-jinjacho.jp/shrine_niigata/search.php?area=&keyword=和多都美"
+      ],
+      "html_cache": [
+        "https___niigata_jinjacho_jp.html",
+        "https___niigata_jinjacho_jp_shrine_niigata_search_php_area__keyword____.html",
+        "https___niigata_jinjacho_jp_shrine_niigata_search_php_area__keyword___.html",
+        "https___niigata_jinjacho_jp_shrine_niigata_search_php_area__keyword___.html",
+        "https___niigata_jinjacho_jp_shrine_niigata_search_php_area__keyword_____.html"
+      ]
+    },
+    "富山県": {
+      "shrines": [],
+      "search_note": "氏神神社検索ページ、またはs=綿津見のGET検索を試みる。まずは氏神神社検索リンクよりも検索フォームでの探索を優先する。 / 検索「綿津見」は0件だったため、氏神神社検索ページへ遷移して一覧・索引から海神社/志賀神社等を探索する。 / 氏神神社検索ページには検索フォームのみで祭神情報なし。GET検索フォーム(action=https://toyama-jinjacho.sakura.ne.jp/, field=s)を使い、既に「綿津見」は検索済みのため、次に「海神」で検索を試みる。 / 「綿津見」「海神」検索は0件だった。残り探索回数が少ないため「志賀」で検索を試みる。 / 富山県神社庁サイトで「綿津見」「海神」「志賀」の検索を実施したが、いずれも0件（検索結果にありません）だった。氏神神社検索ページは訪問済みだが個別検索フォーム（POST形式または地域別選択式）で該当する綿津見系神社の詳細ページに到達できなかった。探索回数の制約により終了。",
+      "hops": 5,
+      "visited": [
+        "https://toyama-jinjacho.sakura.ne.jp/",
+        "https://toyama-jinjacho.sakura.ne.jp/?s=綿津見",
+        "https://toyama-jinjacho.sakura.ne.jp/%E5%AF%8C%E5%B1%B1%E7%9C%8C%E6%B0%8F%E7%A5%9E%E7%A5%9E%E7%A4%BE%E6%A4%9C%E7%B4%A2",
+        "https://toyama-jinjacho.sakura.ne.jp/?s=海神",
+        "https://toyama-jinjacho.sakura.ne.jp/?s=志賀"
+      ],
+      "html_cache": [
+        "https___toyama_jinjacho_sakura_ne_jp_.html",
+        "https___toyama_jinjacho_sakura_ne_jp__s____.html",
+        "https___toyama_jinjacho_sakura_ne_jp__E5_AF_8C_E5_B1_B1_E7_9C_8C_E6_B0_8F_E7_A5_.html",
+        "https___toyama_jinjacho_sakura_ne_jp__s___.html",
+        "https___toyama_jinjacho_sakura_ne_jp__s___.html"
+      ]
+    },
+    "石川県": {
+      "shrines": [
+        {
+          "name": "住吉社",
+          "city": "かほく市",
+          "address": "かほく市松浜ホ8",
+          "main_deity": "底津綿津見神",
+          "source_quote": "[鎮座地] かほく市松浜ホ8 [御祭神] 底津綿津見神",
+          "source_url": "https://www.ishikawa-jinjacho.or.jp/?s=綿津見",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-12",
+          "html_cache": "https___www_ishikawa_jinjacho_or_jp__s____.html"
+        },
+        {
+          "name": "住吉神社",
+          "city": "かほく市",
+          "address": "かほく市外日角ホ55",
+          "main_deity": "上津綿津見神",
+          "source_quote": "[鎮座地] かほく市外日角ホ55 [御祭神] 上津綿津見神",
+          "source_url": "https://www.ishikawa-jinjacho.or.jp/?s=綿津見",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-12",
+          "html_cache": "https___www_ishikawa_jinjacho_or_jp__s____.html"
+        }
+      ],
+      "search_note": "検索フォーム(GET, フィールド名s)を使って「綿津見」で検索する。 / 石川県神社庁の検索結果より、かほく市の底津・中津・上津綿津見神を祀る住吉社・住吉神社(底中上の三社セット)、津幡町・金沢市の綿津見神/大綿津見神を主祭神とする住吉神社を確認。日吉神社・若宮八幡宮・市瀬神社は綿津見系神を合祀神として含むが主祭神は別神のため除外した。十分な件数が確保できたため探索終了。",
+      "hops": 2,
+      "visited": [
+        "https://ishikawa-jinjacho.or.jp",
+        "https://www.ishikawa-jinjacho.or.jp/?s=綿津見"
+      ],
+      "html_cache": [
+        "https___ishikawa_jinjacho_or_jp.html",
+        "https___www_ishikawa_jinjacho_or_jp__s____.html"
+      ]
+    },
+    "福井県": {
+      "shrines": [],
+      "search_note": "検索フォームはPOSTのみで直接組み立て不可。まず神社検索ページ(search/index.php)へ遷移し、GET形式の検索やキーワード入力欄の詳細を確認する。 / 検索フォームはPOST専用(action=/result/, fields=Enshrined/SearchType)だが、GET同型リクエストで祭神名『綿津見』検索を試みる。ページ内に静的な索引リンクは無く、市町村セレクトもJS依存のため直接URLが取得できなかった。この試行で結果が得られなければ、次はSearchType値を変えるか諦めて終了する必要がある。 / 「綿津見」検索結果ページは実際には祭神絞り込みが機能せず「あ行」の神社一覧が全表示されているように見える(綿津見系の社名・祭神記載が見当たらない)。別キーワード「海神」で再検索を試みる。 / SearchType=3&Enshrined=海神 および Enshrined=綿津見 で検索を試みたが、返された結果はフィルタされていない「あ行」から始まる神社の全件一覧と思われ(祭神での絞り込みが機能していない)、海神社・綿津見神社・志賀神社・和多都美神社に該当する社名・祭神情報は本文中に確認できなかった。検索フォームはPOST方式であり、GETパラメータでの祭神検索が正しく機能していない可能性が高い。残り探索回数も限られているため、これ以上の索引探索では対象神社を発見できる見込みが薄いと判断し、0件で終了する。",
+      "hops": 4,
+      "visited": [
+        "https://www.jinja-fukui.jp/",
+        "https://www.jinja-fukui.jp/search/index.php",
+        "https://www.jinja-fukui.jp/result/?SearchType=3&Enshrined=%E7%B6%BF%E6%B4%A5%E8%A6%8B",
+        "https://www.jinja-fukui.jp/result/?SearchType=3&Enshrined=海神"
+      ],
+      "html_cache": [
+        "https___www_jinja_fukui_jp_.html",
+        "https___www_jinja_fukui_jp_search_index_php.html",
+        "https___www_jinja_fukui_jp_result__SearchType_3_Enshrined__E7_B6_BF_E6_B4_A5_E8_.html",
+        "https___www_jinja_fukui_jp_result__SearchType_3_Enshrined___.html"
+      ]
+    },
+    "山梨県": {
+      "shrines": [],
+      "search_note": "綿津見での検索は0件だったため、キーワードを変えて再検索する。 / 剗海神社(南都留郡富士河口湖町西湖2068)の詳細ページで祭神を確認するためfollowする。 / 剗海神社(7156)の祭神は豊玉姫命・木花開耶姫命であり、綿津見神/少童命そのものではないため対象外と判断し出力しない。綿津見・海神での検索は既に実施済みのため、次に「志賀」で検索を試みる。 / 志賀での検索は0件だったため、未検索の「和多都美」で再検索を試みる。detail/7156は訪問済みだが本文内容が今回提示されていないため祭神確認できず、shrinesには含めない。 / 「和多都美」「綿津見」「海神」「志賀」で検索したが該当神社は見つからなかった。探索回数上限のため終了。",
+      "hops": 5,
+      "visited": [
+        "https://www.yamanashi-jinjacho.or.jp/intro/search/result?jinjaName=綿津見",
+        "https://www.yamanashi-jinjacho.or.jp/intro/search/result?jinjaName=海神",
+        "https://www.yamanashi-jinjacho.or.jp/intro/search/detail/7156",
+        "https://www.yamanashi-jinjacho.or.jp/intro/search/result?jinjaName=志賀",
+        "https://www.yamanashi-jinjacho.or.jp/intro/search/result?jinjaName=和多都美"
+      ],
+      "html_cache": [
+        "https___www_yamanashi_jinjacho_or_jp_intro_search_result_jinjaName____.html",
+        "https___www_yamanashi_jinjacho_or_jp_intro_search_result_jinjaName___.html",
+        "https___www_yamanashi_jinjacho_or_jp_intro_search_detail_7156.html",
+        "https___www_yamanashi_jinjacho_or_jp_intro_search_result_jinjaName___.html",
+        "https___www_yamanashi_jinjacho_or_jp_intro_search_result_jinjaName_____.html"
+      ]
+    },
+    "長野県": {
+      "shrines": [],
+      "search_note": "取得失敗 https://www.nagano-jinjacho.jp/page/jinjasyoukai.html (0: HTTPError: HTTP Error 404: Not Found)",
+      "hops": 4,
+      "visited": [
+        "https://nagano-jinjacho.jp",
+        "https://nagano-jinjacho.jp/j-syoukai.html",
+        "https://www.nagano-jinjacho.jp/shibu/suwa.htm",
+        "https://www.nagano-jinjacho.jp/page/jinjasyoukai.html"
+      ]
+    },
+    "岐阜県": {
+      "shrines": [],
+      "search_note": "祭神一覧ページへ遷移し、綿津見神・海神・志賀等の祭神から該当神社を探す / 祭神検索フォームがGETで利用可能なため、綿津見をキーワードに検索を試みる。 / 「綿津見」検索では神明神社(合祀した海神社の記述あり、本社自体は対象外)と住吉神社のみ。祭神未確認かつ社名も対象外のため次に「海神」で検索を試行。 / 検索結果には海神社そのものは見当たらず、神明神社の由緒文中に合併された旧・海神社への言及があるのみ。祭神未確認のため一旦、神明神社の詳細ページで海神社由来の祭神情報が記載されているか確認する。軽海神社は春日明神由来で対象外と判断。 / 当該ページは「神明神社」で主祭神は天照大御神。摂末社に綿津見神が祀られているが、社名が海神社・綿津見神社・志賀神社・和多都美神社のいずれにも該当しないため対象外。探索回数が残り1で、これ以上の索引・検索follow先も確認できないため終了する。",
+      "hops": 5,
+      "visited": [
+        "https://gifu-jinjacho.jp",
+        "https://gifu-jinjacho.jp/godlist.php",
+        "https://gifu-jinjacho.jp/search.php?encodehint=&keyword=綿津見",
+        "https://gifu-jinjacho.jp/search.php?encodehint=&keyword=海神",
+        "https://gifu-jinjacho.jp/syosai.php?shrno=1088&shrname=%E2%98%85%E7%A5%9E%E6%98%8E%E7%A5%9E%E7%A4%BE%E2%98%85"
+      ],
+      "html_cache": [
+        "https___gifu_jinjacho_jp.html",
+        "https___gifu_jinjacho_jp_godlist_php.html",
+        "https___gifu_jinjacho_jp_search_php_encodehint__keyword____.html",
+        "https___gifu_jinjacho_jp_search_php_encodehint__keyword___.html",
+        "https___gifu_jinjacho_jp_syosai_php_shrno_1088_shrname__E2_98_85_E7_A5_9E_E6_98_.html"
+      ]
+    },
+    "静岡県": {
+      "shrines": [],
+      "search_note": "検索フォームを利用して綿津見をキーワードに検索を試みる / 綿津見での検索結果は全一覧(あ行索引)と同一内容で、検索が機能していない可能性がある。祭神確認できる対象神社は見つからなかった。次に「海神」で検索を試みる。 / 検索パラメータ(search=海神)を指定しても実際には全神社一覧の1ページ目(あ行冒頭)が表示され、検索機能が機能していないことを確認した。同様に「綿津見」検索も機能していなかった(訪問済み)。一覧ページには海神社・綿津見神社・志賀神社・和多都美神社に該当する社名が見当たらず、全5ページ・数百件規模の一覧を残り探索回数3回で網羅することは不可能なため、これ以上の追跡は非効率と判断し探索を終了する。",
+      "hops": 3,
+      "visited": [
+        "http://www.shizuoka-jinjacho.or.jp",
+        "http://www.shizuoka-jinjacho.or.jp/shokai/search.php?mode=&search=綿津見",
+        "http://www.shizuoka-jinjacho.or.jp/shokai/search.php?mode=&search=海神"
+      ],
+      "html_cache": [
+        "http___www_shizuoka_jinjacho_or_jp.html",
+        "http___www_shizuoka_jinjacho_or_jp_shokai_search_php_mode__search____.html",
+        "http___www_shizuoka_jinjacho_or_jp_shokai_search_php_mode__search___.html"
+      ]
+    },
+    "愛知県": {
+      "shrines": [],
+      "search_note": "トップページには祭神情報や一覧がないため、検索フォーム(addr フィールド)を使って「綿津見」で検索を試みる。フィールド名から祭神名検索か地域名検索か不明だが、まず試行する。 / 「綿津見」での検索結果は本文に神社一覧が表示されず該当なし。次に「海神」で検索を試みる。 / 「海神」「綿津見」での検索結果に神社一覧が見つからなかった(本文にヒットなし)。次に「志賀」で検索を試みる。 / 検索結果ページの本文が読み取れず、addr=綿津見/海神/志賀での検索結果に神社一覧や祭神情報が確認できなかった。訪問済みの検索キーワード(綿津見・海神・志賀)ではいずれも該当する神社情報を取得できず、これ以上の探索回数もないため終了する。",
+      "hops": 4,
+      "visited": [
+        "https://aichi-jinjacho.or.jp",
+        "https://aichi-jinjacho.or.jp/?addr=綿津見",
+        "https://aichi-jinjacho.or.jp/?addr=海神",
+        "https://aichi-jinjacho.or.jp/?addr=志賀"
+      ],
+      "html_cache": [
+        "https___aichi_jinjacho_or_jp.html",
+        "https___aichi_jinjacho_or_jp__addr____.html",
+        "https___aichi_jinjacho_or_jp__addr___.html",
+        "https___aichi_jinjacho_or_jp__addr___.html"
+      ]
+    },
+    "三重県": {
+      "shrines": [],
+      "search_note": "三重県神社庁トップページ。祭神情報なし。神社一覧ページへ遷移して対象神社を探索する。 / 三重県神社庁の一覧ページには市町別リンクのみで祭神情報は無い。外部の「三重県の神社情報」データベース(kyoka.mie-jinjacho.or.jp/shrine/)に神社検索機能がある可能性があるため、そちらを探索する。 / 祭神が確認できる神社は未発見。検索フォームが見当たらないため、WordPress標準の検索パラメータ(?s=)を推測して「綿津見」で検索を試みる。見つからなければ志摩支部・鳥羽支部・度会支部など沿岸部の支部カテゴリページを辿る。 / 検索結果ページ(綾津見)には対象神社なし。海沿いの支部(鳥羽支部)一覧ページへ遷移して綿津見系神社を探索する。 / 鳥羽支部一覧ページには社名のみで祭神情報が無いため、綿津見系の可能性がある伊射波神社(志摩国二宮)の詳細ページを確認する。他の社(海士潜女神社・菅島神社等)も気になるが探索回数の制約上、最有力候補のみ追跡する。 / 残り探索回数0のため終了。このページ(伊射波神社)には綿津見系祭神は確認できず、探索を終了する。",
+      "hops": 6,
+      "visited": [
+        "https://www.mie-jinjachou.page/",
+        "https://www.mie-jinjachou.page/三重県の神社一覧",
+        "http://kyoka.mie-jinjacho.or.jp/shrine/",
+        "https://kyoka.mie-jinjacho.or.jp/?s=%e7%b6%be%e6%b4%a5%e8%a6%8b",
+        "https://kyoka.mie-jinjacho.or.jp/shrine/cat/05_toba/",
+        "https://kyoka.mie-jinjacho.or.jp/shrine/%e4%bc%8a%e5%b0%84%e6%b3%a2%e7%a5%9e%e7%a4%be/"
+      ],
+      "html_cache": [
+        "https___www_mie_jinjachou_page_.html",
+        "https___www_mie_jinjachou_page_________.html",
+        "http___kyoka_mie_jinjacho_or_jp_shrine_.html",
+        "https___kyoka_mie_jinjacho_or_jp__s__e7_b6_be_e6_b4_a5_e8_a6_8b.html",
+        "https___kyoka_mie_jinjacho_or_jp_shrine_cat_05_toba_.html",
+        "https___kyoka_mie_jinjacho_or_jp_shrine__e4_bc_8a_e5_b0_84_e6_b3_a2_e7_a5_9e_e7_.html"
+      ]
+    },
+    "滋賀県": {
+      "shrines": [],
+      "search_note": "検索フォームはPOSTのみで直接組み立て不可。まず神社検索/一覧ページ(search.html)を確認し、索引や神社名検索の入り口を探す。 / search.htmlの本文・リンクが空で情報が取得できなかったため、これ以上の探索ができません。残り探索回数はありますが、ページ内にリンクや検索フォームの情報が存在しないため終了します。",
+      "hops": 2,
+      "visited": [
+        "https://www.shiga-jinjacho.jp",
+        "https://www.shiga-jinjacho.jp/search.html"
+      ],
+      "html_cache": [
+        "https___www_shiga_jinjacho_jp.html",
+        "https___www_shiga_jinjacho_jp_search_html.html"
+      ]
+    },
+    "京都府": {
+      "shrines": [],
+      "search_note": "神社紹介ページへ遷移し、一覧・検索機能を確認する / 神社紹介ページへ移動して神社一覧・検索を確認する / 京都府は地域別一覧のみで祭神情報なし。海に面する舞鶴市の一覧ページに進み、綿津見系神社を探索する。 / 宮津市の神社一覧ページを確認したが、綿津見系(海神社・綿津見神社・志賀神社・和多都美神社)に該当する社名は見つからなかった。祭神情報も個別ページへのリンクがほぼ無く(籠神社・日吉神社は外部サイトへのリンクのみ)、対象確認不可。残り探索回数を使い、隣接する沿岸地域である与謝郡の一覧ページを確認する。 / 与謝郡のページには海神社・綿津見神社・志賀神社・和多都美神社に該当する社名が見当たらず、祭神情報も確認できなかった。残り探索回数が1のため、これ以上の追跡は行わずdoneとする。",
+      "hops": 5,
+      "visited": [
+        "http://kyoto-jinjacho.or.jp",
+        "http://kyoto-jinjacho.or.jp/jinja.html",
+        "http://kyoto-jinjacho.or.jp/shrine.html",
+        "http://kyoto-jinjacho.or.jp/shrine/21.html",
+        "http://kyoto-jinjacho.or.jp/shrine/32.html"
+      ],
+      "html_cache": [
+        "http___kyoto_jinjacho_or_jp.html",
+        "http___kyoto_jinjacho_or_jp_jinja_html.html",
+        "http___kyoto_jinjacho_or_jp_shrine_html.html",
+        "http___kyoto_jinjacho_or_jp_shrine_21_html.html",
+        "http___kyoto_jinjacho_or_jp_shrine_32_html.html"
+      ]
+    },
+    "大阪府": {
+      "shrines": [],
+      "search_note": "府内神社の紹介ページへ遷移し、一覧・索引を確認する / 大阪府神社庁の市町村一覧ページ。祭神情報なし。海沿いの岬町のページへ探索を進める。 / 岬町第12支部のページには対象神社(海神社・綿津見神社・志賀神社・和多都美神社)が見当たらなかった。神社一覧トップページに戻り、他の支部や検索機能を確認する。",
+      "hops": 3,
+      "visited": [
+        "https://osaka-jinjacho.jp",
+        "https://www.osaka-jinjacho.jp/funai_jinja/index.html",
+        "https://www.osaka-jinjacho.jp/funai_jinja/dai12shibu/misaki-cho/misaki.html"
+      ],
+      "html_cache": [
+        "https___osaka_jinjacho_jp.html",
+        "https___www_osaka_jinjacho_jp_funai_jinja_index_html.html",
+        "https___www_osaka_jinjacho_jp_funai_jinja_dai12shibu_misaki_cho_misaki_html.html"
+      ]
+    },
+    "兵庫県": {
+      "shrines": [],
+      "search_note": "検索ページへ遷移して「綿津見」等のキーワードで検索を試みる / search.htmlは住所検索フォームのみで祭神名や神社名での検索ができない。神社一覧・索引ページを探すためindex.htmlに戻る。 / 検索ページへ遷移し「綿津見」で検索を試みる。GETパラメータ形式が不明なため推測。次に「海神」「志賀」等も試す予定。 / 検索フォームは住所検索(address/lat/lng)のみでキーワード検索機能が存在せず、q=綿津見パラメータは無効。神社名一覧・索引ページも見つからず、これ以上の探索手段がない。残り探索回数も限られるため終了。",
+      "hops": 4,
+      "visited": [
+        "https://www.hyogo-jinjacho.com",
+        "https://www.hyogo-jinjacho.com/search.html",
+        "https://www.hyogo-jinjacho.com/index.html",
+        "https://www.hyogo-jinjacho.com/search.html?q=綿津見"
+      ],
+      "html_cache": [
+        "https___www_hyogo_jinjacho_com.html",
+        "https___www_hyogo_jinjacho_com_search_html.html",
+        "https___www_hyogo_jinjacho_com_index_html.html",
+        "https___www_hyogo_jinjacho_com_search_html_q____.html"
+      ]
+    },
+    "奈良県": {
+      "shrines": [],
+      "search_note": "神社一覧ページへ移動して対象神社を探索する / 奈良市の一覧(jinja.html)には綿津見・海神・志賀・和多都美に該当する社名が見当たらなかった。次の地域一覧(jinja02.html)を確認する。 / 生駒市・生駒郡のページには海神社・綿津見神社・志賀神社・和多都美神社に該当する神社名が見当たらなかった。次の地域一覧ページ(jinja03.html)を確認する。 / 大和郡山市の神社一覧ページには対象(海神社・綿津見神社・志賀神社・和多都美神社)の記載は確認できなかった。奈良県神道青年会の検索サイト(narashinsei.com)で「綿津見」をキーワード検索するURLへ遷移を試みる。 / 奈良県神道青年会サイトの検索(?s=綿津見)では該当する神社が見つからなかった。奈良県神社庁の一覧ページ(jinja.html〜jinja03.html)も既に確認済みで、綿津見系(海神社・綿津見神社・志賀神社・和多都美神社)の神社は本文中に確認できなかった。残り探索回数が尽きたため、0件として終了する。",
+      "hops": 5,
+      "visited": [
+        "https://www.naraken-jinjacho.jp/",
+        "https://www.naraken-jinjacho.jp/jinja.html",
+        "https://www.naraken-jinjacho.jp/jinja02.html",
+        "https://www.naraken-jinjacho.jp/jinja03.html",
+        "http://www.narashinsei.com/?s=綿津見"
+      ],
+      "html_cache": [
+        "https___www_naraken_jinjacho_jp_.html",
+        "https___www_naraken_jinjacho_jp_jinja_html.html",
+        "https___www_naraken_jinjacho_jp_jinja02_html.html",
+        "https___www_naraken_jinjacho_jp_jinja03_html.html",
+        "http___www_narashinsei_com__s____.html"
+      ]
+    },
+    "和歌山県": {
+      "shrines": [],
+      "search_note": "祭神名検索フォーム(Saijinmei)を使い「綿津見」で検索を試みる。まだ対象神社は未発見。 / 検索ページはDB接続エラーで結果が取得できなかった。別キーワードで再試行する。 / 検索ページがDB接続エラー(mysql_connect Access denied)で機能しておらず、綿津見・海神いずれのキーワードでも結果を取得できなかった。残り探索回数も少ないため、これ以上の同一エラーページへのfollowは無意味と判断し終了する。",
+      "hops": 3,
+      "visited": [
+        "https://wakayama-jinjacho.or.jp",
+        "https://wakayama-jinjacho.or.jp/jdb/sys/user/SelectListWjtTbl.php?Saijinmei=綿津見&button3=検索",
+        "https://wakayama-jinjacho.or.jp/jdb/sys/user/SelectListWjtTbl.php?Saijinmei=海神&button3=検索"
+      ],
+      "html_cache": [
+        "https___wakayama_jinjacho_or_jp.html",
+        "https___wakayama_jinjacho_or_jp_jdb_sys_user_SelectListWjtTbl_php_Saijinmei_____.html",
+        "https___wakayama_jinjacho_or_jp_jdb_sys_user_SelectListWjtTbl_php_Saijinmei____b.html"
+      ]
+    },
+    "鳥取県": {
+      "shrines": [
+        {
+          "name": "水分神社",
+          "city": "鳥取市",
+          "address": "鳥取市佐治町尾際1085",
+          "main_deity": "須佐之男命・大山津見神・原山津見神・綿津見神・保食神",
+          "source_quote": "祭神須佐之男命 大山津見神 原山津見神 綿津見 神 保食神",
+          "source_url": "https://tottori-jinjacho.jp/publics/search/?search_word=綿津見",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-12",
+          "html_cache": "https___tottori_jinjacho_jp_publics_search__search_word____.html"
+        },
+        {
+          "name": "河内神社",
+          "city": "鳥取市",
+          "address": "鳥取市河内298",
+          "main_deity": "綿津見神・素盞嗚尊・天照大神",
+          "source_quote": "祭神 綿津見 神 素盞嗚尊 天照大神",
+          "source_url": "https://tottori-jinjacho.jp/publics/search/?search_word=綿津見",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-12",
+          "html_cache": "https___tottori_jinjacho_jp_publics_search__search_word____.html"
+        },
+        {
+          "name": "金山神社",
+          "city": "鳥取市",
+          "address": "鳥取市佐治町余戸481",
+          "main_deity": "綿津見神・素盞嗚命・大山津見命・保食神",
+          "source_quote": "祭神 綿津見 神 素盞嗚命 大山津見命 保食神",
+          "source_url": "https://tottori-jinjacho.jp/publics/search/?search_word=綿津見",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-12",
+          "html_cache": "https___tottori_jinjacho_jp_publics_search__search_word____.html"
+        }
+      ],
+      "search_note": "検索フォームを使って「綿津見」で検索を試みる。まだ祭神情報未確認のため0件。 / 検索結果ページに掲載された3件全てを採用。各社とも祭神欄に綿津見神が明記されているため詳細ページ確認は省略。鳥取県内で目安件数（1〜3社）に達したため探索終了。",
+      "hops": 2,
+      "visited": [
+        "https://tottori-jinjacho.jp",
+        "https://tottori-jinjacho.jp/publics/search/?search_word=綿津見"
+      ],
+      "html_cache": [
+        "https___tottori_jinjacho_jp.html",
+        "https___tottori_jinjacho_jp_publics_search__search_word____.html"
+      ]
+    },
+    "島根県": {
+      "shrines": [
+        {
+          "name": "河内神社",
+          "city": "出雲市",
+          "address": "出雲市佐田町大呂915番地",
+          "main_deity": "綿津見神",
+          "source_quote": "河内神社 綿津見神 出雲市佐田町大呂915番地 水を司る神・五穀豊穣",
+          "source_url": "https://www.shimane-jinjacho.or.jp/izumo/index.html",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-12",
+          "html_cache": "https___www_shimane_jinjacho_or_jp_izumo_index_html.html"
+        },
+        {
+          "name": "大呂神社",
+          "city": "出雲市",
+          "address": "出雲市佐田町大呂472番地2",
+          "main_deity": "誉田別命・日本武命・五十猛命・綿津見命",
+          "source_quote": "大呂神社 誉田別命・日本武命・五十猛命・綿津見命 出雲市佐田町大呂472番地2 無病息災・病気平癒・厄除け・五穀豊穣・商売繁盛外",
+          "source_url": "https://www.shimane-jinjacho.or.jp/izumo/index.html",
+          "tier": "tier1_auto",
+          "retrieved_at": "2026-07-12",
+          "html_cache": "https___www_shimane_jinjacho_or_jp_izumo_index_html.html"
+        },
+        {
+          "name": "海童神社",
+          "city": "出雲市",
+          "address": "出雲市島村町701番地",
+          "main_deity": "玉依姫命・大錦津見命・豊玉姫命・土祖命",
+          "source_quote": "海童神社 玉依姫命・大錦津見命・豊玉姫命・ 土祖命 出雲市島村町701番地 五穀豊穣 家内安全 水難防除",
+          "source_url": "https://www.shimane-jinjacho.or.jp/izumo/index.html",
+          "tier": "rejected_deity_unverified",
+          "retrieved_at": "2026-07-12",
+          "html_cache": "https___www_shimane_jinjacho_or_jp_izumo_index_html.html"
+        }
+      ],
+      "search_note": "神社検索ページへ遷移し、綿津見・海神等のキーワードで検索を試みる / 検索フォームはGoogle CSEで組み立て不可。市町村一覧から沿岸部の松江市ページを辿り、綿津見系神社を探索する。 / 松江市の神社一覧ページを確認したが、綿津見系(海神社・綿津見神社・志賀神社・和多都美神社)に該当する社名・祭神は見つからなかった。爾佐神社(都久豆美命)や日御碕神社(都久津美神)など近似表記はあるが、綿津見神・少童命であることが本文で明示されていないため対象外とした。次に出雲市の神社一覧ページ(松江市と同じURLパターンを推測)を確認する。 / 出雲市のページ本文中の一覧表から綿津見系(綿津見神・綿津見命・大錦津見命)を祀る3社を確認。祭神情報は一覧表内に明記されているため詳細ページへのfollowは行わず終了。県内で目安の1〜3社を確保できたためaction=doneとする。",
+      "hops": 4,
+      "visited": [
+        "https://shimane-jinjacho.or.jp",
+        "https://www.shimane-jinjacho.or.jp/search/index.html",
+        "https://www.shimane-jinjacho.or.jp/matsue/index.html",
+        "https://www.shimane-jinjacho.or.jp/izumo/index.html"
+      ],
+      "html_cache": [
+        "https___shimane_jinjacho_or_jp.html",
+        "https___www_shimane_jinjacho_or_jp_search_index_html.html",
+        "https___www_shimane_jinjacho_or_jp_matsue_index_html.html",
+        "https___www_shimane_jinjacho_or_jp_izumo_index_html.html"
+      ]
+    }
+  }
+}
