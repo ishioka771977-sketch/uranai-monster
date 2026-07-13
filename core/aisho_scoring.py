@@ -186,18 +186,25 @@ def _score_kan_relationship(kan1: str, kan2: str) -> int:
     return 5  # その他
 
 def _score_energy_compatibility(energy1: int, energy2: int) -> int:
-    """エネルギー差をスコア化（0-10）"""
+    """エネルギー差をスコア化（0-10）
+
+    2026-07-13改定(くろたん基準による委任判断):
+    段階を万象学教義(差30/60/100)と ENERGY_DIFF_ADVICE の4段に一致させた。
+    旧実装の「150超→1点」の崖は教義に存在しないコード側の創作だったため撤去。
+    教義は差100超を「要工夫だが処方あり(高い方が外で消費すれば改善)」と扱うので、
+    最低点は絶望値(1)ではなく工夫前提の4とする。
+    高×高(差0の大排気量同士)は教義どおり「ペースが合う」= 満点を維持し、
+    衝突リスクの注意は五本能軸のテキスト(攻撃×攻撃=ブレーキ役不在等)が担う。
+    """
     diff = abs(energy1 - energy2)
     if diff <= 30:
         return 10
     elif diff <= 60:
         return 8
     elif diff <= 100:
-        return 5
-    elif diff <= 150:
-        return 3
+        return 6
     else:
-        return 1
+        return 4
 
 def _score_honnou_complementary(top1_a: str, top1_b: str) -> int:
     """第1本能同士の相性をスコア化（0-10）"""
