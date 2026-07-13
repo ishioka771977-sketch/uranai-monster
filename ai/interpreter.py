@@ -4602,6 +4602,23 @@ def generate_bansho_reading(bundle: DivinationBundle) -> dict:
             max_tokens=5000,
         )
         result = _parse_json_response(text)
+        # 下限保証(コース共通の1,600字床。2026-07-13 ひでさん指示)
+        reading = (result or {}).get("reading") or ""
+        if result and reading and len(reading) < 1600:
+            retry = _with_person(prompt, bundle, v3_polish=True) + (
+                f"\n\n【再指示】直前の出力のreadingは{len(reading)}文字で短すぎた。"
+                "内容の密度と文体を保ったまま、readingを1,800文字前後まで厚くして"
+                "全体を書き直すこと。水増しの繰り返しは禁止。"
+            )
+            try:
+                text2 = _call_api_text(BANSHO_SYSTEM_PROMPT, retry, max_tokens=5000)
+                result2 = _parse_json_response(text2)
+                if result2 and len(result2.get("reading") or "") > len(reading):
+                    print(f"[万象学] length-floor retry: {len(reading)} -> "
+                          f"{len(result2.get('reading') or '')} chars", flush=True)
+                    result = result2
+            except Exception as e:
+                print(f"[万象学] length-floor retry failed: {e}", flush=True)
         if result and result.get("reading"):
             return result
     except Exception as ex:
