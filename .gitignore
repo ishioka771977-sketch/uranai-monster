@@ -4,3 +4,4 @@ __pycache__/
 .streamlit/secrets.toml
 _pilot_run.log
 data/kojindo/_html_cache/
+data/_blind_test_answers.json
