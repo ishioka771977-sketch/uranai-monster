@@ -2802,14 +2802,33 @@ def render_result_page():
     elif course == "開運習慣":
         _kdata = results.get("kaiun_habits", {})
         _cr_hl = _kdata.get("headline", "")
-        _cr_rd = (
+        _kparts = [
             f"【L1 毎日の土台】{_kdata.get('l1_title','')}\n"
             f"なぜ: {_kdata.get('l1_why','')}\n"
-            f"動作: {_kdata.get('l1_action','')}\n\n"
+            f"動作: {_kdata.get('l1_action','')}",
             f"【L2 週単位の発展】{_kdata.get('l2_title','')}\n"
             f"なぜ: {_kdata.get('l2_why','')}\n"
-            f"動作: {_kdata.get('l2_action','')}"
-        )
+            f"動作: {_kdata.get('l2_action','')}",
+        ]
+        if _kdata.get("l3_title"):
+            _kparts.append(
+                f"【L3 月単位の方位】{_kdata.get('l3_title','')}\n"
+                f"なぜ: {_kdata.get('l3_why','')}\n"
+                f"動作: {_kdata.get('l3_action','')}"
+            )
+        if _kdata.get("l4_title"):
+            _kparts.append(
+                f"【L4 年単位の儀式】{_kdata.get('l4_title','')}\n"
+                f"なぜ: {_kdata.get('l4_why','')}\n"
+                f"動作: {_kdata.get('l4_action','')}"
+            )
+        if _kdata.get("l5_title"):
+            _kparts.append(
+                f"【L5 10年の人生設計】{_kdata.get('l5_title','')}\n"
+                f"なぜ: {_kdata.get('l5_why','')}\n"
+                f"構え: {_kdata.get('l5_action','')}"
+            )
+        _cr_rd = "\n\n".join(_kparts)
         _cr_cl = _kdata.get("closing", "")
     else:
         _ckey_map = {"算命学": "sanmei", "星座": "western", "九星気学": "kyusei", "数秘術": "numerology", "タロット": "tarot", "紫微斗数": "ziwei", "万象学": "bansho", "四柱推命": "shichusuimei", "古神道": "kojindo"}
@@ -2924,7 +2943,7 @@ def _render_kaiun_habits_result(bundle, results):
 
 <div style="text-align:center; margin:8px 0 20px; color:#8A8478; font-size:0.85em;">
 「あなたは何者か」ではなく、「だからどう生きるか」<br>
-やってみたくなる、無理しない、続けられる 2 つの習慣
+毎日・週・月・年・10年——時間の5層でめぐる開運習慣
 </div>
 """, unsafe_allow_html=True)
 
@@ -2962,6 +2981,54 @@ def _render_kaiun_habits_result(bundle, results):
 </div>
 """, unsafe_allow_html=True)
 
+    # L3 — 月単位の方位
+    l3_title = k.get("l3_title", "")
+    if l3_title:
+        st.markdown(f"""
+<div style="margin:14px 0; padding:16px; background:rgba(138,111,174,0.08); border-left:4px solid #A488C9; border-radius:6px;">
+<div style="color:#8A8478; font-size:0.78em; letter-spacing:0.1em; margin-bottom:4px;">— L3: 月単位の方位 —</div>
+<div style="color:#A488C9; font-size:1.1em; font-weight:bold; margin-bottom:10px;">🧭 {l3_title}</div>
+<div style="color:#F0EBE0; font-size:0.92em; line-height:1.85; margin-bottom:8px;">
+<span style="color:#BFA350;">なぜ:</span> {k.get("l3_why","")}
+</div>
+<div style="color:#F0EBE0; font-size:0.92em; line-height:1.85;">
+<span style="color:#BFA350;">動作:</span> {k.get("l3_action","")}
+</div>
+</div>
+""", unsafe_allow_html=True)
+
+    # L4 — 年単位の儀式
+    l4_title = k.get("l4_title", "")
+    if l4_title:
+        st.markdown(f"""
+<div style="margin:14px 0; padding:16px; background:rgba(191,163,80,0.10); border-left:4px solid #BFA350; border-radius:6px;">
+<div style="color:#8A8478; font-size:0.78em; letter-spacing:0.1em; margin-bottom:4px;">— L4: 年単位の儀式 —</div>
+<div style="color:#D4B96A; font-size:1.1em; font-weight:bold; margin-bottom:10px;">⛩️ {l4_title}</div>
+<div style="color:#F0EBE0; font-size:0.92em; line-height:1.85; margin-bottom:8px;">
+<span style="color:#BFA350;">なぜ:</span> {k.get("l4_why","")}
+</div>
+<div style="color:#F0EBE0; font-size:0.92em; line-height:1.85;">
+<span style="color:#BFA350;">動作:</span> {k.get("l4_action","")}
+</div>
+</div>
+""", unsafe_allow_html=True)
+
+    # L5 — 10年単位の人生設計
+    l5_title = k.get("l5_title", "")
+    if l5_title:
+        st.markdown(f"""
+<div style="margin:14px 0; padding:16px; background:rgba(124,163,184,0.08); border-left:4px solid #7CA3B8; border-radius:6px;">
+<div style="color:#8A8478; font-size:0.78em; letter-spacing:0.1em; margin-bottom:4px;">— L5: 10年単位の人生設計 —</div>
+<div style="color:#7CA3B8; font-size:1.1em; font-weight:bold; margin-bottom:10px;">🗺️ {l5_title}</div>
+<div style="color:#F0EBE0; font-size:0.92em; line-height:1.85; margin-bottom:8px;">
+<span style="color:#BFA350;">なぜ:</span> {k.get("l5_why","")}
+</div>
+<div style="color:#F0EBE0; font-size:0.92em; line-height:1.85;">
+<span style="color:#BFA350;">構え:</span> {k.get("l5_action","")}
+</div>
+</div>
+""", unsafe_allow_html=True)
+
     # 締め
     if closing:
         st.markdown(f"""
@@ -2973,7 +3040,7 @@ def _render_kaiun_habits_result(bundle, results):
     # 注釈
     st.markdown("""
 <div style="text-align:center; margin:14px 0; color:#5A5A5A; font-size:0.7em;">
-※ この提案はPhase1版です。月単位（L3 方位）・年単位（L4 儀式）・10年単位（L5 人生設計）は今後拡張されます。<br>
+※ 方位は自宅からのおおまかな方向で十分。参拝は「行かなきゃいけない」ものではありません。<br>
 ※ 続けられない時は、続けられない自分を責めない。やりたい時に戻ってくれば十分です。
 </div>
 """, unsafe_allow_html=True)
