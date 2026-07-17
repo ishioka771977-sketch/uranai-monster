@@ -5683,9 +5683,25 @@ def _render_kaiyun_calendar_tab(today, person_data):
         tcs_icon = " ⚠" if d_info["tenchusatsu"] else ""
         kansei_info = DAILY_KANSEI.get(d_info["kansei"], DAILY_KANSEI["比劫"])
         with st.expander(f"{day_num}日  スコア{s}{tcs_icon}  {d_info['day_kanshi']} {d_info['rokuyo']} — {kansei_info['theme']}"):
+            reasons = d_info.get("reasons") or []
+            chips = ""
+            if reasons:
+                chip_items = "".join(
+                    f'<span style="display:inline-block; margin:2px 4px 2px 0; padding:2px 8px; '
+                    f'border:1px solid {"rgba(124,163,184,0.5)" if pt.startswith("+") else "rgba(196,122,106,0.5)"}; '
+                    f'border-radius:10px; font-size:0.72em; '
+                    f'color:{"#7CA3B8" if pt.startswith("+") else "#C47A6A"};">{pt} {label}</span>'
+                    for pt, label in reasons
+                )
+                chips = (
+                    '<div style="margin-top:10px; padding-top:8px; border-top:1px solid rgba(191,163,80,0.15);">'
+                    '<span style="color:#8A8478; font-size:0.72em;">スコアの内訳（基準5点）: </span><br>'
+                    f'{chip_items}</div>'
+                )
             st.markdown(f"""
-<div style="color:#F0EBE0; font-size:0.85em; line-height:1.6;">
+<div style="color:#F0EBE0; font-size:0.85em; line-height:1.75;">
 {d_info["advice"]}
+{chips}
 </div>
 """, unsafe_allow_html=True)
 
@@ -5694,6 +5710,7 @@ def _render_kaiyun_calendar_tab(today, person_data):
 def _render_kaiyun_monthly_yearly_tab(today, person_data):
     from core.kaiyun import (
         generate_monthly_advice, generate_yearly_advice, DAILY_KANSEI,
+        calc_monthly_calendar, get_month_highlights, get_tenchusatsu_months,
     )
 
     # --- 月運 ---
@@ -5728,6 +5745,31 @@ def _render_kaiyun_monthly_yearly_tab(today, person_data):
     <span style="color:#C47A6A;">△ 注意:</span> {month_adv["dont"]}
   </div>
   {tcs_month_html}
+</div>
+""", unsafe_allow_html=True)
+
+    # --- 今月の作戦マップ（いつ動くか・2026-07-18追加）---
+    _cal = calc_monthly_calendar(today.year, today.month, person_data)
+    _hl = get_month_highlights(_cal)
+
+    def _fmt_day(d):
+        return f'{int(d["date"].split("-")[2])}日({d["day_kanshi"]}・{d["rokuyo"]})'
+
+    _rows = []
+    if _hl["best_days"]:
+        _best = "、".join(f'<span style="color:#D4B96A; font-weight:bold;">{_fmt_day(d)} スコア{d["score"]}</span>' for d in _hl["best_days"])
+        _rows.append(f'<div style="margin:4px 0;"><span style="color:#D4B96A;">★ 攻めの日:</span> {_best}<span style="color:#8A8478; font-size:0.85em;"> — 商談・告白・新規スタートはここに寄せる</span></div>')
+    if _hl["kango_days"]:
+        _kg = "、".join(_fmt_day(d) for d in _hl["kango_days"])
+        _rows.append(f'<div style="margin:4px 0;"><span style="color:#A488C9;">💫 縁結び日:</span> {_kg}<span style="color:#8A8478; font-size:0.85em;"> — 日干とあなたが干合。人と会う予定に</span></div>')
+    if _hl["tcs_days"]:
+        _tc = "、".join(str(int(d["date"].split("-")[2])) + "日" for d in _hl["tcs_days"])
+        _rows.append(f'<div style="margin:4px 0;"><span style="color:#C47A6A;">⚠ 天中殺日:</span> {_tc}<span style="color:#8A8478; font-size:0.85em;"> — 大きな決断・契約・高額の買い物は避ける</span></div>')
+    if _rows:
+        st.markdown(f"""
+<div style="background:#15150F; border:1px solid rgba(191,163,80,0.35); border-radius:10px; padding:12px 15px; margin:8px 0;">
+  <div style="color:#BFA350; font-size:0.85em; letter-spacing:0.1em; margin-bottom:6px;">🗓 今月の作戦マップ</div>
+  <div style="color:#F0EBE0; font-size:0.88em; line-height:1.8;">{''.join(_rows)}</div>
 </div>
 """, unsafe_allow_html=True)
 
@@ -5776,6 +5818,17 @@ def _render_kaiyun_monthly_yearly_tab(today, person_data):
 </div>
 """, unsafe_allow_html=True)
 
+    # --- 今年の守りの月（月支が天中殺に当たる月・2026-07-18追加）---
+    _tcs_months = get_tenchusatsu_months(today.year, person_data.get("tenchusatsu", []))
+    if _tcs_months:
+        _tm = "・".join(f"{m}月" for m in _tcs_months)
+        st.markdown(f"""
+<div style="background:#15150F; border:1px solid rgba(196,122,106,0.4); border-radius:10px; padding:10px 15px; margin:8px 0;">
+  <span style="color:#C47A6A; font-weight:bold; font-size:0.9em;">🛡 今年の守りの月: {_tm}</span>
+  <span style="color:#8A8478; font-size:0.82em;"> — 月の気があなたの天中殺に重なる月。新規の種まきより、手入れ・整理・学び直しに向く</span>
+</div>
+""", unsafe_allow_html=True)
+
     # AI鑑定文 — 月運
     _kaiyun_name = getattr(st.session_state.get("kaiyun_person"), "name", "") or ""
     render_gold_divider()
@@ -5792,9 +5845,69 @@ def _render_kaiyun_monthly_yearly_tab(today, person_data):
     )
 
 
+def _life_curve_svg(curve, taiun_list, current_age):
+    """人生運勢カーブのSVGを生成（0〜max歳・大運帯・天中殺年・現在地入り）"""
+    W, H = 720, 250
+    L, R, T, B = 42, 706, 26, 200
+    max_age = curve[-1]["age"]
+
+    def x(age):
+        return L + (R - L) * age / max_age
+
+    def y(score):
+        return B - (B - T) * score / 10
+
+    parts = []
+    # 大運の交互背景帯
+    for i, e in enumerate(taiun_list):
+        x0, x1 = x(e["start_age"]), x(min(e["end_age"] + 1, max_age))
+        if x0 >= R:
+            continue
+        fill = "rgba(191,163,80,0.07)" if i % 2 == 0 else "rgba(191,163,80,0.02)"
+        parts.append(f'<rect x="{x0:.1f}" y="{T}" width="{max(0, x1 - x0):.1f}" height="{B - T}" fill="{fill}"/>')
+        if x0 + 24 < R:
+            parts.append(f'<text x="{x0 + 4:.1f}" y="{T + 12}" font-size="9" fill="#8A8478">{e["kanshi"]}</text>')
+    # 目盛り
+    for s in (0, 5, 10):
+        parts.append(f'<line x1="{L}" y1="{y(s):.1f}" x2="{R}" y2="{y(s):.1f}" stroke="#2A2A2A" stroke-width="1"/>')
+        parts.append(f'<text x="{L - 6}" y="{y(s) + 3:.1f}" font-size="10" fill="#8A8478" text-anchor="end">{s}</text>')
+    for a in range(0, max_age + 1, 10):
+        parts.append(f'<text x="{x(a):.1f}" y="{B + 16}" font-size="9" fill="#8A8478" text-anchor="middle">{a}歳</text>')
+    # 面と折れ線
+    pts = " ".join(f"{x(p['age']):.1f},{y(p['score']):.1f}" for p in curve)
+    area = f"{L},{B} " + pts + f" {R},{B}"
+    parts.append(f'<polygon points="{area}" fill="url(#goldfade)"/>')
+    parts.append(f'<polyline points="{pts}" fill="none" stroke="#D4B96A" stroke-width="2" stroke-linejoin="round"/>')
+    # 天中殺年の点
+    for p in curve:
+        if p["is_tcs_year"]:
+            parts.append(f'<circle cx="{x(p["age"]):.1f}" cy="{y(p["score"]):.1f}" r="2.4" fill="#C47A6A"/>')
+    # 現在地
+    if 0 <= current_age <= max_age:
+        cx = x(current_age)
+        cy = y(curve[current_age]["score"])
+        parts.append(f'<line x1="{cx:.1f}" y1="{T}" x2="{cx:.1f}" y2="{B}" stroke="#D4B96A" stroke-width="1" stroke-dasharray="3,3"/>')
+        parts.append(f'<circle cx="{cx:.1f}" cy="{cy:.1f}" r="5" fill="#D4B96A" stroke="#0A0A0A" stroke-width="2"/>')
+        label_anchor = "end" if cx > R - 60 else "start"
+        lx = cx - 8 if label_anchor == "end" else cx + 8
+        parts.append(f'<text x="{lx:.1f}" y="{T + 12}" font-size="11" fill="#D4B96A" font-weight="bold" text-anchor="{label_anchor}">今 {current_age}歳</text>')
+    svg = (
+        f'<svg viewBox="0 0 {W} {H}" xmlns="http://www.w3.org/2000/svg" '
+        f'style="width:100%; height:auto; background:#111111; border:1px solid #2A2A2A; border-radius:10px;">'
+        f'<defs><linearGradient id="goldfade" x1="0" y1="0" x2="0" y2="1">'
+        f'<stop offset="0%" stop-color="rgba(212,185,106,0.30)"/>'
+        f'<stop offset="100%" stop-color="rgba(212,185,106,0)"/></linearGradient></defs>'
+        + "".join(parts) + "</svg>"
+    )
+    return svg
+
+
 # --- Tab 4 helper ---
 def _render_kaiyun_taiun_tab(person, person_data):
-    from core.kaiyun import calc_taiun, get_current_taiun, DAILY_KANSEI
+    from core.kaiyun import (
+        calc_taiun, get_current_taiun, DAILY_KANSEI,
+        calc_taiun_period_score, calc_life_curve,
+    )
 
     today = date.today()
     gender_str = person.gender
@@ -5804,52 +5917,76 @@ def _render_kaiyun_taiun_tab(person, person_data):
     current_taiun = get_current_taiun(taiun_list, birth_date.year, today.year)
     current_age = today.year - birth_date.year
 
+    # --- 人生運勢カーブ（2026-07-18追加）---
     st.markdown(
-        f'<div style="color:#BFA350; font-weight:bold; margin:10px 0 8px; font-size:1.1em;">'
-        f'🔮 大運タイムライン（現在{current_age}歳）</div>',
+        '<div style="color:#BFA350; font-weight:bold; margin:10px 0 8px; font-size:1.1em;">📈 人生運勢カーブ（0〜90歳）</div>',
+        unsafe_allow_html=True,
+    )
+    curve = calc_life_curve(person_data, birth_date, gender_str, max_age=90)
+    st.markdown(_life_curve_svg(curve, taiun_list, current_age), unsafe_allow_html=True)
+    st.markdown(
+        '<div style="color:#5A5A5A; font-size:0.72em; margin:4px 0 14px;">'
+        '金の線=大運の土台+年運の揺らぎ / <span style="color:#C47A6A;">●</span>=天中殺の年 / 縦帯=大運の切り替わり<br>'
+        '※ 高い=良い・低い=悪いではなく、「攻めが実る時期」と「内を耕す時期」のリズムを表します</div>',
         unsafe_allow_html=True,
     )
 
-    # タイムライン表示
+    st.markdown(
+        f'<div style="color:#BFA350; font-weight:bold; margin:10px 0 8px; font-size:1.1em;">'
+        f'🔮 大運タイムライン（現在{current_age}歳）— 各期をタップで深掘り</div>',
+        unsafe_allow_html=True,
+    )
+
+    # タイムライン表示（各期expander・2026-07-18 深掘り化）
     for entry in taiun_list:
         is_current = (entry == current_taiun)
         is_tcs = entry["is_taiun_tenchusatsu"]
-
-        if is_current:
-            border_color = "#BFA350"
-            bg = "#1A1A10"
-            marker = "★ "
-        elif is_tcs:
-            border_color = "#C47A6A"
-            bg = "#1A1515"
-            marker = "⚠ "
-        else:
-            border_color = "#2A2A2A"
-            bg = "#1A1A1A"
-            marker = ""
+        marker = "★ " if is_current else ("⚠ " if is_tcs else "")
 
         kansei_info = DAILY_KANSEI.get(entry["kansei"], DAILY_KANSEI["比劫"])
         age_range = f'{entry["start_age"]}〜{entry["end_age"]}歳'
-        year_range = f'({birth_date.year + entry["start_age"]}〜{birth_date.year + entry["end_age"]}年)'
+        year_range = f'{birth_date.year + entry["start_age"]}〜{birth_date.year + entry["end_age"]}年'
+        pscore = calc_taiun_period_score(entry, person_data["day_kan"])
+        theme10 = kansei_info["theme"].replace("の日", "の10年")
+        header = f'{marker}{entry["kanshi"]}  {age_range}（{year_range}）— {theme10}  スコア{pscore["score"]}'
 
-        tcs_badge = ""
-        if is_tcs:
-            tcs_badge = '<span style="color:#C47A6A; font-size:0.75em; margin-left:6px;">⚠天中殺</span>'
-
-        st.markdown(f"""
-<div style="background:{bg}; border-left:4px solid {border_color}; border-radius:0 8px 8px 0;
-            padding:10px 12px; margin:5px 0; position:relative;">
-  <div style="display:flex; align-items:center; flex-wrap:wrap; gap:4px 12px;">
-    <span style="color:{border_color}; font-weight:bold; font-size:1.0em;">{marker}{entry["kanshi"]}</span>
-    <span style="color:#8A8478; font-size:0.82em;">{age_range} {year_range}</span>
-    {tcs_badge}
-  </div>
-  <div style="display:flex; flex-wrap:wrap; gap:4px 14px; margin-top:4px;">
-    <span style="color:#8A8478; font-size:0.8em;">五行: <span style="color:#D4B96A;">{entry["gogyo"]}</span></span>
-    <span style="color:#8A8478; font-size:0.8em;">本能: <span style="color:#D4B96A;">{entry["honnou"]}</span></span>
-    <span style="color:#8A8478; font-size:0.8em;">通変星: <span style="color:#D4B96A;">{entry["kansei"]}</span></span>
-    <span style="color:#8A8478; font-size:0.8em;">{kansei_info["theme"]}</span>
-  </div>
+        with st.expander(header, expanded=is_current):
+            tcs_years_html = ""
+            if entry["tenchusatsu_years"]:
+                _tys = "・".join(str(yy) for yy in entry["tenchusatsu_years"])
+                tcs_years_html = (
+                    f'<div style="color:#C47A6A; font-size:0.85em; margin:6px 0;">'
+                    f'⚠ この期間の天中殺の年: {_tys}——この年は拡大より手入れ・学び直しに</div>'
+                )
+            chips = ""
+            if pscore["reasons"]:
+                chip_items = "".join(
+                    f'<span style="display:inline-block; margin:2px 4px 2px 0; padding:2px 8px; '
+                    f'border:1px solid {"rgba(124,163,184,0.5)" if pt.startswith("+") else "rgba(196,122,106,0.5)"}; '
+                    f'border-radius:10px; font-size:0.72em; '
+                    f'color:{"#7CA3B8" if pt.startswith("+") else "#C47A6A"};">{pt} {label}</span>'
+                    for pt, label in pscore["reasons"]
+                )
+                chips = (
+                    '<div style="margin-top:8px; padding-top:6px; border-top:1px solid rgba(191,163,80,0.15);">'
+                    '<span style="color:#8A8478; font-size:0.72em;">スコアの内訳（基準5点）: </span><br>'
+                    f'{chip_items}</div>'
+                )
+            now_badge = ""
+            if is_current:
+                now_badge = '<div style="color:#D4B96A; font-size:0.8em; margin-bottom:6px;">★ いまここを歩いています</div>'
+            st.markdown(f"""
+<div style="color:#F0EBE0; font-size:0.88em; line-height:1.8;">
+{now_badge}
+<div style="display:flex; flex-wrap:wrap; gap:4px 14px; margin-bottom:6px;">
+  <span style="color:#8A8478; font-size:0.85em;">五行: <span style="color:#D4B96A;">{entry["gogyo"]}</span></span>
+  <span style="color:#8A8478; font-size:0.85em;">本能: <span style="color:#D4B96A;">{entry["honnou"]}</span></span>
+  <span style="color:#8A8478; font-size:0.85em;">通変星: <span style="color:#D4B96A;">{entry["kansei"]}</span></span>
+</div>
+<div style="margin:4px 0;"><span style="color:#D4B96A;">◎ この10年でやると良いこと:</span> {kansei_info["do"]}</div>
+<div style="margin:4px 0;"><span style="color:#C47A6A;">△ 注意:</span> {kansei_info["dont"]}</div>
+{tcs_years_html}
+{chips}
 </div>
 """, unsafe_allow_html=True)
 
@@ -5890,6 +6027,37 @@ def _render_kaiyun_taiun_tab(person, person_data):
     <span style="color:#C47A6A;">△</span> {ct_kansei["dont"]}
   </div>
   {tcs_detail}
+</div>
+""", unsafe_allow_html=True)
+
+        # --- 現在地バー + 次の大運の予告（2026-07-18追加）---
+        _elapsed = max(0, min(current_age - ct["start_age"], ct["end_age"] - ct["start_age"]))
+        _total = ct["end_age"] - ct["start_age"] + 1
+        _remain = ct["end_age"] - current_age + 1
+        _pct = int(_elapsed / _total * 100)
+        _next = None
+        for _e in taiun_list:
+            if _e["start_age"] > ct["start_age"]:
+                _next = _e
+                break
+        _next_html = ""
+        if _next:
+            _nk = DAILY_KANSEI.get(_next["kansei"], DAILY_KANSEI["比劫"])
+            _next_theme = _nk["theme"].replace("の日", "")
+            _next_html = (
+                f'<div style="color:#8A8478; font-size:0.85em; margin-top:8px;">'
+                f'⏭ 次の10年: <span style="color:#D4B96A;">{_next["kanshi"]}</span>'
+                f'（{_next["start_age"]}歳〜）は「<span style="color:#D4B96A;">{_next_theme}</span>」の季節へ。'
+                f'いまの大運は残り<span style="color:#D4B96A; font-weight:bold;">{_remain}年</span>——'
+                f'この期間のテーマを取り切ってから渡ると、次が楽になる</div>'
+            )
+        st.markdown(f"""
+<div style="background:#15150F; border:1px solid rgba(191,163,80,0.3); border-radius:10px; padding:12px 15px; margin:8px 0;">
+  <div style="color:#BFA350; font-size:0.85em; margin-bottom:6px;">📍 この大運の現在地: {_elapsed + 1}年目 / {_total}年</div>
+  <div style="background:#2A2A2A; border-radius:6px; height:10px; overflow:hidden;">
+    <div style="background:linear-gradient(90deg, #BFA350, #D4B96A); width:{_pct}%; height:100%;"></div>
+  </div>
+  {_next_html}
 </div>
 """, unsafe_allow_html=True)
 
