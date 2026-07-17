@@ -203,50 +203,63 @@ def calc_lucky_score(target_date: date, person_data: dict) -> dict:
     # 天中殺判定
     is_tcs = day_shi in tcs_shi
 
-    # スコア計算（基本5点）
+    # スコア計算（基本5点）。reasons に内訳を積む（UI表示用・2026-07-17）
     score = 5
+    reasons = []
 
     # 五行関係
     if kansei == "比劫":
         score += 1   # 比和
+        reasons.append(("+1", "日干と比和（自分の五行の日）"))
     elif kansei == "印星":
         score += 1   # 日が本人を生む
+        reasons.append(("+1", "日があなたを生む（印の日）"))
     elif kansei == "官星":
         score -= 1   # 日が本人を剋す
+        reasons.append(("-1", "日があなたを剋す（官の日）"))
 
     # 干合
-    if frozenset([person_kan, day_kan]) in KANGO_PAIRS:
+    is_kango = frozenset([person_kan, day_kan]) in KANGO_PAIRS
+    if is_kango:
         score += 2
+        reasons.append(("+2", f"日干{day_kan}とあなたの{person_kan}が干合（縁が結ばれる日）"))
 
     # 特殊格局 × 火の日（巳/午）
     if special_kaku and day_shi in ("巳", "午"):
         score += 2
+        reasons.append(("+2", f"{special_kaku}のあなたに火の日（{day_shi}）が味方"))
 
     # 特殊格局 × 水の日（亥/子）
     if special_kaku and day_shi in ("亥", "子"):
         score -= 2
+        reasons.append(("-2", f"{special_kaku}のあなたに水の日（{day_shi}）は逆風"))
 
     # 六曜
     if rokuyo in ("大安", "友引"):
         score += 1
+        reasons.append(("+1", f"六曜が{rokuyo}"))
     elif rokuyo == "仏滅":
         score -= 1
+        reasons.append(("-1", "六曜が仏滅"))
 
     # 十二直
     if junichoku in ("建", "満", "成", "開"):
         score += 1
+        reasons.append(("+1", f"十二直が「{junichoku}」（開運日）"))
     elif junichoku in ("破", "危", "閉"):
         score -= 1
+        reasons.append(("-1", f"十二直が「{junichoku}」（慎重日）"))
 
     # 天中殺日
     if is_tcs:
         score -= 3
+        reasons.append(("-3", f"あなたの天中殺の支（{day_shi}）の日"))
 
     # 0〜10にクランプ
     score = max(0, min(10, score))
 
     # アドバイス生成
-    advice = generate_daily_advice(score, kansei, is_tcs, rokuyo, junichoku)
+    advice = generate_daily_advice(score, kansei, is_tcs, rokuyo, junichoku, is_kango)
 
     return {
         "score": score,
@@ -256,6 +269,7 @@ def calc_lucky_score(target_date: date, person_data: dict) -> dict:
         "tenchusatsu": is_tcs,
         "kansei": kansei,
         "advice": advice,
+        "reasons": reasons,
     }
 
 
@@ -263,25 +277,55 @@ def calc_lucky_score(target_date: date, person_data: dict) -> dict:
 # 6. 日運アドバイス生成
 # ============================================================
 
-def generate_daily_advice(score: int, kansei: str, is_tcs: bool, rokuyo: str, junichoku: str) -> str:
-    """スコアと各要素に基づき、一行アドバイスを生成する"""
-    if is_tcs:
-        return "天中殺日。新規の決断は避け、受け身で過ごすのが吉。既存の仕事を丁寧に。"
+def generate_daily_advice(score: int, kansei: str, is_tcs: bool, rokuyo: str,
+                          junichoku: str, is_kango: bool = False) -> str:
+    """スコアと各要素を組み合わせて2〜4文のアドバイスを生成する。
 
+    2026-07-17改定: 旧実装はスコア4〜5で六曜の一行だけに落ち、
+    ヘッダのテーマ（通変）と本文が噛み合わなかった。全スコア帯で
+    「調子 → テーマ(do/dont) → 時間帯(六曜) → 暦の一言(十二直)」を積む構成に統一。
+    """
     kansei_info = DAILY_KANSEI.get(kansei, DAILY_KANSEI["比劫"])
+    rokuyo_advice = ROKUYO_DETAIL.get(rokuyo, {}).get("advice", "")
+    junichoku_info = JUNICHOKU_DETAIL.get(junichoku, {})
 
-    if score >= 8:
-        return f"最高の運気！{kansei_info['theme']}。{kansei_info['do']}"
+    parts = []
+
+    # 1文目: その日の調子
+    if is_tcs:
+        parts.append("天中殺日。新しい決断・契約・買い物は明日以降に回すのが吉。")
+    elif score >= 8:
+        parts.append(f"最高の運気！ {kansei_info['theme']}。")
     elif score >= 6:
-        return f"好調な日。{kansei_info['theme']}。{kansei_info['do']}"
+        parts.append(f"好調な日。{kansei_info['theme']}。")
     elif score >= 4:
-        rokuyo_info = ROKUYO_DETAIL.get(rokuyo, {})
-        rokuyo_advice = rokuyo_info.get("advice", "")
-        return f"平穏な日。{rokuyo_advice}"
+        parts.append(f"落ち着いた日。{kansei_info['theme']}。")
     elif score >= 2:
-        return f"やや低調。{kansei_info['dont']}"
+        parts.append(f"やや低調。{kansei_info['theme']}——ただし攻め方に注意。")
     else:
-        return f"要注意の日。{kansei_info['dont']}無理をせず守りの姿勢で。"
+        parts.append(f"要注意の日。{kansei_info['theme']}だが、今日は守りが正解。")
+
+    # 2文目: テーマの中身（好調時はdo、低調時はdont、中間は両方短く）
+    if is_tcs:
+        parts.append("受け身が基本。既存の仕事の手入れ、掃除、学び直しなど「整える」ことには最良の日。")
+    elif score >= 6:
+        parts.append(kansei_info["do"])
+    elif score >= 4:
+        parts.append(f"{kansei_info['do']}一方で、{kansei_info['dont']}")
+    else:
+        parts.append(kansei_info["dont"])
+
+    # 3文目: 干合の日（縁の特異日は明示）
+    if is_kango and not is_tcs:
+        parts.append("日の干とあなたの日干が干合する「縁結び日」。人と会う予定はこの日に寄せると良い。")
+
+    # 4文目: 時間帯（六曜）+ 暦の一言（十二直が強い日のみ）
+    if rokuyo_advice:
+        parts.append(f"時間帯は{rokuyo}——{rokuyo_advice}")
+    if junichoku_info.get("luck") in ("大吉", "凶"):
+        parts.append(f"暦の十二直は「{junichoku}」。{junichoku_info.get('advice','')}")
+
+    return "".join(parts)
 
 
 # ============================================================
@@ -314,6 +358,7 @@ def calc_monthly_calendar(year: int, month: int, person_data: dict) -> dict:
             "tenchusatsu": result["tenchusatsu"],
             "kansei": result["kansei"],
             "advice": result["advice"],
+            "reasons": result.get("reasons", []),
         }
         days.append(entry)
 

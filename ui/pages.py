@@ -5683,9 +5683,25 @@ def _render_kaiyun_calendar_tab(today, person_data):
         tcs_icon = " ⚠" if d_info["tenchusatsu"] else ""
         kansei_info = DAILY_KANSEI.get(d_info["kansei"], DAILY_KANSEI["比劫"])
         with st.expander(f"{day_num}日  スコア{s}{tcs_icon}  {d_info['day_kanshi']} {d_info['rokuyo']} — {kansei_info['theme']}"):
+            reasons = d_info.get("reasons") or []
+            chips = ""
+            if reasons:
+                chip_items = "".join(
+                    f'<span style="display:inline-block; margin:2px 4px 2px 0; padding:2px 8px; '
+                    f'border:1px solid {"rgba(124,163,184,0.5)" if pt.startswith("+") else "rgba(196,122,106,0.5)"}; '
+                    f'border-radius:10px; font-size:0.72em; '
+                    f'color:{"#7CA3B8" if pt.startswith("+") else "#C47A6A"};">{pt} {label}</span>'
+                    for pt, label in reasons
+                )
+                chips = (
+                    '<div style="margin-top:10px; padding-top:8px; border-top:1px solid rgba(191,163,80,0.15);">'
+                    '<span style="color:#8A8478; font-size:0.72em;">スコアの内訳（基準5点）: </span><br>'
+                    f'{chip_items}</div>'
+                )
             st.markdown(f"""
-<div style="color:#F0EBE0; font-size:0.85em; line-height:1.6;">
+<div style="color:#F0EBE0; font-size:0.85em; line-height:1.75;">
 {d_info["advice"]}
+{chips}
 </div>
 """, unsafe_allow_html=True)
 
