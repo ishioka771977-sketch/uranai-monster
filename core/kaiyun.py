@@ -494,6 +494,82 @@ def generate_yearly_advice(person_data: dict, year: int) -> dict:
 
 
 # ============================================================
+# 9.5 大運スコアと人生運勢カーブ（2026-07-18 開運アドバイス強化）
+# ============================================================
+
+def calc_taiun_period_score(entry: dict, person_kan: str) -> dict:
+    """大運1期の運勢スコア（0〜10）と内訳を返す"""
+    score = 5
+    reasons = []
+    kansei = entry["kansei"]
+    if kansei == "比劫":
+        score += 1
+        reasons.append(("+1", "自分の五行と比和の10年"))
+    elif kansei == "印星":
+        score += 1
+        reasons.append(("+1", "大運があなたを生む（印の10年）"))
+    elif kansei == "財星":
+        score += 1
+        reasons.append(("+1", "行動が実りに変わる（財の10年）"))
+    elif kansei == "官星":
+        score -= 1
+        reasons.append(("-1", "大運があなたを剋す（試練の10年）"))
+    if frozenset([person_kan, entry["kan"]]) in KANGO_PAIRS:
+        score += 2
+        reasons.append(("+2", f"大運の{entry['kan']}とあなたの{person_kan}が干合（縁と転機の10年）"))
+    if entry["is_taiun_tenchusatsu"]:
+        score -= 2
+        reasons.append(("-2", "大運天中殺（拡大より内実を育てる10年）"))
+    score = max(0, min(10, score))
+    return {"score": score, "reasons": reasons}
+
+
+def calc_life_curve(person_data: dict, birth_date: date, gender: str, max_age: int = 90) -> list:
+    """人生運勢カーブ: 年齢ごとのスコア（大運の土台+年運の揺らぎ）を返す。
+
+    Returns: [{"age", "year", "score", "taiun_kanshi", "is_tcs_year", "is_kango_year"}, ...]
+    """
+    person_kan = person_data["day_kan"]
+    tcs_shi = person_data.get("tenchusatsu", [])
+    taiun_list = calc_taiun(person_data, birth_date, gender)
+
+    points = []
+    for age in range(0, max_age + 1):
+        year = birth_date.year + age
+        cur = None
+        for e in taiun_list:
+            if e["start_age"] <= age <= e["end_age"]:
+                cur = e
+                break
+        base = calc_taiun_period_score(cur, person_kan)["score"] if cur else 5
+
+        # 年運の揺らぎ
+        year_kanshi = _calc_nen_kanshi(date(year, 6, 15))
+        y_kan, y_shi = year_kanshi[0], year_kanshi[1]
+        delta = 0
+        y_kansei = get_daily_kansei(person_kan, y_kan)
+        if y_kansei in ("比劫", "印星"):
+            delta += 1
+        elif y_kansei == "官星":
+            delta -= 1
+        is_kango_y = frozenset([person_kan, y_kan]) in KANGO_PAIRS
+        if is_kango_y:
+            delta += 1
+        is_tcs_y = y_shi in tcs_shi
+        if is_tcs_y:
+            delta -= 2
+        points.append({
+            "age": age,
+            "year": year,
+            "score": max(0, min(10, base + delta)),
+            "taiun_kanshi": cur["kanshi"] if cur else "",
+            "is_tcs_year": is_tcs_y,
+            "is_kango_year": is_kango_y,
+        })
+    return points
+
+
+# ============================================================
 # 10. 大運（10年運）計算
 # ============================================================
 
