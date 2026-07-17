@@ -270,6 +270,7 @@ def calc_lucky_score(target_date: date, person_data: dict) -> dict:
         "kansei": kansei,
         "advice": advice,
         "reasons": reasons,
+        "kango": is_kango,
     }
 
 
@@ -329,6 +330,35 @@ def generate_daily_advice(score: int, kansei: str, is_tcs: bool, rokuyo: str,
 
 
 # ============================================================
+# 6.5 月間ハイライト・年間の天中殺月（2026-07-18 開運アドバイス強化）
+# ============================================================
+
+def get_month_highlights(cal_data: dict) -> dict:
+    """月間カレンダーから「いつ動くか」の要点を抽出する。
+
+    Returns: {"best_days": [entry,...最大3], "kango_days": [...], "tcs_days": [...]}
+    """
+    days = cal_data.get("days", [])
+    best_days = sorted(days, key=lambda d: -d["score"])[:3]
+    best_days = [d for d in best_days if d["score"] >= 6]
+    kango_days = [d for d in days if d.get("kango")]
+    tcs_days = [d for d in days if d.get("tenchusatsu")]
+    return {"best_days": best_days, "kango_days": kango_days, "tcs_days": tcs_days}
+
+
+def get_tenchusatsu_months(year: int, tcs_shi: list) -> list:
+    """その年のうち、月支が天中殺の地支に当たる月（=守りの月）を返す"""
+    months = []
+    for m in range(1, 13):
+        sample = date(year, m, 15)
+        nen = _calc_nen_kanshi(sample)
+        month_kanshi = _calc_tsuki_kanshi(sample, nen[0])
+        if month_kanshi[1] in tcs_shi:
+            months.append(m)
+    return months
+
+
+# ============================================================
 # 7. 月間カレンダー生成
 # ============================================================
 
@@ -359,6 +389,7 @@ def calc_monthly_calendar(year: int, month: int, person_data: dict) -> dict:
             "kansei": result["kansei"],
             "advice": result["advice"],
             "reasons": result.get("reasons", []),
+            "kango": result.get("kango", False),
         }
         days.append(entry)
 

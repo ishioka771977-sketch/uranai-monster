@@ -5710,6 +5710,7 @@ def _render_kaiyun_calendar_tab(today, person_data):
 def _render_kaiyun_monthly_yearly_tab(today, person_data):
     from core.kaiyun import (
         generate_monthly_advice, generate_yearly_advice, DAILY_KANSEI,
+        calc_monthly_calendar, get_month_highlights, get_tenchusatsu_months,
     )
 
     # --- 月運 ---
@@ -5744,6 +5745,31 @@ def _render_kaiyun_monthly_yearly_tab(today, person_data):
     <span style="color:#C47A6A;">△ 注意:</span> {month_adv["dont"]}
   </div>
   {tcs_month_html}
+</div>
+""", unsafe_allow_html=True)
+
+    # --- 今月の作戦マップ（いつ動くか・2026-07-18追加）---
+    _cal = calc_monthly_calendar(today.year, today.month, person_data)
+    _hl = get_month_highlights(_cal)
+
+    def _fmt_day(d):
+        return f'{int(d["date"].split("-")[2])}日({d["day_kanshi"]}・{d["rokuyo"]})'
+
+    _rows = []
+    if _hl["best_days"]:
+        _best = "、".join(f'<span style="color:#D4B96A; font-weight:bold;">{_fmt_day(d)} スコア{d["score"]}</span>' for d in _hl["best_days"])
+        _rows.append(f'<div style="margin:4px 0;"><span style="color:#D4B96A;">★ 攻めの日:</span> {_best}<span style="color:#8A8478; font-size:0.85em;"> — 商談・告白・新規スタートはここに寄せる</span></div>')
+    if _hl["kango_days"]:
+        _kg = "、".join(_fmt_day(d) for d in _hl["kango_days"])
+        _rows.append(f'<div style="margin:4px 0;"><span style="color:#A488C9;">💫 縁結び日:</span> {_kg}<span style="color:#8A8478; font-size:0.85em;"> — 日干とあなたが干合。人と会う予定に</span></div>')
+    if _hl["tcs_days"]:
+        _tc = "、".join(str(int(d["date"].split("-")[2])) + "日" for d in _hl["tcs_days"])
+        _rows.append(f'<div style="margin:4px 0;"><span style="color:#C47A6A;">⚠ 天中殺日:</span> {_tc}<span style="color:#8A8478; font-size:0.85em;"> — 大きな決断・契約・高額の買い物は避ける</span></div>')
+    if _rows:
+        st.markdown(f"""
+<div style="background:#15150F; border:1px solid rgba(191,163,80,0.35); border-radius:10px; padding:12px 15px; margin:8px 0;">
+  <div style="color:#BFA350; font-size:0.85em; letter-spacing:0.1em; margin-bottom:6px;">🗓 今月の作戦マップ</div>
+  <div style="color:#F0EBE0; font-size:0.88em; line-height:1.8;">{''.join(_rows)}</div>
 </div>
 """, unsafe_allow_html=True)
 
@@ -5789,6 +5815,17 @@ def _render_kaiyun_monthly_yearly_tab(today, person_data):
     ⚡ {year_adv["energy_advice"]}
   </div>
   {tcs_year_html}
+</div>
+""", unsafe_allow_html=True)
+
+    # --- 今年の守りの月（月支が天中殺に当たる月・2026-07-18追加）---
+    _tcs_months = get_tenchusatsu_months(today.year, person_data.get("tenchusatsu", []))
+    if _tcs_months:
+        _tm = "・".join(f"{m}月" for m in _tcs_months)
+        st.markdown(f"""
+<div style="background:#15150F; border:1px solid rgba(196,122,106,0.4); border-radius:10px; padding:10px 15px; margin:8px 0;">
+  <span style="color:#C47A6A; font-weight:bold; font-size:0.9em;">🛡 今年の守りの月: {_tm}</span>
+  <span style="color:#8A8478; font-size:0.82em;"> — 月の気があなたの天中殺に重なる月。新規の種まきより、手入れ・整理・学び直しに向く</span>
 </div>
 """, unsafe_allow_html=True)
 
@@ -5906,6 +5943,37 @@ def _render_kaiyun_taiun_tab(person, person_data):
     <span style="color:#C47A6A;">△</span> {ct_kansei["dont"]}
   </div>
   {tcs_detail}
+</div>
+""", unsafe_allow_html=True)
+
+        # --- 現在地バー + 次の大運の予告（2026-07-18追加）---
+        _elapsed = max(0, min(current_age - ct["start_age"], ct["end_age"] - ct["start_age"]))
+        _total = ct["end_age"] - ct["start_age"] + 1
+        _remain = ct["end_age"] - current_age + 1
+        _pct = int(_elapsed / _total * 100)
+        _next = None
+        for _e in taiun_list:
+            if _e["start_age"] > ct["start_age"]:
+                _next = _e
+                break
+        _next_html = ""
+        if _next:
+            _nk = DAILY_KANSEI.get(_next["kansei"], DAILY_KANSEI["比劫"])
+            _next_theme = _nk["theme"].replace("の日", "")
+            _next_html = (
+                f'<div style="color:#8A8478; font-size:0.85em; margin-top:8px;">'
+                f'⏭ 次の10年: <span style="color:#D4B96A;">{_next["kanshi"]}</span>'
+                f'（{_next["start_age"]}歳〜）は「<span style="color:#D4B96A;">{_next_theme}</span>」の季節へ。'
+                f'いまの大運は残り<span style="color:#D4B96A; font-weight:bold;">{_remain}年</span>——'
+                f'この期間のテーマを取り切ってから渡ると、次が楽になる</div>'
+            )
+        st.markdown(f"""
+<div style="background:#15150F; border:1px solid rgba(191,163,80,0.3); border-radius:10px; padding:12px 15px; margin:8px 0;">
+  <div style="color:#BFA350; font-size:0.85em; margin-bottom:6px;">📍 この大運の現在地: {_elapsed + 1}年目 / {_total}年</div>
+  <div style="background:#2A2A2A; border-radius:6px; height:10px; overflow:hidden;">
+    <div style="background:linear-gradient(90deg, #BFA350, #D4B96A); width:{_pct}%; height:100%;"></div>
+  </div>
+  {_next_html}
 </div>
 """, unsafe_allow_html=True)
 
