@@ -106,7 +106,7 @@ def _active_provider() -> str:
 
 
 def _claude_model_name() -> str:
-    return os.environ.get("CLAUDE_MODEL", "claude-fable-5")
+    return os.environ.get("CLAUDE_MODEL", "claude-fable-5-1")
 
 
 def _log_claude_response_model(response) -> None:
