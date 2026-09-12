@@ -16,7 +16,8 @@ CUSTOM_CSS = """
 .material-icons, .material-icons-outlined, .material-icons-round,
 .material-icons-sharp, .material-icons-two-tone,
 .material-symbols-rounded, .material-symbols-outlined, .material-symbols-sharp,
-[class*="material-symbols"], [class*="material-icons"] {
+[class*="material-symbols"], [class*="material-icons"],
+[data-testid="stIconMaterial"] {
     font-family: 'Material Symbols Rounded', 'Material Symbols Outlined',
                  'Material Icons', sans-serif !important;
     font-feature-settings: 'liga';
@@ -428,6 +429,14 @@ details[open] > summary::before {
 /* Streamlit の SVG/テキストマーカー（stExpanderIcon 以外）を隠す */
 details summary span[aria-hidden="true"]:not([data-testid="stExpanderIcon"]):empty,
 details summary svg:not([class*="uranai"]) {
+    display: none !important;
+}
+
+/* Streamlit 1.5x系: expanderの開閉アイコンは stIconMaterial のspan。
+   フォント未ロード時に「keyboard_arrow_down」等の生テキストがラベルに重なる
+   (2026-07-17 実測)。独自▼マーカーがあるため丸ごと非表示にする */
+details summary [data-testid="stIconMaterial"],
+[data-testid="stExpander"] summary [data-testid="stIconMaterial"] {
     display: none !important;
 }
 
