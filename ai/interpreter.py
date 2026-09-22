@@ -483,6 +483,8 @@ WESTERN_FULL_PROMPT = """以下のホロスコープデータをもとに、本�
 - 水瓶座♒: 未来からの使者。今の「変」が10年後の常識
 - 魚座♓: 境界線のない魂。想像力が現実と夢を溶かす
 
+{seiza_kb}
+
 ### ハウスの意味（必ず鑑定に織り込め）
 - 1H: 自分自身。外に出るエネルギー
 - 2H: お金。自分の価値。稼ぎ方
@@ -638,6 +640,8 @@ WESTERN_BASIC_PROMPT = """以下の西洋占星術データをもとに、鑑定
 
 ### 主要アスペクト（太陽〜土星間）
 {aspects_list}
+
+{seiza_kb}
 
 ## 出力形式（JSON）
 {{
@@ -2031,6 +2035,44 @@ def generate_sanmei_reading(bundle: DivinationBundle) -> dict:
         return _sanmei_fallback(bundle)
 
 
+_SEIZA_KB_CACHE = None
+
+
+def _load_seiza_kb() -> dict:
+    """書籍KB由来の12星座ダイジェスト（data/seiza_kb.json）を読み込む。無ければ空dict。"""
+    global _SEIZA_KB_CACHE
+    if _SEIZA_KB_CACHE is None:
+        try:
+            import json as _json
+            from pathlib import Path as _Path
+            path = _Path(__file__).parent.parent / "data" / "seiza_kb.json"
+            _SEIZA_KB_CACHE = _json.loads(path.read_text(encoding="utf-8"))
+        except Exception:
+            _SEIZA_KB_CACHE = {}
+    return _SEIZA_KB_CACHE
+
+
+def _seiza_kb_section(sun_sign: str, moon_sign: str = None) -> str:
+    """太陽星座（＋月星座が異なればそれも）の書籍KBダイジェストをプロンプト用に整形。"""
+    kb = _load_seiza_kb()
+    parts = []
+    sun = kb.get(sun_sign, {}).get("digest")
+    if sun:
+        parts.append(f"### 太陽星座『{sun_sign}』の深掘り素材（書籍KB由来・最優先で活用せよ）\n{sun}")
+    if moon_sign and moon_sign != sun_sign:
+        moon = kb.get(moon_sign, {}).get("digest")
+        if moon:
+            parts.append(
+                f"### 月星座『{moon_sign}』の素材（感情面・beingの読みに使う。太陽ほど深追いしない）\n{moon}"
+            )
+    if not parts:
+        return ""
+    parts.append(
+        "※ 上記素材は理論骨格である。用語や箇条書きをそのまま写さず、この人のチャート（アスペクト・ハウス・他天体）と接続して自分の言葉で語り直すこと。"
+    )
+    return "\n\n".join(parts)
+
+
 def generate_western_reading(bundle: DivinationBundle) -> dict:
     """西洋占星術コースの鑑定文を生成"""
     w = bundle.western
@@ -2058,6 +2100,7 @@ def generate_western_reading(bundle: DivinationBundle) -> dict:
             mc_degree="",
             aspects_list=aspects_list,
             retrograde_list=retrograde_list,
+            seiza_kb=_seiza_kb_section(w.sun_sign, w.moon_sign),
         )
     else:
         # 出生時刻なし → ベーシックプロンプト
@@ -2067,6 +2110,7 @@ def generate_western_reading(bundle: DivinationBundle) -> dict:
         prompt = WESTERN_BASIC_PROMPT.format(
             planet_table=planet_table,
             aspects_list=aspects_list,
+            seiza_kb=_seiza_kb_section(w.sun_sign, w.moon_sign),
         )
 
     try:
