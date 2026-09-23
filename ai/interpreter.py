@@ -2073,6 +2073,24 @@ def _seiza_kb_section(sun_sign: str, moon_sign: str = None) -> str:
     return "\n\n".join(parts)
 
 
+def _moon_sign_for_kb(bundle: DivinationBundle):
+    """KB注入に使う月星座。出生時刻なしの場合は正午UTC近似のため、
+    その日の0:00〜23:59(JST)で月星座が変わらない場合のみ返す(月は約2.5日で
+    星座を移るので、日内に変わる日は素材を注入しない)。2026-09-23"""
+    w = bundle.western
+    if bundle.person.birth_time:
+        return w.moon_sign
+    try:
+        from dataclasses import replace as _replace
+        from core.western import calculate_western as _cw
+        p = bundle.person
+        s0 = _cw(_replace(p, birth_time="00:00")).moon_sign
+        s1 = _cw(_replace(p, birth_time="23:59")).moon_sign
+        return s0 if s0 == s1 else None
+    except Exception:
+        return None
+
+
 def generate_western_reading(bundle: DivinationBundle) -> dict:
     """西洋占星術コースの鑑定文を生成"""
     w = bundle.western
@@ -2110,7 +2128,7 @@ def generate_western_reading(bundle: DivinationBundle) -> dict:
         prompt = WESTERN_BASIC_PROMPT.format(
             planet_table=planet_table,
             aspects_list=aspects_list,
-            seiza_kb=_seiza_kb_section(w.sun_sign, w.moon_sign),
+            seiza_kb=_seiza_kb_section(w.sun_sign, _moon_sign_for_kb(bundle)),
         )
 
     try:
