@@ -185,7 +185,12 @@ def _score_kan_relationship(kan1: str, kan2: str) -> int:
         return 3  # 相剋（剋される側）
     return 5  # その他
 
-def _score_energy_compatibility(energy1: int, energy2: int) -> int:
+# 外向き本能(高い側がエネルギーを外で消費する型) — 差100超の減点を緩和する条件
+OUTWARD_HONNOU = {"表現", "攻撃", "魅力"}
+
+
+def _score_energy_compatibility(energy1: int, energy2: int,
+                                high_side_top_honnou: str = "") -> int:
     """エネルギー差をスコア化（0-10）
 
     2026-07-13改定(くろたん基準による委任判断):
@@ -204,6 +209,13 @@ def _score_energy_compatibility(energy1: int, energy2: int) -> int:
     elif diff <= 100:
         return 6
     else:
+        # 2026-09-25改定(ひでさん判断・選択肢2): 教義の処方「高い方が外で消費すれば改善」を
+        # 採点に反映。高い側の第1本能が外向き(表現/攻撃/魅力)なら処方が既に効いている型と
+        # 見なし 4→6。エネルギー342のような規格外の個人が名簿の全員に対して4点固定になる
+        # 構造的減点(2026-07-13 くろたん委任条件(b))の未完部分への対処。運命型(90+)には
+        # 依然届かないので教義の骨は保つ。
+        if high_side_top_honnou in OUTWARD_HONNOU:
+            return 6
         return 4
 
 def _score_honnou_complementary(top1_a: str, top1_b: str) -> int:
@@ -285,11 +297,13 @@ def calc_aisho_score(bundle1, bundle2, relationship: str) -> dict:
     # 2. エネルギー差
     e1 = s1.bansho_energy.total_energy if s1.bansho_energy else 200
     e2 = s2.bansho_energy.total_energy if s2.bansho_energy else 200
-    raw_scores['energy_compatibility'] = _score_energy_compatibility(e1, e2)
-
-    # 3. 五本能の補完
     h1 = s1.bansho_energy.top_honnou if s1.bansho_energy else ""
     h2 = s2.bansho_energy.top_honnou if s2.bansho_energy else ""
+    high_top = h1 if e1 >= e2 else h2
+    raw_scores['energy_compatibility'] = _score_energy_compatibility(e1, e2, high_top)
+    energy_outlet = abs(e1 - e2) > 100 and high_top in OUTWARD_HONNOU
+
+    # 3. 五本能の補完
     raw_scores['honnou_complementary'] = _score_honnou_complementary(h1, h2)
 
     # 4. 天中殺
@@ -328,8 +342,14 @@ def calc_aisho_score(bundle1, bundle2, relationship: str) -> dict:
     energy_adv = {}
     for (lo, hi), adv_dict in ENERGY_DIFF_ADVICE.items():
         if lo <= energy_diff <= hi:
-            energy_adv = adv_dict
+            energy_adv = dict(adv_dict)
             break
+    if energy_outlet:
+        high_name = "高い側"
+        energy_adv['outlet_note'] = (
+            f"{high_name}の第1本能が「{high_top}」で、エネルギーを外で消費する型。"
+            "教義の処方が元から効いている組み合わせなので、差の減点は緩和して採点。"
+        )
 
     # 五本能テキスト
     honnou_text = ""
@@ -356,6 +376,7 @@ def calc_aisho_score(bundle1, bundle2, relationship: str) -> dict:
         'honnou1': h1,
         'honnou2': h2,
         'honnou_text': honnou_text,
+        'energy_outlet': energy_outlet,
     }
 
 

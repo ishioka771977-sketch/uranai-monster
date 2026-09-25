@@ -5,3 +5,4 @@ __pycache__/
 _pilot_run.log
 data/kojindo/_html_cache/
 data/_blind_test_answers.json
+data/_blind_fable_vs_opus55_answers.json

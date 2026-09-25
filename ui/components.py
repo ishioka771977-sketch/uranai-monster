@@ -1258,6 +1258,17 @@ def render_aisho_result(bundle1, bundle2, data: dict, relationship: str = "love"
         diff = abs(ev1 - ev2)
         diff_label = score_result.get('energy_advice', {}).get('label', '')
         diff_advice = score_result.get('energy_advice', {}).get(relationship, score_result.get('energy_advice', {}).get('general', ''))
+        outlet_note = score_result.get('energy_advice', {}).get('outlet_note', '')
+        # スコア内訳(5項目)。「なぜこの点か」を折り畳みで示す(2026-09-25)
+        _det = score_result.get('detail', {}) or {}
+        _labels = [('kan_relationship', '日干の関係(算命学)'), ('energy_compatibility', 'エネルギー差(万象学)'),
+                   ('honnou_complementary', '五本能(万象学)'), ('tenchusatsu_compatibility', '天中殺(算命学)'),
+                   ('star_sign_compatibility', '太陽星座(西洋)')]
+        _rows = "".join(
+            f'<div style="display:flex; justify-content:space-between; padding:2px 0;"><span>{lbl}</span><span style="color:#D4B96A;">{_det.get(k, "-")}/10</span></div>'
+            for k, lbl in _labels if k in _det)
+        breakdown_html = (f'<details style="margin-top:8px; color:#8A8478; font-size:0.82em;"><summary style="cursor:pointer;">スコアの内訳</summary>'
+                          f'<div style="margin-top:4px;">{_rows}</div></details>') if _rows else ""
 
         energy_section = f"""
 <div style="margin:18px 0; padding:16px; background:#1A1A1A; border-radius:8px; border:1px solid #2A2A2A;">
@@ -1288,6 +1299,8 @@ def render_aisho_result(bundle1, bundle2, data: dict, relationship: str = "love"
 {f'<span style="color:#8A8478; font-size:0.85em;"> ({diff_label})</span>' if diff_label else ''}
 </div>
 {f'<div style="color:#8A8478; font-size:0.85em; margin-top:6px; line-height:1.6;">💡 {diff_advice}</div>' if diff_advice else ''}
+{f'<div style="color:#BFA350; font-size:0.82em; margin-top:6px; line-height:1.6;">✦ {outlet_note}</div>' if outlet_note else ''}
+{breakdown_html}
 </div>"""
 
     # 五本能比較セクション
