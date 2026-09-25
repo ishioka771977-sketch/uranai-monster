@@ -5116,6 +5116,9 @@ def generate_aisho_reading(
 
     energy_adv = score_result['energy_advice']
     energy_advice_text = energy_adv.get(scoring_key, energy_adv.get('general', ''))
+    if energy_adv.get('outlet_note'):
+        # 文章と点数の一致: 減点緩和の根拠を鑑定文にも渡す(2026-09-25)
+        energy_advice_text = f"{energy_advice_text} {energy_adv['outlet_note']}"
 
     prompt = AISHO_PROMPT_V2.format(
         name1=name1, name2=name2,
