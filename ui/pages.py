@@ -589,6 +589,8 @@ def render_top_page():
             st.session_state.page = "palm_input"
             st.rerun()
         st.markdown("<br>", unsafe_allow_html=True)
+        st.link_button("🏠 ひでさんの部屋", "https://hidesan-room.vercel.app/", help="くろたんと会話が続く、ひでさん専用の部屋(別アプリ)")
+
         if st.button("⚙ 設定", key="btn_settings"):
             st.session_state.page = "settings"
             st.rerun()
