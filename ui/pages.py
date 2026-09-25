@@ -2371,6 +2371,35 @@ def _record_history(
         print(f"[history] record error: {e}")
 
 
+def _record_history_for(person, course_name: str, types: list | None = None,
+                        result_json: Optional[dict] = None,
+                        card_data_json: Optional[list[dict]] = None):
+    """指定した person 名義で鑑定履歴を1件記録(相性・タロット用。2026-09-25)
+
+    _record_history は session_state.bundle 固定なので、2人鑑定やタロットのように
+    bundle が別 key に入っている場面ではこちらを使う。「ひでさんの部屋」は
+    divination_history のひでさん分を自動で取り込むため、ここに残すことが部屋への転送になる。
+    """
+    if st.session_state.get("no_history"):
+        return
+    if not _supabase_on():
+        return
+    try:
+        name = getattr(person, "name", None)
+        if not name:
+            return
+        bd = getattr(person, "birth_date", None)
+        row = _sb.get_customer_by_name_and_birth(
+            name, bd.year if bd else None, bd.month if bd else None, bd.day if bd else None) or {}
+        _sb.record_divination(
+            customer_id=row.get("id"), customer_name=name, course_name=course_name,
+            divination_types=types or [], result_json=result_json, card_data_json=card_data_json,
+            bundle_snapshot_json=None,
+        )
+    except Exception as e:
+        print(f"[history] record_for error: {e}", flush=True)
+
+
 # ============================================================
 # 鑑定文生成画面（コース選択後のローディング）
 # ============================================================
@@ -3522,6 +3551,22 @@ def render_aisho_loading_page():
         )
         status.update(label="✦ 相性鑑定完了 ✦", state="complete")
 
+    # 履歴に記録(両者名義・相手情報つき)。ひでさんの部屋が「相性: 相手名」スレッドとして取り込む
+    try:
+        _base = {k: v for k, v in (aisho_result or {}).items()
+                 if not k.startswith("_") and isinstance(v, (str, int, float, bool))}
+        for me, other in ((person1, person2), (person2, person1)):
+            _partner = {"name": other.name, "birth_date": str(other.birth_date),
+                        "birth_time": other.birth_time, "gender": other.gender}
+            _record_history_for(
+                me, f"相性: {other.name}", ["相性"],
+                result_json={**_base, "partner": _partner, "relationship": relationship_for_ai,
+                             "role_me": role_a if me is person1 else role_b,
+                             "role_partner": role_b if me is person1 else role_a},
+            )
+    except Exception as _e:
+        print(f"[history] aisho record skipped: {_e}", flush=True)
+
     st.session_state.aisho_bundle1 = bundle1
     st.session_state.aisho_bundle2 = bundle2
     st.session_state.aisho_result = aisho_result
@@ -4255,6 +4300,24 @@ def render_tarot_generating_page():
         st.write("✧ カードと星の声を統合中…")
         result = generate_interactive_tarot(bundle, question, spread_info, cards)
         status.update(label="✦ 鑑定完了 ✦", state="complete")
+
+    # 履歴に記録(質問+カード)。ひでさんの部屋が「タロット: 質問」スレッドとして取り込む
+    try:
+        _cards = []
+        for i, c in enumerate(cards):
+            _pos = spread_info["positions"][i] if i < len(spread_info.get("positions", [])) else f"カード{i+1}"
+            _cards.append({"position": _pos, "card_name": getattr(c, "card_name", ""),
+                           "card_name_en": getattr(c, "card_name_en", ""),
+                           "is_reversed": bool(getattr(c, "is_reversed", False)),
+                           "keywords": list(getattr(c, "keywords", []) or []),
+                           "image_key": getattr(c, "image_key", "")})
+        _rj = {k: v for k, v in (result or {}).items()
+               if not k.startswith("_") and isinstance(v, (str, int, float, bool))}
+        _rj.update({"question": question, "spread_name": spread_info.get("spread_name", ""),
+                    "positions": spread_info.get("positions", [])})
+        _record_history_for(bundle.person, "タロット", ["タロット"], result_json=_rj, card_data_json=_cards)
+    except Exception as _e:
+        print(f"[history] tarot record skipped: {_e}", flush=True)
 
     st.session_state.tarot_result = result
     st.session_state.page = "tarot_result"
